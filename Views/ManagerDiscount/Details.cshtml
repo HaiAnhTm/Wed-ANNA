@@ -1,0 +1,74 @@
+﻿@model DotNet_E_Commerce_Glasses_Web.Models.Discount
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Discount</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TitleDiscount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TitleDiscount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfStart)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfStart)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfEnd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfEnd)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Percent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Percent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Image)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Image)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StatusDiscount.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StatusDiscount.Status)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdDiscount }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

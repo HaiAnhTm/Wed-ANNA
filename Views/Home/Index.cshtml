@@ -1,0 +1,244 @@
+﻿@{
+    ViewBag.Title = "Trang chủ";
+    Layout = ViewBag.Consumer != null ? "~/Views/Shared/_LayoutConsumer.cshtml" : "~/Views/Shared/_Layout.cshtml";
+}
+@*Banner*@
+<div class="container rounded" id="banner_container">
+
+    <div class="row">
+        <div class="col-sm-8 position-relative" id="col_first">
+            <div class="position-absolute top-50 start-50 translate-middle w-75 h-75 translate-middle">
+                <h1>Xin chào@(ViewBag.Consumer != null ? ", " + ViewBag.Consumer.Username : "")</h1>
+                <h2>Thế giới kính mắt</h2>
+                <p>
+                    Với 6 năm kính nghiệm trên thị trường kính mắt Việt, Thế Giới kính mắt tự hào là đơn vị cung cấp các sản phẩm và dịch vụ về kính mắt uy tín tại Việt Nam.
+                    Các sản phẩm được tuyển chọn kỹ lưỡng, đạt độ tinh xảo và c hất lượng cao, hướng đến trải nghiệm tốt nhất cho khách hàng.
+                </p>
+                <p>
+                    Là một sản phẩm về sức khoẻ con người, chúng tôi “kinh doanh dựa trên sự tử tế” lấy khách hàng là trọng tâm, không ngừng thay đổi cải tiến sản phẩm cũng như dịch vụ đi kèm.
+                    Ngoài ra, hệ thống kỹ thuật viên giàu kinh nghiệm, trang thiết bị máy móc hiện đại cùng dịch vụ tư vấn
+                    tận tâm giúp Thế Giới kính mắt trở thành địa chỉ tin cậy đồng hành cùng hàng triệu khách hàng Việt.
+                </p>
+                <div>
+                    <div>
+                        <button class="btn btn-secondary" onclick="redirectToBanHang()">
+                            Mua Ngay
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div id="demo" class="carousel slide" data-bs-ride="carousel">
+
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+                    <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+                    <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+                </div>
+
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="https://kinhmateyeplus.com/wp-content/uploads/2020/05/chat-luong.png" class="img-fluid rounded" style="width:500px;height:480px;" />
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://toplist.vn/images/800px/kinh-mat-anna-297538.jpg" class="img-fluid rounded" style="width:400px;height:480px;" />
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://sp.yimg.com/ib/th?id=OIP.cb2AOuX3FDTznjU8EhvtIAHaJR&pid=Api&w=148&h=148&c=7&dpr=2&rs=1" class="img-fluid rounded" style="width:400px;height:480px;" />
+
+                    </div>
+                </div>
+
+                <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<h3 class="title-heading-center" style="text-align: center">Thế Giới Kính Mắt: Không chỉ đẹp, mà còn chất</h3>
+<p>
+    Kính mắt là một vật dụng sức khoẻ, một phụ kiện thời trang không thể thiếu giúp chúng ta bảo vệ đôi mắt khỏi tác động bên ngoài và khẳng định cá tính của bản thân.
+    Tuy nhiên, bạn đã thực sự hiểu rõ về kính mắt? Và bạn đã biết nên mua kính mắt ở đâu đẹp tại Hà Nội và HCM, chất lượng tốt với giá rẻ?
+    Nếu bạn chưa tìm được câu trả lời, hãy cùng Thế Giới Kính Mắt tìm hiểu nhé!
+</p>
+<h4>Phân loại và công dụng của từng loại kính mắt</h4>
+<p>
+    Trên thị trường hiện nay có rất nhiều loại kính mắt khác nhau, mỗi loại cũng sẽ mang đến công dụng tương ứng.
+    Tuy nhiên, loại kính mắt được sử dụng phổ biến nhất là: kính thuốc, kính an toàn, kính râm và kính bảo vệ chống loá.
+</p>
+<h4>Kính thuốc</h4>
+<center>
+    <img src="https://kinhmateyeplus.com/wp-content/uploads/2020/12/kinh-mat-gong-vuong.jpg" width="1100" height="800">
+</center>
+<p style="text-align: center"><b>Kính thuốc tròng trong suốt</b></p>
+<p>
+    Kính thuốc là loại kính được sử dụng để làm giảm bớt ảnh hưởng của các tật khúc xạ như cận thị, viễn thị, loạn thị bằng cách sử dụng các thấu kính hiệu chỉnh có khả năng bẻ cong ánh sáng vào mắt.
+    Kính mắt cận (hay còn được gọi là kính cận) được sử dụng bởi rất nhiều đối tượng, nhưng phổ biến nhất là thanh thiếu niên.
+    Trong khi đó, kính mắt viễn thị phổ biến ở những người cao tuổi.
+</p>
+<h4>Kính mắt an toàn</h4>
+<center>
+    <img src="https://kinhmateyeplus.com/wp-content/uploads/2020/12/kinh-mat-ha-noi.jpg" width="1100" height="800">
+
+</center>
+<p style="text-align: center"><b>Kính mắt an toàn bảo vệ cả trước và hai bên mắt</b></p>
+<p>
+    Kính mắt an toàn được sử dụng cho công nhân xây dựng hoặc kỹ thuật viên phòng thí nghiệm nhằm bảo vệ mắt khỏi các mảnh vụn.
+    Loại kính này có thiết kế ôm sát vào mặt do đó không chỉ giúp bảo vệ phía trước mắt mà còn bảo vệ mắt từ cả hai bên.
+</p>
+<p>
+    Một số loại kính mắt an toàn được sử dụng để chống lại ánh sáng thông thường hoặc phóng xạ.
+    Một số loại khác lại được sử dụng để bảo vệ mắt trong một số môn thể thao như bơi lội. Để tránh làm rơi mất kính, người sử dụng có thể sử dụng dây buộc kính và đeo vào sau cổ.
+</p>
+<h4>Kính râm</h4>
+<center>
+    <img src="https://kinhmateyeplus.com/wp-content/uploads/2020/12/kinh-mat-ram-dep.jpg" width="1100" height="800">
+
+</center>
+<p style="text-align: center"><b>Kính râm tròng màu</b></p>
+<p>
+    Kính râm là một trong những loại kính mắt rất phổ biến, nó cho phép người sử dụng nhìn tốt hơn trong điều kiện ánh sáng chói vào ban ngày.
+    Đồng thời, loại kính này cũng có thể bảo vệ đôi mắt, chống lại các nguy hiểm của tia cực tím. Loại kính râm đặc trưng nhất là loại sử dụng tròng kính tối màu.
+    Một số loại kính chuyên dụng cho phép nhìn rõ trong điều kiện tối hoặc trong nhà, nhưng khi đi ra nắng sẽ chuyển thành kính râm.
+</p>
+<p>
+    Hầu hết kính râm bán sẵn trên thị trường không có công dụng hỗ trợ điều trị các tật về mắt; tuy nhiên, bạn có thể đặt mua kính râm cận/ kính râm viễn theo đơn đặc biệt.
+</p>
+<h4>Kính bảo vệ chống lóa</h4>
+<center>
+    <img src="https://kinhmateyeplus.com/wp-content/uploads/2020/12/kinh-mat-ram.jpg" width="1100" height="800">
+
+</center>
+<p style="text-align: center"><b>Kính chống loá</b></p>
+<p>
+    Kính bảo vệ chống lóa hoặc kính ánh sáng xanh, có thể làm giảm sự phản xạ ánh sáng đi vào mắt.
+    Các ống kính được phủ một lớp chống chói để ngăn phản xạ ánh sáng trong các điều kiện ánh sáng khác nhau.
+    Bằng cách giảm lượng ánh sáng chói trên mắt, thị lực có thể được cải thiện.
+</p>
+<!-- Footer -->
+<footer class="text-center text-lg-start bg- text-muted" style="background-color: #9DB2BF;">
+
+    <section class="d-flex justify-content-center justify-content-lg-between p-3 border-bottom">
+        <div class="container text-center text-md-start mt-5">
+            <!-- Grid row -->
+            <div class="row mt-3">
+                <!-- Grid column -->
+                <div class="col-md-3 col-lg-4 col-xl-5 mx-auto mb-4">
+                    <!-- Content -->
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        <i class="fas fa-gem me-3 text-secondary"></i>Thế Giới Kính Mắt
+                    </h6>
+                    <p>
+                        TÀI SẢN LỚN NHẤT CỦA DOANH NGHIỆP LÀ KHÁCH HÀNG.
+                    </p>
+                    <p>
+                        THẾ GIỚI KÍNH MẮT – Chuỗi cửa hàng uy tín tại HÀ NỘI , HCM.
+                    </p>
+                    <p>
+                        THẾ GIỚI KÍNH MẮT – Trải nghiệm chất lượng kính mắt theo tiêu chuẩn quốc tế.
+                    </p>
+                </div>
+                <!-- Grid column -->
+                <!-- Grid column -->
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mb-4">
+                    <!-- Links -->
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        Hệ Thống Cửa Hàng
+                    </h6>
+                    <p>
+                        <a href="#!" class="text-reset">Hà Nội</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Hải Phòng</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">TP Hồ Chí Minh</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Vĩnh Phúc</a>
+                    </p>
+                </div>
+
+                <!-- Grid column -->
+                <div class="col-md-5 col-lg-5 col-xl-4 mx-auto mb-md-0 mb-4">
+                    <!-- Links -->
+                    <h6 class="text-uppercase fw-bold mb-4">Liên Hệ</h6>
+                    <p><i class="fas fa-home me-3 text-secondary"></i> 177 Phạm Văn Đồng, Mai Dịch, Hà Nội</p>
+                    <p>
+                        <i class="fas fa-envelope me-3 text-secondary"></i>
+                        TheGioiKinhMat@gmail.com.vn
+                    </p>
+                    <p><i class="fas fa-phone me-3 text-secondary"></i> 0865466762</p>
+                    <p><i class="fas fa-print me-3 text-secondary"></i> 0968686868</p>
+                </div>
+                <!-- Grid column -->
+            </div>
+            <!-- Grid row -->
+        </div>
+    </section>
+    <div class="container p-4">
+        <!-- Section: Social media -->
+        <section class="mb-4">
+            <!-- Facebook -->
+            <a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+
+            <!-- Twitter -->
+            <a class="btn btn-outline-dark  btn-floating m-1" href="#!" role="button">
+                <i class="fab fa-twitter"></i>
+            </a>
+
+            <!-- Google -->
+            <a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button">
+                <i class="fab fa-google"></i>
+            </a>
+
+            <!-- Instagram -->
+            <a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button">
+                <i class="fab fa-instagram"></i>
+            </a>
+
+            <!-- Linkedin -->
+            <a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+
+            <!-- Github -->
+            <a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button">
+                <i class="fab fa-github"></i>
+            </a>
+        </section>
+    </div>
+    <!-- Section: Links  -->
+    <!-- Copyright -->
+    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.025);">
+        © 2023 Copyright:
+        <a class="text-reset fw-bold" href="https://mdbootstrap.com/">TheGioiKinhMat.com</a>
+    </div>
+    <!-- Copyright -->
+</footer>
+<!-- Footer -->
+
+@section Scripts {
+    <script>
+        var linkElement = document.createElement("link");
+        linkElement.rel = "stylesheet";
+        linkElement.type = "text/css";
+        linkElement.href = "../Asset/css/NguoiDung/TrangChu.css";
+        document.head.appendChild(linkElement);
+
+        function redirectToBanHang() {
+            window.location.href = '/BanHang/Index';
+        }
+    </script>
+}
