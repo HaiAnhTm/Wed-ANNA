@@ -1,39 +1,63 @@
-﻿@model IEnumerable<DotNet_E_Commerce_Glasses_Web.Models.Account>
-
-@{
-    ViewBag.Title = "Index";
+﻿@{
+    ViewBag.Title = "Đăng nhập";
+    Layout = "~/Views/Shared/_LayoutNoNavigation.cshtml";
 }
 
-<h2>Index</h2>
+<div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col  -md-8 col-lg-6 col-xl-5">
+            <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                <div class="card-body p-5 text-center">
+                    <div class="mb-md-5 mt-md-4 pb-5">
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Username)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Password)
-        </th>
-        <th></th>
-    </tr>
+                        <h2 class="fw-bold mb-2 text-uppercase">Đăng Nhập</h2>
+                        <p class="text-white-50 mb-5">Vui lòng nhập Tài Khoản và Mật Khẩu!</p>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Username)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Password)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IdAccount }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IdAccount }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IdAccount })
-        </td>
-    </tr>
+                        <form>
+
+                            <div class="form-group">
+                                <label class="form-label mt-4">Tài khoản</label>
+                                <input type="text" class="form-control" id="input_username" placeholder="Tài khoản">
+                                <span class="text-warning" id="notify_username"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label mt-4">Mật khẩu</label>
+                                <input type="password" class="form-control" placeholder="Mật khẩu" autocomplete="on" id="input_password">
+                                <span class="text-warning" id="notify_password"></span>
+                            </div>
+
+                            <div class="d-flex justify-content-center text-center mt-4 pt-1">
+                                <a href="#!" class="text-white"><i class="fab fa-facebook-f fa-lg"></i></a>
+                                <a href="#!" class="text-white"><i class="fab fa-twitter fa-lg mx-4 px-2"></i></a>
+                                <a href="#!" class="text-white"><i class="fab fa-google fa-lg"></i></a>
+                            </div>
+
+                            <div class="d-flex justify-content-center text-center mt-4 pt-1">
+                                <div class="row">
+                                    <button class="btn btn-outline-light btn-lg px-5 button-submit" type="button" id="button-login">
+                                        <span class="spinner-grow-sm" role="status" aria-hidden="true" id="spinner_button"></span>
+                                        Đăng nhập
+                                    </button>
+                                    <span class="text-warning" id="notify_status"></span>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                    <div>
+                        <p class="mb-0">
+                            Bạn chưa có tài khoản?
+                            @Html.ActionLink("Đăng ký", "Index", "RegisterAccount", null, new { @class = "text-white-50" })
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts  {
+    <script src="~/Assets/scripts/LogInAccount.js"></script>
 }
-
-</table>

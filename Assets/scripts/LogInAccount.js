@@ -61,7 +61,7 @@ buttonLogin.addEventListener('click', function () {
 
 async function loginAccountSuccess(userName, password, onSuccess, onFailure) {
    $.ajax({
-      url: '/LogIn/Index',
+       url: '/LoginAccount',
       type: 'POST',
       data: {
          Username: userName,

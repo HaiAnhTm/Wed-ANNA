@@ -1,69 +1,155 @@
-﻿@model IEnumerable<DotNet_E_Commerce_Glasses_Web.Models.Bill>
+﻿﻿@model IEnumerable<DotNet_E_Commerce_Glasses_Web.Models.Bill>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Danh sách hóa đơn";
+    Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Danh sách hóa đơn</h2>
+<div class="container-xxl">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfPurchase)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalBill)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Discount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalPay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Consumer.Username)
+            </th>
+            <th></th>
+        </tr>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.DateOfPurchase)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TotalBill)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TotalPay)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DetailBill.ListBill)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Consumer.Username)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Discount.TitleDiscount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StatusDelivery.Status)
-        </th>
-        <th></th>
-    </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <p>@item.DatePurchaseStr()</p>
+                </td>
+                <td>
+                    <p>@item.CurrencyTotalBill()</p>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Discount) %
+                </td>
+                <td>
+                    <p>@item.CurrencyTotalPay()</p>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Consumer.Username)
+                </td>
+                <td>
+                    <button class="btn btn-outline-secondary" onclick="DialogChiTiet(`@item.IdBild`)">Chi tiết</button>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<div class="modal" id="DialogChiTiet">
+</div>
+@section Scripts {
+    <script>
+      function DialogChiTiet(maChiTietHoaDon) {
+         $.ajax({
+            url: '/HoaDon/GetChiTietHoaDon',
+            type: 'POST',
+            data: { MaHoaDon: maChiTietHoaDon },
+            success: function (data) {
+               if (data.ChiTietHoaDon) {
+                  var chiTiet = JSON.parse(data.ChiTietHoaDon);
+                  if (chiTiet) {
+                     var dialogChiTiet = document.getElementById('DialogChiTiet');
+                     dialogChiTiet.innerHTML =
+                     `
+                     <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Thông tin hóa đơn</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true"></span>
+                                </button>
+                            </div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateOfPurchase)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TotalBill)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TotalPay)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DetailBill.ListBill)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Consumer.Username)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Discount.TitleDiscount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StatusDelivery.Status)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IdBild }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IdBild }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IdBild })
-        </td>
-    </tr>
+                            <div class="modal-body">
+
+                            <div class="row">
+                                    <div class="col-sm-4">
+                                    <img src="${chiTiet.HinhAnh}" style="width: 150px;" />
+                                    </div>
+                                    <div class="col-sm-8">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"></th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="table-active">
+                                                <th scope="row">Tên khách hàng: </th>
+                                                <td>${chiTiet.TenKhachHang}</td>
+                                            </tr>
+                                            <tr class="table-active">
+                                                <th scope="row">Tổng hóa đơn: </th>
+                                                <td>${chiTiet.TongHoaDon}</td>
+                                            </tr>
+
+                                            <tr class="table-active">
+                                                <th scope="row">Giảm giá: </th>
+                                                <td>${chiTiet.GiamGia} %</td>
+                                            </tr>
+
+                                            <tr class="table-active">
+                                                <th scope="row">Thanh toán: </th>
+                                                <td>${chiTiet.ThanhToan}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                </div>
+
+
+                                <h3>Danh sách sản phẩm</h3>
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Tên sản phẩm</th>
+                                        <th scope="col">Số lượng</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="DanhSachSanPham">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                     var danhSach = document.getElementById('DanhSachSanPham');
+                     for (var i in chiTiet.DanhSachSanPham) {
+                        var item = chiTiet.DanhSachSanPham[i];
+                        danhSach.innerHTML +=
+                           `
+                           <tr class="table-active">
+                                <th scope="row">${item.TenSanPham}</th>
+                                <td>${item.SoLuong}</td>
+                            </tr>
+                            `;
+                     }
+                     $(dialogChiTiet).modal('show');
+                  }
+               }
+            },
+            error: function () {
+               console.error("AJAX request failed");
+            }
+         });
+      }
+    </script>
 }
-
-</table>

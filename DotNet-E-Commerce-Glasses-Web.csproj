@@ -218,6 +218,7 @@
     <Compile Include="Models\Product.cs">
       <DependentUpon>GlassesEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductSale.cs" />
     <Compile Include="Models\RateProduct.cs">
       <DependentUpon>GlassesEntity.tt</DependentUpon>
     </Compile>
@@ -2332,6 +2333,7 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
+    <Content Include="Database\CreateDatabase.sql" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -2478,15 +2480,7 @@
     <Content Include="Scripts\bootstrap.min.js.map" />
     <Content Include="Scripts\jquery-3.7.1.min.map" />
     <Content Include="Scripts\jquery-3.7.1.slim.min.map" />
-    <Content Include="Views\RegisterAccount\Create.cshtml" />
-    <Content Include="Views\RegisterAccount\Delete.cshtml" />
-    <Content Include="Views\RegisterAccount\Details.cshtml" />
-    <Content Include="Views\RegisterAccount\Edit.cshtml" />
     <Content Include="Views\RegisterAccount\Index.cshtml" />
-    <Content Include="Views\LoginAccount\Create.cshtml" />
-    <Content Include="Views\LoginAccount\Delete.cshtml" />
-    <Content Include="Views\LoginAccount\Details.cshtml" />
-    <Content Include="Views\LoginAccount\Edit.cshtml" />
     <Content Include="Views\LoginAccount\Index.cshtml" />
     <Content Include="Views\ConsumerProduct\Create.cshtml" />
     <Content Include="Views\ConsumerProduct\Delete.cshtml" />
@@ -2523,7 +2517,6 @@
     <Folder Include="Assets\images\images_Discount\" />
     <Folder Include="Assets\images\images_Manager\" />
     <Folder Include="Assets\images\images_Product\" />
-    <Folder Include="Database\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

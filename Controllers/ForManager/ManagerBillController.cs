@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DotNet_E_Commerce_Glasses_Web.Models;
+using DotNet_E_Commerce_Glasses_Web.Utils;
 
 namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
 {
@@ -15,11 +16,56 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
     {
         private GlassesEntities db = new GlassesEntities();
 
-        // GET: ManagerBill
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            var bills = db.Bills.Include(b => b.DetailBill).Include(b => b.Consumer).Include(b => b.Discount).Include(b => b.StatusDelivery);
-            return View(await bills.ToListAsync());
+            var bills = db.Bills.Include(h => h.DetailBill).Include(h => h.Consumer);
+            return View(bills.ToList());
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> GetDetailBill(int idBill)
+        {
+            var searchBill = await db.Bills.FirstOrDefaultAsync(item => item.IdDetailDiscount == idBill) ?? null;
+            if (searchBill != null)
+            {
+                Dictionary<int, ProductSale> listProductBuy = searchBill
+                .DetailBill
+                .ListBills()
+                .ToDictionary(
+                    item => item.Key,
+                    item => new ProductSale(
+                        quanitySale: item.Value,
+                        product: db.Products.FirstOrDefault(product => product.IdProduct == item.Key)));
+                return Json(new
+                {
+                    status = true,
+                    message = string.Format("Giá trị " + CurrencyUtils.CurrencyConvertToString(searchBill.TotalPay)),
+                    data = new
+                    {
+                        Consumer = new
+                        {
+                            Name = searchBill.Consumer.Username,
+                            Image = searchBill.Consumer.Image,
+                        },
+                        Bill = new
+                        {
+                            TotalBill = searchBill.TotalBill,
+                            TotalPay = searchBill.TotalPay,
+                            Discount = searchBill.Discount
+                        },
+                        ListProducts = listProductBuy.Values
+                    }
+                });
+            }
+            return Json(new
+            {
+                status = false,
+                message = "Lỗi tìm kiếm đơn hàng",
+                data = new
+                {
+
+                }
+            });
         }
 
         // GET: ManagerBill/Details/5

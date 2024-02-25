@@ -19,7 +19,19 @@ namespace DotNet_E_Commerce_Glasses_Web.Models
         {
             this.RateProducts = new HashSet<RateProduct>();
         }
-    
+        public Product(Product product)
+        {
+            this.IdProduct = product.IdProduct;
+            this.IdTypeProduct = product.IdTypeProduct;
+            this.NameProduct = product.NameProduct;
+            this.Price = product.Price;
+            this.Image = product.Image;
+            this.Discount = product.Discount;
+            this.Quantity = product.Quantity;
+            this.TypeProduct = product.TypeProduct;
+            this.RateProducts = new HashSet<RateProduct>();
+            this.TypeProductSale = product.TypeProductSale;
+        }
         public int IdProduct { get; set; }
         public Nullable<int> IdTypeProduct { get; set; }
         public string NameProduct { get; set; }
