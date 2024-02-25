@@ -1,0 +1,59 @@
+﻿﻿@model IEnumerable<DotNet_E_Commerce_Glasses_Web.Models.Bill>
+
+@{
+    ViewBag.Title = "Danh sách hóa đơn";
+    Layout = "~/Views/Shared/_LayoutManager.cshtml";
+}
+
+<h2>Danh sách hóa đơn</h2>
+<div class="container-xxl">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfPurchase)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalBill)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Discount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalPay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Consumer.Username)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <p>@item.DatePurchaseStr()</p>
+                </td>
+                <td>
+                    <p>@item.CurrencyTotalBill()</p>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Discount) %
+                </td>
+                <td>
+                    <p>@item.CurrencyTotalPay()</p>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Consumer.Username)
+                </td>
+                <td>
+                    <button class="btn btn-outline-secondary" onclick="DialogChiTiet(`@item.IdBild`)">Chi tiết</button>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<div class="modal" id="modalDialog">
+</div>
+@section Scripts  {
+    <script src="~/Assets/scripts/ManageBill.js"></script>
+}

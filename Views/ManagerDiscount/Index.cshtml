@@ -1,0 +1,69 @@
+﻿@model IEnumerable<DotNet_E_Commerce_Glasses_Web.Models.Discount>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TitleDiscount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfStart)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfEnd)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Percent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Image)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StatusDiscount.Status)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TitleDiscount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateOfStart)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateOfEnd)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Percent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Image)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StatusDiscount.Status)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdDiscount }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdDiscount }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdDiscount })
+        </td>
+    </tr>
+}
+
+</table>

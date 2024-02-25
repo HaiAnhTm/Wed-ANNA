@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="~/Assets/fontawesome-free-6.4.0-web/css/all.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <link rel="stylesheet" href="~/Assets/css/common.css">
+    <link rel="icon" href="~/Assets/images/images_Other/logo.png">
+</head>
+<body>
+    <div class="offcanvas offcanvas-start" style="width: 300px" tabindex="-1" id="offcanvas" data-bs-keyboard="false" data-bs-backdrop="false">
+        <div class="d-grid gap-2">
+            <h2>Menu</h2>
+            <a class="btn btn-outline-dark btn-floating m-1" @Html.ActionLink("Quản lý sản phẩm", "Index", "SanPham")</a>
+
+            <a class="btn btn-outline-dark btn-floating m-1" @Html.ActionLink("Quản lý loại sản phẩm", "Index", "LoaiSanPham")</a>
+
+            <a class="btn btn-outline-dark btn-floating m-1" @Html.ActionLink("Khuyến mãi", "Index", "KhuyenMais")</a>
+
+            <a class="btn btn-outline-dark btn-floating m-1" @Html.ActionLink("Quản lý khách hàng", "Index", "KhachHangs")</a>
+
+            <a class="btn btn-outline-dark btn-floating m-1" @Html.ActionLink("Đơn hàng", "Index", "HoaDon")</a>
+
+            <a class="btn btn-outline-dark btn-floating m-1" @Html.ActionLink("Thống kê", "Index", "ThongKe")</a>
+
+            <a class="btn btn-outline-dark btn-floating m-1" @Html.ActionLink("Đăng xuất", "DangNhap", "DangNhap")</a>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col min-vh-100 py-3">
+                <button class="btn btn-outline-secondary float-end" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">
+                    <i class="fa-solid fa-bars" data-bs-toggle="offcanvas" data-bs-target="#offcanvas"></i>
+                </button>
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+    @Scripts.Render("//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js")
+</body>
+</html>
