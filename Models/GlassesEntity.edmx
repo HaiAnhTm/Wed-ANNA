@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Account">
           <Key>
             <PropertyRef Name="IdAccount" />
@@ -58,6 +58,7 @@
           <Property Name="Quantity" Type="bigint" />
           <Property Name="Percent" Type="float" />
           <Property Name="Image" Type="nvarchar" MaxLength="500" />
+          <Property Name="CodeDiscount" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Manager">
           <Key>
@@ -358,354 +359,11 @@
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Account">
-          <Key>
-            <PropertyRef Name="IdAccount" />
-          </Key>
-          <Property Name="IdAccount" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Consumers" Relationship="Self.FK_KhachHang_DangNhap" FromRole="Account" ToRole="Consumer" />
-          <NavigationProperty Name="Managers" Relationship="Self.FK_QuanLy_DangNhap" FromRole="Account" ToRole="Manager" />
-        </EntityType>
-        <EntityType Name="Bill">
-          <Key>
-            <PropertyRef Name="IdBild" />
-          </Key>
-          <Property Name="IdBild" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdConsumer" Type="Int32" />
-          <Property Name="IdDiscount" Type="Int32" />
-          <Property Name="IdDetailDiscount" Type="Int32" />
-          <Property Name="DateOfPurchase" Type="DateTime" Precision="3" />
-          <Property Name="TotalBill" Type="Int64" />
-          <Property Name="TotalPay" Type="Int64" />
-          <Property Name="IdDetailDelivery" Type="Int32" />
-          <NavigationProperty Name="DetailBill" Relationship="Self.FK_HoaDon_ChiTietHoaDon" FromRole="Bill" ToRole="DetailBill" />
-          <NavigationProperty Name="Consumer" Relationship="Self.FK_HoaDon_KhachHang" FromRole="Bill" ToRole="Consumer" />
-          <NavigationProperty Name="Discount" Relationship="Self.FK_HoaDon_KhuyenMai" FromRole="Bill" ToRole="Discount" />
-          <NavigationProperty Name="StatusDelivery" Relationship="Self.FK_HoaDon_TrangThaiGiaoHang" FromRole="Bill" ToRole="StatusDelivery" />
-        </EntityType>
-        <EntityType Name="Consumer">
-          <Key>
-            <PropertyRef Name="IdConsumer" />
-          </Key>
-          <Property Name="IdConsumer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdAccount" Type="Int32" />
-          <Property Name="Username" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
-          <Property Name="NumberPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Image" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ListCart" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Account" Relationship="Self.FK_KhachHang_DangNhap" FromRole="Consumer" ToRole="Account" />
-          <NavigationProperty Name="Bills" Relationship="Self.FK_HoaDon_KhachHang" FromRole="Consumer" ToRole="Bill" />
-          <NavigationProperty Name="RateProducts" Relationship="Self.FK_DanhGiaSanPham_KhachHang" FromRole="Consumer" ToRole="RateProduct" />
-        </EntityType>
-        <EntityType Name="DetailBill">
-          <Key>
-            <PropertyRef Name="IdDetailBill" />
-          </Key>
-          <Property Name="IdDetailBill" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ListBill" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Bills" Relationship="Self.FK_HoaDon_ChiTietHoaDon" FromRole="DetailBill" ToRole="Bill" />
-        </EntityType>
-        <EntityType Name="Discount">
-          <Key>
-            <PropertyRef Name="IdDiscount" />
-          </Key>
-          <Property Name="IdDiscount" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdStatus" Type="Int32" />
-          <Property Name="TitleDiscount" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="DateOfStart" Type="DateTime" Precision="3" />
-          <Property Name="DateOfEnd" Type="DateTime" Precision="3" />
-          <Property Name="Quantity" Type="Int64" />
-          <Property Name="Percent" Type="Double" />
-          <Property Name="Image" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Bills" Relationship="Self.FK_HoaDon_KhuyenMai" FromRole="Discount" ToRole="Bill" />
-          <NavigationProperty Name="StatusDiscount" Relationship="Self.FK_KhuyenMai_TrangThaiKhuyenMai" FromRole="Discount" ToRole="StatusDiscount" />
-        </EntityType>
-        <EntityType Name="Manager">
-          <Key>
-            <PropertyRef Name="IdManager" />
-          </Key>
-          <Property Name="IdManager" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdAccount" Type="Int32" />
-          <Property Name="Username" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Image" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Account" Relationship="Self.FK_QuanLy_DangNhap" FromRole="Manager" ToRole="Account" />
-        </EntityType>
-        <EntityType Name="Product">
-          <Key>
-            <PropertyRef Name="IdProduct" />
-          </Key>
-          <Property Name="IdProduct" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdTypeProduct" Type="Int32" />
-          <Property Name="NameProduct" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Price" Type="Int64" />
-          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Image" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Discount" Type="Double" />
-          <Property Name="Quantity" Type="Int64" />
-          <Property Name="IdTypeSale" Type="Int32" />
-          <NavigationProperty Name="RateProducts" Relationship="Self.FK_DanhGiaSanPham_SanPham" FromRole="Product" ToRole="RateProduct" />
-          <NavigationProperty Name="TypeProductSale" Relationship="Self.FK_Product_TypeProductSale" FromRole="Product" ToRole="TypeProductSale" />
-          <NavigationProperty Name="TypeProduct" Relationship="Self.FK_SanPham_LoaiSanPham" FromRole="Product" ToRole="TypeProduct" />
-        </EntityType>
-        <EntityType Name="RateProduct">
-          <Key>
-            <PropertyRef Name="IdRate" />
-          </Key>
-          <Property Name="IdRate" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdConsumer" Type="Int32" />
-          <Property Name="IdProduct" Type="Int32" />
-          <Property Name="TitleRate" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ContentRate" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="DateOfRate" Type="DateTime" Precision="3" />
-          <Property Name="RateStar" Type="Int32" />
-          <NavigationProperty Name="Consumer" Relationship="Self.FK_DanhGiaSanPham_KhachHang" FromRole="RateProduct" ToRole="Consumer" />
-          <NavigationProperty Name="Product" Relationship="Self.FK_DanhGiaSanPham_SanPham" FromRole="RateProduct" ToRole="Product" />
-        </EntityType>
-        <EntityType Name="StatusDelivery">
-          <Key>
-            <PropertyRef Name="IdStatus" />
-          </Key>
-          <Property Name="IdStatus" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Status" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Bills" Relationship="Self.FK_HoaDon_TrangThaiGiaoHang" FromRole="StatusDelivery" ToRole="Bill" />
-        </EntityType>
-        <EntityType Name="StatusDiscount">
-          <Key>
-            <PropertyRef Name="IdStatus" />
-          </Key>
-          <Property Name="IdStatus" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Status" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Discounts" Relationship="Self.FK_KhuyenMai_TrangThaiKhuyenMai" FromRole="StatusDiscount" ToRole="Discount" />
-        </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="TypeProduct">
-          <Key>
-            <PropertyRef Name="IdTypeProduct" />
-          </Key>
-          <Property Name="IdTypeProduct" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TypeProductName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Products" Relationship="Self.FK_SanPham_LoaiSanPham" FromRole="TypeProduct" ToRole="Product" />
-        </EntityType>
-        <EntityType Name="TypeProductSale">
-          <Key>
-            <PropertyRef Name="IdTypeSale" />
-          </Key>
-          <Property Name="IdTypeSale" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StatusProduct" Type="Boolean" />
-          <NavigationProperty Name="Products" Relationship="Self.FK_Product_TypeProductSale" FromRole="TypeProductSale" ToRole="Product" />
-        </EntityType>
-        <Association Name="FK_KhachHang_DangNhap">
-          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
-          <End Role="Consumer" Type="Self.Consumer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Account">
-              <PropertyRef Name="IdAccount" />
-            </Principal>
-            <Dependent Role="Consumer">
-              <PropertyRef Name="IdAccount" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_QuanLy_DangNhap">
-          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
-          <End Role="Manager" Type="Self.Manager" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Account">
-              <PropertyRef Name="IdAccount" />
-            </Principal>
-            <Dependent Role="Manager">
-              <PropertyRef Name="IdAccount" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_HoaDon_ChiTietHoaDon">
-          <End Role="DetailBill" Type="Self.DetailBill" Multiplicity="0..1" />
-          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DetailBill">
-              <PropertyRef Name="IdDetailBill" />
-            </Principal>
-            <Dependent Role="Bill">
-              <PropertyRef Name="IdDetailDiscount" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_HoaDon_KhachHang">
-          <End Role="Consumer" Type="Self.Consumer" Multiplicity="0..1" />
-          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Consumer">
-              <PropertyRef Name="IdConsumer" />
-            </Principal>
-            <Dependent Role="Bill">
-              <PropertyRef Name="IdConsumer" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_HoaDon_KhuyenMai">
-          <End Role="Discount" Type="Self.Discount" Multiplicity="0..1" />
-          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Discount">
-              <PropertyRef Name="IdDiscount" />
-            </Principal>
-            <Dependent Role="Bill">
-              <PropertyRef Name="IdDiscount" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_HoaDon_TrangThaiGiaoHang">
-          <End Role="StatusDelivery" Type="Self.StatusDelivery" Multiplicity="0..1" />
-          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StatusDelivery">
-              <PropertyRef Name="IdStatus" />
-            </Principal>
-            <Dependent Role="Bill">
-              <PropertyRef Name="IdDetailDelivery" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DanhGiaSanPham_KhachHang">
-          <End Role="Consumer" Type="Self.Consumer" Multiplicity="0..1" />
-          <End Role="RateProduct" Type="Self.RateProduct" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Consumer">
-              <PropertyRef Name="IdConsumer" />
-            </Principal>
-            <Dependent Role="RateProduct">
-              <PropertyRef Name="IdConsumer" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_KhuyenMai_TrangThaiKhuyenMai">
-          <End Role="StatusDiscount" Type="Self.StatusDiscount" Multiplicity="0..1" />
-          <End Role="Discount" Type="Self.Discount" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StatusDiscount">
-              <PropertyRef Name="IdStatus" />
-            </Principal>
-            <Dependent Role="Discount">
-              <PropertyRef Name="IdStatus" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DanhGiaSanPham_SanPham">
-          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
-          <End Role="RateProduct" Type="Self.RateProduct" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="IdProduct" />
-            </Principal>
-            <Dependent Role="RateProduct">
-              <PropertyRef Name="IdProduct" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Product_TypeProductSale">
-          <End Role="TypeProductSale" Type="Self.TypeProductSale" Multiplicity="0..1" />
-          <End Role="Product" Type="Self.Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TypeProductSale">
-              <PropertyRef Name="IdTypeSale" />
-            </Principal>
-            <Dependent Role="Product">
-              <PropertyRef Name="IdTypeSale" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SanPham_LoaiSanPham">
-          <End Role="TypeProduct" Type="Self.TypeProduct" Multiplicity="0..1" />
-          <End Role="Product" Type="Self.Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TypeProduct">
-              <PropertyRef Name="IdTypeProduct" />
-            </Principal>
-            <Dependent Role="Product">
-              <PropertyRef Name="IdTypeProduct" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="GlassesEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Accounts" EntityType="Self.Account" />
-          <EntitySet Name="Bills" EntityType="Self.Bill" />
-          <EntitySet Name="Consumers" EntityType="Self.Consumer" />
-          <EntitySet Name="DetailBills" EntityType="Self.DetailBill" />
-          <EntitySet Name="Discounts" EntityType="Self.Discount" />
-          <EntitySet Name="Managers" EntityType="Self.Manager" />
-          <EntitySet Name="Products" EntityType="Self.Product" />
-          <EntitySet Name="RateProducts" EntityType="Self.RateProduct" />
-          <EntitySet Name="StatusDeliveries" EntityType="Self.StatusDelivery" />
-          <EntitySet Name="StatusDiscounts" EntityType="Self.StatusDiscount" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-          <EntitySet Name="TypeProducts" EntityType="Self.TypeProduct" />
-          <EntitySet Name="TypeProductSales" EntityType="Self.TypeProductSale" />
-          <AssociationSet Name="FK_KhachHang_DangNhap" Association="Self.FK_KhachHang_DangNhap">
-            <End Role="Account" EntitySet="Accounts" />
-            <End Role="Consumer" EntitySet="Consumers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_QuanLy_DangNhap" Association="Self.FK_QuanLy_DangNhap">
-            <End Role="Account" EntitySet="Accounts" />
-            <End Role="Manager" EntitySet="Managers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_HoaDon_ChiTietHoaDon" Association="Self.FK_HoaDon_ChiTietHoaDon">
-            <End Role="DetailBill" EntitySet="DetailBills" />
-            <End Role="Bill" EntitySet="Bills" />
-          </AssociationSet>
-          <AssociationSet Name="FK_HoaDon_KhachHang" Association="Self.FK_HoaDon_KhachHang">
-            <End Role="Consumer" EntitySet="Consumers" />
-            <End Role="Bill" EntitySet="Bills" />
-          </AssociationSet>
-          <AssociationSet Name="FK_HoaDon_KhuyenMai" Association="Self.FK_HoaDon_KhuyenMai">
-            <End Role="Discount" EntitySet="Discounts" />
-            <End Role="Bill" EntitySet="Bills" />
-          </AssociationSet>
-          <AssociationSet Name="FK_HoaDon_TrangThaiGiaoHang" Association="Self.FK_HoaDon_TrangThaiGiaoHang">
-            <End Role="StatusDelivery" EntitySet="StatusDeliveries" />
-            <End Role="Bill" EntitySet="Bills" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DanhGiaSanPham_KhachHang" Association="Self.FK_DanhGiaSanPham_KhachHang">
-            <End Role="Consumer" EntitySet="Consumers" />
-            <End Role="RateProduct" EntitySet="RateProducts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_KhuyenMai_TrangThaiKhuyenMai" Association="Self.FK_KhuyenMai_TrangThaiKhuyenMai">
-            <End Role="StatusDiscount" EntitySet="StatusDiscounts" />
-            <End Role="Discount" EntitySet="Discounts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DanhGiaSanPham_SanPham" Association="Self.FK_DanhGiaSanPham_SanPham">
-            <End Role="Product" EntitySet="Products" />
-            <End Role="RateProduct" EntitySet="RateProducts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Product_TypeProductSale" Association="Self.FK_Product_TypeProductSale">
-            <End Role="TypeProductSale" EntitySet="TypeProductSales" />
-            <End Role="Product" EntitySet="Products" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SanPham_LoaiSanPham" Association="Self.FK_SanPham_LoaiSanPham">
-            <End Role="TypeProduct" EntitySet="TypeProducts" />
-            <End Role="Product" EntitySet="Products" />
-          </AssociationSet>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
@@ -736,6 +394,63 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="Accounts" EntityType="Model.Account" />
+          <EntitySet Name="Bills" EntityType="Model.Bill" />
+          <EntitySet Name="Consumers" EntityType="Model.Consumer" />
+          <EntitySet Name="DetailBills" EntityType="Model.DetailBill" />
+          <EntitySet Name="Discounts" EntityType="Model.Discount" />
+          <EntitySet Name="Managers" EntityType="Model.Manager" />
+          <EntitySet Name="Products" EntityType="Model.Product" />
+          <EntitySet Name="RateProducts" EntityType="Model.RateProduct" />
+          <EntitySet Name="StatusDeliveries" EntityType="Model.StatusDelivery" />
+          <EntitySet Name="StatusDiscounts" EntityType="Model.StatusDiscount" />
+          <EntitySet Name="sysdiagrams" EntityType="Model.sysdiagram" />
+          <EntitySet Name="TypeProducts" EntityType="Model.TypeProduct" />
+          <EntitySet Name="TypeProductSales" EntityType="Model.TypeProductSale" />
+          <AssociationSet Name="FK_KhachHang_DangNhap" Association="Model.FK_KhachHang_DangNhap">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Consumer" EntitySet="Consumers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuanLy_DangNhap" Association="Model.FK_QuanLy_DangNhap">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Manager" EntitySet="Managers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HoaDon_ChiTietHoaDon" Association="Model.FK_HoaDon_ChiTietHoaDon">
+            <End Role="DetailBill" EntitySet="DetailBills" />
+            <End Role="Bill" EntitySet="Bills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HoaDon_KhachHang" Association="Model.FK_HoaDon_KhachHang">
+            <End Role="Consumer" EntitySet="Consumers" />
+            <End Role="Bill" EntitySet="Bills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HoaDon_KhuyenMai" Association="Model.FK_HoaDon_KhuyenMai">
+            <End Role="Discount" EntitySet="Discounts" />
+            <End Role="Bill" EntitySet="Bills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HoaDon_TrangThaiGiaoHang" Association="Model.FK_HoaDon_TrangThaiGiaoHang">
+            <End Role="StatusDelivery" EntitySet="StatusDeliveries" />
+            <End Role="Bill" EntitySet="Bills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DanhGiaSanPham_KhachHang" Association="Model.FK_DanhGiaSanPham_KhachHang">
+            <End Role="Consumer" EntitySet="Consumers" />
+            <End Role="RateProduct" EntitySet="RateProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KhuyenMai_TrangThaiKhuyenMai" Association="Model.FK_KhuyenMai_TrangThaiKhuyenMai">
+            <End Role="StatusDiscount" EntitySet="StatusDiscounts" />
+            <End Role="Discount" EntitySet="Discounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DanhGiaSanPham_SanPham" Association="Model.FK_DanhGiaSanPham_SanPham">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="RateProduct" EntitySet="RateProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_TypeProductSale" Association="Model.FK_Product_TypeProductSale">
+            <End Role="TypeProductSale" EntitySet="TypeProductSales" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SanPham_LoaiSanPham" Association="Model.FK_SanPham_LoaiSanPham">
+            <End Role="TypeProduct" EntitySet="TypeProducts" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -748,156 +463,298 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="IdAccount" />
+          </Key>
+          <Property Name="IdAccount" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Consumers" Relationship="Model.FK_KhachHang_DangNhap" FromRole="Account" ToRole="Consumer" />
+          <NavigationProperty Name="Managers" Relationship="Model.FK_QuanLy_DangNhap" FromRole="Account" ToRole="Manager" />
+        </EntityType>
+        <EntityType Name="Bill">
+          <Key>
+            <PropertyRef Name="IdBild" />
+          </Key>
+          <Property Name="IdBild" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdConsumer" Type="Int32" />
+          <Property Name="IdDiscount" Type="Int32" />
+          <Property Name="IdDetailDiscount" Type="Int32" />
+          <Property Name="DateOfPurchase" Type="DateTime" Precision="3" />
+          <Property Name="TotalBill" Type="Int64" />
+          <Property Name="TotalPay" Type="Int64" />
+          <Property Name="IdDetailDelivery" Type="Int32" />
+          <NavigationProperty Name="DetailBill" Relationship="Model.FK_HoaDon_ChiTietHoaDon" FromRole="Bill" ToRole="DetailBill" />
+          <NavigationProperty Name="Consumer" Relationship="Model.FK_HoaDon_KhachHang" FromRole="Bill" ToRole="Consumer" />
+          <NavigationProperty Name="Discount" Relationship="Model.FK_HoaDon_KhuyenMai" FromRole="Bill" ToRole="Discount" />
+          <NavigationProperty Name="StatusDelivery" Relationship="Model.FK_HoaDon_TrangThaiGiaoHang" FromRole="Bill" ToRole="StatusDelivery" />
+        </EntityType>
+        <EntityType Name="Consumer">
+          <Key>
+            <PropertyRef Name="IdConsumer" />
+          </Key>
+          <Property Name="IdConsumer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdAccount" Type="Int32" />
+          <Property Name="Username" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+          <Property Name="NumberPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ListCart" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Account" Relationship="Model.FK_KhachHang_DangNhap" FromRole="Consumer" ToRole="Account" />
+          <NavigationProperty Name="Bills" Relationship="Model.FK_HoaDon_KhachHang" FromRole="Consumer" ToRole="Bill" />
+          <NavigationProperty Name="RateProducts" Relationship="Model.FK_DanhGiaSanPham_KhachHang" FromRole="Consumer" ToRole="RateProduct" />
+        </EntityType>
+        <EntityType Name="DetailBill">
+          <Key>
+            <PropertyRef Name="IdDetailBill" />
+          </Key>
+          <Property Name="IdDetailBill" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ListBill" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Bills" Relationship="Model.FK_HoaDon_ChiTietHoaDon" FromRole="DetailBill" ToRole="Bill" />
+        </EntityType>
+        <EntityType Name="Discount">
+          <Key>
+            <PropertyRef Name="IdDiscount" />
+          </Key>
+          <Property Name="IdDiscount" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdStatus" Type="Int32" />
+          <Property Name="TitleDiscount" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfStart" Type="DateTime" Precision="3" />
+          <Property Name="DateOfEnd" Type="DateTime" Precision="3" />
+          <Property Name="Quantity" Type="Int64" />
+          <Property Name="Percent" Type="Double" />
+          <Property Name="Image" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CodeDiscount" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Bills" Relationship="Model.FK_HoaDon_KhuyenMai" FromRole="Discount" ToRole="Bill" />
+          <NavigationProperty Name="StatusDiscount" Relationship="Model.FK_KhuyenMai_TrangThaiKhuyenMai" FromRole="Discount" ToRole="StatusDiscount" />
+        </EntityType>
+        <EntityType Name="Manager">
+          <Key>
+            <PropertyRef Name="IdManager" />
+          </Key>
+          <Property Name="IdManager" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdAccount" Type="Int32" />
+          <Property Name="Username" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Account" Relationship="Model.FK_QuanLy_DangNhap" FromRole="Manager" ToRole="Account" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="IdProduct" />
+          </Key>
+          <Property Name="IdProduct" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdTypeProduct" Type="Int32" />
+          <Property Name="NameProduct" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Int64" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Image" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Discount" Type="Double" />
+          <Property Name="Quantity" Type="Int64" />
+          <Property Name="IdTypeSale" Type="Int32" />
+          <NavigationProperty Name="RateProducts" Relationship="Model.FK_DanhGiaSanPham_SanPham" FromRole="Product" ToRole="RateProduct" />
+          <NavigationProperty Name="TypeProductSale" Relationship="Model.FK_Product_TypeProductSale" FromRole="Product" ToRole="TypeProductSale" />
+          <NavigationProperty Name="TypeProduct" Relationship="Model.FK_SanPham_LoaiSanPham" FromRole="Product" ToRole="TypeProduct" />
+        </EntityType>
+        <EntityType Name="RateProduct">
+          <Key>
+            <PropertyRef Name="IdRate" />
+          </Key>
+          <Property Name="IdRate" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdConsumer" Type="Int32" />
+          <Property Name="IdProduct" Type="Int32" />
+          <Property Name="TitleRate" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ContentRate" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfRate" Type="DateTime" Precision="3" />
+          <Property Name="RateStar" Type="Int32" />
+          <NavigationProperty Name="Consumer" Relationship="Model.FK_DanhGiaSanPham_KhachHang" FromRole="RateProduct" ToRole="Consumer" />
+          <NavigationProperty Name="Product" Relationship="Model.FK_DanhGiaSanPham_SanPham" FromRole="RateProduct" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="StatusDelivery">
+          <Key>
+            <PropertyRef Name="IdStatus" />
+          </Key>
+          <Property Name="IdStatus" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Status" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Bills" Relationship="Model.FK_HoaDon_TrangThaiGiaoHang" FromRole="StatusDelivery" ToRole="Bill" />
+        </EntityType>
+        <EntityType Name="StatusDiscount">
+          <Key>
+            <PropertyRef Name="IdStatus" />
+          </Key>
+          <Property Name="IdStatus" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Status" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Discounts" Relationship="Model.FK_KhuyenMai_TrangThaiKhuyenMai" FromRole="StatusDiscount" ToRole="Discount" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TypeProduct">
+          <Key>
+            <PropertyRef Name="IdTypeProduct" />
+          </Key>
+          <Property Name="IdTypeProduct" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeProductName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="Model.FK_SanPham_LoaiSanPham" FromRole="TypeProduct" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="TypeProductSale">
+          <Key>
+            <PropertyRef Name="IdTypeSale" />
+          </Key>
+          <Property Name="IdTypeSale" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusProduct" Type="Boolean" />
+          <NavigationProperty Name="Products" Relationship="Model.FK_Product_TypeProductSale" FromRole="TypeProductSale" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_KhachHang_DangNhap">
+          <End Type="Model.Account" Role="Account" Multiplicity="0..1" />
+          <End Type="Model.Consumer" Role="Consumer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="IdAccount" />
+            </Principal>
+            <Dependent Role="Consumer">
+              <PropertyRef Name="IdAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuanLy_DangNhap">
+          <End Type="Model.Account" Role="Account" Multiplicity="0..1" />
+          <End Type="Model.Manager" Role="Manager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="IdAccount" />
+            </Principal>
+            <Dependent Role="Manager">
+              <PropertyRef Name="IdAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HoaDon_ChiTietHoaDon">
+          <End Type="Model.DetailBill" Role="DetailBill" Multiplicity="0..1" />
+          <End Type="Model.Bill" Role="Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DetailBill">
+              <PropertyRef Name="IdDetailBill" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="IdDetailDiscount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HoaDon_KhachHang">
+          <End Type="Model.Consumer" Role="Consumer" Multiplicity="0..1" />
+          <End Type="Model.Bill" Role="Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consumer">
+              <PropertyRef Name="IdConsumer" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="IdConsumer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HoaDon_KhuyenMai">
+          <End Type="Model.Discount" Role="Discount" Multiplicity="0..1" />
+          <End Type="Model.Bill" Role="Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Discount">
+              <PropertyRef Name="IdDiscount" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="IdDiscount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HoaDon_TrangThaiGiaoHang">
+          <End Type="Model.StatusDelivery" Role="StatusDelivery" Multiplicity="0..1" />
+          <End Type="Model.Bill" Role="Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusDelivery">
+              <PropertyRef Name="IdStatus" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="IdDetailDelivery" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DanhGiaSanPham_KhachHang">
+          <End Type="Model.Consumer" Role="Consumer" Multiplicity="0..1" />
+          <End Type="Model.RateProduct" Role="RateProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Consumer">
+              <PropertyRef Name="IdConsumer" />
+            </Principal>
+            <Dependent Role="RateProduct">
+              <PropertyRef Name="IdConsumer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KhuyenMai_TrangThaiKhuyenMai">
+          <End Type="Model.StatusDiscount" Role="StatusDiscount" Multiplicity="0..1" />
+          <End Type="Model.Discount" Role="Discount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusDiscount">
+              <PropertyRef Name="IdStatus" />
+            </Principal>
+            <Dependent Role="Discount">
+              <PropertyRef Name="IdStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DanhGiaSanPham_SanPham">
+          <End Type="Model.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="Model.RateProduct" Role="RateProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="IdProduct" />
+            </Principal>
+            <Dependent Role="RateProduct">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_TypeProductSale">
+          <End Type="Model.TypeProductSale" Role="TypeProductSale" Multiplicity="0..1" />
+          <End Type="Model.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeProductSale">
+              <PropertyRef Name="IdTypeSale" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="IdTypeSale" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SanPham_LoaiSanPham">
+          <End Type="Model.TypeProduct" Role="TypeProduct" Multiplicity="0..1" />
+          <End Type="Model.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeProduct">
+              <PropertyRef Name="IdTypeProduct" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="IdTypeProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="GlassesEntities">
-          <EntitySetMapping Name="Accounts">
-            <EntityTypeMapping TypeName="Model.Account">
-              <MappingFragment StoreEntitySet="Account">
-                <ScalarProperty Name="IdAccount" ColumnName="IdAccount" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Bills">
-            <EntityTypeMapping TypeName="Model.Bill">
-              <MappingFragment StoreEntitySet="Bill">
-                <ScalarProperty Name="IdBild" ColumnName="IdBild" />
-                <ScalarProperty Name="IdConsumer" ColumnName="IdConsumer" />
-                <ScalarProperty Name="IdDiscount" ColumnName="IdDiscount" />
-                <ScalarProperty Name="IdDetailDiscount" ColumnName="IdDetailDiscount" />
-                <ScalarProperty Name="DateOfPurchase" ColumnName="DateOfPurchase" />
-                <ScalarProperty Name="TotalBill" ColumnName="TotalBill" />
-                <ScalarProperty Name="TotalPay" ColumnName="TotalPay" />
-                <ScalarProperty Name="IdDetailDelivery" ColumnName="IdDetailDelivery" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Consumers">
-            <EntityTypeMapping TypeName="Model.Consumer">
-              <MappingFragment StoreEntitySet="Consumer">
-                <ScalarProperty Name="IdConsumer" ColumnName="IdConsumer" />
-                <ScalarProperty Name="IdAccount" ColumnName="IdAccount" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
-                <ScalarProperty Name="NumberPhone" ColumnName="NumberPhone" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
-                <ScalarProperty Name="ListCart" ColumnName="ListCart" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DetailBills">
-            <EntityTypeMapping TypeName="Model.DetailBill">
-              <MappingFragment StoreEntitySet="DetailBill">
-                <ScalarProperty Name="IdDetailBill" ColumnName="IdDetailBill" />
-                <ScalarProperty Name="ListBill" ColumnName="ListBill" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Discounts">
-            <EntityTypeMapping TypeName="Model.Discount">
-              <MappingFragment StoreEntitySet="Discount">
-                <ScalarProperty Name="IdDiscount" ColumnName="IdDiscount" />
-                <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
-                <ScalarProperty Name="TitleDiscount" ColumnName="TitleDiscount" />
-                <ScalarProperty Name="DateOfStart" ColumnName="DateOfStart" />
-                <ScalarProperty Name="DateOfEnd" ColumnName="DateOfEnd" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="Percent" ColumnName="Percent" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Managers">
-            <EntityTypeMapping TypeName="Model.Manager">
-              <MappingFragment StoreEntitySet="Manager">
-                <ScalarProperty Name="IdManager" ColumnName="IdManager" />
-                <ScalarProperty Name="IdAccount" ColumnName="IdAccount" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="Position" ColumnName="Position" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
-                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="Model.Product">
-              <MappingFragment StoreEntitySet="Product">
-                <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
-                <ScalarProperty Name="IdTypeProduct" ColumnName="IdTypeProduct" />
-                <ScalarProperty Name="NameProduct" ColumnName="NameProduct" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
-                <ScalarProperty Name="Discount" ColumnName="Discount" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="IdTypeSale" ColumnName="IdTypeSale" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="RateProducts">
-            <EntityTypeMapping TypeName="Model.RateProduct">
-              <MappingFragment StoreEntitySet="RateProduct">
-                <ScalarProperty Name="IdRate" ColumnName="IdRate" />
-                <ScalarProperty Name="IdConsumer" ColumnName="IdConsumer" />
-                <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
-                <ScalarProperty Name="TitleRate" ColumnName="TitleRate" />
-                <ScalarProperty Name="ContentRate" ColumnName="ContentRate" />
-                <ScalarProperty Name="DateOfRate" ColumnName="DateOfRate" />
-                <ScalarProperty Name="RateStar" ColumnName="RateStar" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="StatusDeliveries">
-            <EntityTypeMapping TypeName="Model.StatusDelivery">
-              <MappingFragment StoreEntitySet="StatusDelivery">
-                <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="StatusDiscounts">
-            <EntityTypeMapping TypeName="Model.StatusDiscount">
-              <MappingFragment StoreEntitySet="StatusDiscount">
-                <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="Model.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TypeProducts">
-            <EntityTypeMapping TypeName="Model.TypeProduct">
-              <MappingFragment StoreEntitySet="TypeProduct">
-                <ScalarProperty Name="IdTypeProduct" ColumnName="IdTypeProduct" />
-                <ScalarProperty Name="TypeProductName" ColumnName="TypeProductName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TypeProductSales">
-            <EntityTypeMapping TypeName="Model.TypeProductSale">
-              <MappingFragment StoreEntitySet="TypeProductSale">
-                <ScalarProperty Name="IdTypeSale" ColumnName="IdTypeSale" />
-                <ScalarProperty Name="StatusProduct" ColumnName="StatusProduct" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Model.Store.sp_alterdiagram" />
           <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Model.Store.sp_creatediagram" />
           <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Model.Store.sp_dropdiagram" />
@@ -922,6 +779,151 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Model.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Model.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="Model.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="IdAccount" ColumnName="IdAccount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bills">
+            <EntityTypeMapping TypeName="Model.Bill">
+              <MappingFragment StoreEntitySet="Bill">
+                <ScalarProperty Name="IdDetailDelivery" ColumnName="IdDetailDelivery" />
+                <ScalarProperty Name="TotalPay" ColumnName="TotalPay" />
+                <ScalarProperty Name="TotalBill" ColumnName="TotalBill" />
+                <ScalarProperty Name="DateOfPurchase" ColumnName="DateOfPurchase" />
+                <ScalarProperty Name="IdDetailDiscount" ColumnName="IdDetailDiscount" />
+                <ScalarProperty Name="IdDiscount" ColumnName="IdDiscount" />
+                <ScalarProperty Name="IdConsumer" ColumnName="IdConsumer" />
+                <ScalarProperty Name="IdBild" ColumnName="IdBild" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Consumers">
+            <EntityTypeMapping TypeName="Model.Consumer">
+              <MappingFragment StoreEntitySet="Consumer">
+                <ScalarProperty Name="ListCart" ColumnName="ListCart" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="NumberPhone" ColumnName="NumberPhone" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="IdAccount" ColumnName="IdAccount" />
+                <ScalarProperty Name="IdConsumer" ColumnName="IdConsumer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetailBills">
+            <EntityTypeMapping TypeName="Model.DetailBill">
+              <MappingFragment StoreEntitySet="DetailBill">
+                <ScalarProperty Name="ListBill" ColumnName="ListBill" />
+                <ScalarProperty Name="IdDetailBill" ColumnName="IdDetailBill" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Discounts">
+            <EntityTypeMapping TypeName="Model.Discount">
+              <MappingFragment StoreEntitySet="Discount">
+                <ScalarProperty Name="CodeDiscount" ColumnName="CodeDiscount" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Percent" ColumnName="Percent" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="DateOfEnd" ColumnName="DateOfEnd" />
+                <ScalarProperty Name="DateOfStart" ColumnName="DateOfStart" />
+                <ScalarProperty Name="TitleDiscount" ColumnName="TitleDiscount" />
+                <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
+                <ScalarProperty Name="IdDiscount" ColumnName="IdDiscount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Managers">
+            <EntityTypeMapping TypeName="Model.Manager">
+              <MappingFragment StoreEntitySet="Manager">
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="IdAccount" ColumnName="IdAccount" />
+                <ScalarProperty Name="IdManager" ColumnName="IdManager" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="Model.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="IdTypeSale" ColumnName="IdTypeSale" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="NameProduct" ColumnName="NameProduct" />
+                <ScalarProperty Name="IdTypeProduct" ColumnName="IdTypeProduct" />
+                <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RateProducts">
+            <EntityTypeMapping TypeName="Model.RateProduct">
+              <MappingFragment StoreEntitySet="RateProduct">
+                <ScalarProperty Name="RateStar" ColumnName="RateStar" />
+                <ScalarProperty Name="DateOfRate" ColumnName="DateOfRate" />
+                <ScalarProperty Name="ContentRate" ColumnName="ContentRate" />
+                <ScalarProperty Name="TitleRate" ColumnName="TitleRate" />
+                <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
+                <ScalarProperty Name="IdConsumer" ColumnName="IdConsumer" />
+                <ScalarProperty Name="IdRate" ColumnName="IdRate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatusDeliveries">
+            <EntityTypeMapping TypeName="Model.StatusDelivery">
+              <MappingFragment StoreEntitySet="StatusDelivery">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatusDiscounts">
+            <EntityTypeMapping TypeName="Model.StatusDiscount">
+              <MappingFragment StoreEntitySet="StatusDiscount">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeProducts">
+            <EntityTypeMapping TypeName="Model.TypeProduct">
+              <MappingFragment StoreEntitySet="TypeProduct">
+                <ScalarProperty Name="TypeProductName" ColumnName="TypeProductName" />
+                <ScalarProperty Name="IdTypeProduct" ColumnName="IdTypeProduct" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeProductSales">
+            <EntityTypeMapping TypeName="Model.TypeProductSale">
+              <MappingFragment StoreEntitySet="TypeProductSale">
+                <ScalarProperty Name="StatusProduct" ColumnName="StatusProduct" />
+                <ScalarProperty Name="IdTypeSale" ColumnName="IdTypeSale" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

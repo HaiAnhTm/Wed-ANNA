@@ -22,52 +22,52 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
             return View(bills.ToList());
         }
 
-        [HttpGet]
-        public async Task<JsonResult> GetDetailBill(string idBillStr)
-        {
-            int idBill = int.Parse(idBillStr);
-            var searchBill = db.Bills.FirstOrDefault(item => item.IdBild == idBill) ?? null;
-            if (searchBill != null)
-            {
-                Dictionary<int, ProductSale> listProductBuy = searchBill
-                .DetailBill
-                .ListBills()
-                .ToDictionary(
-                    item => item.Key,
-                    item => new ProductSale(
-                        quanitySale: item.Value,
-                        product: db.Products.FirstOrDefault(product => product.IdProduct == item.Key)));
-                return Json(new
-                {
-                    status = true,
-                    message = string.Format("Giá trị " + CurrencyUtils.CurrencyConvertToString(searchBill.TotalPay)),
-                    data = new
-                    {
-                        Consumer = new
-                        {
-                            Name = searchBill.Consumer.Username,
-                            Image = searchBill.Consumer.Image,
-                        },
-                        Bill = new
-                        {
-                            TotalBill = searchBill.TotalBill,
-                            TotalPay = searchBill.TotalPay,
-                            Discount = searchBill.Discount
-                        },
-                        ListProducts = listProductBuy.Values
-                    }
-                });
-            }
-            return Json(new
-            {
-                status = false,
-                message = "Lỗi tìm kiếm đơn hàng",
-                data = new
-                {
+        //[HttpGet]
+        //public async Task<JsonResult> GetDetailBill(string idBillStr)
+        //{
+        //    int idBill = int.Parse(idBillStr);
+        //    var searchBill = db.Bills.FirstOrDefault(item => item.IdBild == idBill) ?? null;
+        //    if (searchBill != null)
+        //    {
+        //        Dictionary<int, ProductSale> listProductBuy = searchBill
+        //        .DetailBill
+        //        .ListBills()
+        //        .ToDictionary(
+        //            item => item.Key,
+        //            item => new ProductSale(
+        //                quanitySale: item.Value,
+        //                product: db.Products.FirstOrDefault(product => product.IdProduct == item.Key)));
+        //        return Json(new
+        //        {
+        //            status = true,
+        //            message = string.Format("Giá trị " + CurrencyUtils.CurrencyConvertToString(searchBill.TotalPay)),
+        //            data = new
+        //            {
+        //                Consumer = new
+        //                {
+        //                    Name = searchBill.Consumer.Username,
+        //                    Image = searchBill.Consumer.Image,
+        //                },
+        //                Bill = new
+        //                {
+        //                    TotalBill = searchBill.TotalBill,
+        //                    TotalPay = searchBill.TotalPay,
+        //                    Discount = searchBill.Discount
+        //                },
+        //                ListProducts = listProductBuy.Values
+        //            }
+        //        });
+        //    }
+        //    return Json(new
+        //    {
+        //        status = false,
+        //        message = "Lỗi tìm kiếm đơn hàng",
+        //        data = new
+        //        {
 
-                }
-            });
-        }
+        //        }
+        //    });
+        //}
 
         // GET: ManagerBill/Details/5
         public async Task<ActionResult> Details(int? id)

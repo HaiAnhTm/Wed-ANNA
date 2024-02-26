@@ -1,6 +1,6 @@
 ﻿USE [master]
 GO
-/****** Object:  Database [E-Commerce-Glasses]    Script Date: 2/26/2024 12:23:56 AM ******/
+/****** Object:  Database [E-Commerce-Glasses]    Script Date: 2/27/2024 12:34:27 AM ******/
 CREATE DATABASE [E-Commerce-Glasses]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -84,10 +84,10 @@ ALTER DATABASE [E-Commerce-Glasses] SET QUERY_STORE (OPERATION_MODE = READ_WRITE
 GO
 USE [E-Commerce-Glasses]
 GO
-/****** Object:  User [cigrcham]    Script Date: 2/26/2024 12:23:56 AM ******/
+/****** Object:  User [cigrcham]    Script Date: 2/27/2024 12:34:28 AM ******/
 CREATE USER [cigrcham] WITHOUT LOGIN WITH DEFAULT_SCHEMA=[dbo]
 GO
-/****** Object:  Table [dbo].[Account]    Script Date: 2/26/2024 12:23:56 AM ******/
+/****** Object:  Table [dbo].[Account]    Script Date: 2/27/2024 12:34:28 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -102,7 +102,7 @@ CREATE TABLE [dbo].[Account](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Bill]    Script Date: 2/26/2024 12:23:56 AM ******/
+/****** Object:  Table [dbo].[Bill]    Script Date: 2/27/2024 12:34:28 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -122,7 +122,7 @@ CREATE TABLE [dbo].[Bill](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Consumer]    Script Date: 2/26/2024 12:23:56 AM ******/
+/****** Object:  Table [dbo].[Consumer]    Script Date: 2/27/2024 12:34:28 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -142,7 +142,7 @@ CREATE TABLE [dbo].[Consumer](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[DetailBill]    Script Date: 2/26/2024 12:23:56 AM ******/
+/****** Object:  Table [dbo].[DetailBill]    Script Date: 2/27/2024 12:34:28 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -156,7 +156,7 @@ CREATE TABLE [dbo].[DetailBill](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Discount]    Script Date: 2/26/2024 12:23:56 AM ******/
+/****** Object:  Table [dbo].[Discount]    Script Date: 2/27/2024 12:34:28 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -170,13 +170,14 @@ CREATE TABLE [dbo].[Discount](
 	[Quantity] [bigint] NULL,
 	[Percent] [float] NULL,
 	[Image] [nvarchar](500) NULL,
+	[CodeDiscount] [nvarchar](50) NULL,
  CONSTRAINT [PK_KhachHang] PRIMARY KEY CLUSTERED 
 (
 	[IdDiscount] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Manager]    Script Date: 2/26/2024 12:23:56 AM ******/
+/****** Object:  Table [dbo].[Manager]    Script Date: 2/27/2024 12:34:28 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -196,7 +197,7 @@ CREATE TABLE [dbo].[Manager](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Product]    Script Date: 2/26/2024 12:23:56 AM ******/
+/****** Object:  Table [dbo].[Product]    Script Date: 2/27/2024 12:34:28 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -217,7 +218,7 @@ CREATE TABLE [dbo].[Product](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[RateProduct]    Script Date: 2/26/2024 12:23:56 AM ******/
+/****** Object:  Table [dbo].[RateProduct]    Script Date: 2/27/2024 12:34:28 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -236,7 +237,7 @@ CREATE TABLE [dbo].[RateProduct](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[StatusDelivery]    Script Date: 2/26/2024 12:23:56 AM ******/
+/****** Object:  Table [dbo].[StatusDelivery]    Script Date: 2/27/2024 12:34:28 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -250,7 +251,7 @@ CREATE TABLE [dbo].[StatusDelivery](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[StatusDiscount]    Script Date: 2/26/2024 12:23:56 AM ******/
+/****** Object:  Table [dbo].[StatusDiscount]    Script Date: 2/27/2024 12:34:28 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -264,7 +265,7 @@ CREATE TABLE [dbo].[StatusDiscount](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TypeProduct]    Script Date: 2/26/2024 12:23:56 AM ******/
+/****** Object:  Table [dbo].[TypeProduct]    Script Date: 2/27/2024 12:34:28 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -278,7 +279,7 @@ CREATE TABLE [dbo].[TypeProduct](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TypeProductSale]    Script Date: 2/26/2024 12:23:56 AM ******/
+/****** Object:  Table [dbo].[TypeProductSale]    Script Date: 2/27/2024 12:34:28 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -291,6 +292,31 @@ CREATE TABLE [dbo].[TypeProductSale](
 	[IdTypeSale] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[Account] ON 
+
+INSERT [dbo].[Account] ([IdAccount], [Username], [Password]) VALUES (1, N'Cigrcham', N'daac438f8adf0b9ffdd1b621452cf738')
+SET IDENTITY_INSERT [dbo].[Account] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Consumer] ON 
+
+INSERT [dbo].[Consumer] ([IdConsumer], [IdAccount], [Username], [Address], [DateOfBirth], [NumberPhone], [Image], [ListCart]) VALUES (1, 1, N'Cigrcham', NULL, NULL, NULL, NULL, NULL)
+SET IDENTITY_INSERT [dbo].[Consumer] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Discount] ON 
+
+INSERT [dbo].[Discount] ([IdDiscount], [IdStatus], [TitleDiscount], [DateOfStart], [DateOfEnd], [Quantity], [Percent], [Image], [CodeDiscount]) VALUES (1, 1, N'12312', CAST(N'2000-01-02T00:00:00.000' AS DateTime), CAST(N'2000-01-03T00:00:00.000' AS DateTime), 123, 20, NULL, NULL)
+INSERT [dbo].[Discount] ([IdDiscount], [IdStatus], [TitleDiscount], [DateOfStart], [DateOfEnd], [Quantity], [Percent], [Image], [CodeDiscount]) VALUES (2, 1, N'123123123', CAST(N'2000-01-01T00:00:00.000' AS DateTime), CAST(N'2000-01-01T00:00:00.000' AS DateTime), 12313, 12, NULL, NULL)
+INSERT [dbo].[Discount] ([IdDiscount], [IdStatus], [TitleDiscount], [DateOfStart], [DateOfEnd], [Quantity], [Percent], [Image], [CodeDiscount]) VALUES (3, 1, N'234234', CAST(N'2000-01-01T00:00:00.000' AS DateTime), CAST(N'2000-01-01T00:00:00.000' AS DateTime), 123, 20, NULL, NULL)
+INSERT [dbo].[Discount] ([IdDiscount], [IdStatus], [TitleDiscount], [DateOfStart], [DateOfEnd], [Quantity], [Percent], [Image], [CodeDiscount]) VALUES (4, 1, N'asdf', CAST(N'2000-01-01T00:00:00.000' AS DateTime), CAST(N'2000-01-01T00:00:00.000' AS DateTime), 123123, 123, NULL, N'asdfasdf')
+SET IDENTITY_INSERT [dbo].[Discount] OFF
+GO
+SET IDENTITY_INSERT [dbo].[StatusDiscount] ON 
+
+INSERT [dbo].[StatusDiscount] ([IdStatus], [Status]) VALUES (1, N'Hết hạn')
+INSERT [dbo].[StatusDiscount] ([IdStatus], [Status]) VALUES (2, N'Hoạt động')
+INSERT [dbo].[StatusDiscount] ([IdStatus], [Status]) VALUES (3, N'Không hoạt động')
+SET IDENTITY_INSERT [dbo].[StatusDiscount] OFF
 GO
 ALTER TABLE [dbo].[Bill]  WITH CHECK ADD  CONSTRAINT [FK_HoaDon_ChiTietHoaDon] FOREIGN KEY([IdDetailDiscount])
 REFERENCES [dbo].[DetailBill] ([IdDetailBill])
@@ -351,6 +377,3 @@ USE [master]
 GO
 ALTER DATABASE [E-Commerce-Glasses] SET  READ_WRITE 
 GO
-
---Query
-Select * From Account

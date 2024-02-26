@@ -9,7 +9,6 @@
 
 namespace DotNet_E_Commerce_Glasses_Web.Models
 {
-    using DotNet_E_Commerce_Glasses_Web.Utils;
     using System;
     using System.Collections.Generic;
     
@@ -26,11 +25,5 @@ namespace DotNet_E_Commerce_Glasses_Web.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bill> Bills { get; set; }
-
-        public Dictionary<int, int> ListBills() => JsonUtils.ConvertStrToDic(this.ListBill);
-        public void SetListBill(Dictionary<int, int> dicListProducts)
-        {
-            this.ListBill = JsonUtils.ConvertDicToJson(dicListProducts);
-        }
     }
 }
