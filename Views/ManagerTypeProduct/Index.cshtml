@@ -1,0 +1,107 @@
+﻿﻿@model IEnumerable<DotNet_E_Commerce_Glasses_Web.Models.TypeProduct>
+
+@{
+    ViewBag.Title = "Loại mã khuyến mãi";
+    Layout = "~/Views/Shared/_LayoutManager.cshtml";
+}
+
+<div class="d-flex justify-content-between mb-3 mt-5">
+    <h3>Danh sách loại sản phẩm</h3>
+    <button type="button" class="btn btn-outline-secondary rounded-pill" onclick="showDialogAdd()">Thêm loại sản phẩm</button>
+</div>
+
+<table class="table table-hover w-75 ms-5">
+    <thead>
+        <tr class="table-primary">
+            <th scope="col">STT</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.TypeProductName)</th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (var index = 0; index < Model.Count(); index++)
+        {
+            var item = Model.ElementAt(index);
+            <tr class="table-secondary rounded">
+                <td>
+                    @(index + 1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TypeProductName)
+                </td>
+                <td>
+                    @*<button type="button" class="btn btn-outline-secondary rounded-pill" onclick="DialogThayDoi('@item.MaLoaiSanPham', '@item.TenLoaiSanPham')">Thay đổi</button>*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@*Dialog thay doi*@
+<div class="modal" id="dialogThayDoi">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thông tin loại sản phẩm</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form>
+                    <div class="form-group" hidden>
+                        <input type="text" class="form-control" id="MaLoaiSanPham">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label mt-4">Tên loại sản phẩm: </label>
+                        <input type="text" class="form-control rounded-pill" id="TenLoaiSanPham" placeholder="Nhập tên loại sản phẩm">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary rounded-pill" onclick="ActionCapNhat()">Cập nhật</button>
+                <button type="button" class="btn btn-dark rounded-pill" onclick="ActionXoa()">Xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Dialog them loai san pham*@
+<div class="modal fade" id="modal_dialog_add" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Tạo loại sản phẩm</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group" hidden>
+                        <input type="text" class="form-control" id="MaLoaiSanPham">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label mt-4">Tên loại sản phẩm: </label>
+                        <input type="text" class="form-control" id="add_input_type_product_name" placeholder="Nhập tên loại sản phẩm">                                <span class="text-warning" id="notify_password"></span>
+                        <span class="text-warning" id="notify_input"></span>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="actionAddTypeProduct()">Ok</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts  {
+        <script src="~/Assets/scripts/ManagerTypeProduct.js"></script>
+}
