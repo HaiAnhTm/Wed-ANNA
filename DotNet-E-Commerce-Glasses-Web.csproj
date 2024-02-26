@@ -2313,6 +2313,7 @@
     <Content Include="Assets\fontawesome-free-6.4.0-web\svgs\solid\z.svg" />
     <Content Include="Assets\fonts\LICENSE.txt" />
     <Content Include="Assets\scripts\LogInAccount.js" />
+    <Content Include="Assets\scripts\ManageBill.js" />
     <Content Include="Assets\scripts\RegisterAccount.js" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />

@@ -22,10 +22,11 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
             return View(bills.ToList());
         }
 
-        [HttpPost]
-        public async Task<JsonResult> GetDetailBill(int idBill)
+        [HttpGet]
+        public async Task<JsonResult> GetDetailBill(string idBillStr)
         {
-            var searchBill = await db.Bills.FirstOrDefaultAsync(item => item.IdDetailDiscount == idBill) ?? null;
+            int idBill = int.Parse(idBillStr);
+            var searchBill = db.Bills.FirstOrDefault(item => item.IdBild == idBill) ?? null;
             if (searchBill != null)
             {
                 Dictionary<int, ProductSale> listProductBuy = searchBill
