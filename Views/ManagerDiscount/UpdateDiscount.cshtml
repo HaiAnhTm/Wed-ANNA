@@ -11,19 +11,24 @@
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
+<div class="form-horizontal">
     <h4>Cập nhật mã giảm giá</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.IdDiscount)
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.IdDiscount)
 
-        <div class="form-group">
+<div class="col">
+    <div class="form-group">
         @Html.LabelFor(model => model.CodeDiscount, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-            @Html.EditorFor(model => model.CodeDiscount, new { htmlAttributes = new { @class = "form-control" } })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.CodeDiscount, new { htmlAttributes = new { @class = "form-control", id = "code_discount", disabled = "disabled" } })
             @Html.ValidationMessageFor(model => model.CodeDiscount, "", new { @class = "text-danger" })
-            </div>
         </div>
+    </div>
+
+    <button id="button_create_code" type="button">Tạo mã</button>
+
+</div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.TitleDiscount, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -52,7 +57,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-            @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control", type = "number" } })
+                @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control", type = "number" } })
                 @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -60,18 +65,18 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Percent, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-            @Html.EditorFor(model => model.Percent, new { htmlAttributes = new { @class = "form-control", type = "number" } })
+                @Html.EditorFor(model => model.Percent, new { htmlAttributes = new { @class = "form-control", type = "number" } })
                 @Html.ValidationMessageFor(model => model.Percent, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-        @Html.LabelFor(model => model.IdStatus, "IdStatus", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.IdStatus, "IdStatus", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-            @Html.DropDownList("IdStatus", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.IdStatus, "", new { @class = "text-danger" })
-        </div>
+                @Html.DropDownList("IdStatus", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IdStatus, "", new { @class = "text-danger" })
             </div>
+        </div>
 
         <div class="form-group">
             <label for="HinhAnh">Hình Ảnh</label>
@@ -86,12 +91,12 @@
             </div>
         </div>
     </div>
-}
+    }
 
-<div class="form-group" style="margin-top:20px;">
-    <a class="btn btn-outline-secondary rounded-pill" @Html.ActionLink("Quay trở lại", "Index" )</a>
-</div>
+    <div class="form-group" style="margin-top:20px;">
+        <a class="btn btn-outline-secondary rounded-pill" @Html.ActionLink("Quay trở lại", "Index")</a>
+    </div>
 
-@section Scripts {
-<script src="~/Assets/scripts/ManagaerUpdateDiscount.js"></script>
-}
+    @section Scripts {
+        <script src="~/Assets/scripts/ManagerUpdateDiscount.js"></script>
+    }

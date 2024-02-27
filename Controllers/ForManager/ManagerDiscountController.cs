@@ -1,4 +1,5 @@
 ﻿using DotNet_E_Commerce_Glasses_Web.Models;
+using DotNet_E_Commerce_Glasses_Web.Utils;
 using System;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
@@ -128,6 +129,22 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
                 // Example: Log.Error("Error saving file", ex);
                 return null;
             }
+        }
+
+        [HttpPost]
+        public JsonResult GetCodeDiscount()
+        {
+            do
+            {
+                string code = RenderCode.Code();
+                if (!db.Discounts.ToList().Exists(item => item.CodeDiscount.Equals(code)))
+                    return Json(new
+                    {
+                        status = true,
+                        message = "",
+                        code = code
+                    });
+            } while (true);
         }
 
         protected override void Dispose(bool disposing)
