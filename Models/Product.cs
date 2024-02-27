@@ -11,7 +11,8 @@ namespace DotNet_E_Commerce_Glasses_Web.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Web;
+
     public partial class Product
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -34,5 +35,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Models
         public virtual ICollection<RateProduct> RateProducts { get; set; }
         public virtual TypeProductSale TypeProductSale { get; set; }
         public virtual TypeProduct TypeProduct { get; set; }
+        public HttpPostedFileBase ImageFile { get; set; }
+
     }
 }

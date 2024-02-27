@@ -11,7 +11,8 @@ namespace DotNet_E_Commerce_Glasses_Web.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Web;
+
     public partial class Discount
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -33,6 +34,8 @@ namespace DotNet_E_Commerce_Glasses_Web.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bill> Bills { get; set; }
         public virtual StatusDiscount StatusDiscount { get; set; }
+
+        public HttpPostedFileBase ImageFile { get; set; }
         public string DateOfStartStr() => this.DateOfStart.ToString("dd/MM/yyyy");
         public string DateOfEndStr() => this.DateOfEnd.ToString("dd/MM/yyyy");
     }

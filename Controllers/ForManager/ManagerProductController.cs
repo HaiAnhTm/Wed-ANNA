@@ -38,7 +38,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
         }
 
         // GET: ManagerProduct/Create
-        public ActionResult Create()
+        public ActionResult CreateProduct()
         {
             ViewBag.IdTypeSale = new SelectList(db.TypeProductSales, "IdTypeSale", "IdTypeSale");
             ViewBag.IdTypeProduct = new SelectList(db.TypeProducts, "IdTypeProduct", "TypeProductName");
@@ -50,7 +50,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "IdProduct,IdTypeProduct,NameProduct,Price,Description,Image,Discount,Quantity,IdTypeSale")] Product product)
+        public async Task<ActionResult> CreateProduct([Bind(Include = "IdProduct,IdTypeProduct,NameProduct,Price,Description,Image,Discount,Quantity,IdTypeSale,FileImage")] Product product)
         {
             if (ModelState.IsValid)
             {
