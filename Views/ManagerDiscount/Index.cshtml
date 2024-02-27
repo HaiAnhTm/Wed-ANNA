@@ -7,7 +7,7 @@
 
 <div class="d-flex justify-content-between mb-3 mt-5">
     <h3>Danh sách mã khuyến mãi</h3>
-    <a class="btn btn-outline-secondary rounded-pill" href="@Url.Action("AddDiscount", "ManagerDiscount")">Thêm mới mã khuyến mãi</a>
+    <a class="btn btn-outline-secondary rounded-pill" href="@Url.Action("CreateDiscount", "ManagerDiscount")">Thêm mới mã khuyến mãi</a>
 </div>
 
 <table class="table">
@@ -29,6 +29,10 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Percent)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Image)
         </th>
 
         <th>
@@ -60,18 +64,21 @@
             </td>
 
             <td>
+                <img src="@item.Image" style="width: 200px;" />
+            </td>
+
+            <td>
                 @Html.DisplayFor(modelItem => item.StatusDiscount.Status)
             </td>
             <td>
                 @Html.ActionLink("Cập nhật", "UpdateDiscount", new { id = item.IdDiscount }, new { @class = "btn btn-outline-secondary rounded-pill" })
                 @*<button type="button" class="btn btn-outline-danger rounded-pill" onclick="ShowDialog(`@item.MaKhuyenMai`)">
-                    Xóa
-                </button>*@
+                Xóa
+            </button>*@
             </td>
         </tr>
     }
 </table>
-
 
 @*<div class="modal fade" id="DialogConfirm" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -97,81 +104,3 @@
 @section Scripts  {
         <script src="~/Assets/scripts/ManagerDiscount.js"></script>
 }
-
-
-
-
-
-
-
-
-
-
-@*@{
-    ViewBag.Title = "Index";
-}
-
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.TitleDiscount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateOfStart)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateOfEnd)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Quantity)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Percent)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Image)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StatusDiscount.Status)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TitleDiscount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateOfStart)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateOfEnd)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Percent)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Image)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StatusDiscount.Status)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.IdDiscount }) |
-                @Html.ActionLink("Details", "Details", new { id = item.IdDiscount }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.IdDiscount })
-            </td>
-        </tr>
-    }
-
-</table>*@

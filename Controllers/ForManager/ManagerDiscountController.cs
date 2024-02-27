@@ -36,7 +36,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
         }
 
         [HttpGet]
-        public ActionResult AddDiscount()
+        public ActionResult CreateDiscount()
         {
             ViewBag.IdStatus = new SelectList(db.StatusDiscounts, "IdStatus", "Status");
             return View();
@@ -44,10 +44,16 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AddDiscount([Bind(Include = "IdDiscount,IdStatus,TitleDiscount,DateOfStart,DateOfEnd,Quantity,Percent,CodeDiscount")] Discount discount)
+        public async Task<ActionResult> CreateDiscount([Bind(Include = "IdDiscount,IdStatus,TitleDiscount,DateOfStart,DateOfEnd,Quantity,Percent,CodeDiscount,ImageFile,Image")] Discount discount)
         {
             if (ModelState.IsValid)
             {
+                if (discount.ImageFile != null)
+                    discount.Image = MoveImageToProject(discount.ImageFile);
+                if (discount.DateOfStart > discount.DateOfEnd)
+                    discount.DateOfEnd = discount.DateOfStart;
+                if (discount.DateOfEnd < DateTime.Now)
+                    discount.StatusDiscount = db.StatusDiscounts.FirstOrDefault(item => item.Status.Equals("Hết hạn"));
                 db.Discounts.Add(discount);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -56,6 +62,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
             ViewBag.IdStatus = new SelectList(db.StatusDiscounts, "IdStatus", "Status", discount.IdStatus);
             return View(discount);
         }
+
         [HttpGet]
         public async Task<ActionResult> UpdateDiscount(int? id)
         {

@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DotNet_E_Commerce_Glasses_Web.Models;
+using System.IO;
 
 namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
 {
@@ -50,10 +51,14 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateProduct([Bind(Include = "IdProduct,IdTypeProduct,NameProduct,Price,Description,Image,Discount,Quantity,IdTypeSale,FileImage")] Product product)
+        public async Task<ActionResult> CreateProduct([Bind(Include = "IdProduct,IdTypeProduct,NameProduct,Price,Description,Image,ImageFile,Discount,Quantity,IdTypeSale")] Product product)
         {
             if (ModelState.IsValid)
             {
+                if (product.ImageFile != null)
+                {
+                    product.Image = MoveImageToProject(product.ImageFile);
+                }
                 db.Products.Add(product);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -64,8 +69,40 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
             return View(product);
         }
 
+        public string MoveImageToProject(HttpPostedFileBase file)
+        {
+            try
+            {
+                if (file != null && file.ContentLength > 0)
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(file.FileName);
+                    string extension = Path.GetExtension(file.FileName);
+                    fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+
+                    string folderPath = @"~\Assets\images\images_Product\";
+
+                    string fullPath = Path.Combine(Server.MapPath(folderPath), fileName);
+
+                    file.SaveAs(fullPath);
+
+                    return Path.Combine(folderPath, fileName).Replace("~", "");
+                }
+                else
+                {
+                    return null; // Handle the case where no file is provided
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions, log or rethrow as needed
+                // Example: Log.Error("Error saving file", ex);
+                return null;
+            }   
+        }
+
+
         // GET: ManagerProduct/Edit/5
-        public async Task<ActionResult> Edit(int? id)
+        public async Task<ActionResult> UpdateProduct(int? id)
         {
             if (id == null)
             {
@@ -86,10 +123,14 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "IdProduct,IdTypeProduct,NameProduct,Price,Description,Image,Discount,Quantity,IdTypeSale")] Product product)
+        public async Task<ActionResult> UpdateProduct([Bind(Include = "IdProduct,IdTypeProduct,NameProduct,Price,Description,Image,ImageFile,Discount,Quantity,IdTypeSale")] Product product)
         {
             if (ModelState.IsValid)
             {
+                if (product.ImageFile != null)
+                {
+                    product.Image = MoveImageToProject(product.ImageFile);
+                }
                 db.Entry(product).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
