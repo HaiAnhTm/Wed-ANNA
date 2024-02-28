@@ -1,9 +1,68 @@
 ﻿@{
     ViewBag.Title = "Đăng nhập";
-    Layout = "~/Views/Shared/_LayoutNoNavigation.cshtml";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
-
-<div class="container py-5 h-100">
+<div class="main">
+    <div class="grid wide_secondary">
+        <div class="auth-form">
+            <div class="col l-6 auth-form-left">
+                <img src="~/Assets/images/images_login/img_login.jpg" alt="" class="auth-form-img">
+            </div>
+            <div class="col l-6 auth-form-container">
+                <div class="auth-form-header">
+                    <div class="auth-form-heading">Đăng Nhập</div>
+                    <p class="auth-form-heading_p">Hãy đăng nhập để được hưởng đặc quyền riêng dành cho bạn</p>
+                </div>
+                <form class="auth-form_form">
+                    <div class="auth-form_gr">
+                        <label class="form_gr_account">Tài khoản<p style="color: brown;">*</p></label>
+                        <input type="text" class="form-control" id="input_username" placeholder="Tài khoản">
+                        <span class="text-warning" id="notify_username"></span>
+                    </div>
+                    <div class="auth-form_gr">
+                        <label class="form_gr_account">Mật khẩu<p style="color: brown;">*</p></label>
+                        <input type="password" class="form-control" placeholder="Mật khẩu" autocomplete="on" id="input_password">
+                        <span class="text-warning" id="notify_password"></span>
+                    </div>
+                </form>
+                <div class="checkbox_save_account">
+                    <input type="checkbox" class="checkbox">
+                    <div class="checkbox_text">Lưu tài khoản</div>
+                </div>
+                <div class="auth-form-aside">
+                    <div class="auth-form-help">
+                        <a href="" class="auth-form-pass">Quên mật khẩu</a>
+                        <span class="separate"></span>
+                        <a href="" class="auth-form-help-link">Cần trợ giúp?</a>
+                    </div>
+                </div>
+                <div class="auth-form-controls">
+                    <button class="btn_login button-submit" type="button" id="button-login">
+                        <span class="spinner-grow-sm" role="status" aria-hidden="true" id="spinner_button"></span>
+                        Đăng Nhập
+                    </button>
+                    <span class="text-warning" id="notify_status"></span>
+                </div>
+                <div class="login_or">Hoặc</div>
+                <div class="auth-form-socials">
+                    <a href="" class="btn auth-form-face">
+                        <i class="fa-brands fa-square-facebook"></i>
+                        &emsp;Đăng nhập với Facebook
+                    </a>
+                    <a href="" class="btn auth-form-gg">
+                        <i class="fa-brands fa-google"></i>
+                        &emsp;Đăng nhập với Google  
+                    </a>
+                </div>
+                <div class="auth-form-footer">
+                    <div class="auth-form-footer_answer">Bạn chưa có tài khoản?</div>
+                    @Html.ActionLink("Đăng ký Ngay", "Index", "RegisterAccount", null, new { @class = "auth-form-footer-link" })
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*<div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-12 col  -md-8 col-lg-6 col-xl-5">
             <div class="card bg-dark text-white" style="border-radius: 1rem;">
@@ -56,7 +115,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 
 @section Scripts  {
     <script src="~/Assets/scripts/LogInAccount.js"></script>

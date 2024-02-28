@@ -1,0 +1,179 @@
+.main{
+    background-color: #f8f8f8;
+    height: 100vh;
+}
+.auth-form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-top: 40px;
+}
+
+.auth-form-left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-form-img {
+    height: 500px;
+    max-width: 100%;
+    object-fit: contain;
+    border-radius: 20px;
+}
+
+.auth-form-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.auth-form-heading {
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.auth-form-heading_p {
+    font-size: 16px;
+    font-weight: 100;
+    padding: 20px 0;
+}
+
+.auth-form_gr {
+    margin: 10px 0;
+}
+
+.form_gr_account {
+    display: flex;
+    flex-direction: row;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 14px 0px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.checkbox_save_account {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.checkbox {
+    appearance: none;
+    /* Ẩn kiểu mặc định của checkbox */
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    cursor: pointer;
+    outline: none;
+    margin-right: 8px;
+}
+
+.checkbox:checked {
+    background-color: var(--primary-color);
+    /* Màu nền khi checkbox được chọn */
+}
+
+.checkbox_save_account:hover .checkbox {
+    border-color: #2980b9;
+    /* Đổi màu đường viền khi di chuột qua label */
+}
+.checkbox_text{
+    font-size: 16px;
+    font-weight: 100;
+}
+
+.btn_login{
+    width: 100%;
+    height: 45px;
+    padding: 10px 15px;
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+.auth-form-help{
+    top: 0;
+    right: 0;
+}
+.auth-form-aside{
+    text-align: right;
+    margin-top: 10px;
+}
+.auth-form-pass{
+    font-size: 16px;
+    text-decoration: none;
+    color: var(--text-color);
+}
+.auth-form-help-link{
+    font-size: 16px;
+    color: #117b54;
+}
+.login_or{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+.auth-form-socials{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.btn{
+    width: 100%;
+    height: 45px;
+    padding: 10px 15px;
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    margin: 5px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Thêm bóng đổ */
+}
+.auth-form-face{
+    background-color: #007bff;
+}
+.auth-form-gg{
+    background-color: #fff;
+    color: #555;
+}
+.auth-form-footer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.auth-form-footer_answer{
+    font-size: 16px;
+    font-weight: 100;
+    padding: 20px 0;
+}
+.auth-form-footer-link{
+    font-size: 18px;
+    font-weight: 100;
+    color: #81c8c2;
+}
+.auth-form-privacy{
+    font-size: 15px;
+    font-weight: 100;
+    color: #666;
+}
+.privacy-span{
+    color: #ff0000;
+}
