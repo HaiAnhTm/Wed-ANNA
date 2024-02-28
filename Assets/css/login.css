@@ -14,10 +14,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 500px;
 }
 
 .auth-form-img {
-    height: 500px;
+    height: auto;
     max-width: 100%;
     object-fit: contain;
     border-radius: 20px;
@@ -177,3 +178,15 @@
 .privacy-span{
     color: #ff0000;
 }
+
+.btn_login:hover {
+    background-color: #FF594F;
+    cursor: pointer;
+}
+
+.text-warning {
+    font-size: 14px;
+    color: #ff0000;
+    font-weight: 600;
+}
+
