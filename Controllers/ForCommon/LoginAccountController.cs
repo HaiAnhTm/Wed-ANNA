@@ -46,7 +46,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForCommon
                     {
                         status = true,
                         message = "Đăng nhập thành công.",
-                        url = "/Home",
+                        url = "/Home/",
                     });
                 }
             }

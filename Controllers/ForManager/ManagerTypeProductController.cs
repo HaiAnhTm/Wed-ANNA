@@ -1,4 +1,4 @@
-﻿using DotNet_E_Commerce_Glasses_Web.Models;
+using DotNet_E_Commerce_Glasses_Web.Models;
 using System;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;

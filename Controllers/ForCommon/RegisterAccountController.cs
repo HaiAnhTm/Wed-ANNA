@@ -32,7 +32,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForCommon
                 };
                 db.Consumers.Add(registerConsumer);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index", "LogIn");
+                return RedirectToAction("Index", "LoginAccount");
             }
 
             return View();
