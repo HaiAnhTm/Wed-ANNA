@@ -1,7 +1,23 @@
-﻿
+﻿const filterSelectedId = document.getElementById('fillter_selected');
 
+document.addEventListener('DOMContentLoaded', function () {
+    loadSortIndex();
+});
 
+filterSelectedId.addEventListener('change', function (event) {
+    var selectedValue = this.value; 
+    console.log(selectedValue);
+    location.href = `/ManagerDiscount/Index?sort=${selectedValue}`;
+});
 
+function loadSortIndex() {
+    var urlParams = new URLSearchParams(window.location.search);
+    var sortParam = urlParams.get('sort');
+
+    if (!isNaN(sortParam) && sortParam !== -1) {
+        filterSelectedId.value = sortParam; 
+    }
+}
 
 //function ShoDialogDelete(maKhuyenMai) {
 //    var dialog = document.getElementById('DialogConfirm');

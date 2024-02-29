@@ -13,8 +13,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CodeDiscount, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.CodeDiscount, new { htmlAttributes = new { @class = "form-control", id = "code_discount" , disabled = "disabled" } })
-
+                @Html.EditorFor(model => model.CodeDiscount, new { htmlAttributes = new { @class = "form-control", id = "code_discount", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.CodeDiscount, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -22,8 +21,6 @@
         <button id="button_create_code" type="button">Tạo mã</button>
 
     </div>
-
-       
 
         <div class="form-group">
             @Html.LabelFor(model => model.TitleDiscount, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -77,8 +74,6 @@
             <label for="HinhAnh">Hình Ảnh</label>
             <input type="file" class="form-control" accept="image/*" name="ImageFile" />
         </div>
-
-
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

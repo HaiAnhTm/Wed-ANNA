@@ -10,6 +10,22 @@
     <a class="btn btn-outline-secondary rounded-pill" href="@Url.Action("CreateDiscount", "ManagerDiscount")">Thêm mới mã khuyến mãi</a>
 </div>
 
+<div class="row">
+    <div class="col">
+        <h4>Sắp xếp</h4>
+    </div>
+
+    <div class="col">
+        <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="fillter_selected">
+            <option selected>Open this select menu</option>
+            <option value="1">Theo tên chương trình</option>
+            <option value="2">Theo số lượng</option>
+            <option value="3">Theo tỉ lệ</option>
+        </select>
+    </div>
+
+</div>
+
 <table class="table">
     <tr>
         <th>
@@ -72,9 +88,7 @@
             </td>
             <td>
                 @Html.ActionLink("Cập nhật", "UpdateDiscount", new { id = item.IdDiscount }, new { @class = "btn btn-outline-secondary rounded-pill" })
-                @*<button type="button" class="btn btn-outline-danger rounded-pill" onclick="ShowDialog(`@item.MaKhuyenMai`)">
-                Xóa
-            </button>*@
+                @*<button type="button" class="btn btn-outline-danger rounded-pill" onclick="ShowDialog(`@item.IdStatus`)">Xóa</button>*@
             </td>
         </tr>
     }
@@ -102,5 +116,5 @@
 </div>*@
 
 @section Scripts  {
-        <script src="~/Assets/scripts/ManagerDiscount.js"></script>
+        <script src="~/Assets/scripts/ManagerDiscountIndex.js"></script>
 }

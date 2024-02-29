@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
 {
@@ -30,16 +31,43 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
         }
 
         [HttpGet]
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string sort)
         {
-            var discounts = db.Discounts.Include(d => d.StatusDiscount);
-            return View(await discounts.ToListAsync());
+            int indexSort;
+            if (!int.TryParse(sort, out indexSort))
+            {
+                indexSort = -1; 
+            }
+            var discounts = await db.Discounts.Include(d => d.StatusDiscount).ToListAsync();
+            switch (indexSort)
+            {
+                case 1:
+                    discounts.Sort((first, second) => first.TitleDiscount.CompareTo(second.TitleDiscount));
+                    break;
+                case 2:
+                    discounts.Sort((first, second) => first.Quantity.CompareTo(second.Quantity));
+                    break;
+                case 3:
+                    discounts.Sort((first, second) => first.Percent.CompareTo(second.Percent));
+                    break;
+                default:
+                    break;
+            }
+
+            @ViewBag.SortIndex = indexSort;
+            return View( discounts);
         }
 
         [HttpGet]
         public ActionResult CreateDiscount()
         {
-            ViewBag.IdStatus = new SelectList(db.StatusDiscounts, "IdStatus", "Status");
+            var statusDiscounts = db.StatusDiscounts.ToList();
+            var itemToRemove = statusDiscounts.FirstOrDefault(s => s.Status.Equals("Hết hạn"));
+            if (itemToRemove != null)
+                statusDiscounts.Remove(itemToRemove);
+
+            ViewBag.IdStatus = new SelectList(statusDiscounts, "IdStatus", "Status");
+
             return View();
         }
 
@@ -60,6 +88,11 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
                 return RedirectToAction("Index");
             }
 
+            var statusDiscounts = db.StatusDiscounts.ToList();
+            var itemToRemove = statusDiscounts.FirstOrDefault(s => s.Status.Equals("Hết hạn"));
+            if (itemToRemove != null)
+                statusDiscounts.Remove(itemToRemove);
+
             ViewBag.IdStatus = new SelectList(db.StatusDiscounts, "IdStatus", "Status", discount.IdStatus);
             return View(discount);
         }
@@ -71,12 +104,20 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Discount discount = await db.Discounts.FindAsync(id);
             if (discount == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.IdStatus = new SelectList(db.StatusDiscounts, "IdStatus", "Status", discount.IdStatus);
+
+            var statusDiscounts = db.StatusDiscounts.ToList();
+            var itemToRemove = statusDiscounts.FirstOrDefault(s => s.Status.Equals("Hết hạn"));
+            if (itemToRemove != null)
+                statusDiscounts.Remove(itemToRemove);
+
+            ViewBag.IdStatus = new SelectList(statusDiscounts, "IdStatus", "Status");
+
             return View(discount);
         }
 
@@ -96,7 +137,14 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.IdStatus = new SelectList(db.StatusDiscounts, "IdStatus", "Status", discount.IdStatus);
+
+            var statusDiscounts = db.StatusDiscounts.ToList();
+            var itemToRemove = statusDiscounts.FirstOrDefault(s => s.Status.Equals("Hết hạn"));
+            if (itemToRemove != null)
+                statusDiscounts.Remove(itemToRemove);
+
+            ViewBag.IdStatus = new SelectList(statusDiscounts, "IdStatus", "Status", discount.IdStatus);
+
             return View(discount);
         }
 
@@ -134,17 +182,18 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
         [HttpPost]
         public JsonResult GetCodeDiscount()
         {
+            string code;
             do
             {
-                string code = RenderCode.Code();
-                if (!db.Discounts.ToList().Exists(item => item.CodeDiscount.Equals(code)))
-                    return Json(new
-                    {
-                        status = true,
-                        message = "",
-                        code = code
-                    });
-            } while (true);
+                code = RenderCode.Code();
+            } while (db.Discounts.Any(item => item.CodeDiscount.Equals(code)));
+            return Json(new
+            {
+                status = true,
+                message = "",
+                code = code
+            });
+
         }
 
         protected override void Dispose(bool disposing)

@@ -26,8 +26,8 @@ namespace DotNet_E_Commerce_Glasses_Web.Models
         public string TitleDiscount { get; set; }
         public DateTime DateOfStart { get; set; }
         public DateTime DateOfEnd { get; set; }
-        public Nullable<long> Quantity { get; set; }
-        public Nullable<double> Percent { get; set; }
+        public long Quantity { get; set; }
+        public double Percent { get; set; }
         public string Image { get; set; }
         public string CodeDiscount { get; set; }
     
