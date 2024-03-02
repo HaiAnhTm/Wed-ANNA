@@ -135,7 +135,7 @@
             <PropertyRef Name="IdTypeSale" />
           </Key>
           <Property Name="IdTypeSale" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StatusProduct" Type="bit" />
+          <Property Name="StatusProduct" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_DanhGiaSanPham_KhachHang">
           <End Role="Consumer" Type="Self.Consumer" Multiplicity="0..1" />
@@ -406,7 +406,6 @@
           <EntitySet Name="StatusDiscounts" EntityType="Model.StatusDiscount" />
           <EntitySet Name="sysdiagrams" EntityType="Model.sysdiagram" />
           <EntitySet Name="TypeProducts" EntityType="Model.TypeProduct" />
-          <EntitySet Name="TypeProductSales" EntityType="Model.TypeProductSale" />
           <AssociationSet Name="FK_KhachHang_DangNhap" Association="Model.FK_KhachHang_DangNhap">
             <End Role="Account" EntitySet="Accounts" />
             <End Role="Consumer" EntitySet="Consumers" />
@@ -443,12 +442,13 @@
             <End Role="Product" EntitySet="Products" />
             <End Role="RateProduct" EntitySet="RateProducts" />
           </AssociationSet>
-          <AssociationSet Name="FK_Product_TypeProductSale" Association="Model.FK_Product_TypeProductSale">
-            <End Role="TypeProductSale" EntitySet="TypeProductSales" />
-            <End Role="Product" EntitySet="Products" />
-          </AssociationSet>
           <AssociationSet Name="FK_SanPham_LoaiSanPham" Association="Model.FK_SanPham_LoaiSanPham">
             <End Role="TypeProduct" EntitySet="TypeProducts" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <EntitySet Name="TypeProductSales" EntityType="Model.TypeProductSale" />
+          <AssociationSet Name="FK_Product_TypeProductSale" Association="Model.FK_Product_TypeProductSale">
+            <End Role="TypeProductSale" EntitySet="TypeProductSales" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
         </EntityContainer>
@@ -558,8 +558,8 @@
           <Property Name="Quantity" Type="Int64" />
           <Property Name="IdTypeSale" Type="Int32" />
           <NavigationProperty Name="RateProducts" Relationship="Model.FK_DanhGiaSanPham_SanPham" FromRole="Product" ToRole="RateProduct" />
-          <NavigationProperty Name="TypeProductSale" Relationship="Model.FK_Product_TypeProductSale" FromRole="Product" ToRole="TypeProductSale" />
           <NavigationProperty Name="TypeProduct" Relationship="Model.FK_SanPham_LoaiSanPham" FromRole="Product" ToRole="TypeProduct" />
+          <NavigationProperty Name="TypeProductSale" Relationship="Model.FK_Product_TypeProductSale" FromRole="Product" ToRole="TypeProductSale" />
         </EntityType>
         <EntityType Name="RateProduct">
           <Key>
@@ -608,14 +608,6 @@
           <Property Name="IdTypeProduct" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TypeProductName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Products" Relationship="Model.FK_SanPham_LoaiSanPham" FromRole="TypeProduct" ToRole="Product" />
-        </EntityType>
-        <EntityType Name="TypeProductSale">
-          <Key>
-            <PropertyRef Name="IdTypeSale" />
-          </Key>
-          <Property Name="IdTypeSale" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StatusProduct" Type="Boolean" />
-          <NavigationProperty Name="Products" Relationship="Model.FK_Product_TypeProductSale" FromRole="TypeProductSale" ToRole="Product" />
         </EntityType>
         <Association Name="FK_KhachHang_DangNhap">
           <End Type="Model.Account" Role="Account" Multiplicity="0..1" />
@@ -725,18 +717,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Product_TypeProductSale">
-          <End Type="Model.TypeProductSale" Role="TypeProductSale" Multiplicity="0..1" />
-          <End Type="Model.Product" Role="Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TypeProductSale">
-              <PropertyRef Name="IdTypeSale" />
-            </Principal>
-            <Dependent Role="Product">
-              <PropertyRef Name="IdTypeSale" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_SanPham_LoaiSanPham">
           <End Type="Model.TypeProduct" Role="TypeProduct" Multiplicity="0..1" />
           <End Type="Model.Product" Role="Product" Multiplicity="*" />
@@ -746,6 +726,26 @@
             </Principal>
             <Dependent Role="Product">
               <PropertyRef Name="IdTypeProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TypeProductSale">
+          <Key>
+            <PropertyRef Name="IdTypeSale" />
+          </Key>
+          <Property Name="IdTypeSale" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusProduct" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="Model.FK_Product_TypeProductSale" FromRole="TypeProductSale" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_Product_TypeProductSale">
+          <End Type="Model.TypeProductSale" Role="TypeProductSale" Multiplicity="0..1" />
+          <End Type="Model.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeProductSale">
+              <PropertyRef Name="IdTypeSale" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="IdTypeSale" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

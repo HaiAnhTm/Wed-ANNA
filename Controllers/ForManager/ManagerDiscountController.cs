@@ -54,8 +54,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
                     break;
             }
 
-            @ViewBag.SortIndex = indexSort;
-            return View( discounts);
+            return View(discounts);
         }
 
         [HttpGet]

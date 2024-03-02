@@ -1,14 +1,30 @@
 ﻿@model IEnumerable<DotNet_E_Commerce_Glasses_Web.Models.Product>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Danh sách sản phẩm";
+    Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
 
-<h2>Index</h2>
+<div class="d-flex justify-content-between mb-3 mt-5">
+    <h3>Danh sách sản phẩm</h3>
+    <a class="btn btn-outline-secondary rounded-pill" href="@Url.Action("CreateProduct", "ManagerProduct")">Thêm mới sản phẩm</a>
+</div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<div class="row">
+    <div class="col">
+        <h4>Sắp xếp</h4>
+    </div>
+
+    <div class="col">
+        <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="fillter_selected">
+            <option value=0 selected>Mặc đinh</option>
+            <option value="1">Theo tên sản phẩm</option>
+            <option value="2">Theo số lượng</option>
+            <option value="3">Theo giá</option>
+        </select>
+    </div>
+</div>
+
 <table class="table">
     <tr>
         <th>
@@ -29,47 +45,87 @@
         <th>
             @Html.DisplayNameFor(model => model.Quantity)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TypeProductSale.IdTypeSale)
-        </th>
+
         <th>
             @Html.DisplayNameFor(model => model.TypeProduct.TypeProductName)
         </th>
-        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.TypeProductSale.StatusProduct)
+        </th>
+        <th>
+
+
+
+        </th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.NameProduct)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Image)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Discount)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Quantity)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TypeProductSale.IdTypeSale)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TypeProduct.TypeProductName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IdProduct }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IdProduct }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IdProduct })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameProduct)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                <img src="@item.Image" style="width: 200px;" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Discount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
 
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeProduct.TypeProductName)
+            </td>
+            <th>
+                @Html.DisplayFor(model => item.TypeProductSale.StatusProduct)
+            </th>
+            <td>
+                <div class="col-1" style="max-width: 40px;" id="iconChange">
+                    @Html.ActionLink(" ", "UpdateProduct", new { id = item.IdProduct }, new { @class = "icon-update " })
+                    <i class="fa-solid fa-pen " onclick="handleIconUpdate(event)"></i>
+                </div>
+                <div class="col-1 " style="max-width: 40px;" id="iconDelete">
+                    @Html.ActionLink(" ", "DeleteProduct", new { id = item.IdProduct }, new { @class = "icon-delete" })
+                    <i class="fa-solid fa-trash" onclick="showDiaLogConfirm('@item.IdProduct')"></i>
+                </div>
+            </td>
+        </tr>
+    }
 </table>
+
+
+@*Dialog Confirm Action Delete*@
+<div class="modal" id="dialog_confirm">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Sản phẩm</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h6>Xác nhận xóa sản phẩm</h6>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-danger rounded-pill" id="button_delete">Xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts  {
+    <script src="~/Assets/scripts/ManagerProductIndex.js"></script>
+}

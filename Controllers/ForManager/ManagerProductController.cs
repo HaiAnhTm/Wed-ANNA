@@ -17,10 +17,30 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
         private GlassesEntities db = new GlassesEntities();
 
         // GET: ManagerProduct
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string sort)
         {
-            var products = db.Products.Include(p => p.TypeProductSale).Include(p => p.TypeProduct);
-            return View(await products.ToListAsync());
+            int indexSort;
+            if (!int.TryParse(sort, out indexSort))
+            {
+                indexSort = -1;
+            }
+            var products = await db.Products.Include(p => p.TypeProductSale).Include(p => p.TypeProduct).ToListAsync();
+            switch (indexSort)
+            {
+                case 1:
+                    products.Sort((first, second) => first.NameProduct.CompareTo(second.NameProduct));
+                    break;
+                case 2:
+                    products.Sort((first, second) => first.Quantity.CompareTo(second.Quantity));
+                    break;
+                case 3:
+                    products.Sort((first, second) => first.Price.CompareTo(second.Price));
+                    break;
+                default:
+                    break;
+            }
+
+            return View(products);
         }
 
         // GET: ManagerProduct/Details/5
@@ -41,8 +61,8 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
         // GET: ManagerProduct/Create
         public ActionResult CreateProduct()
         {
-            ViewBag.IdTypeSale = new SelectList(db.TypeProductSales, "IdTypeSale", "IdTypeSale");
             ViewBag.IdTypeProduct = new SelectList(db.TypeProducts, "IdTypeProduct", "TypeProductName");
+            ViewBag.IdTypeSale = new SelectList(db.TypeProductSales, "IdTypeSale", "StatusProduct");
             return View();
         }
 
@@ -56,16 +76,14 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
             if (ModelState.IsValid)
             {
                 if (product.ImageFile != null)
-                {
                     product.Image = MoveImageToProject(product.ImageFile);
-                }
                 db.Products.Add(product);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdTypeSale = new SelectList(db.TypeProductSales, "IdTypeSale", "IdTypeSale", product.IdTypeSale);
             ViewBag.IdTypeProduct = new SelectList(db.TypeProducts, "IdTypeProduct", "TypeProductName", product.IdTypeProduct);
+            ViewBag.IdTypeSale = new SelectList(db.TypeProductSales, "IdTypeSale", "StatusProduct", product.IdTypeSale);
             return View(product);
         }
 
@@ -113,8 +131,8 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
             {
                 return HttpNotFound();
             }
-            ViewBag.IdTypeSale = new SelectList(db.TypeProductSales, "IdTypeSale", "IdTypeSale", product.IdTypeSale);
             ViewBag.IdTypeProduct = new SelectList(db.TypeProducts, "IdTypeProduct", "TypeProductName", product.IdTypeProduct);
+            ViewBag.IdTypeSale = new SelectList(db.TypeProductSales, "IdTypeSale", "StatusProduct", product.IdTypeSale);
             return View(product);
         }
 
@@ -135,35 +153,24 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.IdTypeSale = new SelectList(db.TypeProductSales, "IdTypeSale", "IdTypeSale", product.IdTypeSale);
             ViewBag.IdTypeProduct = new SelectList(db.TypeProducts, "IdTypeProduct", "TypeProductName", product.IdTypeProduct);
+            ViewBag.IdTypeSale = new SelectList(db.TypeProductSales, "IdTypeSale", "StatusProduct", product.IdTypeSale);
             return View(product);
         }
 
-        // GET: ManagerProduct/Delete/5
-        public async Task<ActionResult> Delete(int? id)
+        [HttpPost]
+        public JsonResult DeleteProduct(int IdProduct)
         {
-            if (id == null)
+            if (ModelState.IsValid)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                var product = db.Products.FirstOrDefault(item => item.IdProduct.Equals(IdProduct));
+                if (product == null)
+                    return Json(false);
+                db.Products.Remove(product);
+                db.SaveChanges();
+                return Json(true);
             }
-            Product product = await db.Products.FindAsync(id);
-            if (product == null)
-            {
-                return HttpNotFound();
-            }
-            return View(product);
-        }
-
-        // POST: ManagerProduct/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
-        {
-            Product product = await db.Products.FindAsync(id);
-            db.Products.Remove(product);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return Json(false);
         }
 
         protected override void Dispose(bool disposing)

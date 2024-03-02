@@ -21,7 +21,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Models
         }
     
         public int IdTypeSale { get; set; }
-        public Nullable<bool> StatusProduct { get; set; }
+        public string StatusProduct { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }
