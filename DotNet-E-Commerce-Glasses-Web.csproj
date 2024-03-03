@@ -254,6 +254,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
+    <Content Include="Assets\images\images_login\img_login.jpg" />
+    <Content Include="Assets\images\images_login\register_img.jpg" />
     <Content Include="Assets\images\images_Other\logo.png" />
     <Content Include="Assets\css\common.css" />
     <Content Include="Assets\css\layout\layout_no_navigation\base.css" />
@@ -2314,8 +2316,15 @@
     <Content Include="Assets\fontawesome-free-6.4.0-web\svgs\solid\yin-yang.svg" />
     <Content Include="Assets\fontawesome-free-6.4.0-web\svgs\solid\z.svg" />
     <Content Include="Assets\fonts\LICENSE.txt" />
+    <Content Include="Assets\scripts\ConsumerCart.js" />
+    <Content Include="Assets\scripts\ConsumerProduct.js" />
     <Content Include="Assets\scripts\LogInAccount.js" />
     <Content Include="Assets\scripts\ManageBill.js" />
+    <Content Include="Assets\scripts\ManagerCreateDiscount.js" />
+    <Content Include="Assets\scripts\ManagerDiscountIndex.js" />
+    <Content Include="Assets\scripts\ManagerProductIndex.js" />
+    <Content Include="Assets\scripts\ManagerTypeProduct.js" />
+    <Content Include="Assets\scripts\ManagerUpdateDiscount.js" />
     <Content Include="Assets\scripts\RegisterAccount.js" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -2487,7 +2496,7 @@
     <Content Include="Views\LoginAccount\Index.cshtml" />
     <Content Include="Views\ConsumerProduct\Create.cshtml" />
     <Content Include="Views\ConsumerProduct\Delete.cshtml" />
-    <Content Include="Views\ConsumerProduct\Details.cshtml" />
+    <Content Include="Views\ConsumerProduct\DetailProduct.cshtml" />
     <Content Include="Views\ConsumerProduct\Edit.cshtml" />
     <Content Include="Views\ConsumerProduct\Index.cshtml" />
     <Content Include="Views\ManagerBill\Create.cshtml" />
@@ -2518,6 +2527,12 @@
     <Content Include="Views\ManagerTypeProduct\Details.cshtml" />
     <Content Include="Views\ManagerTypeProduct\Edit.cshtml" />
     <Content Include="Views\ManagerTypeProduct\Index.cshtml" />
+    <Content Include="Views\ManagerProduct\UpdateProduct.cshtml" />
+    <Content Include="Views\ManagerProduct\CreateProduct.cshtml" />
+    <Content Include="Views\ManagerDiscount\CreateDiscount.cshtml" />
+    <Content Include="Views\ManagerDiscount\UpdateDiscount.cshtml" />
+    <Content Include="Views\Shared\_LayoutLogin.cshtml" />
+    <Content Include="Views\ConsumerProduct\ConsumerCart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

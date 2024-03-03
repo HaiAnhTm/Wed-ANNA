@@ -1,0 +1,230 @@
+﻿﻿@model DotNet_E_Commerce_Glasses_Web.Models.Bill
+@{
+    ViewBag.Title = "Giỏ hàng";
+    Layout = ViewBag.Consumer != null ? "~/Views/Shared/_LayoutConsumer.cshtml" : "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h3>Giỏ hàng</h3>
+<div class="container">
+    <div class="row h-75">
+        <div class="col-sm-9">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Hình Ảnh</th>
+                        <th scope="col"></th>
+                        <th scope="col">Số lượng</th>
+                        <th scope="col">Thành tiền</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in (IEnumerable<DotNet_E_Commerce_Glasses_Web.Models.ProductSale>)ViewBag.ListCart)
+                    {
+                        <tr>
+                            <td style="max-width: 180px;">
+                                <img src="@item.Image" alt="Image Description" style="width: 120px;" />
+                            </td>
+                            <td>
+                                <h5 style="width:300px;height:90px;">@item.NameProduct</h5>
+                                <h7>@item.CurrencyString()/1 chiếc</h7>
+                            </td>
+                            <td>
+                                <div class="row">
+                                    <button type="button" class="btn btn-outline-secondary d-flex justify-content-center align-items-center rounded-circle" style="max-width: 30px;" onclick="updateListCart(`@item.IdProduct`, `-1`)">
+                                        <i class="fa-solid fa-minus"></i>
+                                    </button>
+                                    <input type="number" class="col rounded text-center" style="max-width: 100px;" value="@item.QuanitySale" disabled>
+                                    <button type="button" class="btn btn-outline-secondary d-flex justify-content-center align-items-center rounded-circle" style="max-width: 30px;" onclick="updateListCart(`@item.IdProduct`, `1`)">
+                                        <i class="fa-solid fa-plus"></i>
+                                    </button>
+                                </div>
+                            </td>
+                            <td>
+                                <p>@item.getTotalProduct()</p>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-outline-danger d-flex justify-content-center align-items-center rounded-circle" style="max-width: 30px;" onclick="deleteProduct(`@item.IdProduct`)">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div class="row">
+                <strong class="col">
+                    Mã giảm giá
+                </strong>
+                <div class="col">
+                    <input type="text" name="GiamGia" class="rounded" id="input-code">
+                    <span id="notify_GiamGia"></span>
+                    <button type="button" class="btn btn-outline-secondary rounded-pill" onclick="appDiscount()">
+                        Áp dụng
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="d-flex flex-column justify-content-between align-items-center rounded" style="background-color: white">
+                <h3>Thanh toán</h3>
+                <div class="container">
+                    <div class="row">
+                        <div class="col fw-bold">
+                            Tổng hóa đơn:
+                        </div>
+                        <div class="col">
+                            @Model.currencyTotalBill()
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col fw-bold">
+                            Giảm giá:
+                        </div>
+                        <div class="col">
+                            @((Model.Discount != null ? Model.Discount.Percent : 0) + " %")
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col fw-bold">
+                            Số sản phẩm:
+                        </div>
+                        <div class="col">
+                            @ViewBag.ListCart.Count
+                        </div>
+                    </div>
+                    <div class="table-group-divider"></div>
+                    <div class="row mt-4">
+                        <div class="col fw-bold">
+                            Thanh toán:
+                        </div>
+                        <div class="col fw-bold">
+                            @Model.currencyTotalPay()
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top:20px ; margin-bottom:30px;">
+                    <button type="button" class="btn btn-outline-secondary rounded-pill" onclick="HuyThanhToan()">Hủy</button>
+                    <button type="button" class="btn btn-danger rounded-pill" onclick="actionPayBill()">Thanh toán</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts  {
+    <script src="~/Assets/scripts/ConsumerCart.js"></script>
+
+    <script>
+
+
+        function updateListCart(idProduct, quantity) {
+            $.ajax({
+                url: '/ConsumerProduct/AddProductToCart',
+                type: 'POST',
+                data: {
+                    productId: idProduct,
+                    quantity: quantity
+                },
+                success: function (result) {
+                    console.log(result);
+                    if (result.status) {
+                        console.log("Buy Success.");
+                        toastr.options.closeButton = true;
+                        toastr.success('Giỏ hàng', 'Thêm sản phẩm thành công!')
+                        location.reload();
+                    } else {
+                        console.log("Buy Failed.");
+                        window.location.href = result.url;
+                        toastr.options.closeButton = true;
+                    }
+                },
+                error: function () {
+                    console.error("AJAX request failed");
+                }
+            });
+        }
+
+        function deleteProduct(idProduct) {
+            $.ajax({
+                url: '/ConsumerProduct/RemoveFromCart',
+                type: 'POST',
+                data: { productId: idProduct },
+                success: function (result) {
+                    console.log(result);
+                    if (result.status) {
+                        console.log("Buy Success.");
+                        toastr.options.closeButton = true;
+                        toastr.success('Giỏ hàng', 'Cập nhật giỏ hàng thành công!')
+                        location.reload();
+                    } else {
+                        console.log("Buy Failed.");
+                        window.location.href = result.url;
+                        toastr.options.closeButton = true;
+                        toastr.warning('Giỏ hàng', 'Cập nhật giỏ hàng thất bại!')
+                    }
+                },
+                error: function (error) {
+                    console.error("AJAX request failed", error);
+                }
+            });
+        }
+
+
+    function appDiscount() {
+        const inputCode = document.getElementById('input-code')
+
+        var code =inputCode.value;
+
+        if (code.length > 0) {
+            $.ajax({
+                url: '/ConsumerProduct/AddDiscount',
+                type: 'POST',
+                data: {
+                    codeDiscount: code
+                },
+                success: function (result) {
+                    console.log(result);
+                    if (result.status) {
+                        console.log("Buy Success.");
+                        toastr.options.closeButton = true;
+                        toastr.warning('Khuyến mại', 'Áp mã giảm giá thành công');
+                        location.href = result.url
+                    } else {
+                        toastr.options.closeButton = true;
+                        toastr.warning(result.message ?? "Mã khuyến mãi không khả dụng", 'Khuyến mại');
+                    }
+                }
+            });
+        } else
+            document.getElementById("notify_GiamGia").textContent = "Nhập mã giảm giá trước khi áp dung.";
+        }
+
+        function actionPayBill() {
+            $.ajax({
+                url: '@Url.Action("PayBill", "ConsumerProduct")',
+                type: 'POST',
+                data: {},
+                success: function (result) {
+                    console.log(result);
+                    if (result.status) {
+                        toastr.options.closeButton = true;
+                        toastr.success(result.message, "Thanh toán")
+                        location.reload();
+                    } else {
+                        //window.location.href = result.url;
+                        toastr.options.closeButton = true;
+                        toastr.warning(result.message, "Thanh toán")
+                    }
+                },
+                error: function () {
+                    console.error("AJAX request failed");
+                }
+            });
+        }
+
+    </script>
+}

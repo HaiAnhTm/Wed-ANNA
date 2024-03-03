@@ -28,8 +28,8 @@ namespace DotNet_E_Commerce_Glasses_Web.Models
         public virtual Consumer Consumer { get; set; }
         public virtual Discount Discount { get; set; }
         public virtual StatusDelivery StatusDelivery { get; set; }
-        public string DatePurchaseStr() => this.DateOfPurchase.ToString("dd/MM/yyyy");
-        public string CurrencyTotalBill() => CurrencyUtils.CurrencyConvertToString(this.TotalBill);
-        public string CurrencyTotalPay() => CurrencyUtils.CurrencyConvertToString(this.TotalPay);
+        public string datePurchaseStr() => this.DateOfPurchase.ToString("dd/MM/yyyy");
+        public string currencyTotalBill() => CurrencyUtils.CurrencyConvertToString(this.TotalBill);
+        public string currencyTotalPay() => CurrencyUtils.CurrencyConvertToString(this.TotalPay);
     }
 }

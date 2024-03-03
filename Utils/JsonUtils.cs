@@ -24,6 +24,28 @@ namespace DotNet_E_Commerce_Glasses_Web.Utils
         }
 
 
-        public static Bill JsonToHoaDon(string json) => JsonConvert.DeserializeObject<Bill>(json);
+        public static Bill convertJsonToBill(string json) => JsonConvert.DeserializeObject<Bill>(json);
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public static Dictionary<int, int> convertJsonCartToDic(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json))
+                return null;
+            return JsonConvert.DeserializeObject<Dictionary<int, int>>(json);
+        }
+        public static string convertDicToCartJson(Dictionary<int, int> dic) => JsonConvert.SerializeObject(dic);
+
+
     }
 }

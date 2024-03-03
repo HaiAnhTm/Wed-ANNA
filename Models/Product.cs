@@ -9,6 +9,7 @@
 
 namespace DotNet_E_Commerce_Glasses_Web.Models
 {
+    using DotNet_E_Commerce_Glasses_Web.Utils;
     using System;
     using System.Collections.Generic;
     using System.Web;
@@ -20,7 +21,24 @@ namespace DotNet_E_Commerce_Glasses_Web.Models
         {
             this.RateProducts = new HashSet<RateProduct>();
         }
-    
+        public Product(Product product)
+        {
+            this.IdProduct = product.IdProduct;
+            this.IdTypeProduct = product.IdTypeProduct;
+            this.NameProduct = product.NameProduct;
+            this.Price = product.Price;
+            this.Description = product.Description;
+            this.Image = product.Image;
+            this.Discount = product.Discount;
+            this.Quantity = product.Quantity;
+            this.IdTypeSale = product.IdTypeSale;
+            this.RateProducts = product.RateProducts;
+            this.TypeProductSale = product.TypeProductSale;
+            this.TypeProduct = product.TypeProduct;
+            this.ImageFile = product.ImageFile;
+            this.RateProducts = new HashSet<RateProduct>();
+        }
+
         public int IdProduct { get; set; }
         public Nullable<int> IdTypeProduct { get; set; }
         public string NameProduct { get; set; }
@@ -29,7 +47,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Models
         public string Image { get; set; }
         public Nullable<double> Discount { get; set; }
         public long Quantity { get; set; }
-        public Nullable<int> IdTypeSale { get; set; }
+        public int IdTypeSale { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RateProduct> RateProducts { get; set; }
@@ -37,5 +55,6 @@ namespace DotNet_E_Commerce_Glasses_Web.Models
         public virtual TypeProduct TypeProduct { get; set; }
         public HttpPostedFileBase ImageFile { get; set; }
 
+        public string CurrencyString() => CurrencyUtils.CurrencyConvertToString(this.Price);
     }
 }
