@@ -14,6 +14,7 @@ using DotNet_E_Commerce_Glasses_Web.Sessions;
 using PagedList;
 using System.Data.Entity.Migrations;
 using DotNet_E_Commerce_Glasses_Web.App_Start;
+using System.Runtime.ConstrainedExecution;
 
 namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
 {
@@ -38,6 +39,8 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
                     else
                         dicCart = JsonUtils.convertJsonCartToDic(consumer.ListCart);
                     bill = new Bill();
+                    bill.Consumer = consumer;
+                    bill.IdConsumer = consumerID;
                 }
             }
         }   
@@ -136,7 +139,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
         }
 
         [HttpGet]
-        public ActionResult ConsumerCart(string code)
+        public async Task<ActionResult> ConsumerCart(string code)
         {
             if (consumer == null)
                 return RedirectToAction("Index", "LogInAccount");
@@ -156,7 +159,9 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
                     {
                         var key = pair.Key;
                         var value = pair.Value;
-                        temp.Add(key, new ProductSale(value, db.Products.FirstOrDefault(item => item.IdProduct.Equals(key))));
+                        var product = await db.Products.FindAsync(key);
+                        if (product != null)
+                            temp.Add(key, new ProductSale(value, product));
                     }
                 }
                 bill.TotalBill = CalculatorTotalBill(temp);
@@ -308,9 +313,6 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
                     status = false, 
                     url = "", 
                     message = "Giỏ hàng trống" });
-
-            Bill bill = JsonUtils.convertJsonToBill(consumer.ListCart);
-
             if (bill != null)
             {
                 DetailBill detailBill = new DetailBill
@@ -320,7 +322,6 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
                 db.DetailBills.Add(detailBill);
                 await db.SaveChangesAsync();
 
-           
 
                 Dictionary<int, ProductSale> temp = new Dictionary<int, ProductSale>();
 
@@ -330,11 +331,11 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
                     {
                         var key = pair.Key;
                         var value = pair.Value;
-                        temp.Add(key, new ProductSale(value, db.Products.FirstOrDefault(item => item.IdProduct.Equals(key))));
+                        var product = await db.Products.FindAsync(key);
 
-                        var product = db.Products.Find(key);
                         if (product != null)
                         {
+                            temp.Add(key, new ProductSale(value, product));
                             product.Quantity -= value;
                             db.Products.AddOrUpdate(product);
                             await db.SaveChangesAsync();
@@ -350,8 +351,17 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
                 dicCart.Clear();
                 consumer.ListCart = string.Empty;
 
-                db.Consumers.AddOrUpdate(consumer);
-                db.Bills.Add(bill);
+   
+                try
+                {
+                    db.Consumers.AddOrUpdate(consumer);
+                    db.Bills.Add(bill);
+                }catch(Exception ex)
+                {
+                    var a = ex.Message;
+
+                    Console.WriteLine(ex.Message);
+                }
                 await db.SaveChangesAsync();
                 return Json(new { 
                     status = true, 
