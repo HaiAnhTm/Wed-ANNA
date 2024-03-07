@@ -9,7 +9,6 @@
 
 namespace DotNet_E_Commerce_Glasses_Web.Models
 {
-    using DotNet_E_Commerce_Glasses_Web.Utils;
     using System;
     using System.Collections.Generic;
     
@@ -17,19 +16,17 @@ namespace DotNet_E_Commerce_Glasses_Web.Models
     {
         public int IdBild { get; set; }
         public Nullable<int> IdConsumer { get; set; }
-        public Nullable<int> IdDiscount { get; set; }
+        public Nullable<double> PercentDiscount { get; set; }
         public Nullable<int> IdDetailDiscount { get; set; }
-        public DateTime DateOfPurchase { get; set; }
+        public Nullable<System.DateTime> DateOfPurchase { get; set; }
         public Nullable<long> TotalBill { get; set; }
         public Nullable<long> TotalPay { get; set; }
         public Nullable<int> IdDetailDelivery { get; set; }
+        public Nullable<int> IdDetailBill { get; set; }
     
-        public virtual DetailBill DetailBill { get; set; }
         public virtual Consumer Consumer { get; set; }
+        public virtual DetailBill DetailBill { get; set; }
         public virtual Discount Discount { get; set; }
         public virtual StatusDelivery StatusDelivery { get; set; }
-        public string datePurchaseStr() => this.DateOfPurchase.ToString("dd/MM/yyyy");
-        public string currencyTotalBill() => CurrencyUtils.CurrencyConvertToString(this.TotalBill);
-        public string currencyTotalPay() => CurrencyUtils.CurrencyConvertToString(this.TotalPay);
     }
 }

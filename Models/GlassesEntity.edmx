@@ -19,12 +19,13 @@
           </Key>
           <Property Name="IdBild" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IdConsumer" Type="int" />
-          <Property Name="IdDiscount" Type="int" />
+          <Property Name="PercentDiscount" Type="float" />
           <Property Name="IdDetailDiscount" Type="int" />
           <Property Name="DateOfPurchase" Type="datetime" />
           <Property Name="TotalBill" Type="bigint" />
           <Property Name="TotalPay" Type="bigint" />
           <Property Name="IdDetailDelivery" Type="int" />
+          <Property Name="IdDetailBill" Type="int" />
         </EntityType>
         <EntityType Name="Consumer">
           <Key>
@@ -56,7 +57,7 @@
           <Property Name="DateOfStart" Type="datetime" />
           <Property Name="DateOfEnd" Type="datetime" />
           <Property Name="Quantity" Type="bigint" />
-          <Property Name="Percent" Type="float" />
+          <Property Name="PercentValue" Type="float" />
           <Property Name="Image" Type="nvarchar" MaxLength="500" />
           <Property Name="CodeDiscount" Type="nvarchar" MaxLength="50" />
         </EntityType>
@@ -137,31 +138,19 @@
           <Property Name="IdTypeSale" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StatusProduct" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <Association Name="FK_DanhGiaSanPham_KhachHang">
+        <Association Name="FK_Bill_Consumer">
           <End Role="Consumer" Type="Self.Consumer" Multiplicity="0..1" />
-          <End Role="RateProduct" Type="Self.RateProduct" Multiplicity="*" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Consumer">
               <PropertyRef Name="IdConsumer" />
             </Principal>
-            <Dependent Role="RateProduct">
+            <Dependent Role="Bill">
               <PropertyRef Name="IdConsumer" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DanhGiaSanPham_SanPham">
-          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
-          <End Role="RateProduct" Type="Self.RateProduct" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="IdProduct" />
-            </Principal>
-            <Dependent Role="RateProduct">
-              <PropertyRef Name="IdProduct" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_HoaDon_ChiTietHoaDon">
+        <Association Name="FK_Bill_DetailBill">
           <End Role="DetailBill" Type="Self.DetailBill" Multiplicity="0..1" />
           <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
           <ReferentialConstraint>
@@ -169,23 +158,11 @@
               <PropertyRef Name="IdDetailBill" />
             </Principal>
             <Dependent Role="Bill">
-              <PropertyRef Name="IdDetailDiscount" />
+              <PropertyRef Name="IdDetailBill" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_HoaDon_KhachHang">
-          <End Role="Consumer" Type="Self.Consumer" Multiplicity="0..1" />
-          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Consumer">
-              <PropertyRef Name="IdConsumer" />
-            </Principal>
-            <Dependent Role="Bill">
-              <PropertyRef Name="IdConsumer" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_HoaDon_KhuyenMai">
+        <Association Name="FK_Bill_Discount">
           <End Role="Discount" Type="Self.Discount" Multiplicity="0..1" />
           <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
           <ReferentialConstraint>
@@ -193,11 +170,11 @@
               <PropertyRef Name="IdDiscount" />
             </Principal>
             <Dependent Role="Bill">
-              <PropertyRef Name="IdDiscount" />
+              <PropertyRef Name="IdDetailDiscount" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_HoaDon_TrangThaiGiaoHang">
+        <Association Name="FK_Bill_StatusDelivery">
           <End Role="StatusDelivery" Type="Self.StatusDelivery" Multiplicity="0..1" />
           <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
           <ReferentialConstraint>
@@ -209,7 +186,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_KhachHang_DangNhap">
+        <Association Name="FK_Consumer_Account">
           <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
           <End Role="Consumer" Type="Self.Consumer" Multiplicity="*" />
           <ReferentialConstraint>
@@ -221,7 +198,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_KhuyenMai_TrangThaiKhuyenMai">
+        <Association Name="FK_Discount_StatusDiscount">
           <End Role="StatusDiscount" Type="Self.StatusDiscount" Multiplicity="0..1" />
           <End Role="Discount" Type="Self.Discount" Multiplicity="*" />
           <ReferentialConstraint>
@@ -230,6 +207,30 @@
             </Principal>
             <Dependent Role="Discount">
               <PropertyRef Name="IdStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Manager_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Manager" Type="Self.Manager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="IdAccount" />
+            </Principal>
+            <Dependent Role="Manager">
+              <PropertyRef Name="IdAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_TypeProduct">
+          <End Role="TypeProduct" Type="Self.TypeProduct" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeProduct">
+              <PropertyRef Name="IdTypeProduct" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="IdTypeProduct" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -245,27 +246,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_QuanLy_DangNhap">
-          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
-          <End Role="Manager" Type="Self.Manager" Multiplicity="*" />
+        <Association Name="FK_RateProduct_Consumer">
+          <End Role="Consumer" Type="Self.Consumer" Multiplicity="0..1" />
+          <End Role="RateProduct" Type="Self.RateProduct" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Account">
-              <PropertyRef Name="IdAccount" />
+            <Principal Role="Consumer">
+              <PropertyRef Name="IdConsumer" />
             </Principal>
-            <Dependent Role="Manager">
-              <PropertyRef Name="IdAccount" />
+            <Dependent Role="RateProduct">
+              <PropertyRef Name="IdConsumer" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SanPham_LoaiSanPham">
-          <End Role="TypeProduct" Type="Self.TypeProduct" Multiplicity="0..1" />
-          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+        <Association Name="FK_RateProduct_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="RateProduct" Type="Self.RateProduct" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TypeProduct">
-              <PropertyRef Name="IdTypeProduct" />
+            <Principal Role="Product">
+              <PropertyRef Name="IdProduct" />
             </Principal>
-            <Dependent Role="Product">
-              <PropertyRef Name="IdTypeProduct" />
+            <Dependent Role="RateProduct">
+              <PropertyRef Name="IdProduct" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -314,49 +315,49 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TypeProduct" EntityType="Self.TypeProduct" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TypeProductSale" EntityType="Self.TypeProductSale" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_DanhGiaSanPham_KhachHang" Association="Self.FK_DanhGiaSanPham_KhachHang">
+          <AssociationSet Name="FK_Bill_Consumer" Association="Self.FK_Bill_Consumer">
             <End Role="Consumer" EntitySet="Consumer" />
-            <End Role="RateProduct" EntitySet="RateProduct" />
+            <End Role="Bill" EntitySet="Bill" />
           </AssociationSet>
-          <AssociationSet Name="FK_DanhGiaSanPham_SanPham" Association="Self.FK_DanhGiaSanPham_SanPham">
-            <End Role="Product" EntitySet="Product" />
-            <End Role="RateProduct" EntitySet="RateProduct" />
-          </AssociationSet>
-          <AssociationSet Name="FK_HoaDon_ChiTietHoaDon" Association="Self.FK_HoaDon_ChiTietHoaDon">
+          <AssociationSet Name="FK_Bill_DetailBill" Association="Self.FK_Bill_DetailBill">
             <End Role="DetailBill" EntitySet="DetailBill" />
             <End Role="Bill" EntitySet="Bill" />
           </AssociationSet>
-          <AssociationSet Name="FK_HoaDon_KhachHang" Association="Self.FK_HoaDon_KhachHang">
-            <End Role="Consumer" EntitySet="Consumer" />
-            <End Role="Bill" EntitySet="Bill" />
-          </AssociationSet>
-          <AssociationSet Name="FK_HoaDon_KhuyenMai" Association="Self.FK_HoaDon_KhuyenMai">
+          <AssociationSet Name="FK_Bill_Discount" Association="Self.FK_Bill_Discount">
             <End Role="Discount" EntitySet="Discount" />
             <End Role="Bill" EntitySet="Bill" />
           </AssociationSet>
-          <AssociationSet Name="FK_HoaDon_TrangThaiGiaoHang" Association="Self.FK_HoaDon_TrangThaiGiaoHang">
+          <AssociationSet Name="FK_Bill_StatusDelivery" Association="Self.FK_Bill_StatusDelivery">
             <End Role="StatusDelivery" EntitySet="StatusDelivery" />
             <End Role="Bill" EntitySet="Bill" />
           </AssociationSet>
-          <AssociationSet Name="FK_KhachHang_DangNhap" Association="Self.FK_KhachHang_DangNhap">
+          <AssociationSet Name="FK_Consumer_Account" Association="Self.FK_Consumer_Account">
             <End Role="Account" EntitySet="Account" />
             <End Role="Consumer" EntitySet="Consumer" />
           </AssociationSet>
-          <AssociationSet Name="FK_KhuyenMai_TrangThaiKhuyenMai" Association="Self.FK_KhuyenMai_TrangThaiKhuyenMai">
+          <AssociationSet Name="FK_Discount_StatusDiscount" Association="Self.FK_Discount_StatusDiscount">
             <End Role="StatusDiscount" EntitySet="StatusDiscount" />
             <End Role="Discount" EntitySet="Discount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Manager_Account" Association="Self.FK_Manager_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Manager" EntitySet="Manager" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_TypeProduct" Association="Self.FK_Product_TypeProduct">
+            <End Role="TypeProduct" EntitySet="TypeProduct" />
+            <End Role="Product" EntitySet="Product" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_TypeProductSale" Association="Self.FK_Product_TypeProductSale">
             <End Role="TypeProductSale" EntitySet="TypeProductSale" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
-          <AssociationSet Name="FK_QuanLy_DangNhap" Association="Self.FK_QuanLy_DangNhap">
-            <End Role="Account" EntitySet="Account" />
-            <End Role="Manager" EntitySet="Manager" />
+          <AssociationSet Name="FK_RateProduct_Consumer" Association="Self.FK_RateProduct_Consumer">
+            <End Role="Consumer" EntitySet="Consumer" />
+            <End Role="RateProduct" EntitySet="RateProduct" />
           </AssociationSet>
-          <AssociationSet Name="FK_SanPham_LoaiSanPham" Association="Self.FK_SanPham_LoaiSanPham">
-            <End Role="TypeProduct" EntitySet="TypeProduct" />
+          <AssociationSet Name="FK_RateProduct_Product" Association="Self.FK_RateProduct_Product">
             <End Role="Product" EntitySet="Product" />
+            <End Role="RateProduct" EntitySet="RateProduct" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -406,52 +407,52 @@
           <EntitySet Name="StatusDiscounts" EntityType="Model.StatusDiscount" />
           <EntitySet Name="sysdiagrams" EntityType="Model.sysdiagram" />
           <EntitySet Name="TypeProducts" EntityType="Model.TypeProduct" />
-          <AssociationSet Name="FK_KhachHang_DangNhap" Association="Model.FK_KhachHang_DangNhap">
+          <EntitySet Name="TypeProductSales" EntityType="Model.TypeProductSale" />
+          <AssociationSet Name="FK_Consumer_Account" Association="Model.FK_Consumer_Account">
             <End Role="Account" EntitySet="Accounts" />
             <End Role="Consumer" EntitySet="Consumers" />
           </AssociationSet>
-          <AssociationSet Name="FK_QuanLy_DangNhap" Association="Model.FK_QuanLy_DangNhap">
+          <AssociationSet Name="FK_Manager_Account" Association="Model.FK_Manager_Account">
             <End Role="Account" EntitySet="Accounts" />
             <End Role="Manager" EntitySet="Managers" />
           </AssociationSet>
-          <AssociationSet Name="FK_HoaDon_ChiTietHoaDon" Association="Model.FK_HoaDon_ChiTietHoaDon">
+          <AssociationSet Name="FK_Bill_Consumer" Association="Model.FK_Bill_Consumer">
+            <End Role="Consumer" EntitySet="Consumers" />
+            <End Role="Bill" EntitySet="Bills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_DetailBill" Association="Model.FK_Bill_DetailBill">
             <End Role="DetailBill" EntitySet="DetailBills" />
             <End Role="Bill" EntitySet="Bills" />
           </AssociationSet>
-          <AssociationSet Name="FK_HoaDon_KhachHang" Association="Model.FK_HoaDon_KhachHang">
-            <End Role="Consumer" EntitySet="Consumers" />
-            <End Role="Bill" EntitySet="Bills" />
-          </AssociationSet>
-          <AssociationSet Name="FK_HoaDon_KhuyenMai" Association="Model.FK_HoaDon_KhuyenMai">
+          <AssociationSet Name="FK_Bill_Discount" Association="Model.FK_Bill_Discount">
             <End Role="Discount" EntitySet="Discounts" />
             <End Role="Bill" EntitySet="Bills" />
           </AssociationSet>
-          <AssociationSet Name="FK_HoaDon_TrangThaiGiaoHang" Association="Model.FK_HoaDon_TrangThaiGiaoHang">
+          <AssociationSet Name="FK_Bill_StatusDelivery" Association="Model.FK_Bill_StatusDelivery">
             <End Role="StatusDelivery" EntitySet="StatusDeliveries" />
             <End Role="Bill" EntitySet="Bills" />
           </AssociationSet>
-          <AssociationSet Name="FK_DanhGiaSanPham_KhachHang" Association="Model.FK_DanhGiaSanPham_KhachHang">
+          <AssociationSet Name="FK_RateProduct_Consumer" Association="Model.FK_RateProduct_Consumer">
             <End Role="Consumer" EntitySet="Consumers" />
             <End Role="RateProduct" EntitySet="RateProducts" />
           </AssociationSet>
-          <AssociationSet Name="FK_KhuyenMai_TrangThaiKhuyenMai" Association="Model.FK_KhuyenMai_TrangThaiKhuyenMai">
+          <AssociationSet Name="FK_Discount_StatusDiscount" Association="Model.FK_Discount_StatusDiscount">
             <End Role="StatusDiscount" EntitySet="StatusDiscounts" />
             <End Role="Discount" EntitySet="Discounts" />
           </AssociationSet>
-          <AssociationSet Name="FK_DanhGiaSanPham_SanPham" Association="Model.FK_DanhGiaSanPham_SanPham">
-            <End Role="Product" EntitySet="Products" />
-            <End Role="RateProduct" EntitySet="RateProducts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SanPham_LoaiSanPham" Association="Model.FK_SanPham_LoaiSanPham">
+          <AssociationSet Name="FK_Product_TypeProduct" Association="Model.FK_Product_TypeProduct">
             <End Role="TypeProduct" EntitySet="TypeProducts" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
-          <EntitySet Name="TypeProductSales" EntityType="Model.TypeProductSale" />
           <AssociationSet Name="FK_Product_TypeProductSale" Association="Model.FK_Product_TypeProductSale">
             <End Role="TypeProductSale" EntitySet="TypeProductSales" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
-        </EntityContainer>
+          <AssociationSet Name="FK_RateProduct_Product" Association="Model.FK_RateProduct_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="RateProduct" EntitySet="RateProducts" />
+          </AssociationSet>
+          </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
           <Property Type="Binary" Name="definition" Nullable="true" />
@@ -470,8 +471,8 @@
           <Property Name="IdAccount" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Consumers" Relationship="Model.FK_KhachHang_DangNhap" FromRole="Account" ToRole="Consumer" />
-          <NavigationProperty Name="Managers" Relationship="Model.FK_QuanLy_DangNhap" FromRole="Account" ToRole="Manager" />
+          <NavigationProperty Name="Consumers" Relationship="Model.FK_Consumer_Account" FromRole="Account" ToRole="Consumer" />
+          <NavigationProperty Name="Managers" Relationship="Model.FK_Manager_Account" FromRole="Account" ToRole="Manager" />
         </EntityType>
         <EntityType Name="Bill">
           <Key>
@@ -479,16 +480,17 @@
           </Key>
           <Property Name="IdBild" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdConsumer" Type="Int32" />
-          <Property Name="IdDiscount" Type="Int32" />
+          <Property Name="PercentDiscount" Type="Double" />
           <Property Name="IdDetailDiscount" Type="Int32" />
           <Property Name="DateOfPurchase" Type="DateTime" Precision="3" />
           <Property Name="TotalBill" Type="Int64" />
           <Property Name="TotalPay" Type="Int64" />
           <Property Name="IdDetailDelivery" Type="Int32" />
-          <NavigationProperty Name="DetailBill" Relationship="Model.FK_HoaDon_ChiTietHoaDon" FromRole="Bill" ToRole="DetailBill" />
-          <NavigationProperty Name="Consumer" Relationship="Model.FK_HoaDon_KhachHang" FromRole="Bill" ToRole="Consumer" />
-          <NavigationProperty Name="Discount" Relationship="Model.FK_HoaDon_KhuyenMai" FromRole="Bill" ToRole="Discount" />
-          <NavigationProperty Name="StatusDelivery" Relationship="Model.FK_HoaDon_TrangThaiGiaoHang" FromRole="Bill" ToRole="StatusDelivery" />
+          <Property Name="IdDetailBill" Type="Int32" />
+          <NavigationProperty Name="Consumer" Relationship="Model.FK_Bill_Consumer" FromRole="Bill" ToRole="Consumer" />
+          <NavigationProperty Name="DetailBill" Relationship="Model.FK_Bill_DetailBill" FromRole="Bill" ToRole="DetailBill" />
+          <NavigationProperty Name="Discount" Relationship="Model.FK_Bill_Discount" FromRole="Bill" ToRole="Discount" />
+          <NavigationProperty Name="StatusDelivery" Relationship="Model.FK_Bill_StatusDelivery" FromRole="Bill" ToRole="StatusDelivery" />
         </EntityType>
         <EntityType Name="Consumer">
           <Key>
@@ -502,9 +504,9 @@
           <Property Name="NumberPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Image" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="ListCart" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Account" Relationship="Model.FK_KhachHang_DangNhap" FromRole="Consumer" ToRole="Account" />
-          <NavigationProperty Name="Bills" Relationship="Model.FK_HoaDon_KhachHang" FromRole="Consumer" ToRole="Bill" />
-          <NavigationProperty Name="RateProducts" Relationship="Model.FK_DanhGiaSanPham_KhachHang" FromRole="Consumer" ToRole="RateProduct" />
+          <NavigationProperty Name="Account" Relationship="Model.FK_Consumer_Account" FromRole="Consumer" ToRole="Account" />
+          <NavigationProperty Name="Bills" Relationship="Model.FK_Bill_Consumer" FromRole="Consumer" ToRole="Bill" />
+          <NavigationProperty Name="RateProducts" Relationship="Model.FK_RateProduct_Consumer" FromRole="Consumer" ToRole="RateProduct" />
         </EntityType>
         <EntityType Name="DetailBill">
           <Key>
@@ -512,7 +514,7 @@
           </Key>
           <Property Name="IdDetailBill" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ListBill" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Bills" Relationship="Model.FK_HoaDon_ChiTietHoaDon" FromRole="DetailBill" ToRole="Bill" />
+          <NavigationProperty Name="Bills" Relationship="Model.FK_Bill_DetailBill" FromRole="DetailBill" ToRole="Bill" />
         </EntityType>
         <EntityType Name="Discount">
           <Key>
@@ -524,11 +526,11 @@
           <Property Name="DateOfStart" Type="DateTime" Precision="3" />
           <Property Name="DateOfEnd" Type="DateTime" Precision="3" />
           <Property Name="Quantity" Type="Int64" />
-          <Property Name="Percent" Type="Double" />
+          <Property Name="PercentValue" Type="Double" />
           <Property Name="Image" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="CodeDiscount" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Bills" Relationship="Model.FK_HoaDon_KhuyenMai" FromRole="Discount" ToRole="Bill" />
-          <NavigationProperty Name="StatusDiscount" Relationship="Model.FK_KhuyenMai_TrangThaiKhuyenMai" FromRole="Discount" ToRole="StatusDiscount" />
+          <NavigationProperty Name="Bills" Relationship="Model.FK_Bill_Discount" FromRole="Discount" ToRole="Bill" />
+          <NavigationProperty Name="StatusDiscount" Relationship="Model.FK_Discount_StatusDiscount" FromRole="Discount" ToRole="StatusDiscount" />
         </EntityType>
         <EntityType Name="Manager">
           <Key>
@@ -542,7 +544,7 @@
           <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Image" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Account" Relationship="Model.FK_QuanLy_DangNhap" FromRole="Manager" ToRole="Account" />
+          <NavigationProperty Name="Account" Relationship="Model.FK_Manager_Account" FromRole="Manager" ToRole="Account" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -557,9 +559,9 @@
           <Property Name="Discount" Type="Double" />
           <Property Name="Quantity" Type="Int64" />
           <Property Name="IdTypeSale" Type="Int32" />
-          <NavigationProperty Name="RateProducts" Relationship="Model.FK_DanhGiaSanPham_SanPham" FromRole="Product" ToRole="RateProduct" />
-          <NavigationProperty Name="TypeProduct" Relationship="Model.FK_SanPham_LoaiSanPham" FromRole="Product" ToRole="TypeProduct" />
+          <NavigationProperty Name="TypeProduct" Relationship="Model.FK_Product_TypeProduct" FromRole="Product" ToRole="TypeProduct" />
           <NavigationProperty Name="TypeProductSale" Relationship="Model.FK_Product_TypeProductSale" FromRole="Product" ToRole="TypeProductSale" />
+          <NavigationProperty Name="RateProducts" Relationship="Model.FK_RateProduct_Product" FromRole="Product" ToRole="RateProduct" />
         </EntityType>
         <EntityType Name="RateProduct">
           <Key>
@@ -572,8 +574,8 @@
           <Property Name="ContentRate" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="DateOfRate" Type="DateTime" Precision="3" />
           <Property Name="RateStar" Type="Int32" />
-          <NavigationProperty Name="Consumer" Relationship="Model.FK_DanhGiaSanPham_KhachHang" FromRole="RateProduct" ToRole="Consumer" />
-          <NavigationProperty Name="Product" Relationship="Model.FK_DanhGiaSanPham_SanPham" FromRole="RateProduct" ToRole="Product" />
+          <NavigationProperty Name="Consumer" Relationship="Model.FK_RateProduct_Consumer" FromRole="RateProduct" ToRole="Consumer" />
+          <NavigationProperty Name="Product" Relationship="Model.FK_RateProduct_Product" FromRole="RateProduct" ToRole="Product" />
         </EntityType>
         <EntityType Name="StatusDelivery">
           <Key>
@@ -581,7 +583,7 @@
           </Key>
           <Property Name="IdStatus" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Status" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Bills" Relationship="Model.FK_HoaDon_TrangThaiGiaoHang" FromRole="StatusDelivery" ToRole="Bill" />
+          <NavigationProperty Name="Bills" Relationship="Model.FK_Bill_StatusDelivery" FromRole="StatusDelivery" ToRole="Bill" />
         </EntityType>
         <EntityType Name="StatusDiscount">
           <Key>
@@ -589,7 +591,7 @@
           </Key>
           <Property Name="IdStatus" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Status" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Discounts" Relationship="Model.FK_KhuyenMai_TrangThaiKhuyenMai" FromRole="StatusDiscount" ToRole="Discount" />
+          <NavigationProperty Name="Discounts" Relationship="Model.FK_Discount_StatusDiscount" FromRole="StatusDiscount" ToRole="Discount" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -607,9 +609,17 @@
           </Key>
           <Property Name="IdTypeProduct" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TypeProductName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Products" Relationship="Model.FK_SanPham_LoaiSanPham" FromRole="TypeProduct" ToRole="Product" />
+          <NavigationProperty Name="Products" Relationship="Model.FK_Product_TypeProduct" FromRole="TypeProduct" ToRole="Product" />
         </EntityType>
-        <Association Name="FK_KhachHang_DangNhap">
+        <EntityType Name="TypeProductSale">
+          <Key>
+            <PropertyRef Name="IdTypeSale" />
+          </Key>
+          <Property Name="IdTypeSale" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusProduct" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="Model.FK_Product_TypeProductSale" FromRole="TypeProductSale" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_Consumer_Account">
           <End Type="Model.Account" Role="Account" Multiplicity="0..1" />
           <End Type="Model.Consumer" Role="Consumer" Multiplicity="*" />
           <ReferentialConstraint>
@@ -621,7 +631,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_QuanLy_DangNhap">
+        <Association Name="FK_Manager_Account">
           <End Type="Model.Account" Role="Account" Multiplicity="0..1" />
           <End Type="Model.Manager" Role="Manager" Multiplicity="*" />
           <ReferentialConstraint>
@@ -633,19 +643,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_HoaDon_ChiTietHoaDon">
-          <End Type="Model.DetailBill" Role="DetailBill" Multiplicity="0..1" />
-          <End Type="Model.Bill" Role="Bill" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DetailBill">
-              <PropertyRef Name="IdDetailBill" />
-            </Principal>
-            <Dependent Role="Bill">
-              <PropertyRef Name="IdDetailDiscount" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_HoaDon_KhachHang">
+        <Association Name="FK_Bill_Consumer">
           <End Type="Model.Consumer" Role="Consumer" Multiplicity="0..1" />
           <End Type="Model.Bill" Role="Bill" Multiplicity="*" />
           <ReferentialConstraint>
@@ -657,7 +655,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_HoaDon_KhuyenMai">
+        <Association Name="FK_Bill_DetailBill">
+          <End Type="Model.DetailBill" Role="DetailBill" Multiplicity="0..1" />
+          <End Type="Model.Bill" Role="Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DetailBill">
+              <PropertyRef Name="IdDetailBill" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="IdDetailBill" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_Discount">
           <End Type="Model.Discount" Role="Discount" Multiplicity="0..1" />
           <End Type="Model.Bill" Role="Bill" Multiplicity="*" />
           <ReferentialConstraint>
@@ -665,11 +675,11 @@
               <PropertyRef Name="IdDiscount" />
             </Principal>
             <Dependent Role="Bill">
-              <PropertyRef Name="IdDiscount" />
+              <PropertyRef Name="IdDetailDiscount" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_HoaDon_TrangThaiGiaoHang">
+        <Association Name="FK_Bill_StatusDelivery">
           <End Type="Model.StatusDelivery" Role="StatusDelivery" Multiplicity="0..1" />
           <End Type="Model.Bill" Role="Bill" Multiplicity="*" />
           <ReferentialConstraint>
@@ -681,7 +691,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DanhGiaSanPham_KhachHang">
+        <Association Name="FK_RateProduct_Consumer">
           <End Type="Model.Consumer" Role="Consumer" Multiplicity="0..1" />
           <End Type="Model.RateProduct" Role="RateProduct" Multiplicity="*" />
           <ReferentialConstraint>
@@ -693,7 +703,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_KhuyenMai_TrangThaiKhuyenMai">
+        <Association Name="FK_Discount_StatusDiscount">
           <End Type="Model.StatusDiscount" Role="StatusDiscount" Multiplicity="0..1" />
           <End Type="Model.Discount" Role="Discount" Multiplicity="*" />
           <ReferentialConstraint>
@@ -705,19 +715,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DanhGiaSanPham_SanPham">
-          <End Type="Model.Product" Role="Product" Multiplicity="0..1" />
-          <End Type="Model.RateProduct" Role="RateProduct" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="IdProduct" />
-            </Principal>
-            <Dependent Role="RateProduct">
-              <PropertyRef Name="IdProduct" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SanPham_LoaiSanPham">
+        <Association Name="FK_Product_TypeProduct">
           <End Type="Model.TypeProduct" Role="TypeProduct" Multiplicity="0..1" />
           <End Type="Model.Product" Role="Product" Multiplicity="*" />
           <ReferentialConstraint>
@@ -729,14 +727,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="TypeProductSale">
-          <Key>
-            <PropertyRef Name="IdTypeSale" />
-          </Key>
-          <Property Name="IdTypeSale" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StatusProduct" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Products" Relationship="Model.FK_Product_TypeProductSale" FromRole="TypeProductSale" ToRole="Product" />
-        </EntityType>
         <Association Name="FK_Product_TypeProductSale">
           <End Type="Model.TypeProductSale" Role="TypeProductSale" Multiplicity="0..1" />
           <End Type="Model.Product" Role="Product" Multiplicity="*" />
@@ -749,7 +739,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <Association Name="FK_RateProduct_Product">
+          <End Type="Model.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="Model.RateProduct" Role="RateProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="IdProduct" />
+            </Principal>
+            <Dependent Role="RateProduct">
+              <PropertyRef Name="IdProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -791,12 +793,13 @@
           <EntitySetMapping Name="Bills">
             <EntityTypeMapping TypeName="Model.Bill">
               <MappingFragment StoreEntitySet="Bill">
+                <ScalarProperty Name="IdDetailBill" ColumnName="IdDetailBill" />
                 <ScalarProperty Name="IdDetailDelivery" ColumnName="IdDetailDelivery" />
                 <ScalarProperty Name="TotalPay" ColumnName="TotalPay" />
                 <ScalarProperty Name="TotalBill" ColumnName="TotalBill" />
                 <ScalarProperty Name="DateOfPurchase" ColumnName="DateOfPurchase" />
                 <ScalarProperty Name="IdDetailDiscount" ColumnName="IdDetailDiscount" />
-                <ScalarProperty Name="IdDiscount" ColumnName="IdDiscount" />
+                <ScalarProperty Name="PercentDiscount" ColumnName="PercentDiscount" />
                 <ScalarProperty Name="IdConsumer" ColumnName="IdConsumer" />
                 <ScalarProperty Name="IdBild" ColumnName="IdBild" />
               </MappingFragment>
@@ -829,7 +832,7 @@
               <MappingFragment StoreEntitySet="Discount">
                 <ScalarProperty Name="CodeDiscount" ColumnName="CodeDiscount" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
-                <ScalarProperty Name="Percent" ColumnName="Percent" />
+                <ScalarProperty Name="PercentValue" ColumnName="PercentValue" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="DateOfEnd" ColumnName="DateOfEnd" />
                 <ScalarProperty Name="DateOfStart" ColumnName="DateOfStart" />
@@ -924,7 +927,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

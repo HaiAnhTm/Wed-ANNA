@@ -28,7 +28,7 @@
                             </td>
                             <td>
                                 <h5 style="width:300px;height:90px;">@item.NameProduct</h5>
-                                <h7>@item.CurrencyString()/1 chiếc</h7>
+                                <h7>@item.Price/1 chiếc</h7>
                             </td>
                             <td>
                                 <div class="row">
@@ -83,7 +83,7 @@
                             Giảm giá:
                         </div>
                         <div class="col">
-                            @((Model.Discount != null ? Model.Discount.Percent : 0) + " %")
+                            @((Model.Discount != null ? Model.Discount.PercentValue : 0) + " %")
                         </div>
                     </div>
 
