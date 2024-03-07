@@ -106,7 +106,7 @@
                     </div>
                 </div>
                 <div style="margin-top:20px ; margin-bottom:30px;">
-                    <button type="button" class="btn btn-outline-secondary rounded-pill" onclick="HuyThanhToan()">Hủy</button>
+                    <button type="button" class="btn btn-outline-secondary rounded-pill" onclick="actionCancelBill()">Hủy</button>
                     <button type="button" class="btn btn-danger rounded-pill" onclick="actionPayBill()">Thanh toán</button>
                 </div>
             </div>
@@ -206,6 +206,28 @@
         function actionPayBill() {
             $.ajax({
                 url: '@Url.Action("PayBill", "ConsumerProduct")',
+                type: 'POST',
+                data: {},
+                success: function (result) {
+                    if (result.status) {
+                        toastr.options.closeButton = true;
+                        toastr.success(result.message, 'Giỏ hàng');
+                        setTimeout(function () {
+                            location.reload();
+                        }, 500);
+                    } else {
+                        toastr.options.closeButton = true;
+                        toastr.warning(result.message, 'Giỏ hàng');
+                    }
+                },
+                error: function () {
+                    console.error("AJAX request failed");
+                }
+            });
+        }
+        function actionCancelBill() {
+            $.ajax({
+                url: '@Url.Action("CancelBill", "ConsumerProduct")',
                 type: 'POST',
                 data: {},
                 success: function (result) {

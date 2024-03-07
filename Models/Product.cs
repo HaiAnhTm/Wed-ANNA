@@ -42,17 +42,18 @@ namespace DotNet_E_Commerce_Glasses_Web.Models
         public int IdProduct { get; set; }
         public Nullable<int> IdTypeProduct { get; set; }
         public string NameProduct { get; set; }
-        public long Price { get; set; }
+        public Nullable<long> Price { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
         public Nullable<double> Discount { get; set; }
-        public long Quantity { get; set; }
-        public int IdTypeSale { get; set; }
+        public Nullable<long> Quantity { get; set; }
+        public Nullable<int> IdTypeSale { get; set; }
     
+        public virtual TypeProduct TypeProduct { get; set; }
+        public virtual TypeProductSale TypeProductSale { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RateProduct> RateProducts { get; set; }
-        public virtual TypeProductSale TypeProductSale { get; set; }
-        public virtual TypeProduct TypeProduct { get; set; }
+
         public HttpPostedFileBase ImageFile { get; set; }
 
         public string CurrencyString() => CurrencyUtils.CurrencyConvertToString(this.Price);

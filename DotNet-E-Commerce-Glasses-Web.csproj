@@ -2511,10 +2511,6 @@
     <Content Include="Views\ManagerProduct\Details.cshtml" />
     <Content Include="Views\ManagerProduct\Edit.cshtml" />
     <Content Include="Views\ManagerProduct\Index.cshtml" />
-    <Content Include="Views\ManagerDiscount\Create.cshtml" />
-    <Content Include="Views\ManagerDiscount\Delete.cshtml" />
-    <Content Include="Views\ManagerDiscount\Details.cshtml" />
-    <Content Include="Views\ManagerDiscount\Edit.cshtml" />
     <Content Include="Views\ManagerDiscount\Index.cshtml" />
     <Content Include="Views\ManagerConsumer\Create.cshtml" />
     <Content Include="Views\ManagerConsumer\Delete.cshtml" />

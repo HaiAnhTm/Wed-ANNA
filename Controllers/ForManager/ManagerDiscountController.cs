@@ -45,10 +45,10 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
                     discounts.Sort((first, second) => first.TitleDiscount.CompareTo(second.TitleDiscount));
                     break;
                 case 2:
-                    discounts.Sort((first, second) => first.Quantity.CompareTo(second.Quantity));
+                    discounts.Sort((first, second) => first.Quantity.Value.CompareTo(second.Quantity));
                     break;
                 case 3:
-                    discounts.Sort((first, second) => first.Percent.CompareTo(second.Percent));
+                    discounts.Sort((first, second) => first.PercentValue.Value.CompareTo(second.PercentValue));
                     break;
                 default:
                     break;

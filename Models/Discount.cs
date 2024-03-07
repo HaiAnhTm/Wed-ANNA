@@ -24,19 +24,18 @@ namespace DotNet_E_Commerce_Glasses_Web.Models
         public int IdDiscount { get; set; }
         public Nullable<int> IdStatus { get; set; }
         public string TitleDiscount { get; set; }
-        public DateTime DateOfStart { get; set; }
-        public DateTime DateOfEnd { get; set; }
-        public long Quantity { get; set; }
-        public double Percent { get; set; }
+        public Nullable<System.DateTime> DateOfStart { get; set; }
+        public Nullable<System.DateTime> DateOfEnd { get; set; }
+        public Nullable<long> Quantity { get; set; }
+        public Nullable<double> PercentValue { get; set; }
         public string Image { get; set; }
         public string CodeDiscount { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bill> Bills { get; set; }
         public virtual StatusDiscount StatusDiscount { get; set; }
-
         public HttpPostedFileBase ImageFile { get; set; }
-        public string DateOfStartStr() => this.DateOfStart.ToString("dd/MM/yyyy");
-        public string DateOfEndStr() => this.DateOfEnd.ToString("dd/MM/yyyy");
+        public string DateOfStartStr() => this.DateOfStart?.ToString("dd/MM/yyyy");
+        public string DateOfEndStr() => this.DateOfEnd?.ToString("dd/MM/yyyy");
     }
 }

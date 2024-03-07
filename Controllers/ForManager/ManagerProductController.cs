@@ -31,10 +31,10 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
                     products.Sort((first, second) => first.NameProduct.CompareTo(second.NameProduct));
                     break;
                 case 2:
-                    products.Sort((first, second) => first.Quantity.CompareTo(second.Quantity));
+                    products.Sort((first, second) => first.Quantity.Value.CompareTo(second.Quantity));
                     break;
                 case 3:
-                    products.Sort((first, second) => first.Price.CompareTo(second.Price));
+                    products.Sort((first, second) => first.Price.Value.CompareTo(second.Price));
                     break;
                 default:
                     break;
