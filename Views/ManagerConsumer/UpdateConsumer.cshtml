@@ -1,0 +1,117 @@
+﻿@model DotNet_E_Commerce_Glasses_Web.Models.Consumer
+
+@{
+    ViewBag.Title = "Cập nhật khách hàng";
+    Layout = Model != null ? "~/Views/Shared/_LayoutConsumer.cshtml" : "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Cập nhật khách hàng</h2>
+
+@using (Html.BeginForm("UpdateConsumer", "ManagerConsumer", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal" style="width:80%">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.IdConsumer)
+        @Html.HiddenFor(model => model.IdAccount)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.DateOfBirth, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NumberPhone, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NumberPhone, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NumberPhone, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @*Chọn hình ảnh*@
+        <div class="form-group">
+            <label for="Image">Hình Ảnh</label>
+            <input type="text" hidden name="Image" value="@Model.Image" />
+            <input type="file" style="width:83%" id="HinhAnh" class="form-control " accept="image/*" name="ImageFile" />
+            @Html.ValidationMessage("HinhAnh", new { @class = "text-danger" })
+            <img src="@Model.Image" style="width: 200px; " id="showImage" />
+        </div>
+
+        <div class="form-group" style="margin-top:20px;">
+            <div class="form-group ">
+                <button type="button" class="btn btn-outline-secondary rounded-pill" onclick="showDialogChangePassword()">Thay đổi mật khẩu </button>
+            </div>
+
+            <div class="form-group" style="margin-top:20px;">
+                <button type="submit" class="btn btn-outline-secondary rounded-pill">Lưu</button>
+            </div>
+        </div>
+    </div>
+}
+
+@*Dialog thay đổi mật khẩu*@
+<div class="modal" id="dialog_change_password">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thay đổi mật khẩu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form>
+                    <input hidden value="@Model.IdAccount" id="account_id" />
+                    <div class="form-group">
+                        <label class="form-label mt-4">Mật khẩu cũ: </label>
+                        <input type="password" class="form-control rounded-pill" id="password_old" placeholder="Mật khẩu củ">
+                        <span class="text-warning" id="notify_password_old"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label mt-4">Mật khẩu mới: </label>
+                        <input type="password" class="form-control rounded-pill" id="password_new" placeholder="Mật khẩu mới">
+                        <span class="text-warning" id="notify_password_new"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label mt-4">Xác nhận mật khẩu: </label>
+                        <input type="password" class="form-control rounded-pill" id="password_repeat" placeholder="Xác nhận mật khẩu mới">
+                        <span class="text-warning" id="notify_password_repeat"></span>
+                    </div>
+                </form>
+            </div>
+
+            <span class="text-warning" id="notify_status"></span>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary rounded-pill" onclick="actionUpdatePassword()">Cập nhật</button>
+                <button type="button" class="btn btn-dark rounded-pill" data-bs-dismiss="modal" aria-label="Close">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts  {
+    <script src="~/Assets/scripts/UpdateConsumer.js"></script>
+}
+

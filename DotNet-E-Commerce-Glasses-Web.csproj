@@ -2326,6 +2326,7 @@
     <Content Include="Assets\scripts\ManagerTypeProduct.js" />
     <Content Include="Assets\scripts\ManagerUpdateDiscount.js" />
     <Content Include="Assets\scripts\RegisterAccount.js" />
+    <Content Include="Assets\scripts\UpdateConsumer.js" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -2496,11 +2497,8 @@
     <Content Include="Scripts\jquery-3.7.1.slim.min.map" />
     <Content Include="Views\RegisterAccount\Index.cshtml" />
     <Content Include="Views\LoginAccount\Index.cshtml" />
-    <Content Include="Views\ConsumerProduct\Create.cshtml" />
-    <Content Include="Views\ConsumerProduct\Delete.cshtml" />
     <Content Include="Views\ConsumerProduct\DetailProduct.cshtml" />
-    <Content Include="Views\ConsumerProduct\Edit.cshtml" />
-    <Content Include="Views\ConsumerProduct\Index.cshtml" />
+    <Content Include="Views\ConsumerProduct\UpdateConsumer.cshtml" />
     <Content Include="Views\ManagerBill\Create.cshtml" />
     <Content Include="Views\ManagerBill\Delete.cshtml" />
     <Content Include="Views\ManagerBill\Details.cshtml" />
@@ -2515,8 +2513,7 @@
     <Content Include="Views\ManagerConsumer\Create.cshtml" />
     <Content Include="Views\ManagerConsumer\Delete.cshtml" />
     <Content Include="Views\ManagerConsumer\Details.cshtml" />
-    <Content Include="Views\ManagerConsumer\Edit.cshtml" />
-    <Content Include="Views\ManagerConsumer\Index.cshtml" />
+    <Content Include="Views\ManagerConsumer\UpdateConsumer.cshtml" />
     <Content Include="Views\Shared\_LayoutConsumer.cshtml" />
     <Content Include="Views\Shared\_LayoutManager.cshtml" />
     <Content Include="Views\Shared\_LayoutNoNavigation.cshtml" />
@@ -2531,6 +2528,8 @@
     <Content Include="Views\ManagerDiscount\UpdateDiscount.cshtml" />
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />
     <Content Include="Views\ConsumerProduct\ConsumerCart.cshtml" />
+    <Content Include="Views\ConsumerProduct\Index.cshtml" />
+    <Content Include="Views\ManagerConsumer\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

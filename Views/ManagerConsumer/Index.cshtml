@@ -1,14 +1,12 @@
 ﻿@model IEnumerable<DotNet_E_Commerce_Glasses_Web.Models.Consumer>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Danh sách khách hàng";
+    Layout = Model != null ? "~/Views/Shared/_LayoutManager.cshtml" : "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Danh sách khách hàng</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -29,10 +27,6 @@
         <th>
             @Html.DisplayNameFor(model => model.ListCart)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Account.Username)
-        </th>
-        <th></th>
     </tr>
 
 @foreach (var item in Model) {
@@ -50,20 +44,11 @@
             @Html.DisplayFor(modelItem => item.NumberPhone)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Image)
+            <img src="@item.Image" style="width: 200px;"/>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ListCart)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Account.Username)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IdConsumer }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IdConsumer }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IdConsumer })
-        </td>
     </tr>
 }
-
 </table>

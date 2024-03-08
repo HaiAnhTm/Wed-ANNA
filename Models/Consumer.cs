@@ -11,7 +11,8 @@ namespace DotNet_E_Commerce_Glasses_Web.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Web;
+
     public partial class Consumer
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -35,5 +36,6 @@ namespace DotNet_E_Commerce_Glasses_Web.Models
         public virtual ICollection<Bill> Bills { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RateProduct> RateProducts { get; set; }
+        public HttpPostedFileBase ImageFile { get; set; }
     }
 }

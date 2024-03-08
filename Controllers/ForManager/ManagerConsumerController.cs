@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,6 +6,10 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DotNet_E_Commerce_Glasses_Web.Models;
+using System.IO;
+using DotNet_E_Commerce_Glasses_Web.Sessions;
+using System.Data.Entity.Migrations;
+using DotNet_E_Commerce_Glasses_Web.Utils;
 
 namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
 {
@@ -15,110 +17,95 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
     {
         private GlassesEntities db = new GlassesEntities();
 
-        // GET: ManagerConsumer
         public async Task<ActionResult> Index()
         {
             var consumers = db.Consumers.Include(c => c.Account);
             return View(await consumers.ToListAsync());
         }
 
-        // GET: ManagerConsumer/Details/5
-        public async Task<ActionResult> Details(int? id)
+        public ActionResult UpdateConsumer()
         {
-            if (id == null)
+            if (int.TryParse(ConsumerSession.getConsumerSession(), out int id))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                Consumer consumer = db.Consumers.Find(id);
+                if (consumer == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.Consumer = consumer;
+                return View(consumer);
             }
-            Consumer consumer = await db.Consumers.FindAsync(id);
-            if (consumer == null)
-            {
-                return HttpNotFound();
-            }
-            return View(consumer);
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
-
-        // GET: ManagerConsumer/Create
-        public ActionResult Create()
-        {
-            ViewBag.IdAccount = new SelectList(db.Accounts, "IdAccount", "Username");
-            return View();
-        }
-
-        // POST: ManagerConsumer/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "IdConsumer,IdAccount,Username,Address,DateOfBirth,NumberPhone,Image,ListCart")] Consumer consumer)
+        public async Task<ActionResult> UpdateConsumer([Bind(Include = "IdConsumer,IdAccount,Username,Address,DateOfBirth,NumberPhone,Image,ImageFile")] Consumer consumer)
         {
             if (ModelState.IsValid)
             {
-                db.Consumers.Add(consumer);
+                if (consumer.ImageFile != null)
+                {
+                    var fileSave = MoveImageToProject(consumer.ImageFile);
+                    if (fileSave  != null)
+                        consumer.Image = fileSave;
+                }
+                db.Consumers.AddOrUpdate(consumer);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("UpdateConsumer");
             }
-
-            ViewBag.IdAccount = new SelectList(db.Accounts, "IdAccount", "Username", consumer.IdAccount);
+            ViewBag.Consumer = consumer;
             return View(consumer);
         }
-
-        // GET: ManagerConsumer/Edit/5
-        public async Task<ActionResult> Edit(int? id)
+        private string MoveImageToProject(HttpPostedFileBase file)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (file != null && file.ContentLength > 0)
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(file.FileName);
+                    string extension = Path.GetExtension(file.FileName);
+                    fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+
+                    string folderPath = @"~\Assets\images\images_Consumer\";
+
+                    string fullPath = Path.Combine(Server.MapPath(folderPath), fileName);
+
+                    file.SaveAs(fullPath);
+
+                    return Path.Combine(folderPath, fileName).Replace("~", "");
+                }
+                else
+                {
+                    return null;
+                }
             }
-            Consumer consumer = await db.Consumers.FindAsync(id);
-            if (consumer == null)
+            catch (Exception)
             {
-                return HttpNotFound();
+                return null;
             }
-            ViewBag.IdAccount = new SelectList(db.Accounts, "IdAccount", "Username", consumer.IdAccount);
-            return View(consumer);
         }
 
-        // POST: ManagerConsumer/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "IdConsumer,IdAccount,Username,Address,DateOfBirth,NumberPhone,Image,ListCart")] Consumer consumer)
+        public async Task<JsonResult> UpdatePassword(int accountId, string oldPassword, string newPassword)
         {
-            if (ModelState.IsValid)
+            var account = db.Accounts.FirstOrDefault(item => item.IdAccount.Equals(accountId));
+            if (account != null)
             {
-                db.Entry(consumer).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                if (account.Password.Equals(PasswordSercurity.GetMD5(oldPassword))) 
+                {
+                    account.Password = PasswordSercurity.GetMD5(newPassword);
+                    db.Accounts.AddOrUpdate(account);
+                    await db.SaveChangesAsync();
+                    return Json(new { 
+                        status = true, 
+                        message = "Cập nhật mật khẩu thành công" 
+                    });
+                }
+                else
+                    return Json(new { status = false, message = "Mật khẩu cũ không chính xác!" });
             }
-            ViewBag.IdAccount = new SelectList(db.Accounts, "IdAccount", "Username", consumer.IdAccount);
-            return View(consumer);
-        }
-
-        // GET: ManagerConsumer/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Consumer consumer = await db.Consumers.FindAsync(id);
-            if (consumer == null)
-            {
-                return HttpNotFound();
-            }
-            return View(consumer);
-        }
-
-        // POST: ManagerConsumer/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
-        {
-            Consumer consumer = await db.Consumers.FindAsync(id);
-            db.Consumers.Remove(consumer);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            else
+                return Json(new { status = false, message = "Lỗi cập nhật!" });
         }
 
         protected override void Dispose(bool disposing)

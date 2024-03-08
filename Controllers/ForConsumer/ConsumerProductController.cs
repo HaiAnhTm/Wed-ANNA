@@ -5,7 +5,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using DotNet_E_Commerce_Glasses_Web.Models;
 using DotNet_E_Commerce_Glasses_Web.Utils;
@@ -13,8 +12,6 @@ using Microsoft.Ajax.Utilities;
 using DotNet_E_Commerce_Glasses_Web.Sessions;
 using PagedList;
 using System.Data.Entity.Migrations;
-using DotNet_E_Commerce_Glasses_Web.App_Start;
-using System.Runtime.ConstrainedExecution;
 
 namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
 {
