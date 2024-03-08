@@ -1,4 +1,4 @@
-﻿﻿@model IEnumerable<DotNet_E_Commerce_Glasses_Web.Models.Bill>
+﻿@model IEnumerable<DotNet_E_Commerce_Glasses_Web.Models.Bill>
 
 @{
     ViewBag.Title = "Danh sách hóa đơn";
@@ -6,6 +6,7 @@
 }
 
 <h2>Danh sách hóa đơn</h2>
+
 <div class="container-xxl">
     <table class="table">
         <tr>
@@ -16,13 +17,16 @@
                 @Html.DisplayNameFor(model => model.TotalBill)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Discount)
+                @Html.DisplayNameFor(model => model.PercentDiscount)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TotalPay)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Consumer.Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StatusDelivery.Status)
             </th>
             <th></th>
         </tr>
@@ -31,29 +35,35 @@
         {
             <tr>
                 <td>
-                    <p>@item.DatePurchaseStr()</p>
+                    <p>@item.datePurchaseStr()</p>
                 </td>
                 <td>
-                    <p>@item.CurrencyTotalBill()</p>
+                    <p>@item.currencyTotalBill()</p>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Discount) %
+                    <p>@item.valuePercent()</p>
                 </td>
                 <td>
-                    <p>@item.CurrencyTotalPay()</p>
+                    <p>@item.currencyTotalPay()</p>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Consumer.Username)
                 </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.StatusDelivery.Status)
+                </th>
                 <td>
-                    <button class="btn btn-outline-secondary" onclick="DialogChiTiet(`@item.IdBild`)">Chi tiết</button>
+                    <button class="btn btn-outline-secondary" onclick="actionDialogDetailBill(`@item.IdBild`)">Chi tiết</button>
                 </td>
             </tr>
         }
     </table>
 </div>
-<div class="modal" id="modalDialog">
+
+
+<div class="modal" id="dialog_detail_bill">
 </div>
+
 @section Scripts  {
-    <script src="~/Assets/scripts/ManageBill.js"></script>
+    <script src="~/Assets/scripts/ManagerBill.js"></script>
 }

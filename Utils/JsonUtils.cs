@@ -46,6 +46,5 @@ namespace DotNet_E_Commerce_Glasses_Web.Utils
         }
         public static string convertDicToCartJson(Dictionary<int, int> dic) => JsonConvert.SerializeObject(dic);
 
-
     }
 }

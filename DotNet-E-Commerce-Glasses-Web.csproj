@@ -213,6 +213,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GlassesEntity.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\ItemListBill.cs" />
     <Compile Include="Models\Manager.cs">
       <DependentUpon>GlassesEntity.tt</DependentUpon>
     </Compile>
@@ -2320,6 +2321,7 @@
     <Content Include="Assets\scripts\ConsumerProduct.js" />
     <Content Include="Assets\scripts\LogInAccount.js" />
     <Content Include="Assets\scripts\ManageBill.js" />
+    <Content Include="Assets\scripts\ManagerBill.js" />
     <Content Include="Assets\scripts\ManagerCreateDiscount.js" />
     <Content Include="Assets\scripts\ManagerDiscountIndex.js" />
     <Content Include="Assets\scripts\ManagerProductIndex.js" />
@@ -2499,11 +2501,6 @@
     <Content Include="Views\LoginAccount\Index.cshtml" />
     <Content Include="Views\ConsumerProduct\DetailProduct.cshtml" />
     <Content Include="Views\ConsumerProduct\UpdateConsumer.cshtml" />
-    <Content Include="Views\ManagerBill\Create.cshtml" />
-    <Content Include="Views\ManagerBill\Delete.cshtml" />
-    <Content Include="Views\ManagerBill\Details.cshtml" />
-    <Content Include="Views\ManagerBill\Edit.cshtml" />
-    <Content Include="Views\ManagerBill\Index.cshtml" />
     <Content Include="Views\ManagerProduct\Create.cshtml" />
     <Content Include="Views\ManagerProduct\Delete.cshtml" />
     <Content Include="Views\ManagerProduct\Details.cshtml" />
@@ -2530,6 +2527,11 @@
     <Content Include="Views\ConsumerProduct\ConsumerCart.cshtml" />
     <Content Include="Views\ConsumerProduct\Index.cshtml" />
     <Content Include="Views\ManagerConsumer\Index.cshtml" />
+    <Content Include="Views\ManagerBill\Create.cshtml" />
+    <Content Include="Views\ManagerBill\Delete.cshtml" />
+    <Content Include="Views\ManagerBill\Details.cshtml" />
+    <Content Include="Views\ManagerBill\Edit.cshtml" />
+    <Content Include="Views\ManagerBill\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

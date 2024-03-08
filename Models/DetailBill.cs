@@ -9,6 +9,7 @@
 
 namespace DotNet_E_Commerce_Glasses_Web.Models
 {
+    using DotNet_E_Commerce_Glasses_Web.Utils;
     using System;
     using System.Collections.Generic;
     
@@ -21,9 +22,17 @@ namespace DotNet_E_Commerce_Glasses_Web.Models
         }
     
         public int IdDetailBill { get; set; }
-        public string ListBill { get; set; }
+        public string ListBill { private get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bill> Bills { get; set; }
+
+        public Dictionary<int, int> listProductDetail() => JsonUtils.convertJsonCartToDic(this.ListBill);
+
+        public void setListBill(Dictionary<int, int> listDic)
+        {
+            this.ListBill = JsonUtils.convertDicToCartJson(listDic);
+        }
+    
     }
 }

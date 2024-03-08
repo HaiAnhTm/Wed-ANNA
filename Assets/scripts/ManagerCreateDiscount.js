@@ -13,7 +13,6 @@ buttonCreateCode.addEventListener('click', function (event) {
     )
 })
 
-
 async function getCodeDiscount(
     onSuccess,
     onFailure

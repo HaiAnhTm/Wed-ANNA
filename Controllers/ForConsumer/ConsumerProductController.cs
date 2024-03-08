@@ -344,6 +344,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
                 bill.DateOfPurchase = DateTime.Now;
                 bill.TotalBill = CalculatorTotalBill(temp);
                 bill.TotalPay = CalculatorTotalPay(bill);
+                bill.StatusDelivery = await db.StatusDeliveries.FirstOrDefaultAsync(item => item.Status.Equals("Chưa giao hàng"));
 
                 dicCart.Clear();
                 consumer.ListCart = string.Empty;

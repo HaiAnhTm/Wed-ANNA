@@ -16,7 +16,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
     public class ManagerConsumerController : Controller
     {
         private GlassesEntities db = new GlassesEntities();
-
+    
         public async Task<ActionResult> Index()
         {
             var consumers = db.Consumers.Include(c => c.Account);

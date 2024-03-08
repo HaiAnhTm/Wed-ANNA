@@ -32,5 +32,6 @@ namespace DotNet_E_Commerce_Glasses_Web.Models
         public string datePurchaseStr() => this.DateOfPurchase?.ToString("dd/MM/yyyy");
         public string currencyTotalBill() => CurrencyUtils.CurrencyConvertToString(this.TotalBill);
         public string currencyTotalPay() => CurrencyUtils.CurrencyConvertToString(this.TotalPay);
+        public string valuePercent() => this.PercentDiscount?.ToString() ?? "0" + "%";
     }
 }
