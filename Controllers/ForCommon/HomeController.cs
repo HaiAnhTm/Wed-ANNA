@@ -7,7 +7,9 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers
 {
     public class HomeController : Controller
     {
-        private GlassesEntities db = new GlassesEntities();
+        private readonly GlassesEntities db = new GlassesEntities();
+
+        [HttpGet]
         public ActionResult Index()
         {
             var consumerId = ConsumerSession.getConsumerSession();

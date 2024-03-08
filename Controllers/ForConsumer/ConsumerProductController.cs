@@ -19,9 +19,9 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
     {
         private GlassesEntities db = new GlassesEntities();
 
-        private Dictionary<int, int> dicCart;
-        private Consumer consumer;
-        private Bill bill;
+        private readonly Dictionary<int, int> dicCart;
+        private readonly Consumer consumer;
+        private readonly Bill bill;
 
         public ConsumerProductController()
         {

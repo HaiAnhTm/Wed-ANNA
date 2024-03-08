@@ -8,17 +8,14 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForCommon
 {
     public class RegisterAccountController : Controller
     {
-        private GlassesEntities db = new GlassesEntities();
+        private readonly GlassesEntities db = new GlassesEntities();
 
-        public ActionResult Index()
-        {
-            return View();
-        }
+        [HttpGet]
+        public ActionResult Index() => View();
 
         [HttpPost]
         public async Task<ActionResult> Index([Bind(Include = "IdAccount,Username,Password")] Account account, [Bind(Include = "Name")] string Name)
         {
-
             if (ModelState.IsValid)
             {
                 account.Password = PasswordSercurity.GetMD5(account.Password);

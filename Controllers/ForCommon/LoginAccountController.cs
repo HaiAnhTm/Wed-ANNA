@@ -10,8 +10,9 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForCommon
 {
     public class LoginAccountController : Controller
     {
-        private GlassesEntities db = new GlassesEntities();
+        private readonly GlassesEntities db = new GlassesEntities();
 
+        [HttpGet]
         public ActionResult Index()
         {
             Session.RemoveAll();
