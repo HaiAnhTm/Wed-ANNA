@@ -2,14 +2,14 @@
 
 namespace DotNet_E_Commerce_Glasses_Web.Models
 {
-    public class ProductSale : Product
+    public class ProductSaleModel : Product
     {
         public int QuanitySale { get; set; }
-        public ProductSale(int quanitySale, Product product) : base(product)
+        public ProductSaleModel(int quanitySale, Product product) : base(product)
         {
             this.QuanitySale = quanitySale;
         }
-        public ProductSale(int quanitySale)
+        public ProductSaleModel(int quanitySale)
         {
             this.QuanitySale = quanitySale;
         }

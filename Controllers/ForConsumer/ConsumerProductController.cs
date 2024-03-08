@@ -120,7 +120,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
         }
 
         // Function tính tổng hóa đơn
-        private long CalculatorTotalBill(Dictionary<int, ProductSale> dicSale)
+        private long CalculatorTotalBill(Dictionary<int, ProductSaleModel> dicSale)
         {
             long result = 0;
             dicSale.Values.ForEach(item => result += item.QuanitySale * item.Price.Value);
@@ -149,7 +149,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
                 }
 
 
-                Dictionary<int, ProductSale> temp = new Dictionary<int, ProductSale>();
+                Dictionary<int, ProductSaleModel> temp = new Dictionary<int, ProductSaleModel>();
                 if (dicCart != null)
                 {
                     foreach (var pair in dicCart)
@@ -158,7 +158,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
                         var value = pair.Value;
                         var product = await db.Products.FindAsync(key);
                         if (product != null)
-                            temp.Add(key, new ProductSale(value, product));
+                            temp.Add(key, new ProductSaleModel(value, product));
                     }
                 }
                 bill.TotalBill = CalculatorTotalBill(temp);
@@ -178,14 +178,14 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
                 return RedirectToAction("DangNhap", "DangNhap");
             else
             {
-                Dictionary<int, ProductSale> temp = new Dictionary<int, ProductSale>();
+                Dictionary<int, ProductSaleModel> temp = new Dictionary<int, ProductSaleModel>();
                 if (dicCart != null)
                 {
                     foreach (var pair in dicCart)
                     {
                         var key = pair.Key;
                         var value = pair.Value;
-                        temp.Add(key, new ProductSale(value, db.Products.FirstOrDefault(item => item.IdProduct.Equals(key))));
+                        temp.Add(key, new ProductSaleModel(value, db.Products.FirstOrDefault(item => item.IdProduct.Equals(key))));
                     }
                 }
                 bill.TotalBill = CalculatorTotalBill(temp);
@@ -320,7 +320,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
                 await db.SaveChangesAsync();
 
 
-                Dictionary<int, ProductSale> temp = new Dictionary<int, ProductSale>();
+                Dictionary<int, ProductSaleModel> temp = new Dictionary<int, ProductSaleModel>();
 
                 if (dicCart != null)
                 {
@@ -332,7 +332,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
 
                         if (product != null)
                         {
-                            temp.Add(key, new ProductSale(value, product));
+                            temp.Add(key, new ProductSaleModel(value, product));
                             product.Quantity -= value;
                             db.Products.AddOrUpdate(product);
                             await db.SaveChangesAsync();

@@ -12,7 +12,8 @@ namespace DotNet_E_Commerce_Glasses_Web.Models
     using DotNet_E_Commerce_Glasses_Web.Utils;
     using System;
     using System.Collections.Generic;
-    
+    using System.Linq;
+
     public partial class DetailBill
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -33,6 +34,16 @@ namespace DotNet_E_Commerce_Glasses_Web.Models
         {
             this.ListBill = JsonUtils.convertDicToCartJson(listDic);
         }
-    
+
+        public int totalQuanityProduct()
+        {
+            int result = 0;
+            var dicProduct = listProductDetail();
+            if (dicProduct != null)
+                foreach (var item in dicProduct.Values.ToList())
+                    result += item;
+            return result;
+        }
+
     }
 }

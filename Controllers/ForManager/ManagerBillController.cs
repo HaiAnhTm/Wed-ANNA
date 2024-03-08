@@ -36,15 +36,15 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
                     },
                     message = ""
                 });
-            Dictionary<int, ProductSale> productSaleDic = bill.DetailBill
+            Dictionary<int, ProductSaleModel> productSaleDic = bill.DetailBill
              .listProductDetail()
              .ToDictionary(
                  item => item.Key,
-                 item => new ProductSale(item.Value, db.Products.FirstOrDefault(sanPham => sanPham.IdProduct.Equals(item.Key)) ?? new ProductSale(item.Value))
+                 item => new ProductSaleModel(item.Value, db.Products.FirstOrDefault(sanPham => sanPham.IdProduct.Equals(item.Key)) ?? new ProductSaleModel(item.Value))
              );
 
-            List<ItemListBill> listBill = new List<ItemListBill>();
-            productSaleDic.Values.ToList().ForEach(item => listBill.Add(new ItemListBill(item.NameProduct, item.QuanitySale)));
+            List<ItemListBillModel> listBill = new List<ItemListBillModel>();
+            productSaleDic.Values.ToList().ForEach(item => listBill.Add(new ItemListBillModel(item.NameProduct, item.QuanitySale)));
             return Json(new { 
                 status = true, 
                 data =  new {

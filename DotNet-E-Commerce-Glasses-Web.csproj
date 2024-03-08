@@ -175,6 +175,7 @@
     <Compile Include="Controllers\ForCommon\LoginAccountController.cs" />
     <Compile Include="Controllers\ForCommon\RegisterAccountController.cs" />
     <Compile Include="Controllers\ForConsumer\ConsumerProductController.cs" />
+    <Compile Include="Controllers\ForManager\DashBoardController.cs" />
     <Compile Include="Controllers\ForManager\ManagerBillController.cs" />
     <Compile Include="Controllers\ForManager\ManagerConsumerController.cs" />
     <Compile Include="Controllers\ForManager\ManagerDiscountController.cs" />
@@ -192,6 +193,7 @@
     <Compile Include="Models\Consumer.cs">
       <DependentUpon>GlassesEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DashBoardModel.cs" />
     <Compile Include="Models\DetailBill.cs">
       <DependentUpon>GlassesEntity.tt</DependentUpon>
     </Compile>
@@ -213,14 +215,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GlassesEntity.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\ItemListBill.cs" />
+    <Compile Include="Models\ItemListBillModel.cs" />
     <Compile Include="Models\Manager.cs">
       <DependentUpon>GlassesEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Product.cs">
       <DependentUpon>GlassesEntity.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ProductSale.cs" />
+    <Compile Include="Models\ProductSaleModel.cs" />
     <Compile Include="Models\RateProduct.cs">
       <DependentUpon>GlassesEntity.tt</DependentUpon>
     </Compile>
@@ -2320,9 +2322,9 @@
     <Content Include="Assets\scripts\ConsumerCart.js" />
     <Content Include="Assets\scripts\ConsumerProduct.js" />
     <Content Include="Assets\scripts\LogInAccount.js" />
-    <Content Include="Assets\scripts\ManageBill.js" />
     <Content Include="Assets\scripts\ManagerBill.js" />
     <Content Include="Assets\scripts\ManagerCreateDiscount.js" />
+    <Content Include="Assets\scripts\ManagerDashboard.js" />
     <Content Include="Assets\scripts\ManagerDiscountIndex.js" />
     <Content Include="Assets\scripts\ManagerProductIndex.js" />
     <Content Include="Assets\scripts\ManagerTypeProduct.js" />
@@ -2532,6 +2534,7 @@
     <Content Include="Views\ManagerBill\Details.cshtml" />
     <Content Include="Views\ManagerBill\Edit.cshtml" />
     <Content Include="Views\ManagerBill\Index.cshtml" />
+    <Content Include="Views\DashBoard\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
