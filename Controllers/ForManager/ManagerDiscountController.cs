@@ -127,7 +127,11 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
             if (ModelState.IsValid)
             {
                 if (discount.ImageFile != null)
-                    discount.Image = MoveImageToProject(discount.ImageFile);
+                {
+                    var pathSave = MoveImageToProject(discount.ImageFile);
+                        if(pathSave != null)
+                            discount.Image = pathSave;
+                }
                 if (discount.DateOfStart > discount.DateOfEnd)
                     discount.DateOfEnd = discount.DateOfStart;
                 if (discount.DateOfEnd < DateTime.Now)
@@ -147,7 +151,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
             return View(discount);
         }
 
-        public string MoveImageToProject(HttpPostedFileBase file)
+        private string MoveImageToProject(HttpPostedFileBase file)
         {
             try
             {
@@ -167,13 +171,11 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
                 }
                 else
                 {
-                    return null; // Handle the case where no file is provided
+                    return null;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                // Handle exceptions, log or rethrow as needed
-                // Example: Log.Error("Error saving file", ex);
                 return null;
             }
         }

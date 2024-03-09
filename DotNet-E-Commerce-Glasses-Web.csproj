@@ -2319,9 +2319,9 @@
     <Content Include="Assets\fontawesome-free-6.4.0-web\svgs\solid\yin-yang.svg" />
     <Content Include="Assets\fontawesome-free-6.4.0-web\svgs\solid\z.svg" />
     <Content Include="Assets\fonts\LICENSE.txt" />
-    <Content Include="Assets\scripts\ConsumerCart.js" />
+    <Content Include="Assets\scripts\ForConsumer\ConsumerCart.js" />
     <Content Include="Assets\scripts\ConsumerProduct.js" />
-    <Content Include="Assets\scripts\LogInAccount.js" />
+    <Content Include="Assets\scripts\ForCommon\LogInAccount.js" />
     <Content Include="Assets\scripts\ManagerBill.js" />
     <Content Include="Assets\scripts\ManagerCreateDiscount.js" />
     <Content Include="Assets\scripts\ManagerDashboard.js" />
@@ -2329,7 +2329,7 @@
     <Content Include="Assets\scripts\ManagerProductIndex.js" />
     <Content Include="Assets\scripts\ManagerTypeProduct.js" />
     <Content Include="Assets\scripts\ManagerUpdateDiscount.js" />
-    <Content Include="Assets\scripts\RegisterAccount.js" />
+    <Content Include="Assets\scripts\ForCommon\RegisterAccount.js" />
     <Content Include="Assets\scripts\UpdateConsumer.js" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -2542,6 +2542,7 @@
     <Folder Include="Assets\images\images_Discount\" />
     <Folder Include="Assets\images\images_Manager\" />
     <Folder Include="Assets\images\images_Product\" />
+    <Folder Include="Assets\scripts\ForManager\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

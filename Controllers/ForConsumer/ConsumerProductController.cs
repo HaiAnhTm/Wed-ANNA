@@ -1,17 +1,18 @@
-﻿using System;
+﻿using DotNet_E_Commerce_Glasses_Web.App_Start;
+using DotNet_E_Commerce_Glasses_Web.Models;
+using DotNet_E_Commerce_Glasses_Web.Sessions;
+using DotNet_E_Commerce_Glasses_Web.Utils;
+using Microsoft.Ajax.Utilities;
+using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net;
-using System.Web.Mvc;
-using DotNet_E_Commerce_Glasses_Web.Models;
-using DotNet_E_Commerce_Glasses_Web.Utils;
-using Microsoft.Ajax.Utilities;
-using DotNet_E_Commerce_Glasses_Web.Sessions;
-using PagedList;
 using System.Data.Entity.Migrations;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
 {
@@ -40,7 +41,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
                     bill.IdConsumer = consumerID;
                 }
             }
-        }   
+        }
 
         [HttpGet]
         public async Task<ActionResult> Index(string typeProductID, int? page, string search)
@@ -78,20 +79,22 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
         }
 
         [HttpPost]
-        public JsonResult AddProductToCart(int productId, int quantity)
+        public async Task<JsonResult> AddProductToCart(int productId, int quantity)
         {
             if (consumer == null)
-                return Json(new {
-                    status = false, 
-                    message = "Yêu cầu đăng nhập trước khi mua hàng", 
-                    url = "/LoginAccount/Index" 
+                return Json(new
+                {
+                    status = false,
+                    message = "Yêu cầu đăng nhập trước khi mua hàng",
+                    url = "/LoginAccount/Index"
                 });
             else
             {
                 int temp = 0;
                 if (dicCart.ContainsKey(productId))
                     temp = dicCart[productId];
-                if (db.Products.Find(productId) != null && db.Products.Find(productId).Quantity - temp > 0)
+                var product = await db.Products.FindAsync(productId);
+                if (product != null && product.Quantity - temp > 0)
                 {
                     if (dicCart.ContainsKey(productId))
                         dicCart[productId] += quantity;
@@ -103,15 +106,17 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
                     consumer.ListCart = JsonUtils.convertDicToCartJson(dicCart);
 
                     db.Consumers.AddOrUpdate(consumer);
-                    db.SaveChanges();
-                    return Json(new { 
+                    await db.SaveChangesAsync();
+                    return Json(new
+                    {
                         status = true,
                         message = "Thêm vào giỏ hàng thành công",
                         url = ""
                     });
                 }
                 else
-                    return Json(new { 
+                    return Json(new
+                    {
                         status = false,
                         message = "Hết hàng",
                         url = ""
@@ -119,7 +124,6 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
             }
         }
 
-        // Function tính tổng hóa đơn
         private long CalculatorTotalBill(Dictionary<int, ProductSaleModel> dicSale)
         {
             long result = 0;
@@ -197,9 +201,8 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
             }
         }
 
-        // Json Result sử dụng khi thêm mã giảm giá
         [HttpPost]
-        public  async Task<JsonResult> AddDiscount(string codeDiscount)
+        public async Task<JsonResult> AddDiscount(string codeDiscount)
         {
             var discount = await db.Discounts.FirstOrDefaultAsync(item => item.CodeDiscount.Equals(codeDiscount));
             if (discount != null)
@@ -251,14 +254,14 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
         }
 
 
-        // Json Result sử dụng khi xóa một sản phẩm trong giỏ hàng
         [HttpPost]
         public JsonResult RemoveFromCart(int productId)
         {
             if (consumer == null)
-                return Json(new { 
-                    status = false, 
-                    url = "/LogInAccount/Index" 
+                return Json(new
+                {
+                    status = false,
+                    url = "/LogInAccount/Index"
                 });
             else
             {
@@ -266,20 +269,20 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
                 consumer.ListCart = JsonUtils.ConvertDicToJson(dicCart);
                 db.Consumers.AddOrUpdate(consumer);
                 db.SaveChangesAsync();
-                return Json(new { 
-                    status = true 
+                return Json(new
+                {
+                    status = true
                 });
             }
         }
 
-
-        // Json Result sử dụng khi xóa một sản phẩm trong giỏ hàng
         [HttpPost]
         public JsonResult CancelBill()
         {
             if (consumer == null)
-                return Json(new { 
-                    status = false, 
+                return Json(new
+                {
+                    status = false,
                     message = "Yêu cầu đăng nhập trước khi hủy thanh toán!",
                     url = "/LogInAccount/Index"
                 });
@@ -288,33 +291,37 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
                 consumer.ListCart = string.Empty;
                 db.Consumers.AddOrUpdate(consumer);
                 db.SaveChangesAsync();
-                return Json(new { 
-                    status = true, 
-                    message = "Hủy thanh toán thành công!" 
+                return Json(new
+                {
+                    status = true,
+                    message = "Hủy thanh toán thành công!"
                 });
             }
         }
 
         [HttpPost]
-        public async Task<JsonResult>  PayBill()
+        public async Task<JsonResult> PayBill()
         {
             if (consumer == null)
-                return Json(new { 
+                return Json(new
+                {
                     status = false,
-                    url = "/LogInAccount/Index", 
+                    url = "/LogInAccount/Index",
                     message = ""
                 });
 
             if (JsonUtils.convertJsonCartToDic(consumer.ListCart) == null)
-                return Json(new { 
-                    status = false, 
-                    url = "", 
-                    message = "Giỏ hàng trống" });
+                return Json(new
+                {
+                    status = false,
+                    url = "",
+                    message = "Giỏ hàng trống"
+                });
             if (bill != null)
             {
                 DetailBill detailBill = new DetailBill
                 {
-                   ListBill = consumer.ListCart
+                    ListBill = consumer.ListCart
                 };
                 db.DetailBills.Add(detailBill);
                 await db.SaveChangesAsync();
@@ -351,17 +358,19 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
                 db.Consumers.AddOrUpdate(consumer);
                 db.Bills.Add(bill);
                 await db.SaveChangesAsync();
-                return Json(new { 
-                    status = true, 
-                    url = "/ConsumerProduct/Index", 
-                    message = "Thanh toán thành công!" 
+                return Json(new
+                {
+                    status = true,
+                    url = "/ConsumerProduct/Index",
+                    message = "Thanh toán thành công!"
                 });
             }
             else
-                return Json(new { 
-                    status = false, 
-                    url = "", 
-                    message = "Thanh toán thất bại!" 
+                return Json(new
+                {
+                    status = false,
+                    url = "",
+                    message = "Thanh toán thất bại!"
                 });
         }
 
