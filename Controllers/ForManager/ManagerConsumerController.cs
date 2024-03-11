@@ -10,19 +10,21 @@ using System.IO;
 using DotNet_E_Commerce_Glasses_Web.Sessions;
 using System.Data.Entity.Migrations;
 using DotNet_E_Commerce_Glasses_Web.Utils;
+using DotNet_E_Commerce_Glasses_Web.App_Start;
 
 namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
 {
     public class ManagerConsumerController : Controller
     {
         private GlassesEntities db = new GlassesEntities();
-    
+
+        [ManagerAuthorize]
         public async Task<ActionResult> Index()
         {
             var consumers = db.Consumers.Include(c => c.Account);
             return View(await consumers.ToListAsync());
         }
-
+        [ConsumerAuthorize]
         public ActionResult UpdateConsumer()
         {
             if (int.TryParse(ConsumerSession.getConsumerSession(), out int id))
@@ -37,6 +39,8 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
             }
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
+
+        [ConsumerAuthorize]
         [HttpPost]
         public async Task<ActionResult> UpdateConsumer([Bind(Include = "IdConsumer,IdAccount,Username,Address,DateOfBirth,NumberPhone,Image,ImageFile")] Consumer consumer)
         {
@@ -88,6 +92,10 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
         [HttpPost]
         public async Task<JsonResult> UpdatePassword(int accountId, string oldPassword, string newPassword)
         {
+            if(ConsumerSession.getConsumerSession() != null)
+            {
+                return Json(new { status = false, message = "Yêu cầu đăng nhập!" });
+            }
             var account = db.Accounts.FirstOrDefault(item => item.IdAccount.Equals(accountId));
             if (account != null)
             {

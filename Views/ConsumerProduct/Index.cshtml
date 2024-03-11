@@ -16,7 +16,7 @@
             <div class="collapse navbar-collapse" id="navbarColor02">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link fw-bolder" href="@Url.Action("Index", "ConsumerProduct", new { loaiSanPham = "", page = 1 })">
+                        <a class="nav-link fw-bolder" href="@Url.Action("Index", "ConsumerProduct", new { typeProductID = "", page = 1 })">
                             Tất cả
                             <span class="visually-hidden">(current)</span>
                         </a>
@@ -27,7 +27,7 @@
                         {
                             var item = loai.ElementAt(i);
                             <li class="nav-item">
-                                <a class="nav-link fw-bolder" href="@Url.Action("Index", "ConsumerProduct", new { loaiSanPham = item.IdTypeProduct, page = 1 })">@item.TypeProductName</a>
+                                <a class="nav-link fw-bolder" href="@Url.Action("Index", "ConsumerProduct", new { typeProductID = item.IdTypeProduct, page = 1 })">@item.TypeProductName</a>
                             </li>
                         }
                         if (i < loai.Count)
@@ -39,7 +39,7 @@
                                         for (; i < loai.Count; i++)
                                         {
                                             var item = loai.ElementAt(i);
-                                            <a class="dropdown-item" href="@Url.Action("Index", "ConsumerProduct", new { loaiSanPham = item.IdTypeProduct, page = 1 })">@item.TypeProductName</a>
+                                            <a class="dropdown-item" href="@Url.Action("Index", "ConsumerProduct", new { typeProductID = item.IdTypeProduct, page = 1 })">@item.TypeProductName</a>
                                         }
                                     }
                                 </div>
@@ -132,7 +132,7 @@
     @if (ViewBag.Page > 1)
     {
         <li class="page-item disabled">
-            <a class="page-link" href="@Url.Action("Index", "ConsumerProduct", new { loaiSanPham = ViewBag.TypeProductID, page = (ViewBag.Page - 1), search = ViewBag.Search })">&laquo;</a>
+            <a class="page-link" href="@Url.Action("Index", "ConsumerProduct", new { typeProductID = ViewBag.TypeProductID, page = (ViewBag.Page - 1), search = ViewBag.Search })">&laquo;</a>
         </li>
     }
     @{
@@ -142,13 +142,13 @@
             if (index.Equals(ViewBag.Page))
             {
                 <li class="page-item disabled">
-                    <a class="page-link" href="@Url.Action("Index", "ConsumerProduct", new { loaiSanPham = ViewBag.TypeProductID, page = index, search = ViewBag.Search})">@(index)</a>
+                    <a class="page-link" href="@Url.Action("Index", "ConsumerProduct", new { typeProductID = ViewBag.TypeProductID, page = index, search = ViewBag.Search})">@(index)</a>
                 </li>
             }
             else
             {
                 <li class="page-item ">
-                    <a class="page-link" href="@Url.Action("Index", "ConsumerProduct", new { loaiSanPham = ViewBag.TypeProductID, page = index, search = ViewBag.Search })">@(index)</a>
+                    <a class="page-link" href="@Url.Action("Index", "ConsumerProduct", new { typeProductID = ViewBag.TypeProductID, page = index, search = ViewBag.Search })">@(index)</a>
                 </li>
             }
         }
@@ -158,7 +158,7 @@
     @if (ViewBag.Page < Model.PageCount)
     {
         <li class="page-item">
-            <a class="page-link" href="@Url.Action("Index", "ConsumerProduct", new { loaiSanPham = ViewBag.TypeProductID, page = (ViewBag.Page + 1), search = ViewBag.Search })">&raquo;</a>
+            <a class="page-link" href="@Url.Action("Index", "ConsumerProduct", new { typeProductID = ViewBag.TypeProductID, page = (ViewBag.Page + 1), search = ViewBag.Search })">&raquo;</a>
         </li>
     }
 </ul>

@@ -1,3 +1,4 @@
+using DotNet_E_Commerce_Glasses_Web.App_Start;
 using DotNet_E_Commerce_Glasses_Web.Models;
 using System;
 using System.Data.Entity;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 
 namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
 {
+    [ManagerAuthorize]
     public class ManagerTypeProductController : Controller
     {
         private GlassesEntities db = new GlassesEntities();

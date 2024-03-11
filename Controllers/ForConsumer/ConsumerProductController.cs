@@ -75,7 +75,11 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
             {
                 return HttpNotFound();
             }
-            return View(product);
+            if (consumer != null)
+            {
+                ViewBag.Consumer = consumer;
+            }
+            return View(new ProductSaleModel(quanitySale: 1, product: product));
         }
 
         [HttpPost]
@@ -204,6 +208,13 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
         [HttpPost]
         public async Task<JsonResult> AddDiscount(string codeDiscount)
         {
+            if(consumer == null)
+                return Json(new
+                {
+                    status = false,
+                    message = "",
+                    url = "/LoginAccount/Index"
+                });
             var discount = await db.Discounts.FirstOrDefaultAsync(item => item.CodeDiscount.Equals(codeDiscount));
             if (discount != null)
             {
@@ -231,7 +242,8 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
                     return Json(new
                     {
                         status = false,
-                        message = "Mã khuyến mãi không hoạt động!"
+                        message = "Mã khuyến mãi không hoạt động!",
+                        url = ""
                     });
                 else
                 {
@@ -248,14 +260,14 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
             return Json(new
             {
                 status = false,
-                message = ""
+                message = "Không có mã hoạt động!",
+                url = ""
             });
 
         }
 
-
         [HttpPost]
-        public JsonResult RemoveFromCart(int productId)
+        public async Task<JsonResult> RemoveFromCart(int productId)
         {
             if (consumer == null)
                 return Json(new
@@ -268,7 +280,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
                 dicCart.Remove(productId);
                 consumer.ListCart = JsonUtils.ConvertDicToJson(dicCart);
                 db.Consumers.AddOrUpdate(consumer);
-                db.SaveChangesAsync();
+                await db.SaveChangesAsync();
                 return Json(new
                 {
                     status = true
@@ -277,7 +289,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
         }
 
         [HttpPost]
-        public JsonResult CancelBill()
+        public async Task<JsonResult> CancelBill()
         {
             if (consumer == null)
                 return Json(new
@@ -290,7 +302,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
             {
                 consumer.ListCart = string.Empty;
                 db.Consumers.AddOrUpdate(consumer);
-                db.SaveChangesAsync();
+                await db.SaveChangesAsync();
                 return Json(new
                 {
                     status = true,

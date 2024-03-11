@@ -9,18 +9,17 @@ using System.Web;
 using System.Web.Mvc;
 using DotNet_E_Commerce_Glasses_Web.Models;
 using System.IO;
+using DotNet_E_Commerce_Glasses_Web.App_Start;
 
 namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
 {
     public class ManagerProductController : Controller
     {
-        private GlassesEntities db = new GlassesEntities();
-
-        // GET: ManagerProduct
+        private readonly GlassesEntities db = new GlassesEntities();
+        [ManagerAuthorize]
         public async Task<ActionResult> Index(string sort)
         {
-            int indexSort;
-            if (!int.TryParse(sort, out indexSort))
+            if (!int.TryParse(sort, out int indexSort))
             {
                 indexSort = -1;
             }
@@ -43,7 +42,6 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
             return View(products);
         }
 
-        // GET: ManagerProduct/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -57,18 +55,14 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
             }
             return View(product);
         }
-
-        // GET: ManagerProduct/Create
+        [ManagerAuthorize]
         public ActionResult CreateProduct()
         {
             ViewBag.IdTypeProduct = new SelectList(db.TypeProducts, "IdTypeProduct", "TypeProductName");
             ViewBag.IdTypeSale = new SelectList(db.TypeProductSales, "IdTypeSale", "StatusProduct");
             return View();
         }
-
-        // POST: ManagerProduct/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [ManagerAuthorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateProduct([Bind(Include = "IdProduct,IdTypeProduct,NameProduct,Price,Description,Image,ImageFile,Discount,Quantity,IdTypeSale")] Product product)
@@ -76,7 +70,12 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
             if (ModelState.IsValid)
             {
                 if (product.ImageFile != null)
-                    product.Image = MoveImageToProject(product.ImageFile);
+                {
+                    var fileSave = MoveImageToProject(product.ImageFile);
+                    if (fileSave != null)
+                        product.Image = fileSave;
+                }
+                    
                 db.Products.Add(product);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -87,7 +86,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
             return View(product);
         }
 
-        public string MoveImageToProject(HttpPostedFileBase file)
+        private string MoveImageToProject(HttpPostedFileBase file)
         {
             try
             {
@@ -107,19 +106,16 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
                 }
                 else
                 {
-                    return null; // Handle the case where no file is provided
+                    return null;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                // Handle exceptions, log or rethrow as needed
-                // Example: Log.Error("Error saving file", ex);
                 return null;
             }   
         }
-
-
-        // GET: ManagerProduct/Edit/5
+        [HttpPost]
+        [ManagerAuthorize]
         public async Task<ActionResult> UpdateProduct(int? id)
         {
             if (id == null)
@@ -136,18 +132,18 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
             return View(product);
         }
 
-        // POST: ManagerProduct/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ManagerAuthorize]
         public async Task<ActionResult> UpdateProduct([Bind(Include = "IdProduct,IdTypeProduct,NameProduct,Price,Description,Image,ImageFile,Discount,Quantity,IdTypeSale")] Product product)
         {
             if (ModelState.IsValid)
             {
                 if (product.ImageFile != null)
                 {
-                    product.Image = MoveImageToProject(product.ImageFile);
+                    var fileSave = MoveImageToProject(product.ImageFile);
+                    if (fileSave != null)
+                        product.Image = fileSave;
                 }
                 db.Entry(product).State = EntityState.Modified;
                 await db.SaveChangesAsync();
@@ -159,7 +155,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
         }
 
         [HttpPost]
-        public JsonResult DeleteProduct(int IdProduct)
+        public async Task<JsonResult> DeleteProduct(int IdProduct)
         {
             if (ModelState.IsValid)
             {
@@ -167,7 +163,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
                 if (product == null)
                     return Json(false);
                 db.Products.Remove(product);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 return Json(true);
             }
             return Json(false);

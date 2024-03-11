@@ -1,3 +1,4 @@
+using DotNet_E_Commerce_Glasses_Web.App_Start;
 using DotNet_E_Commerce_Glasses_Web.Models;
 using DotNet_E_Commerce_Glasses_Web.Utils;
 using System;
@@ -13,9 +14,10 @@ using System.Web.UI.WebControls;
 
 namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
 {
+    [ManagerAuthorize]
     public class ManagerDiscountController : Controller
     {
-        private GlassesEntities db = new GlassesEntities();
+        private readonly GlassesEntities db = new GlassesEntities();
 
         public ManagerDiscountController()
         {
@@ -33,10 +35,9 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
         [HttpGet]
         public async Task<ActionResult> Index(string sort)
         {
-            int indexSort;
-            if (!int.TryParse(sort, out indexSort))
+            if (!int.TryParse(sort, out int indexSort))
             {
-                indexSort = -1; 
+                indexSort = -1;
             }
             var discounts = await db.Discounts.Include(d => d.StatusDiscount).ToListAsync();
             switch (indexSort)

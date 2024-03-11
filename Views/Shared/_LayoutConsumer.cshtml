@@ -41,10 +41,13 @@
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle show" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                            @if (ViewBag.Consumer.Image != null)
+                            @if (ViewBag.Consumer != null)
                             {
-                                <img src="@ViewBag.Consumer.Image" style="width: 30px; height: 30px;" class="rounded-circle" />
-                                <strong> @(ViewBag.Consumer != null ? " " + ViewBag.Consumer.Username : "")</strong>
+                                if (ViewBag.Consumer.Image != null)
+                                {
+                                    <img src="@ViewBag.Consumer.Image" style="width: 30px; height: 30px;" class="rounded-circle" />
+                                    <strong> @(ViewBag.Consumer != null ? " " + ViewBag.Consumer.Username : "")</strong>
+                                }
                             }
                             else
                             {
@@ -67,7 +70,7 @@
     </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js")
-    @RenderSection("scripts", required: true)
+    @RenderSection("scripts", required: false)
 </body>
 </html>
 

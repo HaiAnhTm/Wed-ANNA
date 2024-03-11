@@ -1,10 +1,27 @@
 ﻿@model DotNet_E_Commerce_Glasses_Web.Models.Product
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Chi tiết sản phẩm";
 }
 
-<h2>Details</h2>
+
+<div class="row g-0 text-center">
+    <div class="col-sm-6 col-md-8">
+        <img src="@Model.Image" style="width: 360px;" />
+    </div>
+    <div class="col-6 col-md-4">
+
+
+
+
+
+
+
+    </div>
+</div>  
+
+
+
 
 <div>
     <h4>Product</h4>
@@ -76,7 +93,3 @@
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.IdProduct }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

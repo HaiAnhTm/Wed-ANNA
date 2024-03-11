@@ -1,82 +1,164 @@
-﻿@model DotNet_E_Commerce_Glasses_Web.Models.Product
+﻿@model DotNet_E_Commerce_Glasses_Web.Models.ProductSaleModel
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Chi tiết sản phẩm";
+    Layout = ViewBag.Consumer != null ? "~/Views/Shared/_LayoutConsumer.cshtml" : "~/Views/Shared/_Layout.cshtml";
 }
+<link href="~/Assets/css/DetailProduct.css" rel="stylesheet"/>
 
-<h2>Details</h2>
 
-<div>
-    <h4>Product</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.NameProduct)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.NameProduct)
-        </dd>
+<div class="container">
+    <div class="row h-75">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
+        <div class="row g-0 text-center">
+            <div class="col-sm-6 col-md-8">
+                <div style="position: relative;">
+                    <img src="@Model.Image" style="width: 360px;" />
 
-        <dd>
-            @Html.DisplayFor(model => model.Price)
-        </dd>
+                    @if (Model.Discount > 0)
+                    {
+                        <div style="position: absolute; top: 10px; right: 10px; background-color: red; color: white; padding: 5px; border-radius: 5px;">
+                            @Model.Discount % off
+                        </div>
+                    }
+                </div>
+            </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+            <div class="col-6 col-md-4">
+                <div class="container">
+                    <div class="row">
+                        <h2>@Model.NameProduct</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="rating" id="stars">
+                                <span class="star">&#9734;</span>
+                                <span class="star">&#9734;</span>
+                                <span class="star">&#9734;</span>
+                                <span class="star">&#9734;</span>
+                                <span class="star">&#9734;</span>
+                            </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+                        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Image)
-        </dt>
+                        <div class="col-md-6">
+                            <p id="ratingText">Rating: <span id="currentRating">0</span>/5</p>
+                        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Image)
-        </dd>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4>@Model.Price</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h4>@Model.Description</h4>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Discount)
-        </dt>
+                            <div class="row">
+                                <button type="button" class="btn btn-outline-secondary d-flex justify-content-center align-items-center rounded-circle" style="max-width: 30px;" onclick="updateListCart(`@Model.IdProduct`, `-1`)">
+                                    <i class="fa-solid fa-minus"></i>
+                                </button>
+                                <input type="number" class="col rounded text-center" style="max-width: 100px;" value="@Model.QuanitySale" disabled>
+                                <button type="button" class="btn btn-outline-secondary d-flex justify-content-center align-items-center rounded-circle" style="max-width: 30px;" onclick="updateListCart(`@Model.IdProduct`, `1`)">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Discount)
-        </dd>
+                        <div class="col-md-6">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Quantity)
-        </dt>
+                            @if (Model.Quantity <= 0)
+                            {
+                                <button class="btn btn-secondary" disabled>Hết hàng</button>
+                            }
+                            else
+                            {
+                                <button class="btn btn-primary add-to-cart-btn" onclick="updateListCart(`@Model.IdProduct`, `1`)">Thêm giỏ hàng</button>
+                            }
 
-        <dd>
-            @Html.DisplayFor(model => model.Quantity)
-        </dd>
+                        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TypeProductSale.IdTypeSale)
-        </dt>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.TypeProductSale.IdTypeSale)
-        </dd>
+        </div>
+    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TypeProduct.TypeProductName)
-        </dt>
+        @section Scripts  {
 
-        <dd>
-            @Html.DisplayFor(model => model.TypeProduct.TypeProductName)
-        </dd>
+            <script>
+                const stars = document.querySelectorAll( '.star' );
+                const ratingText = document.getElementById( 'ratingText' );
+                const currentRating = document.getElementById( 'currentRating' );
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.IdProduct }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+                stars.forEach( ( star, index ) =>
+                {
+                    star.addEventListener( 'click', () =>
+                    {
+                        const ratingValue = index + 1;
+                        currentRating.textContent = ratingValue;
+                        ratingText.style.display = 'block'; // Display the rating text once a rating is given
+                        resetStars();
+                        highlightStars( index );
+                    } );
+                } );
+
+                function resetStars ()
+                {
+                    stars.forEach( star =>
+                    {
+                        star.textContent = '☆'; // Reset all stars to empty
+                    } );
+                }
+
+                function highlightStars ( index )
+                {
+                    for ( let i = 0; i <= index; i++ )
+                    {
+                        stars[ i ].textContent = '★'; // Highlight stars up to the clicked one
+                    }
+                }
+
+
+
+                function updateListCart ( idProduct, quantity )
+                {
+                    $.ajax( {
+                        url: "/ConsumerProduct/AddProductToCart",
+                        type: "POST",
+                        data: {
+                            productId: idProduct,
+                            quantity: quantity,
+                        },
+                        success: function ( result )
+                        {
+                            console.log( result );
+                            if ( result.status )
+                            {
+                                console.log( "Buy Success." );
+                                toastr.options.closeButton = true;
+                                toastr.success( "Giỏ hàng", "Thêm sản phẩm thành công!" );
+                                location.reload();
+                            } else
+                            {
+                                console.log( "Buy Failed." );
+                                window.location.href = result.url;
+                                toastr.options.closeButton = true;
+                            }
+                        },
+                        error: function ()
+                        {
+                            console.error( "AJAX request failed" );
+                        },
+                    } );
+                }
+
+
+            </script>
+        }

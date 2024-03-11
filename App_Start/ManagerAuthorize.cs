@@ -13,7 +13,7 @@ namespace DotNet_E_Commerce_Glasses_Web.App_Start
                     new System.Web.Routing.RouteValueDictionary(
                         new
                         {
-                            controller = "DangNhap",
+                            controller = "LoginAccount",
                             action = "Index"
                         }));
         }

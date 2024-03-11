@@ -257,10 +257,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
+    <Content Include="Assets\css\base.css" />
+    <Content Include="Assets\css\common.css" />
+    <Content Include="Assets\css\DetailProduct.css" />
+    <Content Include="Assets\css\grid.css" />
+    <Content Include="Assets\css\login.css" />
     <Content Include="Assets\images\images_login\img_login.jpg" />
     <Content Include="Assets\images\images_login\register_img.jpg" />
     <Content Include="Assets\images\images_Other\logo.png" />
-    <Content Include="Assets\css\common.css" />
     <Content Include="Assets\css\layout\layout_no_navigation\base.css" />
     <Content Include="Assets\fontawesome-free-6.4.0-web\css\all.css" />
     <Content Include="Assets\fontawesome-free-6.4.0-web\css\all.min.css" />
@@ -2319,9 +2323,9 @@
     <Content Include="Assets\fontawesome-free-6.4.0-web\svgs\solid\yin-yang.svg" />
     <Content Include="Assets\fontawesome-free-6.4.0-web\svgs\solid\z.svg" />
     <Content Include="Assets\fonts\LICENSE.txt" />
-    <Content Include="Assets\scripts\ForConsumer\ConsumerCart.js" />
     <Content Include="Assets\scripts\ConsumerProduct.js" />
     <Content Include="Assets\scripts\ForCommon\LogInAccount.js" />
+    <Content Include="Assets\scripts\ForConsumer\ConsumerCart.js" />
     <Content Include="Assets\scripts\ManagerBill.js" />
     <Content Include="Assets\scripts\ManagerCreateDiscount.js" />
     <Content Include="Assets\scripts\ManagerDashboard.js" />

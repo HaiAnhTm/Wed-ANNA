@@ -37,7 +37,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForCommon
                     {
                         status = true,
                         message = "Đăng nhập thành công.",
-                        url = "/Manage",
+                        url = "/DashBoard/",
                     });
                 }
                 if (accountLogin.Consumers.Count != 0)
