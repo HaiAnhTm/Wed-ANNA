@@ -1,6 +1,6 @@
 ﻿USE [master]
 GO
-/****** Object:  Database [E-Commerce-Glasses]    Script Date: 2/27/2024 11:31:34 PM ******/
+/****** Object:  Database [E-Commerce-Glasses]    Script Date: 3/11/2024 10:20:45 PM ******/
 CREATE DATABASE [E-Commerce-Glasses]
  CONTAINMENT = NONE
  ON  PRIMARY 
@@ -84,10 +84,10 @@ ALTER DATABASE [E-Commerce-Glasses] SET QUERY_STORE (OPERATION_MODE = READ_WRITE
 GO
 USE [E-Commerce-Glasses]
 GO
-/****** Object:  User [cigrcham]    Script Date: 2/27/2024 11:31:34 PM ******/
+/****** Object:  User [cigrcham]    Script Date: 3/11/2024 10:20:45 PM ******/
 CREATE USER [cigrcham] WITHOUT LOGIN WITH DEFAULT_SCHEMA=[dbo]
 GO
-/****** Object:  Table [dbo].[Account]    Script Date: 2/27/2024 11:31:34 PM ******/
+/****** Object:  Table [dbo].[Account]    Script Date: 3/11/2024 10:20:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -102,7 +102,7 @@ CREATE TABLE [dbo].[Account](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Bill]    Script Date: 2/27/2024 11:31:34 PM ******/
+/****** Object:  Table [dbo].[Bill]    Script Date: 3/11/2024 10:20:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -110,19 +110,20 @@ GO
 CREATE TABLE [dbo].[Bill](
 	[IdBild] [int] IDENTITY(1,1) NOT NULL,
 	[IdConsumer] [int] NULL,
-	[IdDiscount] [int] NULL,
+	[PercentDiscount] [float] NULL,
 	[IdDetailDiscount] [int] NULL,
 	[DateOfPurchase] [datetime] NULL,
 	[TotalBill] [bigint] NULL,
 	[TotalPay] [bigint] NULL,
 	[IdDetailDelivery] [int] NULL,
+	[IdDetailBill] [int] NULL,
  CONSTRAINT [PK_HoaDon] PRIMARY KEY CLUSTERED 
 (
 	[IdBild] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Consumer]    Script Date: 2/27/2024 11:31:34 PM ******/
+/****** Object:  Table [dbo].[Consumer]    Script Date: 3/11/2024 10:20:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -142,7 +143,7 @@ CREATE TABLE [dbo].[Consumer](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[DetailBill]    Script Date: 2/27/2024 11:31:34 PM ******/
+/****** Object:  Table [dbo].[DetailBill]    Script Date: 3/11/2024 10:20:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -156,7 +157,7 @@ CREATE TABLE [dbo].[DetailBill](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Discount]    Script Date: 2/27/2024 11:31:34 PM ******/
+/****** Object:  Table [dbo].[Discount]    Script Date: 3/11/2024 10:20:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -168,7 +169,7 @@ CREATE TABLE [dbo].[Discount](
 	[DateOfStart] [datetime] NULL,
 	[DateOfEnd] [datetime] NULL,
 	[Quantity] [bigint] NULL,
-	[Percent] [float] NULL,
+	[PercentValue] [float] NULL,
 	[Image] [nvarchar](500) NULL,
 	[CodeDiscount] [nvarchar](50) NULL,
  CONSTRAINT [PK_KhachHang] PRIMARY KEY CLUSTERED 
@@ -177,7 +178,7 @@ CREATE TABLE [dbo].[Discount](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Manager]    Script Date: 2/27/2024 11:31:34 PM ******/
+/****** Object:  Table [dbo].[Manager]    Script Date: 3/11/2024 10:20:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -197,7 +198,7 @@ CREATE TABLE [dbo].[Manager](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Product]    Script Date: 2/27/2024 11:31:34 PM ******/
+/****** Object:  Table [dbo].[Product]    Script Date: 3/11/2024 10:20:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -218,7 +219,7 @@ CREATE TABLE [dbo].[Product](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[RateProduct]    Script Date: 2/27/2024 11:31:34 PM ******/
+/****** Object:  Table [dbo].[RateProduct]    Script Date: 3/11/2024 10:20:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -237,7 +238,7 @@ CREATE TABLE [dbo].[RateProduct](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[StatusDelivery]    Script Date: 2/27/2024 11:31:34 PM ******/
+/****** Object:  Table [dbo].[StatusDelivery]    Script Date: 3/11/2024 10:20:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -251,7 +252,7 @@ CREATE TABLE [dbo].[StatusDelivery](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[StatusDiscount]    Script Date: 2/27/2024 11:31:34 PM ******/
+/****** Object:  Table [dbo].[StatusDiscount]    Script Date: 3/11/2024 10:20:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -265,7 +266,7 @@ CREATE TABLE [dbo].[StatusDiscount](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TypeProduct]    Script Date: 2/27/2024 11:31:34 PM ******/
+/****** Object:  Table [dbo].[TypeProduct]    Script Date: 3/11/2024 10:20:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -279,74 +280,74 @@ CREATE TABLE [dbo].[TypeProduct](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TypeProductSale]    Script Date: 2/27/2024 11:31:34 PM ******/
+/****** Object:  Table [dbo].[TypeProductSale]    Script Date: 3/11/2024 10:20:45 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[TypeProductSale](
 	[IdTypeSale] [int] IDENTITY(1,1) NOT NULL,
-	[StatusProduct] [bit] NULL,
+	[StatusProduct] [nvarchar](50) NULL,
  CONSTRAINT [PK_TypeProductSale] PRIMARY KEY CLUSTERED 
 (
 	[IdTypeSale] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-ALTER TABLE [dbo].[Bill]  WITH CHECK ADD  CONSTRAINT [FK_HoaDon_ChiTietHoaDon] FOREIGN KEY([IdDetailDiscount])
-REFERENCES [dbo].[DetailBill] ([IdDetailBill])
-GO
-ALTER TABLE [dbo].[Bill] CHECK CONSTRAINT [FK_HoaDon_ChiTietHoaDon]
-GO
-ALTER TABLE [dbo].[Bill]  WITH CHECK ADD  CONSTRAINT [FK_HoaDon_KhachHang] FOREIGN KEY([IdConsumer])
+ALTER TABLE [dbo].[Bill]  WITH CHECK ADD  CONSTRAINT [FK_Bill_Consumer] FOREIGN KEY([IdConsumer])
 REFERENCES [dbo].[Consumer] ([IdConsumer])
 GO
-ALTER TABLE [dbo].[Bill] CHECK CONSTRAINT [FK_HoaDon_KhachHang]
+ALTER TABLE [dbo].[Bill] CHECK CONSTRAINT [FK_Bill_Consumer]
 GO
-ALTER TABLE [dbo].[Bill]  WITH CHECK ADD  CONSTRAINT [FK_HoaDon_KhuyenMai] FOREIGN KEY([IdDiscount])
+ALTER TABLE [dbo].[Bill]  WITH CHECK ADD  CONSTRAINT [FK_Bill_DetailBill] FOREIGN KEY([IdDetailBill])
+REFERENCES [dbo].[DetailBill] ([IdDetailBill])
+GO
+ALTER TABLE [dbo].[Bill] CHECK CONSTRAINT [FK_Bill_DetailBill]
+GO
+ALTER TABLE [dbo].[Bill]  WITH CHECK ADD  CONSTRAINT [FK_Bill_Discount] FOREIGN KEY([IdDetailDiscount])
 REFERENCES [dbo].[Discount] ([IdDiscount])
 GO
-ALTER TABLE [dbo].[Bill] CHECK CONSTRAINT [FK_HoaDon_KhuyenMai]
+ALTER TABLE [dbo].[Bill] CHECK CONSTRAINT [FK_Bill_Discount]
 GO
-ALTER TABLE [dbo].[Bill]  WITH CHECK ADD  CONSTRAINT [FK_HoaDon_TrangThaiGiaoHang] FOREIGN KEY([IdDetailDelivery])
+ALTER TABLE [dbo].[Bill]  WITH CHECK ADD  CONSTRAINT [FK_Bill_StatusDelivery] FOREIGN KEY([IdDetailDelivery])
 REFERENCES [dbo].[StatusDelivery] ([IdStatus])
 GO
-ALTER TABLE [dbo].[Bill] CHECK CONSTRAINT [FK_HoaDon_TrangThaiGiaoHang]
+ALTER TABLE [dbo].[Bill] CHECK CONSTRAINT [FK_Bill_StatusDelivery]
 GO
-ALTER TABLE [dbo].[Consumer]  WITH CHECK ADD  CONSTRAINT [FK_KhachHang_DangNhap] FOREIGN KEY([IdAccount])
+ALTER TABLE [dbo].[Consumer]  WITH CHECK ADD  CONSTRAINT [FK_Consumer_Account] FOREIGN KEY([IdAccount])
 REFERENCES [dbo].[Account] ([IdAccount])
 GO
-ALTER TABLE [dbo].[Consumer] CHECK CONSTRAINT [FK_KhachHang_DangNhap]
+ALTER TABLE [dbo].[Consumer] CHECK CONSTRAINT [FK_Consumer_Account]
 GO
-ALTER TABLE [dbo].[Discount]  WITH CHECK ADD  CONSTRAINT [FK_KhuyenMai_TrangThaiKhuyenMai] FOREIGN KEY([IdStatus])
+ALTER TABLE [dbo].[Discount]  WITH CHECK ADD  CONSTRAINT [FK_Discount_StatusDiscount] FOREIGN KEY([IdStatus])
 REFERENCES [dbo].[StatusDiscount] ([IdStatus])
 GO
-ALTER TABLE [dbo].[Discount] CHECK CONSTRAINT [FK_KhuyenMai_TrangThaiKhuyenMai]
+ALTER TABLE [dbo].[Discount] CHECK CONSTRAINT [FK_Discount_StatusDiscount]
 GO
-ALTER TABLE [dbo].[Manager]  WITH CHECK ADD  CONSTRAINT [FK_QuanLy_DangNhap] FOREIGN KEY([IdAccount])
+ALTER TABLE [dbo].[Manager]  WITH CHECK ADD  CONSTRAINT [FK_Manager_Account] FOREIGN KEY([IdAccount])
 REFERENCES [dbo].[Account] ([IdAccount])
 GO
-ALTER TABLE [dbo].[Manager] CHECK CONSTRAINT [FK_QuanLy_DangNhap]
+ALTER TABLE [dbo].[Manager] CHECK CONSTRAINT [FK_Manager_Account]
+GO
+ALTER TABLE [dbo].[Product]  WITH CHECK ADD  CONSTRAINT [FK_Product_TypeProduct] FOREIGN KEY([IdTypeProduct])
+REFERENCES [dbo].[TypeProduct] ([IdTypeProduct])
+GO
+ALTER TABLE [dbo].[Product] CHECK CONSTRAINT [FK_Product_TypeProduct]
 GO
 ALTER TABLE [dbo].[Product]  WITH CHECK ADD  CONSTRAINT [FK_Product_TypeProductSale] FOREIGN KEY([IdTypeSale])
 REFERENCES [dbo].[TypeProductSale] ([IdTypeSale])
 GO
 ALTER TABLE [dbo].[Product] CHECK CONSTRAINT [FK_Product_TypeProductSale]
 GO
-ALTER TABLE [dbo].[Product]  WITH CHECK ADD  CONSTRAINT [FK_SanPham_LoaiSanPham] FOREIGN KEY([IdTypeProduct])
-REFERENCES [dbo].[TypeProduct] ([IdTypeProduct])
-GO
-ALTER TABLE [dbo].[Product] CHECK CONSTRAINT [FK_SanPham_LoaiSanPham]
-GO
-ALTER TABLE [dbo].[RateProduct]  WITH CHECK ADD  CONSTRAINT [FK_DanhGiaSanPham_KhachHang] FOREIGN KEY([IdConsumer])
+ALTER TABLE [dbo].[RateProduct]  WITH CHECK ADD  CONSTRAINT [FK_RateProduct_Consumer] FOREIGN KEY([IdConsumer])
 REFERENCES [dbo].[Consumer] ([IdConsumer])
 GO
-ALTER TABLE [dbo].[RateProduct] CHECK CONSTRAINT [FK_DanhGiaSanPham_KhachHang]
+ALTER TABLE [dbo].[RateProduct] CHECK CONSTRAINT [FK_RateProduct_Consumer]
 GO
-ALTER TABLE [dbo].[RateProduct]  WITH CHECK ADD  CONSTRAINT [FK_DanhGiaSanPham_SanPham] FOREIGN KEY([IdProduct])
+ALTER TABLE [dbo].[RateProduct]  WITH CHECK ADD  CONSTRAINT [FK_RateProduct_Product] FOREIGN KEY([IdProduct])
 REFERENCES [dbo].[Product] ([IdProduct])
 GO
-ALTER TABLE [dbo].[RateProduct] CHECK CONSTRAINT [FK_DanhGiaSanPham_SanPham]
+ALTER TABLE [dbo].[RateProduct] CHECK CONSTRAINT [FK_RateProduct_Product]
 GO
 USE [master]
 GO
