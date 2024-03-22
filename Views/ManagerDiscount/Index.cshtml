@@ -5,7 +5,196 @@
     Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
 
-<div class="d-flex justify-content-between mb-3 mt-5">
+<div class="col l-10">
+    <div class="Create-product">
+        <div class="col l-5 Create_discount">
+            <div class="Create_discount_header">Hãy tạo mã giảm giá ngay cho SHOP của bạn</div>
+            <div class="Create_discount_Text">
+                Mã giảm giá có thể tăng 23% doanh thu và 46% đơn hàng
+                mới!
+            </div>
+            <button href="@Url.Action("CreateDiscount", "ManagerDiscount")" class="Create_discount_button">
+                Tạo mã giảm giá ngay
+                <i class="fa-solid fa-chevron-right icon_arow-right"></i>
+            </button>
+        </div>
+        <div class="col l-7 img-discount">
+            <div class="img_discount-text">
+                <div class="imt-text1">Tạo mã giảm thôi!</div>
+                <div class="imt-text2"></div>
+                <div class="imt-text3"></div>
+                <div class="imt-text4"></div>
+                <div class="imt-text5"></div>
+            </div>
+            <img class="header-img-discount" src="~/Assets/images/images_Discount/discount.png" alt="">
+        </div>
+    </div>
+    <div class="content-discount">
+        <div class="content-discount-title">
+            <div class="content_title_discout">Danh sách mã giảm giá</div>
+            <div class="content_title_discout_text">
+                Tạo mã giảm giá ngay để có thể thu hút người mua.
+            </div>
+        </div>
+        <div class="col discount_selectt">
+            <div class="discount_select_text">sắp xếp: </div>
+            <select class="discount-form-select" aria-label=".form-select-sm example" id="fillter_selected">
+                <option value=0 selected>Mặc đinh</option>
+                <option value="1">Theo tên chương trình</option>
+                <option value="2">Theo số lượng</option>
+                <option value="3">Theo tỉ lệ</option>
+            </select>
+        </div>
+        <div class="content-discount-header">
+            <div class="content-discount-header-text header-text-active">Tất Cả</div>
+            <div class="content-discount-header-text">Đang diễn ra</div>
+            <div class="content-discount-header-text">Sắp diễn ra</div>
+            <div class="content-discount-header-text">Đã kết thúc</div>
+        </div>
+        <div class="search_discount">
+            <div class="search_discount_with_name">Tên Voucher</div>
+            <input class="find-discount-name-input" type="text" placeholder=" ">
+            <i class="fa-solid fa-magnifying-glass find_icon"></i>
+        </div>
+        <div class="content-discount-detail">
+            <div class="discount-detail-header">
+                <div class="col l-4 header-text-discount">
+                    <div class="header-check-text header-check-text-firt">
+                        Tên Voucher | Mã Voucher
+                    </div>
+                </div>
+                <div class="col l-1 header-check-tile">
+                    <div class="header-check-text">Giảm Giá</div>
+                </div>
+                <div class="col l-1 header-check-tile">
+                    <div class="header-check-text">Lượt dùng</div>
+                </div>
+                <div class="col l-2 header-check-tile">
+                    <div class="header-check-text">Trạng thái</div>
+                </div>
+                <div class="col l-3 header-check-tile">
+                    <div class="header-check-text">Thời gian sử dụng mã</div>
+                </div>
+                <div class="col l-2 header-check-tile header-check-text-last">
+                    <div class="header-check-text">Thao Tác</div>
+                </div>
+            </div>
+            @foreach (var item in Model)
+            {
+                <div class="addiscount-content-body ">
+                    <div class="col l-4 content-body-name">
+                        <img class="addiscount-body-discount-img" src="@item.Image"
+                             alt="">
+                        <div class="discount_name_and_code">
+                            <div class="addiscount-discount">@Html.DisplayFor(modelItem => item.TitleDiscount)</div>
+                            <div class="addiscount-discount-code">Mã Voucher: @Html.DisplayFor(modelItem => item.CodeDiscount)</div>
+                        </div>
+                    </div>
+                    <div class="col l-1 addiscount-discount">
+                        <div class="addiscount-discount">@Html.DisplayNameFor(model => model.PercentValue)%</div>
+                    </div>
+                    <div class="col l-1 addiscount-discount-unitprice addiscount-discount">
+                        <div class="addiscount-discount">@Html.DisplayFor(modelItem => item.Quantity)</div>
+                    </div>
+                    <div class="col l-2 addiscount-discount-quantity addiscount-discount">
+                        <div class="addiscount-discount">@Html.DisplayFor(modelItem => item.StatusDiscount.Status)</div>
+                    </div>
+                    <div class="col l-3 addiscount-discount">
+                        <div class="addiscount-discount">@item.DateOfStartStr() - @item.DateOfEndStr()</div>
+                    </div>
+                    <div class="col l-2 addiscount-discount">
+                        <div class="discount-Update-operation">Cập nhật</div>
+                        <div class="discount-Update-operation">Xóa</div>
+                        <div class="discount-Update-operation">Xem Thêm</div>
+                    </div>
+                </div>
+                <div class="addiscount-content-body ongoing">
+                    <div class="col l-4 content-body-name">
+                        <img class="addiscount-body-discount-img" src="./assets/img/imgdiscount.png"
+                             alt="">
+                        <div class="discount_name_and_code">
+                            <div class="addiscount-discount">Đây là Voucher</div>
+                            <div class="addiscount-discount-code">Mã Voucher: @Html.DisplayFor(modelItem => item.CodeDiscount)</div>
+                        </div>
+                    </div>
+                    <div class="col l-1 addiscount-discount">
+                        <div class="addiscount-discount">69%</div>
+                    </div>
+                    <div class="col l-1 addiscount-discount-unitprice addiscount-discount">
+                        <div class="addiscount-discount">234</div>
+                    </div>
+                    <div class="col l-2 addiscount-discount-quantity addiscount-discount">
+                        <div class="addiscount-discount">Đang diễn ra</div>
+                    </div>
+                    <div class="col l-3 addiscount-discount">
+                        <div class="addiscount-discount">@Html.DisplayNameFor(model => model.DateOfStart) - @Html.DisplayNameFor(model => model.DateOfEnd)</div>
+                    </div>
+                    <div class="col l-2 addiscount-discount">
+                        <div class="discount-Update-operation">Cập nhật</div>
+                        <div class="discount-Update-operation">Xóa</div>
+                        <div class="discount-Update-operation">Xem Thêm</div>
+                    </div>
+                </div>
+                <div class="addiscount-content-body upcoming">
+                    <div class="col l-4 content-body-name">
+                        <img class="addiscount-body-discount-img" src="./assets/img/imgdiscount.png"
+                             alt="">
+                        <div class="discount_name_and_code">
+                            <div class="addiscount-discount">Đây là Voucher</div>
+                            <div class="addiscount-discount-code">Mã Voucher: abcd</div>
+                        </div>
+                    </div>
+                    <div class="col l-1 addiscount-discount">
+                        <div class="addiscount-discount">69%</div>
+                    </div>
+                    <div class="col l-1 addiscount-discount-unitprice addiscount-discount">
+                        <div class="addiscount-discount">234</div>
+                    </div>
+                    <div class="col l-2 addiscount-discount-quantity addiscount-discount">
+                        <div class="addiscount-discount">Sắp diễn ra</div>
+                    </div>
+                    <div class="col l-3 addiscount-discount">
+                        <div class="addiscount-discount">08:27 06/03/2023 - 09:27 06/03/2024</div>
+                    </div>
+                    <div class="col l-2 addiscount-discount">
+                        <div class="discount-Update-operation">Cập nhật</div>
+                        <div class="discount-Update-operation">Xóa</div>
+                        <div class="discount-Update-operation">Xem Thêm</div>
+                    </div>
+                </div>
+                <div class="addiscount-content-body expired">
+                    <div class="col l-4 content-body-name">
+                        <img class="addiscount-body-discount-img" src="./assets/img/imgdiscount.png"
+                             alt="">
+                        <div class="discount_name_and_code">
+                            <div class="addiscount-discount">Đây là Voucher</div>
+                            <div class="addiscount-discount-code">Mã Voucher: abcd</div>
+                        </div>
+                    </div>
+                    <div class="col l-1 addiscount-discount">
+                        <div class="addiscount-discount">69%</div>
+                    </div>
+                    <div class="col l-1 addiscount-discount-unitprice addiscount-discount">
+                        <div class="addiscount-discount">234</div>
+                    </div>
+                    <div class="col l-2 addiscount-discount-quantity addiscount-discount">
+                        <div class="addiscount-discount">Đã Kết thúc</div>
+                    </div>
+                    <div class="col l-3 addiscount-discount">
+                        <div class="addiscount-discount">08:27 06/03/2023 - 09:27 06/03/2024</div>
+                    </div>
+                    <div class="col l-2 addiscount-discount">
+                        <div class="discount-Update-operation">Cập nhật</div>
+                        <div class="discount-Update-operation">Xóa</div>
+                        <div class="discount-Update-operation">Xem Thêm</div>
+                    </div>
+                </div>
+            }
+            </div>
+    </div>
+</div>
+
+<!--<div class="d-flex justify-content-between mb-3 mt-5">
     <h3>Danh sách mã khuyến mãi</h3>
     <a class="btn btn-outline-secondary rounded-pill" href="@Url.Action("CreateDiscount", "ManagerDiscount")">Thêm mới mã khuyến mãi</a>
 </div>
@@ -17,7 +206,7 @@
 
     <div class="col">
         <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="fillter_selected">
-            <option value= 0 selected>Mặc đinh</option>
+            <option value=0 selected>Mặc đinh</option>
             <option value="1">Theo tên chương trình</option>
             <option value="2">Theo số lượng</option>
             <option value="3">Theo tỉ lệ</option>
@@ -57,64 +246,32 @@
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CodeDiscount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TitleDiscount)
-            </td>
-            <td>
-                <p>@item.DateOfStartStr()</p>
-            </td>
-            <td>
-                <p>@item.DateOfEndStr()</p>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PercentValue)
-            </td>
 
-            <td>
-                <img src="@item.Image" style="width: 200px;" />
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.StatusDiscount.Status)
-            </td>
-            <td>
-                @Html.ActionLink("Cập nhật", "UpdateDiscount", new { id = item.IdDiscount }, new { @class = "btn btn-outline-secondary rounded-pill" })
-                @*<button type="button" class="btn btn-outline-danger rounded-pill" onclick="ShowDialog(`@item.IdStatus`)">Xóa</button>*@
-            </td>
+<!--</td>
         </tr>
     }
-</table>
-
+</table>-->
 @*<div class="modal fade" id="DialogConfirm" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content modal-dialog-centered">
-            <div class="modal-header">
-                <h5 class="modal-title">Cảnh Báo!</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"></span>
-                </button>
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content modal-dialog-centered">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cảnh Báo!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Xác nhận xóa sản phẩm</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="ActionDelete()">Xóa</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                </div>
+                <input id="ma" name="ma" hidden />
             </div>
-            <div class="modal-body">
-                <p>Xác nhận xóa sản phẩm</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="ActionDelete()">Xóa</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-            </div>
-            <input id="ma" name="ma" hidden />
         </div>
-    </div>
-</div>*@
+    </div>*@
 
 @section Scripts  {
-        <script src="~/Assets/scripts/ManagerDiscountIndex.js"></script>
+<script src="~/Assets/scripts/ManagerDiscountIndex.js"></script>
 }

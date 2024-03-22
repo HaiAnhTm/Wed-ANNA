@@ -9,38 +9,158 @@
     <link rel="stylesheet" href="~/Assets/css/common.css">
     <link rel="stylesheet" href="~/Assets/fontawesome-free-6.4.0-web/css/all.min.css">
     <link rel="icon" href="~/Assets/images/images_Other/logo.png">
+    <link rel="stylesheet" href="~/Assets/fonts/Roboto-Black.ttf">
+    <link rel="stylesheet" href="~/Assets/css/grid.css">
+    <link rel="stylesheet" href="~/Assets/css/BaseX.css">
+    <link rel="stylesheet" href="~/Assets/css/Discount.css">
+    <link rel="stylesheet" href="~/Assets/fontawesome-free-6.4.0-web/">
 </head>
+
 <body>
-    <div class="offcanvas offcanvas-start" style="width: 300px" tabindex="-1" id="offcanvas" data-bs-keyboard="false" data-bs-backdrop="false">
-        <div class="d-grid gap-2">
-            <h2>Menu</h2>
-            <a class="btn btn-outline-dark btn-floating m-1" @Html.ActionLink("Quản lý sản phẩm", "Index", "ManagerProduct")</a>
-
-            <a class="btn btn-outline-dark btn-floating m-1" @Html.ActionLink("Quản lý loại sản phẩm", "Index", "ManagerTypeProduct")</a>
-
-            <a class="btn btn-outline-dark btn-floating m-1" @Html.ActionLink("Khuyến mãi", "Index", "ManagerDiscount")</a>
-
-            <a class="btn btn-outline-dark btn-floating m-1" @Html.ActionLink("Quản lý khách hàng", "Index", "ManagerConsumer")</a>
-
-            <a class="btn btn-outline-dark btn-floating m-1" @Html.ActionLink("Đơn hàng", "Index", "ManagerBill")</a>
-
-            <a class="btn btn-outline-dark btn-floating m-1" @Html.ActionLink("Thống kê", "Index", "DashBoard")</a>
-
-            <a class="btn btn-outline-dark btn-floating m-1" @Html.ActionLink("Đăng xuất", "Index", "LoginAccount")</a>
+    <div class="main">
+        <div class="grid wide">
+            <div class="adheader">
+                <div class="headerleft">
+                    <img src="~/Assets/images/logo.svg" alt="" class="headerleft-logo">
+                    <i class="fa-solid fa-chevron-right icon_arow-right hiden"></i>
+                    <div class="headerleft-text hiden">Mã Giảm Giá Của Tôi</div>
+                    <i class="fa-solid fa-chevron-right icon_arow-right hiden"></i>
+                    <div class="headerleft-text-now hiden">Tạo mã giảm giá mới</div>
+                </div>
+                <div class="headerright">
+                    <div class="headerright-admin">
+                        <img src="./assets/img/logo-shopee-1.jpg" alt="" class="headerright-img-admin">
+                        <div class="headerright-admin-name">Xin Chào hai_anh.__2003</div>
+                    </div>
+                    <i class="fa-solid fa-bars header-right-bars-logo"></i>
+                    <i class="fa-solid fa-bell header-right-bell-logo"></i>
+                    <div class="headerright-text">ANNA GLASSES</div>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col min-vh-100 py-3">
-                <button class="btn btn-outline-secondary float-end" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" role="button">
-                    <i class="fa-solid fa-bars" data-bs-toggle="offcanvas" data-bs-target="#offcanvas"></i>
-                </button>
-                @RenderBody()
+        <div class="adProduct-Container">
+            <div class="grid wide">
+                <div class="adProduct-Content row sm-gutter">
+                    <div class="col l-2">
+                        <div class="category" onclick="setActive(event)">
+                            <div class="category-order-management" id="orderManagement" onclick="toggleSubItems('orderManagement')">
+                                <div class="order-management-heading" onclick="toggleSubMenu('orderManagement')">
+                                    <i class="fa-regular fa-clipboard Oder-icon"></i>
+                                    <div class="order-management-heading-text">Quản Lý Đơn Hàng</div>
+                                    <i class="fa-solid fa-chevron-down chevron-manage-icon"
+                                       id="orderManagementIcon"></i>
+                                </div>
+                                <a class="order-management-items hidden" @Html.ActionLink("Tất cả Đơn Hàng", "Index", "ManagerBill")</a>
+                            </div>
+
+                            <div class="category-order-management" id="productManagement" onclick="toggleSubItems('productManagement')">
+                                <div class="order-management-heading" onclick="toggleSubMenu('productManagement')">
+                                    <i class="fa-solid fa-bag-shopping Oder-icon"></i>
+                                    <div class="order-management-heading-text">Quản Lý Sản Phẩm</div>
+                                    <i class="fa-solid fa-chevron-down chevron-manage-icon"
+                                       id="productManagementIcon"></i>
+                                </div>
+                                <a class="order-management-items hidden" @Html.ActionLink("Tất cả Sản Phẩm", "Index", "ManagerProduct")</a>
+                                <a href="#" class="order-management-items hidden">Thêm Sản Phẩm</a>
+                                <a class="order-management-items hidden" @Html.ActionLink("Loại sản phẩm", "Index", "ManagerTypeProduct")</a>
+                            </div>
+                            <div class="category-order-management" id="ConsumersManagement" onclick="toggleSubItems('ConsumersManagement')">
+                                <div class="order-management-heading" onclick="toggleSubMenu('ConsumersManagement')">
+                                    <i class="fa-regular fa-user Oder-icon"></i>
+                                    <div class="order-management-heading-text">Quản Lý Khách Hàng</div>
+                                    <i class="fa-solid fa-chevron-down chevron-manage-icon"
+                                       id="ConsumersManagementIcon"></i>
+                                </div>
+                                <a class="order-management-items hidden" @Html.ActionLink("Thông Tin Khách Hàng", "Index", "ManagerConsumer")</a>
+                            </div>
+                            <div class="category-order-management" id="DiscountManagement" onclick="toggleSubItems('DiscountManagement')">
+                                <div class="order-management-heading" onclick="toggleSubMenu('DiscountManagement')">
+                                    <i class="fa-solid fa-bag-shopping Oder-icon"></i>
+                                    <div class="order-management-heading-text">Kênh MarKetting</div>
+                                    <i class="fa-solid fa-chevron-down chevron-manage-icon"
+                                       id="DiscountManagementIcon"></i>
+                                </div>
+                                <a class="order-management-items hidden" @Html.ActionLink("Mã Giảm giá của tôi", "Index", "ManagerDiscount")</a>
+                            </div>
+                            <div class="category-order-management" id="ShopManagement" onclick="toggleSubItems('ShopManagement')">
+                                <div class="order-management-heading" onclick="toggleSubMenu('ShopManagement')">
+                                    <i class="fa-solid fa-shop Oder-icon"></i>
+                                    <div class="order-management-heading-text">Quản Lý Shop</div>
+                                    <i class="fa-solid fa-chevron-down chevron-manage-icon" id="ShopManagementIcon"></i>
+                                </div>
+                                <a class="order-management-items hidden" @Html.ActionLink("Báo cáo Thống kê", "Index", "DashBoard")</a>
+                                <a class="order-management-items hidden" @Html.ActionLink("Đăng xuất", "Index", "LoginAccount")</a>
+                            </div>
+                        </div>
+                    </div>
+                    @RenderBody()
+                </div>
             </div>
         </div>
     </div>
-    @Scripts.Render("~/bundles/jquery")
-    @RenderSection("scripts", required: false)
-    @Scripts.Render("//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js")
+
 </body>
+
+
+
+
+@Scripts.Render("~/bundles/jquery")
+@RenderSection("scripts", required: false)
+@Scripts.Render("//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js")
+<script>
+    function setActive(event) {
+        // Kiểm tra xem phần tử được bấm có class "order-management-items" không
+        const targetElement = event.target;
+        if (targetElement.classList.contains('order-management-items')) {
+            // Kiểm tra xem phần tử đã được kích hoạt trước đó chưa
+            const activeItem = document.querySelector('.order-management-items-active');
+            if (activeItem !== null) {
+                // Nếu đã có phần tử được kích hoạt trước đó, hãy loại bỏ class "active" từ nó
+                activeItem.classList.remove('order-management-items-active');
+            }
+
+            // Thêm class "active" cho phần tử được bấm vào
+            targetElement.classList.add('order-management-items-active');
+        } else {
+            // Kiểm tra xem phần tử được bấm có phải là một phần tử con của thành phần cha không
+            const parentCategory = targetElement.closest('.category-order-management');
+            if (!parentCategory) {
+                // Nếu không phải, thực hiện việc ẩn các thành phần con của tất cả các thành phần cha
+                const allCategories = document.querySelectorAll('.category-order-management');
+                allCategories.forEach(category => {
+                    // Kiểm tra xem phần tử được bấm có phải là một phần tử con của category không
+                    if (!category.contains(targetElement)) {
+                        const subItems = category.querySelectorAll('.order-management-items');
+                        subItems.forEach(item => {
+                            item.classList.add('hidden');
+                        });
+                    }
+                });
+            }
+        }
+    }
+
+    // Toggle menu và lưu trạng thái mới vào localStorage
+    function toggleSubMenu(categoryId) {
+        const category = document.getElementById(categoryId);
+        const icon = document.getElementById(categoryId + 'Icon');
+        const subItems = category.querySelectorAll('.order-management-items');
+
+        category.classList.toggle('expanded');
+        subItems.forEach(item => {
+            item.classList.toggle('hidden');
+        });
+        icon.classList.toggle('fa-chevron-down');
+        icon.classList.toggle('fa-chevron-up');
+
+        saveSubMenuState();
+    }
+</script>
+
+
+
+
+
+
 </html>
+

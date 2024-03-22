@@ -5,102 +5,137 @@
     Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
 
-<div class="d-flex justify-content-between mb-3 mt-5">
-    <h3>Danh sách sản phẩm</h3>
-    <a class="btn btn-outline-secondary rounded-pill" href="@Url.Action("CreateProduct", "ManagerProduct")">Thêm mới sản phẩm</a>
-</div>
+<div class="col l-10">
+    @*<div class="find-product">
+        <div class="find-product-de">
+            <div class="find-product-name">
+                <select class="find-product-name-text" name="find-product" id="find_product_select">
+                    <option value="0" selected>Tên Sản Phẩm</option>
+                    <option value="1">Mã Sản phẩm</option>
+                </select>
+                <input class="find-product-name-input" type="text" id="productNameInput"
+                       placeholder="Nhập Tên Sản Phẩm">
+            </div>
+            <div class="find-product-name">
+                <div class="find-product-name-text">Trạng Thái</div>
+                <input class="find-product-name-input" type="text" placeholder="Trạng Thái">
+            </div>
+        </div>
 
-<div class="row">
-    <div class="col">
-        <h4>Sắp xếp</h4>
-    </div>
-
-    <div class="col">
-        <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="fillter_selected">
-            <option value=0 selected>Mặc đinh</option>
-            <option value="1">Theo tên sản phẩm</option>
-            <option value="2">Theo số lượng</option>
-            <option value="3">Theo giá</option>
-        </select>
-    </div>
-</div>
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.NameProduct)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Image)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Discount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Quantity)
-        </th>
-
-        <th>
-            @Html.DisplayNameFor(model => model.TypeProduct.TypeProductName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TypeProductSale.StatusProduct)
-        </th>
-        <th>
-
-
-
-        </th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NameProduct)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                <img src="@item.Image" style="width: 200px;" />
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Discount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.TypeProduct.TypeProductName)
-            </td>
-            <th>
-                @Html.DisplayFor(model => item.TypeProductSale.StatusProduct)
-            </th>
-            <td>
-                <div class="col-1" style="max-width: 40px;" id="iconChange">
-                    @Html.ActionLink(" ", "UpdateProduct", new { id = item.IdProduct }, new { @class = "icon-update " })
-                    <i class="fa-solid fa-pen " onclick="handleIconUpdate(event)"></i>
+            <div class="row">
+                <div class="col l-2">
+                    <button class="btn btn-find" id="findButton">Tìm</button>
                 </div>
-                <div class="col-1 " style="max-width: 40px;" id="iconDelete">
-                    @Html.ActionLink(" ", "DeleteProduct", new { id = item.IdProduct }, new { @class = "icon-delete" })
-                    <i class="fa-solid fa-trash" onclick="showDiaLogConfirm('@item.IdProduct')"></i>
+                <div class="col l-2">
+                    <button class="btn btn-find-2" id="resetButton">Nhập Lại</button>
                 </div>
-            </td>
-        </tr>
-    }
-</table>
+            </div>
+    </div>*@
 
+        <div class="content-product">
+            <div class="content-product-header">
+                <div class="content-discount-header-text header-text-active">Tất Cả</div>
+                <div class="content-discount-header-text">Đang Hoạt Động</div>
+                <div class="content-discount-header-text">Hết Hàng</div>
+                <div class="content-discount-header-text">Không Bán</div>
+            </div>
+            <div class="content-product-body">
+                <div class="content-product-body-header">
+                    <div class="body-products-available">
+                        <div class="number-of-products-available">69 Sản Phẩm</div>
+                        <div class="number-of-products-can-posted">
+                            Có thể đăng tải thêm 931 Sản Phẩm
+                        </div>
+                    </div>
+                    <div class="form_select_arrangeAndAdd">
+                        <div class="form_select_arrage_text">Sắp Xếp: </div>
+                        <select class="form_select_arrange" id="fillter_selected">
+                            <option value=0 selected>Mặc đinh</option>
+                            <option value="1">Theo tên sản phẩm</option>
+                            <option value="2">Theo số lượng</option>
+                            <option value="3">Theo giá</option>
+                        </select>
+                        <button class="btn btn_add_product" href="@Url.Action("CreateProduct", "ManagerProduct")"> + Thêm Mới 1 Sản Phẩm </button>
+                    </div>
+                </div>
+            </div>
+            <div class="content-product-detail">
+                <div class="product-detail-header">
+                    <div class="col l-3 header-text-product">
+                        <input type="checkbox">
+                        <div class="header-check-text header-check-text-firt">Tên Sản Phẩm</div>
+                    </div>
+                    <div class="col l-2 header-check-tile">
+                        <div class="header-check-text">Mô tả</div>
+                    </div>
+                    <div class="col l-2 header-check-tile">
+                        <div class="header-check-text">Đơn Giá</div>
+                    </div>
+                    <div class="col l-1 header-check-tile">
+                        <div class="header-check-text">giảm giá</div>
+                    </div>
+                    <div class="col l-1 header-check-tile">
+                        <div class="header-check-text">Số Lượng</div>
+                    </div>
+                    <div class="col l-1 header-check-tile">
+                        <div class="header-check-text">Loại</div>
+                    </div>
+                    <div class="col l-1 header-check-tile">
+                        <div class="header-check-text">Trạng Thái</div>
+                    </div>
+                    <div class="col l-1 header-check-tile header-check-text-last">
+                        <div class="header-check-text">Thao Tác</div>
+                    </div>
+                </div>
+                @foreach (var item in Model)
+                {
+                    <div class="adProduct-content-body">
+                        <div class="col l-3 content-body-name">
+                            <input type="checkbox" class="content-body-name-checkbox">
+                            <img class="adProduct-body-product-img" src="@item.Image"
+                                 alt="">
+                            <div class="adProduct-product-name">@Html.DisplayFor(modelItem => item.NameProduct)</div>
+                        </div>
+
+                        <div class="col l-2 adProduct-product">
+                            <div class="adProduct-product-manucafer">@Html.DisplayFor(modelItem => item.Description)</div>
+                        </div>
+                        <div class="col l-2 adProduct-product-unitprice adProduct-product">
+                            <div class="adProduct-product-manucafer">₫@Html.DisplayFor(modelItem => item.Price)</div>
+                        </div>
+                        <div class="col l-1 adProduct-product-unitprice adProduct-product">
+                            <div class="adProduct-product-manucafer">@Html.DisplayFor(modelItem => item.Discount)%</div>
+                        </div>
+                        <div class="col l-1 adProduct-product-unitprice adProduct-product">
+                            <div class="adProduct-product-manucafer">@Html.DisplayFor(modelItem => item.Quantity)</div>
+                        </div>
+                        <div class="col l-1 adProduct-product-quantity adProduct-product">
+                            <div class="adProduct-product-manucafer product-quantity">@Html.DisplayFor(modelItem => item.TypeProduct.TypeProductName)</div>
+                        </div>
+                        <div class="col l-1 adProduct-product">
+                            <div class="adProduct-product-manucafer">@Html.DisplayFor(model => item.TypeProductSale.StatusProduct)</div>
+                        </div>
+                        <div class="col l-1 adProduct-product">
+                            @Html.ActionLink("Cập nhật", "UpdateProduct", new { id = item.IdProduct }, new { @class = "product-Update-operation icon-update " })
+
+                            <div class="product-Update-operation" id="iconDelete" onclick="showDeleteDiaLogConfirm('@item.IdProduct')">Xóa</div>
+                        </div>
+                    </div>
+
+                    <div class="footer-chose">
+                        <div class="footer-chose-left">
+                            <input type="checkbox" class="footer-chose-left-checkbox">
+                            <div class="footer-chose-left-text">Chọn Tất cả</div>
+                        </div>
+                        <div class="footer-chose-right">
+                            <div class="footer-chose-right-text">69 sản phẩm đã được chọn</div>
+                            <button class="footer-chose-right-btn btn btn_delete" id="iconDelete" onclick="showDiaLogConfirm('@item.IdProduct')">@Html.ActionLink("Xóa", "DeleteProduct", new { id = item.IdProduct }, new { @class = "icon-delete" }) </button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 
 @*Dialog Confirm Action Delete*@
 <div class="modal" id="dialog_confirm">
@@ -124,8 +159,169 @@
 </div>
 
 
-
-
 @section Scripts  {
-    <script src="~/Assets/scripts/ManagerProductIndex.js"></script>
+    <script>
+        const filterSelectedId = document.getElementById('fillter_selected');
+
+        document.addEventListener('DOMContentLoaded', function () {
+            loadSortIndex();
+        });
+
+        filterSelectedId.addEventListener('change', function (event) {
+            var selectedValue = this.value;
+            console.log(selectedValue);
+            location.href = `/ManagerProduct/Index?sort=${selectedValue}`;
+        });
+
+        function loadSortIndex() {
+            var urlParams = new URLSearchParams(window.location.search);
+            var sortParam = urlParams.get('sort');
+
+            if (!isNaN(sortParam) && sortParam !== -1) {
+                filterSelectedId.value = sortParam;
+            }
+        }
+
+        function handleIconDelete(event) {
+            event.preventDefault();
+            var link = event.target.parentElement.querySelector('.icon-delete');
+            if (link) {
+                link.click();
+            }
+        }
+        const dialogConfirmId = document.getElementById('dialog_confirm');
+        const buttonConfirmId = document.getElementById('button_delete')
+        function hideDialogConfirm() {
+            $(dialogConfirmId).modal('hide');
+        }
+
+        function showDeleteDiaLogConfirm(IdProduct) {
+            $(dialogConfirmId).modal('show');
+
+            buttonConfirmId.addEventListener('click', function () {
+                $.ajax({
+                    url: '/ManagerProduct/DeleteProduct',
+                    type: 'POST',
+                    data: { IdProduct: IdProduct },
+                    success: function (data) {
+                        if (data) {
+                            hideDialogConfirm()
+                            location.reload();
+                        } else {
+                            console.error("Update failed.");
+                        }
+                    },
+                    error: function (error) {
+                        console.log("Error: ", error);
+                    }
+                });
+            })
+            buttonConfirmId.removeEventListener('click')
+
+        }
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // đổi lại placehoder khi được select
+            var selectElement = document.getElementById("find_product_select");
+            var inputElement = document.getElementById("productNameInput");
+
+            selectElement.addEventListener("change", function () {
+                if (selectElement.value === "0") {
+                    inputElement.placeholder = "Nhập Tên Sản Phẩm";
+                } else if (selectElement.value === "1") {
+                    inputElement.placeholder = "Nhập Mã Sản Phẩm";
+                }
+            });
+            // reset button
+            var resetButton = document.getElementById("resetButton");
+
+            resetButton.addEventListener("click", function () {
+                var inputs = document.querySelectorAll('.find-product-name-input');
+                inputs.forEach(function (input) {
+                    input.value = '';
+                });
+            });
+        });
+        // Hàm để cập nhật số lượng sản phẩm đã được chọn trong footer
+        function updateSelectedProductCount() {
+            var selectedCount = document.querySelectorAll('.content-body-name-checkbox:checked').length;
+            var footerText = document.querySelector('.footer-chose-right-text');
+            footerText.textContent = selectedCount + " sản phẩm đã được chọn";
+        }
+
+        // Hàm để kiểm tra xem tất cả các checkbox đã được chọn hay chưa
+        function checkAllSelected() {
+            var checkboxes = document.querySelectorAll('.content-body-name-checkbox');
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (!checkboxes[i].checked) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // Hàm để kiểm tra xem có bất kỳ checkbox nào được chọn không
+        function checkAnySelected() {
+            var checkboxes = document.querySelectorAll('.content-body-name-checkbox');
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // Hàm để hiển thị hoặc ẩn phần footer
+        function toggleFooter() {
+            var footer = document.querySelector('.footer-chose');
+            var footerCheckbox = document.querySelector('.footer-chose-left-checkbox');
+            if (checkAnySelected()) {
+                footer.style.display = 'flex';
+                footerCheckbox.checked = checkAllSelected();
+            } else {
+                footer.style.display = 'none';
+                footerCheckbox.checked = false;
+            }
+        }
+
+        // Hàm để cập nhật trạng thái checkbox header
+        function updateHeaderCheckbox() {
+            var headerCheckbox = document.querySelector('.header-text-product input[type="checkbox"]');
+            headerCheckbox.checked = checkAllSelected();
+        }
+
+        // Lắng nghe sự kiện click trên các checkbox và tiêu đề sản phẩm
+        var checkboxes = document.querySelectorAll('.content-body-name-checkbox');
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].addEventListener('click', function () {
+                toggleFooter();
+                updateHeaderCheckbox();
+                updateSelectedProductCount();
+            });
+        }
+
+        // Lắng nghe sự kiện click trên checkbox footer để chọn tất cả hoặc bỏ chọn tất cả
+        var footerCheckbox = document.querySelector('.footer-chose-left-checkbox');
+        footerCheckbox.addEventListener('click', function () {
+            var checkboxes = document.querySelectorAll('.content-body-name-checkbox');
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = footerCheckbox.checked;
+            }
+            toggleFooter();
+            updateHeaderCheckbox();
+            updateSelectedProductCount();
+        });
+
+        // Lắng nghe sự kiện click trên checkbox header để chọn tất cả hoặc bỏ chọn tất cả
+        var headerCheckbox = document.querySelector('.header-text-product input[type="checkbox"]');
+        headerCheckbox.addEventListener('click', function () {
+            var checkboxes = document.querySelectorAll('.content-body-name-checkbox');
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = headerCheckbox.checked;
+            }
+            toggleFooter();
+            updateSelectedProductCount();
+        });
+    </script>
 }

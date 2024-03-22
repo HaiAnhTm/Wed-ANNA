@@ -114,15 +114,15 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
                 return null;
             }   
         }
-        [HttpPost]
+        [HttpGet]
         [ManagerAuthorize]
-        public async Task<ActionResult> UpdateProduct(int? id)
+        public ActionResult UpdateProduct(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = await db.Products.FindAsync(id);
+            Product product =  db.Products.Find(id);
             if (product == null)
             {
                 return HttpNotFound();

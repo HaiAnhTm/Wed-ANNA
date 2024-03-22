@@ -2,11 +2,11 @@
     --white-color: #fff !important;
     --black-color: #000 !important;
     --text-color: #333 !important;
-    --primary-color: #81C8C2  !important;
+    --text-lighter: #ababab !important;
+    --primary-color: #81C8C2 !important;
     --boder-color: #dbdbdb !important;
     --secondary-color: #BFE8E3 !important;
-
-
+    --background-color: #f6f6f6 !important;
     --header-height: 120px;
     --navbar-height: 34px;
     --header-with-search-height: calc(var(--header-height)) - calc(var(--navbar-height));
@@ -17,6 +17,10 @@
     box-sizing: inherit;
     /* kế thừa thuộc tính từ cha */
     margin: 0;
+}
+a {
+    color: inherit;
+    text-decoration: none;
 }
 html {
     font-size: 62.5%;
@@ -56,35 +60,27 @@ html {
 }
 
 /* modal */
-.modal {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    display: flex;
-}
 
-.modal-overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-}
-
-.modal-body {
-    background-color: var(--white-color);
-    margin: auto;
-    /* display: flex và magrin auto để căn giữa khối khi dùng flex */
-    position: relative;
-    z-index: 1;
-    border-radius: 2px;
-}
 
 /* nút chung */
+
+input:focus {
+    outline: none; /* Loại bỏ border khi input được focus */
+}
+
+.content-product-detail input:hover {
+    cursor: pointer;
+}
+
+select:focus {
+    outline: none; /* Loại bỏ border khi input được focus */
+}
+
+select:hover {
+    cursor: pointer;
+}
+/* nút chung */
 .btn {
-    min-width: 126px;
-    height: 36px;
     text-decoration: none;
     border: none;
     border-radius: 2px;
@@ -95,6 +91,14 @@ html {
     align-items: center;
     justify-content: center;
     line-height: 1.6rem;
+}
+
+    .btn:hover {
+        filter: brightness(90%);
+    }
+
+.hidden {
+    display: none !important;
 }
 
 .btn.btn-primary {
@@ -166,16 +170,25 @@ html {
     border-radius: 2px;
 }
 
-.pagination-items-active.pagination-items-link:hover{
+.pagination-items-active.pagination-items-link:hover {
     opacity: 0.9;
 }
-.pagination-items-active.pagination-items-link{
+
+.pagination-items-active.pagination-items-link {
     background-color: #f53e2d;
     color: var(--white-color);
 }
-.product-items-price-new{
+
+.product-items-price-new {
     color: rgb(192, 0, 0);
     font-size: 2.6rem;
     text-align: center;
     margin-left: 12px;
+}
+
+.Create_Product_body_head {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 30px;
 }

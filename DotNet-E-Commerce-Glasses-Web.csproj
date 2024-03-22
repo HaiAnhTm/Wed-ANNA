@@ -257,11 +257,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
-    <Content Include="Assets\css\base.css" />
+    <Content Include="Assets\css\BaseX.css" />
     <Content Include="Assets\css\common.css" />
     <Content Include="Assets\css\DetailProduct.css" />
+    <Content Include="Assets\css\Discount.css" />
     <Content Include="Assets\css\grid.css" />
     <Content Include="Assets\css\login.css" />
+    <Content Include="Assets\images\images_Discount\discount.png" />
+    <Content Include="Assets\images\images_Discount\imgdiscount.png" />
     <Content Include="Assets\images\images_login\img_login.jpg" />
     <Content Include="Assets\images\images_login\register_img.jpg" />
     <Content Include="Assets\images\images_Other\logo.png" />
@@ -2323,6 +2326,7 @@
     <Content Include="Assets\fontawesome-free-6.4.0-web\svgs\solid\yin-yang.svg" />
     <Content Include="Assets\fontawesome-free-6.4.0-web\svgs\solid\z.svg" />
     <Content Include="Assets\fonts\LICENSE.txt" />
+    <Content Include="Assets\images\logo.svg" />
     <Content Include="Assets\scripts\ConsumerProduct.js" />
     <Content Include="Assets\scripts\ForCommon\LogInAccount.js" />
     <Content Include="Assets\scripts\ForConsumer\ConsumerCart.js" />
@@ -2330,7 +2334,8 @@
     <Content Include="Assets\scripts\ManagerCreateDiscount.js" />
     <Content Include="Assets\scripts\ManagerDashboard.js" />
     <Content Include="Assets\scripts\ManagerDiscountIndex.js" />
-    <Content Include="Assets\scripts\ManagerProductIndex.js" />
+    <Content Include="Assets\scripts\Category.js" />
+    <Content Include="Assets\scripts\ManagerProductIndexX.js" />
     <Content Include="Assets\scripts\ManagerTypeProduct.js" />
     <Content Include="Assets\scripts\ManagerUpdateDiscount.js" />
     <Content Include="Assets\scripts\ForCommon\RegisterAccount.js" />
@@ -2507,10 +2512,7 @@
     <Content Include="Views\LoginAccount\Index.cshtml" />
     <Content Include="Views\ConsumerProduct\DetailProduct.cshtml" />
     <Content Include="Views\ConsumerProduct\UpdateConsumer.cshtml" />
-    <Content Include="Views\ManagerProduct\Create.cshtml" />
-    <Content Include="Views\ManagerProduct\Delete.cshtml" />
     <Content Include="Views\ManagerProduct\Details.cshtml" />
-    <Content Include="Views\ManagerProduct\Edit.cshtml" />
     <Content Include="Views\ManagerProduct\Index.cshtml" />
     <Content Include="Views\ManagerDiscount\Index.cshtml" />
     <Content Include="Views\ManagerConsumer\Create.cshtml" />
@@ -2520,10 +2522,6 @@
     <Content Include="Views\Shared\_LayoutConsumer.cshtml" />
     <Content Include="Views\Shared\_LayoutManager.cshtml" />
     <Content Include="Views\Shared\_LayoutNoNavigation.cshtml" />
-    <Content Include="Views\ManagerTypeProduct\Create.cshtml" />
-    <Content Include="Views\ManagerTypeProduct\Delete.cshtml" />
-    <Content Include="Views\ManagerTypeProduct\Details.cshtml" />
-    <Content Include="Views\ManagerTypeProduct\Edit.cshtml" />
     <Content Include="Views\ManagerTypeProduct\Index.cshtml" />
     <Content Include="Views\ManagerProduct\UpdateProduct.cshtml" />
     <Content Include="Views\ManagerProduct\CreateProduct.cshtml" />
@@ -2543,7 +2541,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Assets\images\images_Consumer\" />
-    <Folder Include="Assets\images\images_Discount\" />
     <Folder Include="Assets\images\images_Manager\" />
     <Folder Include="Assets\images\images_Product\" />
     <Folder Include="Assets\scripts\ForManager\" />
