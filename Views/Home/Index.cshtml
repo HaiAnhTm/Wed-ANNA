@@ -3,7 +3,285 @@
     Layout = ViewBag.Consumer != null ? "~/Views/Shared/_LayoutConsumer.cshtml" : "~/Views/Shared/_Layout.cshtml";
 }
 @*Banner*@
-<div class="container rounded" id="banner_container">
+
+<div class="slider-container">
+    <div class="slide slide_active" style="background-image: url('/Assets/images/img/slider-1.jpeg');">
+    </div>
+    <div class="slide" style="background-image: url('/Assets/images/img/slider-2.jpeg');">
+    </div>
+    <button class="btn_slider_prev">
+        <i class="fa-solid fa-chevron-left slide-btn-left"></i>
+    </button>
+    <button class="btn_slider_next">
+        <i class="fa-solid fa-chevron-right slide-btn-right"></i>
+    </button>
+</div>
+<div class="grid wide">
+    <div class="body_best_seller_product">
+        <div class="seller_product_title">BÁN CHẠY NHẤT</div>
+        <div class="seller_product_list">
+            <div class="col l-3">
+                <div class="best_seller_product-card">
+                    <div class="best_seller_product-image">
+                        <img src="~/Assets/images/img/glass_img.jpeg" alt="Gọng kính">
+                    </div>
+                    <div class="best_seller_product-details">
+                        <div class="best_seller_product-name">GK. GỌNG NHỰA CỨNG AN077 (52.18.150) - GHI</div>
+                        <div class="best_seller_product-pricing">
+                            <div class="best_seller_product-discount">
+                                Tiết kiệm được <span class="best_seller_product-discount-price">150.000đ</span>
+                            </div>
+                            <div class="best_seller_product-original-price">800.000đ</div>
+                        </div>
+                        <button class="best_seller_product-buy-btn">
+                            <div class="best_seller_product-price">650.000đ</div>
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col l-3">
+                <div class="best_seller_product-card">
+                    <div class="best_seller_product-image">
+                        <img src="~/Assets/images/img/glass_img.jpeg" alt="Gọng kính">
+                    </div>
+                    <div class="best_seller_product-details">
+                        <div class="best_seller_product-name">GK. GỌNG NHỰA CỨNG AN077 (52.18.150) - GHI</div>
+                        <div class="best_seller_product-pricing">
+                            <div class="best_seller_product-discount">
+                                Tiết kiệm được <span class="best_seller_product-discount-price">150.000đ</span>
+                            </div>
+                            <div class="best_seller_product-original-price">800.000đ</div>
+                        </div>
+                        <button class="best_seller_product-buy-btn">
+                            <div class="best_seller_product-price">650.000đ</div>
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col l-3">
+                <div class="best_seller_product-card">
+                    <div class="best_seller_product-image">
+                        <img src="~/Assets/images/img/glass_img.jpeg" alt="Gọng kính">
+                    </div>
+                    <div class="best_seller_product-details">
+                        <div class="best_seller_product-name">GK. GỌNG NHỰA CỨNG AN077 (52.18.150) - GHI</div>
+                        <div class="best_seller_product-pricing">
+                            <div class="best_seller_product-discount">
+                                Tiết kiệm được <span class="best_seller_product-discount-price">150.000đ</span>
+                            </div>
+                            <div class="best_seller_product-original-price">800.000đ</div>
+                        </div>
+                        <button class="best_seller_product-buy-btn">
+                            <div class="best_seller_product-price">650.000đ</div>
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col l-3">
+                <div class="best_seller_product-card">
+                    <div class="best_seller_product-image">
+                        <img src="~/Assets/images/img/glass_img.jpeg" alt="Gọng kính">
+                    </div>
+                    <div class="best_seller_product-details">
+                        <div class="best_seller_product-name">GK. GỌNG NHỰA CỨNG AN077 (52.18.150) - GHI</div>
+                        <div class="best_seller_product-pricing">
+                            <div class="best_seller_product-discount">
+                                Tiết kiệm được <span class="best_seller_product-discount-price">150.000đ</span>
+                            </div>
+                            <div class="best_seller_product-original-price">800.000đ</div>
+                        </div>
+                        <button class="best_seller_product-buy-btn">
+                            <div class="best_seller_product-price">650.000đ</div>
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="seller_product_last_img">
+        <div class="col l_6">
+            <img src="~/Assets/images/img/Home_img_1_linh.jpeg" alt="">
+        </div>
+        <div class="col l_6">
+            <img src="~/Assets/images/img/Home_img_2_tun.jpeg" alt="">
+        </div>
+    </div>
+</div>
+<div class="grid wide">
+    <div class="body_Choose_glases">
+        <div class="col l-4">
+            <div class="Choose_glases_img_left">
+                <img src="~/Assets/images/img/Home_tun_Glass.jpeg" alt="">
+            </div>
+        </div>
+        <div class="col l-8">
+            <div class="Choose_glases_for_you">CHỌN KÍNH PHÙ HỢP VỚI BẠN</div>
+            <div class="Choose_glases">
+                <div class="Choose_glases_left">
+                    <div class="Choose_glases_tille">CHỌN KÍNH THEO KHUÔN MẶT</div>
+                    <div class="Choose_glases_detail l-7">
+                        Lựa chọn kính theo hình dáng khuôn mặt và sở thích cá
+                        nhân của bạn.
+                    </div>
+                </div>
+                <div class="Choose_glases_right">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+            </div>
+            <div class="Choose_glases">
+                <div class="Choose_glases_left">
+                    <div class="Choose_glases_tille">CHỌN KÍNH THEO PHONG CÁCH</div>
+                    <div class="Choose_glases_detail l-7">
+                        Lựa chọn kính phù hợp với gu thẩm mỹ và phong cách
+                        thời trang của bạn.
+                    </div>
+                </div>
+                <div class="Choose_glases_right">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+            </div>
+            <div class="Choose_glases">
+                <div class="Choose_glases_left">
+                    <div class="Choose_glases_tille">CHỌN KÍNH THEO CÔNG VIỆC</div>
+                    <div class="Choose_glases_detail l-7">
+                        Lựa chọn kính tối ưu cho môi trường công việc và yêu
+                        cầu chuyên môn của bạn.
+                    </div>
+                </div>
+                <div class="Choose_glases_right">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="body_introduce">
+    <div class="grid wide">
+        <div class="body_introduce_anna">
+            <div class="col l-7">
+                <div class="introduce_title_1">NHỮNG ĐIỀU THÚ VỊ CHỈ CÓ TẠI ANNA</div>
+                <div class="introduce_content">
+                    Được thành lập từ năm 2015, trải qua hơn 8 năm phát triển, kính mắt Anna đã, đang và sẽ
+                    chiếm lĩnh một vị trí không thể thiếu trong lòng các bạn trẻ. Với quy mô hoạt động rộng khắp
+                    toàn quốc, Anna không ngừng mở rộng thêm các chi nhánh để mang những sản phẩm chất lượng đến
+                    tay người tiêu dùng, đồng thời khẳng định vị thế và uy tín của mình trên thị trường kính
+                    mắt. Công ty chú trọng đầu tư vào công nghệ và mẫu mã để từng sản phẩm không chỉ đẹp về
+                    ngoại hình mà còn vượt trội về chức năng, phù hợp với mọi hoạt động sống động của giới trẻ.
+                    Đó chính là cam kết của Anna – mang đến sự hoàn hảo trong từng chi tiết, đồng hành cùng
+                    phong cách và tầm nhìn của bạn.
+                </div>
+            </div>
+            <div class="col l-5">
+                <div class="introduce_img">
+                    <img src="~/Assets/images/img/introduc3_q12.jpeg" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="body_introduce_anna">
+            <div class="col l-5">
+                <div class="introduce_img">
+                    <img src="~/Assets/images/img/troduce2.png" alt="">
+                </div>
+            </div>
+            <div class="col l-7">
+                <div class="introduce_title_2" style="background-image: url('/Assets/images/img/co_ve.png');">
+                    Kính Mắt Anna: Vẻ Đẹp Tinh Tế
+                </div>
+                <div class="introduce_content">
+                    Kính mắt Anna không chỉ là một phụ kiện thời trang, mà còn là người bạn đồng hành không thể
+                    thiếu, giúp bảo vệ đôi mắt bạn dưới mọi ánh nắng và môi trường làm việc. Với sự kết hợp tinh
+                    tế giữa công nghệ sản xuất tiên tiến và thời trang hiện đại, mỗi cặp kính của chúng tôi đều
+                    mang đến sự thoải mái tối ưu và phong cách nổi bật cho người sử dụng. Dù bạn là người yêu
+                    thích vẻ đẹp cổ điển hay hướng đến sự đơn giản, tinh tế, Anna luôn có những thiết kế đa dạng
+                    phù hợp với mọi sở thích và nhu cầu. Hãy để kính mắt Anna nâng tầm vẻ đẹp tự nhiên và bảo vệ
+                    đôi mắt quý giá của bạn.
+                </div>
+            </div>
+        </div>
+        <div class="body_introduce_anna">
+            <div class="col l-7">
+                <div class="introduce_title_3">
+                    <img src="~/Assets/images/img/logo_httt_blue.png" alt="">
+                </div>
+                <div class="introduce_content">
+                    Kính mắt Anna không chỉ chú trọng vào chất lượng sản phẩm mà còn gửi gắm tình yêu và sự quan
+                    tâm đến cộng đồng thông qua 'Hành Trình Tử Tế'. Chương trình này phản ánh cam kết mạnh mẽ
+                    của thương hiệu đối với các hoạt động xã hội, từ việc tài trợ cho các ca mổ mắt dị tật bẩm
+                    sinh cho trẻ em đến việc phát tặng túi với thông điệp nhân ái. Là một dự án phi lợi nhuận,
+                    chúng mình mong muốn lan toả giá trị nhân ái, tiếp thêm động lực cho cộng đồng và cùng nhau
+                    hướng tới một tương lai tốt đẹp hơn. Anna mong muốn không chỉ làm đẹp thế giới qua lăng kính
+                    mà còn qua những hành động có ý nghĩa, góp phần xây dựng một tương lai tốt đẹp hơn cho cộng
+                    đồng.
+                </div>
+            </div>
+            <div class="col l-5">
+                <div class="introduce_img">
+                    <img src="~/Assets/images/img/introduce3.jpg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="kind_journey" class="body_kind_journey"  style="background-image: url('/Assets/images/img/Background_HTTT.jpeg');">
+    <div class="grid wide">
+        <div class="kind_journey_header">
+            <div class="kind_journey_header_left">
+                <img src="~/Assets/images/img/Logo_HTTT.png" alt="">
+            </div>
+            <div class="kind_journey_header_right">
+                <div class="journey_header_right_text">Cộng đồng sống tử tế</div>
+                <div class="journey_header_right_icon">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="grid wide">
+        <div class="kind_journey_body">
+            <div class="col l-6">
+                <div class="kind_journey_content">
+                    <div class="kind_journey_sun_eyes">ĐÔI MẮT MẶT TRỜI</div>
+                    <div class="kind_journey_sun_eyes_text">
+                        Tài trợ các ca mổ mắt dị tật bẩm sinh cho các em nhỏ
+                        có hoàn cảnh khó khăn.
+                    </div>
+                    <div class="kind_journey_sun_eyes">TÚI TỬ TẾ</div>
+                    <div class="kind_journey_sun_eyes_text">
+                        Anna sẽ in 500.000 chiếc túi tử tế nhằm lan toả câu
+                        chuyện tìm người thân mất lạc, cùng hy vọng phép màu sẽ xảy ra.
+                    </div>
+                </div>
+                <div class="kind_journey_content_bottom">
+                    <div class="col l-4">
+                        <div class="content_bottom_h1">07</div>
+                        <div class="content_bottom_h2">TỈNH THÀNH</div>
+                        <div class="content_bottom_h2">Hành trình tử tế có mặt</div>
+                    </div>
+                    <div class="col l-4">
+                        <div class="content_bottom_h1">30</div>
+                        <div class="content_bottom_h2">EM NHỎ</div>
+                        <div class="content_bottom_h2">Được tài trợ chi phí phẫu thuật mắt</div>
+                    </div>
+                    <div class="col l-4">
+                        <div class="content_bottom_h1">500.000</div>
+                        <div class="content_bottom_h2">TÚI TỬ TẾ</div>
+                        <div class="content_bottom_h2">Được phát tặng để tìm người thân thất lạc</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col l-6">
+                <div class="kind_journey_img_right">
+                    <img src="~/Assets/images/img/eye_httt.jpeg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div class="container rounded" id="banner_container">
 
     <div class="row">
         <div class="col-sm-8 position-relative" id="col_first">
@@ -123,122 +401,115 @@
     Kính bảo vệ chống lóa hoặc kính ánh sáng xanh, có thể làm giảm sự phản xạ ánh sáng đi vào mắt.
     Các ống kính được phủ một lớp chống chói để ngăn phản xạ ánh sáng trong các điều kiện ánh sáng khác nhau.
     Bằng cách giảm lượng ánh sáng chói trên mắt, thị lực có thể được cải thiện.
-</p>
+</p>-->
 <!-- Footer -->
-<footer class="text-center text-lg-start bg- text-muted" style="background-color: #9DB2BF;">
+<!--<footer class="text-center text-lg-start bg- text-muted" style="background-color: #9DB2BF;">
 
     <section class="d-flex justify-content-center justify-content-lg-between p-3 border-bottom">
-        <div class="container text-center text-md-start mt-5">
-            <!-- Grid row -->
-            <div class="row mt-3">
-                <!-- Grid column -->
-                <div class="col-md-3 col-lg-4 col-xl-5 mx-auto mb-4">
-                    <!-- Content -->
-                    <h6 class="text-uppercase fw-bold mb-4">
-                        <i class="fas fa-gem me-3 text-secondary"></i>Thế Giới Kính Mắt
-                    </h6>
-                    <p>
-                        TÀI SẢN LỚN NHẤT CỦA DOANH NGHIỆP LÀ KHÁCH HÀNG.
-                    </p>
-                    <p>
-                        THẾ GIỚI KÍNH MẮT – Chuỗi cửa hàng uy tín tại HÀ NỘI , HCM.
-                    </p>
-                    <p>
-                        THẾ GIỚI KÍNH MẮT – Trải nghiệm chất lượng kính mắt theo tiêu chuẩn quốc tế.
-                    </p>
-                </div>
-                <!-- Grid column -->
-                <!-- Grid column -->
-                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mb-4">
-                    <!-- Links -->
-                    <h6 class="text-uppercase fw-bold mb-4">
-                        Hệ Thống Cửa Hàng
-                    </h6>
-                    <p>
-                        <a href="#!" class="text-reset">Hà Nội</a>
-                    </p>
-                    <p>
-                        <a href="#!" class="text-reset">Hải Phòng</a>
-                    </p>
-                    <p>
-                        <a href="#!" class="text-reset">TP Hồ Chí Minh</a>
-                    </p>
-                    <p>
-                        <a href="#!" class="text-reset">Vĩnh Phúc</a>
-                    </p>
-                </div>
-
-                <!-- Grid column -->
-                <div class="col-md-5 col-lg-5 col-xl-4 mx-auto mb-md-0 mb-4">
-                    <!-- Links -->
-                    <h6 class="text-uppercase fw-bold mb-4">Liên Hệ</h6>
-                    <p><i class="fas fa-home me-3 text-secondary"></i> 177 Phạm Văn Đồng, Mai Dịch, Hà Nội</p>
-                    <p>
-                        <i class="fas fa-envelope me-3 text-secondary"></i>
-                        TheGioiKinhMat@gmail.com.vn
-                    </p>
-                    <p><i class="fas fa-phone me-3 text-secondary"></i> 0865466762</p>
-                    <p><i class="fas fa-print me-3 text-secondary"></i> 0968686868</p>
-                </div>
-                <!-- Grid column -->
-            </div>
-            <!-- Grid row -->
-        </div>
+        <div class="container text-center text-md-start mt-5">-->
+<!-- Grid row -->
+<!--<div class="row mt-3">-->
+<!-- Grid column -->
+<!--<div class="col-md-3 col-lg-4 col-xl-5 mx-auto mb-4">-->
+<!-- Content -->
+<!--<h6 class="text-uppercase fw-bold mb-4">
+        <i class="fas fa-gem me-3 text-secondary"></i>Thế Giới Kính Mắt
+    </h6>
+    <p>
+        TÀI SẢN LỚN NHẤT CỦA DOANH NGHIỆP LÀ KHÁCH HÀNG.
+    </p>
+    <p>
+        THẾ GIỚI KÍNH MẮT – Chuỗi cửa hàng uy tín tại HÀ NỘI , HCM.
+    </p>
+    <p>
+        THẾ GIỚI KÍNH MẮT – Trải nghiệm chất lượng kính mắt theo tiêu chuẩn quốc tế.
+    </p>
+</div>-->
+<!-- Grid column -->
+<!-- Grid column -->
+<!--<div class="col-md-3 col-lg-3 col-xl-3 mx-auto mb-4">-->
+<!-- Links -->
+<!--<h6 class="text-uppercase fw-bold mb-4">
+        Hệ Thống Cửa Hàng
+    </h6>
+    <p>
+        <a href="#!" class="text-reset">Hà Nội</a>
+    </p>
+    <p>
+        <a href="#!" class="text-reset">Hải Phòng</a>
+    </p>
+    <p>
+        <a href="#!" class="text-reset">TP Hồ Chí Minh</a>
+    </p>
+    <p>
+        <a href="#!" class="text-reset">Vĩnh Phúc</a>
+    </p>
+</div>-->
+<!-- Grid column -->
+<!--<div class="col-md-5 col-lg-5 col-xl-4 mx-auto mb-md-0 mb-4">-->
+<!-- Links -->
+<!--<h6 class="text-uppercase fw-bold mb-4">Liên Hệ</h6>
+    <p><i class="fas fa-home me-3 text-secondary"></i> 177 Phạm Văn Đồng, Mai Dịch, Hà Nội</p>
+    <p>
+        <i class="fas fa-envelope me-3 text-secondary"></i>
+        TheGioiKinhMat@gmail.com.vn
+    </p>
+    <p><i class="fas fa-phone me-3 text-secondary"></i> 0865466762</p>
+    <p><i class="fas fa-print me-3 text-secondary"></i> 0968686868</p>
+</div>-->
+<!-- Grid column -->
+<!--</div>-->
+<!-- Grid row -->
+<!--</div>
+</section>
+<div class="container p-4">-->
+<!-- Section: Social media -->
+<!--<section class="mb-4">-->
+<!-- Facebook -->
+<!--<a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button">
+    <i class="fab fa-facebook-f"></i>
+</a>-->
+<!-- Twitter -->
+<!--<a class="btn btn-outline-dark  btn-floating m-1" href="#!" role="button">
+    <i class="fab fa-twitter"></i>
+</a>-->
+<!-- Google -->
+<!--<a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button">
+    <i class="fab fa-google"></i>
+</a>-->
+<!-- Instagram -->
+<!--<a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button">
+    <i class="fab fa-instagram"></i>
+</a>-->
+<!-- Linkedin -->
+<!--<a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button">
+    <i class="fab fa-linkedin-in"></i>
+</a>-->
+<!-- Github -->
+<!--<a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button">
+            <i class="fab fa-github"></i>
+        </a>
     </section>
-    <div class="container p-4">
-        <!-- Section: Social media -->
-        <section class="mb-4">
-            <!-- Facebook -->
-            <a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button">
-                <i class="fab fa-facebook-f"></i>
-            </a>
-
-            <!-- Twitter -->
-            <a class="btn btn-outline-dark  btn-floating m-1" href="#!" role="button">
-                <i class="fab fa-twitter"></i>
-            </a>
-
-            <!-- Google -->
-            <a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button">
-                <i class="fab fa-google"></i>
-            </a>
-
-            <!-- Instagram -->
-            <a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button">
-                <i class="fab fa-instagram"></i>
-            </a>
-
-            <!-- Linkedin -->
-            <a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button">
-                <i class="fab fa-linkedin-in"></i>
-            </a>
-
-            <!-- Github -->
-            <a class="btn btn-outline-dark btn-floating m-1" href="#!" role="button">
-                <i class="fab fa-github"></i>
-            </a>
-        </section>
-    </div>
-    <!-- Section: Links  -->
-    <!-- Copyright -->
-    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.025);">
-        © 2023 Copyright:
-        <a class="text-reset fw-bold" href="https://mdbootstrap.com/">TheGioiKinhMat.com</a>
-    </div>
-    <!-- Copyright -->
-</footer>
+</div>-->
+<!-- Section: Links  -->
+<!-- Copyright -->
+<!--<div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.025);">
+    © 2023 Copyright:
+    <a class="text-reset fw-bold" href="https://mdbootstrap.com/">TheGioiKinhMat.com</a>
+</div>-->
+<!-- Copyright -->
+<!--</footer>-->
 <!-- Footer -->
-
 @section Scripts {
-    <script>
-        var linkElement = document.createElement("link");
-        linkElement.rel = "stylesheet";
-        linkElement.type = "text/css";
-        linkElement.href = "../Asset/css/NguoiDung/TrangChu.css";
-        document.head.appendChild(linkElement);
+<script>
+    var linkElement = document.createElement("link");
+    linkElement.rel = "stylesheet";
+    linkElement.type = "text/css";
+    linkElement.href = "../Asset/css/NguoiDung/TrangChu.css";
+    document.head.appendChild(linkElement);
 
-        function redirectToBanHang() {
-            window.location.href = '/BanHang/Index';
-        }
-    </script>
+    function redirectToBanHang() {
+        window.location.href = '/BanHang/Index';
+    }
+</script>
 }

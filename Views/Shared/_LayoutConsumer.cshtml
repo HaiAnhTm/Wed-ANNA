@@ -1,4 +1,401 @@
 ﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @*<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <link rel="stylesheet" href="~/Assets/css/common.css">*@
+    <link rel="stylesheet" href="~/Assets/fontawesome-free-6.4.0-web/css/all.min.css">
+    <link rel="stylesheet" href="~/Assets/fonts/Roboto-Black.ttf">
+    <link rel="stylesheet" href="~/Assets/css/grid.css">
+    <link rel="stylesheet" href="~/Assets/css/Base.css">
+    <link rel="stylesheet" href="~/Assets/css/consumer.css">
+    <link rel="stylesheet" href="~/Assets/fontawesome-free-6.4.0-web/">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="main">
+        <div class="grid wide">
+            <header class="main_header">
+                <div class="top_header">
+                    <div class="top_header_left">GIẢM NGAY 15% CHO ĐƠN HÀNG ĐẦU TIÊN</div>
+                    <div class="top_header_right">
+                        <div class="top_header_right_items">Chính Sách</div>
+                        <div class="top_header_right_items">Tra cứu đơn hàng</div>
+                        <a href="@Url.Action("", "LoginAccount", null, Request.Url.Scheme)" class="top_header_right_items">
+                            <i class="fa-solid fa-user"></i>
+                            Tài Khoản
+                        </a>
+                    </div>
+                </div>
+                <div class="navbarr">
+                    <div class="header_navbar_list">
+                        <img src="~/Assets/images/img/logo.svg" alt="" class="navbar_img_logo" @Html.ActionLink(" ", "", "Home", new { area = "Others" }, new { @class = "navbar-brand " })/>
+                        <div class="nav_items_product nav_product">
+                            <a href="@Url.Action("Index", "ConsumerProduct")" class="nav_link">
+                                Sản Phẩm
+                                <i class="fa-solid fa-chevron-down chevron-manage-icon"></i>
+                            </a>
+                            <div class="grid wide">
+                                <div class="nav_product_title">
+                                    <div class="col l-4 nav_product_title_item">
+                                        <div class="product_title_items">
+                                            <a href="">Kính dâm</a>
+                                        </div>
+                                        <div class="product_title_items">
+                                            <a href="">Decor</a>
+                                        </div>
+                                        <div class="product_title_items">
+                                            <a href="">Gọng kính</a>
+                                        </div>
+                                        <div class="product_title_items">
+                                            <a href="">Tròng kính</a>
+                                        </div>
+                                    </div>
+                                    <div class="col l-4">
+                                        <img src="~/Assets/images/img/img_login.jpg" alt="" class="nav_img_product_1">
+                                    </div>
+                                    <div class="col l-4">
+                                        <img src="~/Assets/images/img/register_img.jpg" alt="" class="nav_img_product_2">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nav_items_product">
+                            <a href="" class="nav_link">
+                                Tìm Cửa Hàng
+                                <i class="fa-solid fa-location-dot"></i>
+                            </a>
+                        </div>
+                        <div class="header-search">
+                            <div class="search-input-wrap">
+                                <input type="text" class="header-search-input" placeholder="Các mẫu kính râm hot...">
+                                <div class="header-search-history">
+                                    <h3 class="search-history-heading">Lịch sử tìm kiếm</h3>
+                                    <ul class="search-history-list">
+                                        <li class="search-history-items">
+                                            <a href="">Gọng Kính</a>
+                                            <i class="fa-solid fa-arrow-right"></i>
+                                        </li>
+                                        <li class="search-history-items">
+                                            <a href="">tròng kính</a>
+                                            <i class="fa-solid fa-arrow-right"></i>
+                                        </li>
+                                        <li class="search-history-items">
+                                            <a href="">kính dâm</a>
+                                            <i class="fa-solid fa-arrow-right"></i>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <button class="header-search-btn">
+                                <i class="fa-solid fa-magnifying-glass header-search-btn-icon"></i>
+                            </button>
+                        </div>
+                        <div class="nav_items_product">
+                            <a href="" class="nav_link">
+                                Xem Thêm
+                                <i class="fa-solid fa-chevron-down chevron-manage-icon"></i>
+                            </a>
+                            <div class="nav_detail_list">
+                                <div class="nav_detail_items">
+                                    <a href="">Chọn Kính Theo Gương Mặt</a>
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </div>
+                                <div class="nav_detail_items">
+                                    <a href="">Về Chúng Tôi</a>
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </div>
+                                <div class="nav_detail_items">
+                                    <a href="">Blog</a>
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="nav_items_product">
+                            <a href="#kind_journey" class="nav_link">
+                                Hành Trình Tử Tế
+                            </a>
+                        </div>
+                        <div class="header-cart">
+                            <div class="hearder-cart-warp">
+                                <a href="@Url.Action("ConsumerCart", "ConsumerProduct")" class="nav_link">
+                                    Giỏ Hàng
+                                    <i class="fa-solid fa-cart-shopping header-cart-shopping"></i>
+                                </a>
+                                <span class="header-cart-notice">
+
+                                </span>
+                                <!-- no cart: header-cart-list-no_cart -->
+                                <div class="header-cart-list">
+                                    <!-- <img src="./assets/img/no-cart.png" alt="" class="img-no-cart">
+                                <span class="no-cart-msg">
+                                    Chưa có sản phẩm
+                                </span> -->
+                                    <h4 class="cart-heading">sản phẩm đã thêm</h4>
+                                    <ul class="cart-list-items">
+                                        <li class="cart-items">
+                                            <img src="~/Assets/images/img/glass_img.jpeg" alt="" class="cart-items-img">
+                                            <div class="cart-items-info">
+                                                <div class="cart-items-head">
+                                                    <h5 class="cart-items-name">Sách Hoàng Tử Bé</h5>
+                                                    <div class="cart-items-price-wrap">
+                                                        <span class="cart-items-price">98.000đ</span>
+                                                        <span class="cart-items-multiply">x</span>
+                                                        <span class="cart-items-qnt">2</span>
+                                                    </div>
+                                                </div>
+                                                <div class="cart-items-body">
+                                                    <span class="cart-items-description">
+                                                        phân loại: sách
+                                                    </span>
+                                                    <span class="cart-items-remove">Xóa</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="cart-items">
+                                            <img src="~/Assets/images/img/glass_img.jpeg" alt="" class="cart-items-img">
+                                            <div class="cart-items-info">
+                                                <div class="cart-items-head">
+                                                    <h5 class="cart-items-name">
+                                                        Sách kẻ điên bên phải thiên tài bên trái
+                                                    </h5>
+                                                    <div class="cart-items-price-wrap">
+                                                        <span class="cart-items-price">67.900đ</span>
+                                                        <span class="cart-items-multiply">x</span>
+                                                        <span class="cart-items-qnt">1</span>
+                                                    </div>
+                                                </div>
+                                                <div class="cart-items-body">
+                                                    <span class="cart-items-description">
+                                                        phân loại: sách
+                                                    </span>
+                                                    <span class="cart-items-remove">Xóa</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="cart-items">
+                                            <img src="~/Assets/images/img/glass_img.jpeg" alt="" class="cart-items-img">
+                                            <div class="cart-items-info">
+                                                <div class="cart-items-head">
+                                                    <h5 class="cart-items-name">Đắc Nhân Tâm</h5>
+                                                    <div class="cart-items-price-wrap">
+                                                        <span class="cart-items-price">123.500</span>
+                                                        <span class="cart-items-multiply">x</span>
+                                                        <span class="cart-items-qnt">3</span>
+                                                    </div>
+                                                </div>
+                                                <div class="cart-items-body">
+                                                    <span class="cart-items-description">
+                                                        phân loại: sách
+                                                    </span>
+                                                    <span class="cart-items-remove">Xóa</span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <button class="btn btn-primary btn-cart-view">Xem giỏ hàng</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </div>
+        @RenderBody()
+        <footer class="footer">
+            <div class="grid wide">
+                <div class="main_footer">
+                    <div class="footer_left">
+                        <div class="footer_left_name">ANNA</div>
+                        <div class="footer_left_slogan">THƯƠNG HIỆU KÍNH MẮT</div>
+                        <div class="footer_left_slogan">CỦA SỰ TỬ TẾ</div>
+                        <div class="footer_left_mail">Đăng kí để nhận tin mới nhất</div>
+                        <div class="footer_left_register_mail">
+                            <input type="text" class="footer_mail_input" placeholder="Để lại Email của bạn...">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </div>
+                        <div class="footer_left_contact_icon">
+                            <i class="fa-brands fa-facebook contact_icon"></i>
+                            <i class="fa-brands fa-instagram contact_icon"></i>
+                            <i class="fa-brands fa-tiktok contact_icon"></i>
+                            <i class="fa-brands fa-youtube contact_icon"></i>
+                        </div>
+                    </div>
+                    <div class="footer_right">
+                        <div class="footer_right_top">
+                            <div class="col">
+                                <div class="footer_right_title">SẢN PHẨM</div>
+                                <div class="footer_right_content">Kính râm</div>
+                                <div class="footer_right_content">Decor</div>
+                                <div class="footer_right_content">Gọng Kính</div>
+                                <div class="footer_right_content">Tròng Kính</div>
+                            </div>
+                            <div class="col">
+                                <div class="footer_right_title">THÔNG TIN LIÊN HỆ</div>
+                                <div class="footer_right_content">0393200525</div>
+                                <div class="footer_right_content">Hải Anh</div>
+                                <div class="footer_right_content">kaitokid1122003@gmail.com</div>
+                            </div>
+                        </div>
+                        <div class="footer_right_bottom col">
+                            <div class="footer_right_title">CHÍNH SÁCH MUA HÀNG</div>
+                            <div class="footer_right_content">Hình thức thanh toán</div>
+                            <div class="footer_right_content">Chính sách giao hàng</div>
+                            <div class="footer_right_content">Chính sách bảo hành</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer_bottom">
+                    <div class="footer_bottom_text">Anna © 2018 - 2023. Design by Hải Anh</div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script>
+        // cuộn header
+        let lastScrollTop = 0; // Lưu vị trí cuộn cuối cùng
+        const header = document.querySelector('.main_header'); // Chọn thanh header
+
+        window.addEventListener('scroll', function () {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            // Khi kéo xuống và vượt qua 100px
+            if (scrollTop > lastScrollTop && scrollTop > 400) {
+                header.classList.add('header-hidden'); // Ẩn header
+            } else {
+                header.classList.remove('header-hidden'); // Hiện header
+            }
+            lastScrollTop = scrollTop;
+        });
+
+        // slider
+        document.addEventListener('DOMContentLoaded', function () {
+            let currentIndex = 0;
+            const slides = document.querySelectorAll('.slide');
+            const totalSlides = slides.length;
+            const prevButton = document.querySelector('.btn_slider_prev');
+            const nextButton = document.querySelector('.btn_slider_next');
+
+            function changeSlide(newIndex) {
+                slides[currentIndex].classList.remove('slide_active');
+                currentIndex = newIndex;
+                if (currentIndex >= totalSlides) {
+                    currentIndex = 0;
+                } else if (currentIndex < 0) {
+                    currentIndex = totalSlides - 1;
+                }
+                slides[currentIndex].classList.add('slide_active');
+            }
+
+            // Tự động chuyển slide
+            setInterval(function () {
+                changeSlide(currentIndex + 1);
+            }, 4000); // 4000ms = 4s
+
+            // Nút chuyển slide
+            prevButton.addEventListener('click', function () {
+                changeSlide(currentIndex - 1);
+            });
+
+            nextButton.addEventListener('click', function () {
+                changeSlide(currentIndex + 1);
+            });
+
+            // Thêm sự kiện kéo cho slider
+            let startX;
+            const sliderContainer = document.querySelector('.slider-container');
+
+            sliderContainer.addEventListener('mousedown', function (e) {
+                startX = e.pageX;
+                sliderContainer.addEventListener('mousemove', mouseMoveHandler);
+                e.preventDefault(); // Ngăn chặn việc bắt đầu kéo và thả mặc định
+            });
+
+            document.addEventListener('mouseup', function () {
+                sliderContainer.removeEventListener('mousemove', mouseMoveHandler);
+            });
+
+            function mouseMoveHandler(e) {
+                const moveX = e.pageX - startX;
+                if (Math.abs(moveX) > 200) { // Di chuyển đủ xa để chuyển slide
+                    if (moveX > 0) {
+                        changeSlide(currentIndex - 1);
+                    } else {
+                        changeSlide(currentIndex + 1);
+                    }
+                    sliderContainer.removeEventListener('mousemove', mouseMoveHandler);
+                }
+            }
+        });
+        // chữ từ từ xuất hiện ở introduce
+        function isVisible(element) {
+            const elementPosition = element.getBoundingClientRect();
+            const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+            // Kiểm tra xem phần tử có trong viewport không
+            return elementPosition.top <= windowHeight && elementPosition.bottom >= 0;
+        }
+        function typeWritingEffect(element, text, speed) {
+            let i = 0;
+            function typing() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(typing, speed);
+                }
+            }
+            typing();
+        }
+        function initTypeWritingEffect() {
+            const titles = document.querySelectorAll(".introduce_title_1, .introduce_title_2");
+            titles.forEach(title => {
+                // Kiểm tra nếu phần tử đã hiển thị và chưa có hiệu ứng được áp dụng
+                if (isVisible(title) && !title.classList.contains('typed')) {
+                    const text = title.textContent;
+                    title.textContent = '';
+                    title.classList.add('typed'); // Đánh dấu phần tử đã có hiệu ứng
+                    typeWritingEffect(title, text, 50); // Thay đổi tốc độ theo ý muốn
+                }
+            });
+        }
+        window.addEventListener('scroll', initTypeWritingEffect);
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const fadeInElements = document.querySelectorAll('.introduce_content');
+
+            const checkVisibility = (element) => {
+                const rect = element.getBoundingClientRect();
+                const windowHeight = (window.innerHeight || document.documentElement.clientHeight);
+                return rect.top <= windowHeight && rect.bottom >= 0;
+            };
+
+            const runFadeInAnimations = () => {
+                fadeInElements.forEach(element => {
+                    if (checkVisibility(element)) {
+                        // Kích hoạt hiệu ứng animation bằng cách thiết lập animation-play-state là running
+                        element.style.animationPlayState = 'running';
+                    }
+                });
+            };
+
+            // Kiểm tra khi trang được tải và khi người dùng cuộn trang
+            runFadeInAnimations();
+            window.addEventListener('scroll', runFadeInAnimations);
+        });
+    </script>
+</body>
+
+</html>
+
+
+
+
+
+
+<!--<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -6,9 +403,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="~/Assets/fontawesome-free-6.4.0-web/css/all.min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />-->
     @* css *@
-    <link rel="stylesheet" href="~/Assets/css/common.css">
+    <!--<link rel="stylesheet" href="~/Assets/css/common.css">
     <link rel="icon" href="~/Assets/images/images_Other/logo.png">
 </head>
 
@@ -72,6 +469,6 @@
     @Scripts.Render("//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js")
     @RenderSection("scripts", required: false)
 </body>
-</html>
+</html>-->
 
 

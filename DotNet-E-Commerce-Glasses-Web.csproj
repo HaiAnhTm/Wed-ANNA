@@ -257,11 +257,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
-    <Content Include="Assets\css\BaseX.css" />
+    <Content Include="Assets\css\Base.css" />
     <Content Include="Assets\css\common.css" />
     <Content Include="Assets\css\DetailProduct.css" />
     <Content Include="Assets\css\Discount.css" />
     <Content Include="Assets\css\grid.css" />
+    <Content Include="Assets\css\consumer.css" />
     <Content Include="Assets\css\login.css" />
     <Content Include="Assets\images\images_Discount\discount.png" />
     <Content Include="Assets\images\images_Discount\imgdiscount.png" />
@@ -2326,6 +2327,28 @@
     <Content Include="Assets\fontawesome-free-6.4.0-web\svgs\solid\yin-yang.svg" />
     <Content Include="Assets\fontawesome-free-6.4.0-web\svgs\solid\z.svg" />
     <Content Include="Assets\fonts\LICENSE.txt" />
+    <Content Include="Assets\images\img\Background_HTTT.jpeg" />
+    <Content Include="Assets\images\img\bg-banner-about-us.jpeg" />
+    <Content Include="Assets\images\img\co_ve.png" />
+    <Content Include="Assets\images\img\discount.png" />
+    <Content Include="Assets\images\img\eye_httt.jpeg" />
+    <Content Include="Assets\images\img\glass_img.jpeg" />
+    <Content Include="Assets\images\img\Home_img_1_linh.jpeg" />
+    <Content Include="Assets\images\img\Home_img_2_tun.jpeg" />
+    <Content Include="Assets\images\img\Home_tun_Glass.jpeg" />
+    <Content Include="Assets\images\img\httt_img.jpeg" />
+    <Content Include="Assets\images\img\imgdiscount.png" />
+    <Content Include="Assets\images\img\img_login.jpg" />
+    <Content Include="Assets\images\img\introduc3_q12.jpeg" />
+    <Content Include="Assets\images\img\introduce2.jpg" />
+    <Content Include="Assets\images\img\introduce3.jpg" />
+    <Content Include="Assets\images\img\logo.svg" />
+    <Content Include="Assets\images\img\Logo_HTTT.png" />
+    <Content Include="Assets\images\img\logo_httt_blue.png" />
+    <Content Include="Assets\images\img\register_img.jpg" />
+    <Content Include="Assets\images\img\slider-1.jpeg" />
+    <Content Include="Assets\images\img\slider-2.jpeg" />
+    <Content Include="Assets\images\img\troduce2.png" />
     <Content Include="Assets\images\logo.svg" />
     <Content Include="Assets\scripts\ConsumerProduct.js" />
     <Content Include="Assets\scripts\ForCommon\LogInAccount.js" />
