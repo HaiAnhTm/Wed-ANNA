@@ -31,110 +31,114 @@
                 </div>
             </div>
     </div>*@
+    <div class="container-fluid">
 
-        <div class="content-product">
-            <div class="content-product-header">
-                <div class="content-discount-header-text header-text-active">Tất Cả</div>
-                <div class="content-discount-header-text">Đang Hoạt Động</div>
-                <div class="content-discount-header-text">Hết Hàng</div>
-                <div class="content-discount-header-text">Không Bán</div>
-            </div>
-            <div class="content-product-body">
-                <div class="content-product-body-header">
-                    <div class="body-products-available">
-                        <div class="number-of-products-available">69 Sản Phẩm</div>
-                        <div class="number-of-products-can-posted">
-                            Có thể đăng tải thêm 931 Sản Phẩm
-                        </div>
-                    </div>
-                    <div class="form_select_arrangeAndAdd">
-                        <div class="form_select_arrage_text">Sắp Xếp: </div>
-                        <select class="form_select_arrange" id="fillter_selected">
-                            <option value=0 selected>Mặc đinh</option>
-                            <option value="1">Theo tên sản phẩm</option>
-                            <option value="2">Theo số lượng</option>
-                            <option value="3">Theo giá</option>
-                        </select>
-                        <button class="btn btn_add_product" href="@Url.Action("CreateProduct", "ManagerProduct")"> + Thêm Mới 1 Sản Phẩm </button>
+    </div>
+
+    <div class="content-product">
+
+        <div class="content-product-header">
+            <div class="content-discount-header-text header-text-active">Tất Cả</div>
+            <div class="content-discount-header-text">Đang Hoạt Động</div>
+            <div class="content-discount-header-text">Hết Hàng</div>
+            <div class="content-discount-header-text">Không Bán</div>
+        </div>
+        <div class="content-product-body">
+            <div class="content-product-body-header">
+                <div class="body-products-available">
+                    <div class="number-of-products-available">69 Sản Phẩm</div>
+                    <div class="number-of-products-can-posted">
+                        Có thể đăng tải thêm 931 Sản Phẩm
                     </div>
                 </div>
-            </div>
-            <div class="content-product-detail">
-                <div class="product-detail-header">
-                    <div class="col l-3 header-text-product">
-                        <input type="checkbox">
-                        <div class="header-check-text header-check-text-firt">Tên Sản Phẩm</div>
-                    </div>
-                    <div class="col l-2 header-check-tile">
-                        <div class="header-check-text">Mô tả</div>
-                    </div>
-                    <div class="col l-2 header-check-tile">
-                        <div class="header-check-text">Đơn Giá</div>
-                    </div>
-                    <div class="col l-1 header-check-tile">
-                        <div class="header-check-text">giảm giá</div>
-                    </div>
-                    <div class="col l-1 header-check-tile">
-                        <div class="header-check-text">Số Lượng</div>
-                    </div>
-                    <div class="col l-1 header-check-tile">
-                        <div class="header-check-text">Loại</div>
-                    </div>
-                    <div class="col l-1 header-check-tile">
-                        <div class="header-check-text">Trạng Thái</div>
-                    </div>
-                    <div class="col l-1 header-check-tile header-check-text-last">
-                        <div class="header-check-text">Thao Tác</div>
-                    </div>
+                <div class="form_select_arrangeAndAdd">
+                    <div class="form_select_arrage_text">Sắp Xếp: </div>
+                    <select class="form_select_arrange" id="fillter_selected">
+                        <option value=0 selected>Mặc đinh</option>
+                        <option value="1">Theo tên sản phẩm</option>
+                        <option value="2">Theo số lượng</option>
+                        <option value="3">Theo giá</option>
+                    </select>
+                    <button class="btn btn_add_product" href="@Url.Action("CreateProduct", "ManagerProduct")"> + Thêm Mới 1 Sản Phẩm </button>
                 </div>
-                @foreach (var item in Model)
-                {
-                    <div class="adProduct-content-body">
-                        <div class="col l-3 content-body-name">
-                            <input type="checkbox" class="content-body-name-checkbox">
-                            <img class="adProduct-body-product-img" src="@item.Image"
-                                 alt="">
-                            <div class="adProduct-product-name">@Html.DisplayFor(modelItem => item.NameProduct)</div>
-                        </div>
-
-                        <div class="col l-2 adProduct-product">
-                            <div class="adProduct-product-manucafer">@Html.DisplayFor(modelItem => item.Description)</div>
-                        </div>
-                        <div class="col l-2 adProduct-product-unitprice adProduct-product">
-                            <div class="adProduct-product-manucafer">₫@Html.DisplayFor(modelItem => item.Price)</div>
-                        </div>
-                        <div class="col l-1 adProduct-product-unitprice adProduct-product">
-                            <div class="adProduct-product-manucafer">@Html.DisplayFor(modelItem => item.Discount)%</div>
-                        </div>
-                        <div class="col l-1 adProduct-product-unitprice adProduct-product">
-                            <div class="adProduct-product-manucafer">@Html.DisplayFor(modelItem => item.Quantity)</div>
-                        </div>
-                        <div class="col l-1 adProduct-product-quantity adProduct-product">
-                            <div class="adProduct-product-manucafer product-quantity">@Html.DisplayFor(modelItem => item.TypeProduct.TypeProductName)</div>
-                        </div>
-                        <div class="col l-1 adProduct-product">
-                            <div class="adProduct-product-manucafer">@Html.DisplayFor(model => item.TypeProductSale.StatusProduct)</div>
-                        </div>
-                        <div class="col l-1 adProduct-product">
-                            @Html.ActionLink("Cập nhật", "UpdateProduct", new { id = item.IdProduct }, new { @class = "product-Update-operation icon-update " })
-
-                            <div class="product-Update-operation" id="iconDelete" onclick="showDeleteDiaLogConfirm('@item.IdProduct')">Xóa</div>
-                        </div>
-                    </div>
-
-                    <div class="footer-chose">
-                        <div class="footer-chose-left">
-                            <input type="checkbox" class="footer-chose-left-checkbox">
-                            <div class="footer-chose-left-text">Chọn Tất cả</div>
-                        </div>
-                        <div class="footer-chose-right">
-                            <div class="footer-chose-right-text">69 sản phẩm đã được chọn</div>
-                            <button class="footer-chose-right-btn btn btn_delete" id="iconDelete" onclick="showDiaLogConfirm('@item.IdProduct')">@Html.ActionLink("Xóa", "DeleteProduct", new { id = item.IdProduct }, new { @class = "icon-delete" }) </button>
-                        </div>
-                    </div>
-                }
             </div>
         </div>
+        <div class="content-product-detail">
+            <div class="product-detail-header">
+                <div class="col l-3 header-text-product">
+                    <input type="checkbox">
+                    <div class="header-check-text header-check-text-firt">Tên Sản Phẩm</div>
+                </div>
+                <div class="col l-2 header-check-tile">
+                    <div class="header-check-text">Mô tả</div>
+                </div>
+                <div class="col l-2 header-check-tile">
+                    <div class="header-check-text">Đơn Giá</div>
+                </div>
+                <div class="col l-1 header-check-tile">
+                    <div class="header-check-text">giảm giá</div>
+                </div>
+                <div class="col l-1 header-check-tile">
+                    <div class="header-check-text">Số Lượng</div>
+                </div>
+                <div class="col l-1 header-check-tile">
+                    <div class="header-check-text">Loại</div>
+                </div>
+                <div class="col l-1 header-check-tile">
+                    <div class="header-check-text">Trạng Thái</div>
+                </div>
+                <div class="col l-1 header-check-tile header-check-text-last">
+                    <div class="header-check-text">Thao Tác</div>
+                </div>
+            </div>
+            @foreach (var item in Model)
+            {
+                <div class="adProduct-content-body">
+                    <div class="col l-3 content-body-name">
+                        <input type="checkbox" class="content-body-name-checkbox">
+                        <img class="adProduct-body-product-img" src="@item.Image"
+                             alt="">
+                        <div class="adProduct-product-name">@Html.DisplayFor(modelItem => item.NameProduct)</div>
+                    </div>
+
+                    <div class="col l-2 adProduct-product">
+                        <div class="adProduct-product-manucafer">@Html.DisplayFor(modelItem => item.Description)</div>
+                    </div>
+                    <div class="col l-2 adProduct-product-unitprice adProduct-product">
+                        <div class="adProduct-product-manucafer">₫@Html.DisplayFor(modelItem => item.Price)</div>
+                    </div>
+                    <div class="col l-1 adProduct-product-unitprice adProduct-product">
+                        <div class="adProduct-product-manucafer">@Html.DisplayFor(modelItem => item.Discount)%</div>
+                    </div>
+                    <div class="col l-1 adProduct-product-unitprice adProduct-product">
+                        <div class="adProduct-product-manucafer">@Html.DisplayFor(modelItem => item.Quantity)</div>
+                    </div>
+                    <div class="col l-1 adProduct-product-quantity adProduct-product">
+                        <div class="adProduct-product-manucafer product-quantity">@Html.DisplayFor(modelItem => item.TypeProduct.TypeProductName)</div>
+                    </div>
+                    <div class="col l-1 adProduct-product">
+                        <div class="adProduct-product-manucafer">@Html.DisplayFor(model => item.TypeProductSale.StatusProduct)</div>
+                    </div>
+                    <div class="col l-1 adProduct-product">
+                        @Html.ActionLink("Cập nhật", "UpdateProduct", new { id = item.IdProduct }, new { @class = "product-Update-operation icon-update " })
+
+                        <div class="product-Update-operation" id="iconDelete" onclick="showDeleteDiaLogConfirm('@item.IdProduct')">Xóa</div>
+                    </div>
+                </div>
+
+                <div class="footer-chose">
+                    <div class="footer-chose-left">
+                        <input type="checkbox" class="footer-chose-left-checkbox">
+                        <div class="footer-chose-left-text">Chọn Tất cả</div>
+                    </div>
+                    <div class="footer-chose-right">
+                        <div class="footer-chose-right-text">69 sản phẩm đã được chọn</div>
+                        <button class="footer-chose-right-btn btn btn_delete" id="iconDelete" onclick="showDiaLogConfirm('@item.IdProduct')">@Html.ActionLink("Xóa", "DeleteProduct", new { id = item.IdProduct }, new { @class = "icon-delete" }) </button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
     </div>
 
 @*Dialog Confirm Action Delete*@

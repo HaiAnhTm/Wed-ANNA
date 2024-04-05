@@ -2,48 +2,55 @@
     ViewBag.Title = "Thống kê";
     Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
-<div class="col l-10">
-    <div class="container-fluid">
+
+<div class="container-fluid">
+    <div class="row">
         @*Input date*@
         <div class="form-group" style="max-width: 200px;">
             <label for="exampleInputPassword1" class="form-label mt-4">Ngày:</label>
             <input type="date" class="form-control" id="thongKeDate" placeholder="Ngày" autocomplete="off" onchange="ThongKeDateOnChange()">
         </div>
-        @*Data Detail*@
-        <div class="row m-5" style="height:10px;">
-            <div class="col m-1">
-                <div class="w-100 h-100 border border-dark rounded shadow-lg p-3 mb-5 bg-body-tertiary">
-                    <h5>Tổng doanh thu: </h5>
-                    <h6 id="doanhThuTotal">5000 vnd</h6>
-                </div>
-            </div>
-            <div class="col m-1">
-                <div class="w-100 h-100 border border-dark rounded shadow-lg p-3 mb-5 bg-body-tertiary">
-                    <h5>Số sản phẩm: </h5>
-                    <h6 id="sanPhamTotal">5000 vnd</h6>
-                </div>
+    </div>
+    <hr style="margin-top: 100px;" />
+
+    @*Data Detail*@
+    <div class="row">
+        <div class="col-6">
+            <div class="w-100 h-100 border border-dark rounded shadow-lg p-3 mb-5 bg-body-tertiary">
+                <h5>Tổng doanh thu: </h5>
+                <h6 id="doanhThuTotal">5000 vnd</h6>
             </div>
         </div>
-        <hr style="margin-top: 200px;" />
 
-        @*Chart*@
-        <div class="row">
-            <div class="col-sm-8">
-                <div>
-                    <div class="form-group" style="max-width: 200px;">
-                        <label for="exampleInputPassword1" class="form-label mt-4">Ngày bắt đầu:</label>
-                        <input type="date" class="form-control" id="dateStart" placeholder="Ngày" autocomplete="off" onchange="ChartDateStartOnChange()">
-                    </div>
-                    <canvas id="doanhThuChart"></canvas>
-                </div>
+        <div class="col-6">
+            <div class="w-100 h-100 border border-dark rounded shadow-lg p-3 mb-5 bg-body-tertiary">
+                <h5>Số sản phẩm: </h5>
+                <h6 id="sanPhamTotal">5000 vnd</h6>
             </div>
-            <div class="col-sm-4">
+        </div>
+
+    </div>
+
+    <hr style="margin-top: 100px;" />
+
+
+    @*Chart*@
+    <div class="row">
+        <div class="col-sm-8">
+            <div>
                 <div class="form-group" style="max-width: 200px;">
-                    <label for="exampleInputPassword1" class="form-label mt-4">Ngày kết thúc:</label>
-                    <input type="date" class="form-control" id="dateEnd" placeholder="Ngày" autocomplete="off" onchange="ChartDateEndOnChange()" disabled>
+                    <label for="exampleInputPassword1" class="form-label mt-4">Ngày bắt đầu:</label>
+                    <input type="date" class="form-control" id="dateStart" placeholder="Ngày" autocomplete="off" onchange="ChartDateStartOnChange()">
                 </div>
-                <canvas id="sanPhamChart"></canvas>
+                <canvas id="doanhThuChart"></canvas>
             </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group" style="max-width: 200px;">
+                <label for="exampleInputPassword1" class="form-label mt-4">Ngày kết thúc:</label>
+                <input type="date" class="form-control" id="dateEnd" placeholder="Ngày" autocomplete="off" onchange="ChartDateEndOnChange()" disabled>
+            </div>
+            <canvas id="sanPhamChart"></canvas>
         </div>
     </div>
 </div>
