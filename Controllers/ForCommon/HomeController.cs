@@ -8,6 +8,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers
     public class HomeController : Controller
     {
         private readonly GlassesEntities db = new GlassesEntities();
+        private readonly Manager manager;
 
         [HttpGet]
         public ActionResult Index()

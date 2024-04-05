@@ -5,38 +5,41 @@
     Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
 
-<div class="d-flex justify-content-between mb-3 mt-5">
-    <h3>Danh sách loại sản phẩm</h3>
-    <button type="button" class="btn btn-outline-secondary rounded-pill" onclick="showDialogAdd()">Thêm loại sản phẩm</button>
-</div>
+<div class="container-fluid">
+    <div class="d-flex justify-content-between mb-3 mt-5">
+        <h3>Danh sách loại sản phẩm</h3>
+        <button type="button" class="btn btn-outline-secondary rounded-pill" onclick="showDialogAdd()">Thêm loại sản phẩm</button>
+    </div>
 
-<table class="table table-hover w-75 ms-5">
-    <thead>
-        <tr class="table-primary">      
-            <th scope="col">STT</th>
-            <th scope="col">@Html.DisplayNameFor(model => model.TypeProductName)</th>
-            <th>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @for (var index = 0; index < Model.Count(); index++)
-        {
-            var item = Model.ElementAt(index);
-            <tr class="table-secondary rounded">
-                <td>
-                    @(index + 1)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TypeProductName)
-                </td>
-                <td>
-                    <button type="button" class="btn btn-outline-secondary rounded-pill" onclick="showDialogUpdate('@item.IdTypeProduct', '@item.TypeProductName')">Thay đổi</button>
-                </td>
+    <table class="table table-hover w-75 ms-5">
+        <thead>
+            <tr class="table-primary">
+                <th scope="col">STT</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.TypeProductName)</th>
+                <th>
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @for (var index = 0; index < Model.Count(); index++)
+            {
+                var item = Model.ElementAt(index);
+                <tr class="table-secondary rounded">
+                    <td>
+                        @(index + 1)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TypeProductName)
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-outline-secondary rounded-pill" onclick="showDialogUpdate('@item.IdTypeProduct', '@item.TypeProductName')">Thay đổi</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
 
 @*Dialog thay doi*@
 <div class="modal" id="modal_dialog_update">
@@ -90,7 +93,7 @@
 
                     <div class="form-group">
                         <label class="form-label mt-4">Tên loại sản phẩm: </label>
-                        <input type="text" class="form-control" id="add_input_type_product_name" placeholder="Nhập tên loại sản phẩm">                                <span class="text-warning" id="notify_password"></span>
+                        <input type="text" class="form-control" id="add_input_type_product_name" placeholder="Nhập tên loại sản phẩm">                                
                         <span class="text-warning" id="notify_input_add"></span>
 
                     </div>

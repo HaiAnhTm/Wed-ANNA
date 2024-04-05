@@ -30,6 +30,7 @@
                 <div class="body-products-available">
                     <div class="number-of-products-available" id="number_products">0 Sản Phẩm</div>
                 </div>
+
                 <div class="form_select_arrangeAndAdd">
                     <div class="form_select_arrage_text">Sắp Xếp: </div>
                     <select class="form_select_arrange" id="fillter_selected">
@@ -38,8 +39,10 @@
                         <option value="2">Theo số lượng</option>
                         <option value="3">Theo giá</option>
                     </select>
+
                     <a href="/ManagerProduct/CreateProduct" class="btn btn_add_product">+ Thêm Mới 1 Sản Phẩm</a>"
                 </div>
+
             </div>
         </div>
     </div>
@@ -79,7 +82,6 @@
                 </div>
             </div>
 
-
         <div id="content-product-list">
         
         </div>
@@ -114,7 +116,6 @@
     <script>
         var sortIndex = 0
         var statusIndex = 0
-
 
         initialize()
         handleEventChangeTab()
@@ -159,6 +160,7 @@
                 )
             });
         }
+
         function handleEventChangeTab ()
         {
             const radios = document.querySelectorAll( '.content-discount-radio' );

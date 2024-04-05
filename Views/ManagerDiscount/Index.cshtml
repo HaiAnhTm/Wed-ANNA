@@ -6,273 +6,421 @@
 }
 
 
-<div class="col l-10">
-    <div class="Create-product">
-        <div class="col l-5 Create_discount">
-            <div class="Create_discount_header">Hãy tạo mã giảm giá ngay cho SHOP của bạn</div>
-            <div class="Create_discount_Text">
-                Mã giảm giá có thể tăng 23% doanh thu và 46% đơn hàng
-                mới!
+<div class="container-fluid">
+    <div class="row">
+        <div class="Create-product">
+            <div class="col l-5 Create_discount">
+                <div class="Create_discount_header">Hãy tạo mã giảm giá ngay cho SHOP của bạn</div>
+                <div class="Create_discount_Text">
+                    Mã giảm giá có thể tăng 23% doanh thu và 46% đơn hàng mới!
+                </div>
+
+                <button type="button" class="Create_discount_button" onclick="clickButtonCreateDiscount()">
+                    Tạo mã giảm giá ngay
+                    <i class="fa-solid fa-chevron-right icon_arow-right"></i>
+                </button>
+
             </div>
-            <button href="@Url.Action("CreateDiscount", "ManagerDiscount")" class="Create_discount_button">
-                Tạo mã giảm giá ngay
-                <i class="fa-solid fa-chevron-right icon_arow-right"></i>
-            </button>
-        </div>
-        <div class="col l-7 img-discount">
-            <div class="img_discount-text">
-                <div class="imt-text1">Tạo mã giảm thôi!</div>
-                <div class="imt-text2"></div>
-                <div class="imt-text3"></div>
-                <div class="imt-text4"></div>
-                <div class="imt-text5"></div>
+            <div class="col l-7 img-discount">
+                <div class="img_discount-text">
+                    <div class="imt-text1">Tạo mã giảm thôi!</div>
+                    <div class="imt-text2"></div>
+                    <div class="imt-text3"></div>
+                    <div class="imt-text4"></div>
+                    <div class="imt-text5"></div>
+                </div>
+
+                <img class="header-img-discount" src="~/Assets/images/images_Discount/discount.png" alt="">
+
             </div>
-            <img class="header-img-discount" src="~/Assets/images/images_Discount/discount.png" alt="">
         </div>
     </div>
-    <div class="content-discount">
-        <div class="content-discount-title">
-            <div class="content_title_discout">Danh sách mã giảm giá</div>
-            <div class="content_title_discout_text">
-                Tạo mã giảm giá ngay để có thể thu hút người mua.
+
+    <div class="row">
+
+        <div class="content-discount">
+
+            <div class="content-discount-title">
+                <div class="content_title_discout">Danh sách mã giảm giá</div>
+                <div class="content_title_discout_text">
+                    Tạo mã giảm giá ngay để có thể thu hút người mua.
+                </div>
+            </div>
+
+            <div class="col discount_selectt">
+                <div class="form_select_arrage_text">Sắp Xếp: </div>
+                <select class="form_select_arrange" id="fillter_selected">
+                    <option value=0 selected>Mặc đinh</option>
+                    <option value="1">Theo tên chương trình</option>
+                    <option value="2">Theo số lượng</option>
+                    <option value="3">Theo tỉ lệ</option>
+                </select>
+            </div>
+
+            <div class="content-discount-header">
+                <input type="radio" id="radio-all" name="discount-type" class="content-discount-radio" hidden checked>
+                <label for="radio-all" class="content-discount-header-text header-text-active">Tất Cả</label>
+
+                <input type="radio" id="radio-active" name="discount-type" class="content-discount-radio" hidden>
+                <label for="radio-active" class="content-discount-header-text">Đang diễn ra</label>
+
+                <input type="radio" id="radio-out-of-stock" name="discount-type" class="content-discount-radio" hidden>
+                <label for="radio-out-of-stock" class="content-discount-header-text">Sắp diễn ra</label>
+
+                <input type="radio" id="radio-not-selling" name="discount-type" class="content-discount-radio" hidden>
+                <label for="radio-not-selling" class="content-discount-header-text">Đã kết thúc</label>
+            </div>
+
+            <div class="search_discount">
+                <div class="search_discount_with_name">Tên Voucher</div>
+                <input class="find-discount-name-input" type="text" placeholder="Nhập tên mã khuyến mãi" id="input_discount_search">
+                <button type="button" onclick="onClickButtonSearch()">
+                    <i class="fa-solid fa-magnifying-glass find_icon"></i>
+                </button>
+            </div>
+
+            <div class="content-discount-detail">
+                <div class="discount-detail-header">
+                    <div class="col l-4 header-text-discount">
+                        <div class="header-check-text header-check-text-firt">
+                            Tên Voucher | Mã Voucher
+                        </div>
+                    </div>
+                    <div class="col l-1 header-check-tile">
+                        <div class="header-check-text">Giảm Giá</div>
+                    </div>
+                    <div class="col l-1 header-check-tile">
+                        <div class="header-check-text">Lượt dùng</div>
+                    </div>
+                    <div class="col l-2 header-check-tile">
+                        <div class="header-check-text">Trạng thái</div>
+                    </div>
+                    <div class="col l-3 header-check-tile">
+                        <div class="header-check-text">Thời gian sử dụng mã</div>
+                    </div>
+                    <div class="col l-2 header-check-tile header-check-text-last">
+                        <div class="header-check-text">Thao Tác</div>
+                    </div>
+
+                </div>
+                <div id="content-discount-list"></div>
             </div>
         </div>
-        <div class="col discount_selectt">
-            <div class="discount_select_text">sắp xếp: </div>
-            <select class="discount-form-select" aria-label=".form-select-sm example" id="fillter_selected">
+    </div>
+</div>
+
+
+
+    <!--<div class="d-flex justify-content-between mb-3 mt-5">
+        <h3>Danh sách mã khuyến mãi</h3>
+        <a class="btn btn-outline-secondary rounded-pill" href="@Url.Action("CreateDiscount", "ManagerDiscount")">Thêm mới mã khuyến mãi</a>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <h4>Sắp xếp</h4>
+        </div>
+
+        <div class="col">
+            <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="fillter_selected">
                 <option value=0 selected>Mặc đinh</option>
                 <option value="1">Theo tên chương trình</option>
                 <option value="2">Theo số lượng</option>
                 <option value="3">Theo tỉ lệ</option>
             </select>
         </div>
-        <div class="content-discount-header">
-            <div class="content-discount-header-text header-text-active">Tất Cả</div>
-            <div class="content-discount-header-text">Đang diễn ra</div>
-            <div class="content-discount-header-text">Sắp diễn ra</div>
-            <div class="content-discount-header-text">Đã kết thúc</div>
-        </div>
-        <div class="search_discount">
-            <div class="search_discount_with_name">Tên Voucher</div>
-            <input class="find-discount-name-input" type="text" placeholder=" ">
-            <i class="fa-solid fa-magnifying-glass find_icon"></i>
-        </div>
-        <div class="content-discount-detail">
-            <div class="discount-detail-header">
-                <div class="col l-4 header-text-discount">
-                    <div class="header-check-text header-check-text-firt">
-                        Tên Voucher | Mã Voucher
-                    </div>
-                </div>
-                <div class="col l-1 header-check-tile">
-                    <div class="header-check-text">Giảm Giá</div>
-                </div>
-                <div class="col l-1 header-check-tile">
-                    <div class="header-check-text">Lượt dùng</div>
-                </div>
-                <div class="col l-2 header-check-tile">
-                    <div class="header-check-text">Trạng thái</div>
-                </div>
-                <div class="col l-3 header-check-tile">
-                    <div class="header-check-text">Thời gian sử dụng mã</div>
-                </div>
-                <div class="col l-2 header-check-tile header-check-text-last">
-                    <div class="header-check-text">Thao Tác</div>
-                </div>
-            </div>
-            @foreach (var item in Model)
-            {
-                <div class="addiscount-content-body ">
-                    <div class="col l-4 content-body-name">
-                        <img class="addiscount-body-discount-img" src="@item.Image"
-                             alt="">
-                        <div class="discount_name_and_code">
-                            <div class="addiscount-discount">@Html.DisplayFor(modelItem => item.TitleDiscount)</div>
-                            <div class="addiscount-discount-code">Mã Voucher: @Html.DisplayFor(modelItem => item.CodeDiscount)</div>
-                        </div>
-                    </div>
-                    <div class="col l-1 addiscount-discount">
-                        <div class="addiscount-discount">@Html.DisplayNameFor(model => model.PercentValue)%</div>
-                    </div>
-                    <div class="col l-1 addiscount-discount-unitprice addiscount-discount">
-                        <div class="addiscount-discount">@Html.DisplayFor(modelItem => item.Quantity)</div>
-                    </div>
-                    <div class="col l-2 addiscount-discount-quantity addiscount-discount">
-                        <div class="addiscount-discount">@Html.DisplayFor(modelItem => item.StatusDiscount.Status)</div>
-                    </div>
-                    <div class="col l-3 addiscount-discount">
-                        <div class="addiscount-discount">@item.DateOfStartStr() - @item.DateOfEndStr()</div>
-                    </div>
-                    <div class="col l-2 addiscount-discount">
-                        <div class="discount-Update-operation">Cập nhật</div>
-                        <div class="discount-Update-operation">Xóa</div>
-                        <div class="discount-Update-operation">Xem Thêm</div>
-                    </div>
-                </div>
-                <div class="addiscount-content-body ongoing">
-                    <div class="col l-4 content-body-name">
-                        <img class="addiscount-body-discount-img" src="./assets/img/imgdiscount.png"
-                             alt="">
-                        <div class="discount_name_and_code">
-                            <div class="addiscount-discount">Đây là Voucher</div>
-                            <div class="addiscount-discount-code">Mã Voucher: @Html.DisplayFor(modelItem => item.CodeDiscount)</div>
-                        </div>
-                    </div>
-                    <div class="col l-1 addiscount-discount">
-                        <div class="addiscount-discount">69%</div>
-                    </div>
-                    <div class="col l-1 addiscount-discount-unitprice addiscount-discount">
-                        <div class="addiscount-discount">234</div>
-                    </div>
-                    <div class="col l-2 addiscount-discount-quantity addiscount-discount">
-                        <div class="addiscount-discount">Đang diễn ra</div>
-                    </div>
-                    <div class="col l-3 addiscount-discount">
-                        <div class="addiscount-discount">@Html.DisplayNameFor(model => model.DateOfStart) - @Html.DisplayNameFor(model => model.DateOfEnd)</div>
-                    </div>
-                    <div class="col l-2 addiscount-discount">
-                        <div class="discount-Update-operation">Cập nhật</div>
-                        <div class="discount-Update-operation">Xóa</div>
-                        <div class="discount-Update-operation">Xem Thêm</div>
-                    </div>
-                </div>
-                <div class="addiscount-content-body upcoming">
-                    <div class="col l-4 content-body-name">
-                        <img class="addiscount-body-discount-img" src="./assets/img/imgdiscount.png"
-                             alt="">
-                        <div class="discount_name_and_code">
-                            <div class="addiscount-discount">Đây là Voucher</div>
-                            <div class="addiscount-discount-code">Mã Voucher: abcd</div>
-                        </div>
-                    </div>
-                    <div class="col l-1 addiscount-discount">
-                        <div class="addiscount-discount">69%</div>
-                    </div>
-                    <div class="col l-1 addiscount-discount-unitprice addiscount-discount">
-                        <div class="addiscount-discount">234</div>
-                    </div>
-                    <div class="col l-2 addiscount-discount-quantity addiscount-discount">
-                        <div class="addiscount-discount">Sắp diễn ra</div>
-                    </div>
-                    <div class="col l-3 addiscount-discount">
-                        <div class="addiscount-discount">08:27 06/03/2023 - 09:27 06/03/2024</div>
-                    </div>
-                    <div class="col l-2 addiscount-discount">
-                        <div class="discount-Update-operation">Cập nhật</div>
-                        <div class="discount-Update-operation">Xóa</div>
-                        <div class="discount-Update-operation">Xem Thêm</div>
-                    </div>
-                </div>
-                <div class="addiscount-content-body expired">
-                    <div class="col l-4 content-body-name">
-                        <img class="addiscount-body-discount-img" src="./assets/img/imgdiscount.png"
-                             alt="">
-                        <div class="discount_name_and_code">
-                            <div class="addiscount-discount">Đây là Voucher</div>
-                            <div class="addiscount-discount-code">Mã Voucher: abcd</div>
-                        </div>
-                    </div>
-                    <div class="col l-1 addiscount-discount">
-                        <div class="addiscount-discount">69%</div>
-                    </div>
-                    <div class="col l-1 addiscount-discount-unitprice addiscount-discount">
-                        <div class="addiscount-discount">234</div>
-                    </div>
-                    <div class="col l-2 addiscount-discount-quantity addiscount-discount">
-                        <div class="addiscount-discount">Đã Kết thúc</div>
-                    </div>
-                    <div class="col l-3 addiscount-discount">
-                        <div class="addiscount-discount">08:27 06/03/2023 - 09:27 06/03/2024</div>
-                    </div>
-                    <div class="col l-2 addiscount-discount">
-                        <div class="discount-Update-operation">Cập nhật</div>
-                        <div class="discount-Update-operation">Xóa</div>
-                        <div class="discount-Update-operation">Xem Thêm</div>
-                    </div>
-                </div>
-            }
-            </div>
-    </div>
-</div>
 
-<!--<div class="d-flex justify-content-between mb-3 mt-5">
-    <h3>Danh sách mã khuyến mãi</h3>
-    <a class="btn btn-outline-secondary rounded-pill" href="@Url.Action("CreateDiscount", "ManagerDiscount")">Thêm mới mã khuyến mãi</a>
-</div>
-
-<div class="row">
-    <div class="col">
-        <h4>Sắp xếp</h4>
     </div>
 
-    <div class="col">
-        <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="fillter_selected">
-            <option value=0 selected>Mặc đinh</option>
-            <option value="1">Theo tên chương trình</option>
-            <option value="2">Theo số lượng</option>
-            <option value="3">Theo tỉ lệ</option>
-        </select>
-    </div>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CodeDiscount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TitleDiscount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfStart)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfEnd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PercentValue)
+            </th>
 
-</div>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.CodeDiscount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TitleDiscount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateOfStart)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateOfEnd)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Quantity)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PercentValue)
-        </th>
-
-        <th>
-            @Html.DisplayNameFor(model => model.Image)
-        </th>
-
-        <th>
-            @Html.DisplayNameFor(model => model.StatusDiscount.Status)
-        </th>
-        <th></th>
-    </tr>
-
-
-<!--</td>
+            <th>
+                @Html.DisplayNameFor(model => model.StatusDiscount.Status)
+            </th>
+            <th></th>
         </tr>
-    }
-</table>-->
-@*<div class="modal fade" id="DialogConfirm" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content modal-dialog-centered">
-                <div class="modal-header">
-                    <h5 class="modal-title">Cảnh Báo!</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true"></span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Xác nhận xóa sản phẩm</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="ActionDelete()">Xóa</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                </div>
-                <input id="ma" name="ma" hidden />
-            </div>
-        </div>
-    </div>*@
 
-@section Scripts  {
-<script src="~/Assets/scripts/ManagerDiscountIndex.js"></script>
-}
+
+    <!--</td>
+            </tr>
+        }
+    </table>-->
+    @*<div class="modal fade" id="DialogConfirm" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content modal-dialog-centered">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Cảnh Báo!</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Xác nhận xóa sản phẩm</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="ActionDelete()">Xóa</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    </div>
+                    <input id="ma" name="ma" hidden />
+                </div>
+            </div>
+        </div>*@
+
+    @section Scripts  {
+        <script>
+           
+            function clickButtonCreateDiscount ()
+            {
+                window.location.href = "/ManagerDiscount/CreateDiscount";
+            }
+
+            //const filterSelectedId = document.getElementById( 'fillter_selected' );
+
+            //document.addEventListener( 'DOMContentLoaded', function ()
+            //{
+            //    loadSortIndex();
+            //} );
+
+            //filterSelectedId.addEventListener( 'change', function ( event )
+            //{
+            //    var selectedValue = this.value;
+            //    console.log( selectedValue );
+            //    location.href = `/ManagerDiscount/Index?sort=${ selectedValue }`;
+            //} );
+
+            //function loadSortIndex ()
+            //{
+            //    var urlParams = new URLSearchParams( window.location.search );
+            //    var sortParam = urlParams.get( 'sort' );
+
+            //    if ( !isNaN( sortParam ) && sortParam !== -1 )
+            //    {
+            //        filterSelectedId.value = sortParam;
+            //    }
+            //}
+            
+
+            var sortIndex = 0
+            var statusIndex = 0
+
+            initialize()
+            handleEventFilter()
+            handleEventChangeTab()
+
+            function initialize ()
+            {
+                loadDiscounts(
+                    onSuccess = function onSuccess ( data )
+                    {
+                        console.log( "Success! Data:", data );
+                        showDiscounts(
+                            discounts = data
+                        )
+                    },
+                    onFailure = function onFailure ()
+                    {
+                        console.log( "Failed to load discounts." );
+                    }
+                )
+            }  
+
+
+            function handleEventFilter ()
+            {
+                const filterSelectedId = document.getElementById( 'fillter_selected' );
+
+                filterSelectedId.addEventListener( 'change', function ( event )
+                {
+                    sortIndex = this.value;
+                    loadDiscounts(
+                        onSuccess = function onSuccess ( data )
+                        {
+                            console.log( "Success! Data:", data );
+                            showDiscounts(
+                                discounts = data
+                            )
+                        },
+                        onFailure = function onFailure ()
+                        {
+                            console.log( "Failed to load discounts." );
+                        }
+                    )
+                });
+            }
+
+            function handleEventChangeTab ()
+            {
+                const radios = document.querySelectorAll( '.content-discount-radio' );
+
+                radios.forEach( ( radio, index ) =>
+                {
+                    radio.addEventListener( 'click', () =>
+                    {
+                        statusIndex = index
+
+                        loadDiscounts(
+                            onSuccess = function onSuccess ( data )
+                            {
+                                console.log( "Success! Data:", data );
+                                showDiscounts(
+                                    discounts = data
+                                )
+                            },
+                            onFailure = function onFailure ()
+                            {
+                                console.log( "Failed to load discounts." );
+                            }
+                        )
+
+                        const labels = document.querySelectorAll( '.content-discount-header-text' );
+                        labels.forEach( ( label, labelIndex ) =>
+                        {
+                            if ( labelIndex === index )
+                            {
+                                label.classList.add( 'header-text-active' );
+                            } else
+                            {
+                                label.classList.remove( 'header-text-active' );
+                            }
+                        } );
+                    } );
+                } );
+            }
+
+            async function loadDiscounts (
+                onSuccess,
+                onFailure,
+                sort = sortIndex,
+                statusProduct = statusIndex,
+                search = ''
+            )
+            {
+                console.log( "Search: " + search )
+                try
+                {
+                    const response = await $.ajax( {
+                        url: "/ManagerDiscount/QueryDiscount",
+                        type: "GET",
+                        data: {
+                            sort: sort,
+                            statusProduct: statusProduct,
+                            search: search
+                        }
+                    } );
+
+                    if ( response.status )
+                    {
+                        onSuccess( response.data );
+                    } else
+                    {
+                        location.href = response.url;
+                    }
+                } catch ( error )
+                {
+                    console.error( 'Error:', error );
+                    onFailure();
+                }
+            }
+
+            function onClickButtonSearch ()
+            {
+                var inputElement = document.getElementById( "input_discount_search" );
+                var searchText = inputElement.value;
+
+                loadDiscounts(
+                    function onSuccess ( data )
+                    {
+                        console.log( "Success! Data:", data );
+                        showDiscounts( {
+                            discounts: data
+                        } );
+                    },
+                    function onFailure ()
+                    {
+                        console.log( "Failed to load discounts." );
+                    },
+                    undefined,
+                    undefined,
+                    searchText
+                );
+            }
+
+
+            function showDiscounts (discounts)
+            {
+                var discountDetailId = document.getElementById("content-discount-list");
+
+                discountDetailId.innerHTML = "";
+                discounts.forEach( ( item ) =>
+                    {
+                        var htmlContent =
+                            `
+                            <div class="addiscount-content-body ongoing">
+
+                              <div class="col l-4 content-body-name">
+                                <img class="addiscount-body-discount-img" src="${ item.image_url }" alt="" />
+
+                                <div class="discount_name_and_code">
+
+                                  <div class="addiscount-discount">${ item.name_discount }</div>
+
+                                  <div class="addiscount-discount-code">
+                                    Mã Voucher: ${ item.code_discount }
+                                  </div>
+          
+                                </div>
+                              </div>
+
+                              <div class="col l-1 addiscount-discount">
+                                <div class="addiscount-discount">${ item.percent } %</div>
+                              </div>
+
+                              <div class="col l-1 addiscount-discount-unitprice addiscount-discount">
+                                <div class="addiscount-discount">${ item.quantity }</div>
+                              </div>
+
+                              <div class="col l-2 addiscount-discount-quantity addiscount-discount">
+                                <div class="addiscount-discount">${ item.status }</div>
+                              </div>
+
+                              <div class="col l-3 addiscount-discount">
+                                <div class="addiscount-discount">${ item.duration }</div>
+                              </div>
+
+                              <div class="col l-2 addiscount-discount">
+                                <div class="discount-Update-operation">Cập nhật</div>
+                                <div class="discount-Update-operation">Xóa</div>
+                                <div class="discount-Update-operation">Xem Thêm</div>
+                              </div>
+                            </div>
+                            `;
+                        discountDetailId.insertAdjacentHTML( "beforeend", htmlContent );
+                    } );
+               
+            }
+                
+        </script>
+    }

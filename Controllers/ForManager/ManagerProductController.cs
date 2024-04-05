@@ -1,7 +1,6 @@
 ﻿using DotNet_E_Commerce_Glasses_Web.App_Start;
 using DotNet_E_Commerce_Glasses_Web.Models;
 using DotNet_E_Commerce_Glasses_Web.Sessions;
-using DotNet_E_Commerce_Glasses_Web.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -106,7 +105,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
             {
                 if (item == null)
                 {
-                    continue; // Skip invalid items
+                    continue;
                 }
 
                 var jsonData = new

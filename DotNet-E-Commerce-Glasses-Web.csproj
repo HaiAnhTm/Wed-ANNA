@@ -2369,7 +2369,6 @@
     <Content Include="Assets\scripts\ManagerBill.js" />
     <Content Include="Assets\scripts\ManagerCreateDiscount.js" />
     <Content Include="Assets\scripts\ManagerDashboard.js" />
-    <Content Include="Assets\scripts\ManagerDiscountIndex.js" />
     <Content Include="Assets\scripts\Category.js" />
     <Content Include="Assets\scripts\ManagerProductIndexX.js" />
     <Content Include="Assets\scripts\ManagerTypeProduct.js" />
@@ -2579,7 +2578,6 @@
     <Folder Include="Assets\images\images_Consumer\" />
     <Folder Include="Assets\images\images_Manager\" />
     <Folder Include="Assets\images\images_Product\" />
-    <Folder Include="Assets\NewFolder1\" />
     <Folder Include="Assets\scripts\ForManager\" />
   </ItemGroup>
   <ItemGroup>
