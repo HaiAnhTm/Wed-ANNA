@@ -1,29 +1,91 @@
-﻿using System;
+﻿using DotNet_E_Commerce_Glasses_Web.App_Start;
+using DotNet_E_Commerce_Glasses_Web.Models;
+using DotNet_E_Commerce_Glasses_Web.Sessions;
+using DotNet_E_Commerce_Glasses_Web.Utils;
+using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using DotNet_E_Commerce_Glasses_Web.Models;
-using System.IO;
-using DotNet_E_Commerce_Glasses_Web.App_Start;
 
 namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
 {
+    [ManagerAuthorize]
     public class ManagerProductController : Controller
     {
         private readonly GlassesEntities db = new GlassesEntities();
-        [ManagerAuthorize]
-        public async Task<ActionResult> Index(string sort)
+        private readonly Manager manager;
+
+        public ManagerProductController()
         {
-            if (!int.TryParse(sort, out int indexSort))
+            string session = ManagerSession.getManagerSession();
+            if (session != null && int.TryParse(session, out int managerId))
+            {
+                manager = db.Managers.FirstOrDefault(item => item.IdManager.Equals(managerId));
+            }
+        }
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> QueryProduct(string sort, string statusProduct)
+        {
+            if(manager == null)
+                return Json(new {
+                    status = false,
+                    message = "Yêu cầu đăng nhập!",
+                    url = "/LoginAccount"
+            }); 
+           if (!int.TryParse(sort, out int indexSort))
             {
                 indexSort = -1;
             }
-            var products = await db.Products.Include(p => p.TypeProductSale).Include(p => p.TypeProduct).ToListAsync();
+            if (!int.TryParse(statusProduct, out int indexStatus))
+            {
+                indexStatus = -1;
+            }
+
+            List<Product> products = await db.Products.Include(p => p.TypeProductSale).Include(p => p.TypeProduct).ToListAsync();
+
+            switch (indexStatus)
+            {
+                case 1:
+                    {
+                        var typeSale =  await db.TypeProductSales.Where(item => item.StatusProduct.Equals("Bán hàng")).FirstOrDefaultAsync();
+                        if (typeSale != null)
+                            products = products
+                                .Where(item => item.IdTypeSale.Equals(typeSale.IdTypeSale))
+                                .ToList();
+                        break;
+                    }
+                case 2:
+                    {
+                        products = products
+                               .Where(item => item.Quantity <= 0)
+                               .ToList();
+                        break;
+                    }
+                case 3:
+                    {
+                        var typeSale = await db.TypeProductSales.Where(item => item.StatusProduct.Equals("Không bán")).FirstOrDefaultAsync();
+                        if (typeSale != null)
+                            products = products
+                                .Where(item => item.IdTypeSale.Equals(typeSale.IdTypeSale))
+                                .ToList();
+                        break;
+                    }
+                default:
+                    {
+                        break;
+                    }
+            }
+
             switch (indexSort)
             {
                 case 1:
@@ -39,8 +101,32 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
                     break;
             }
 
-            return View(products);
+            var jsonResult = new List<object>();
+            foreach (var item in products)
+            {
+                if (item == null)
+                {
+                    continue; // Skip invalid items
+                }
+
+                var jsonData = new
+                {
+                    id_product = item.IdProduct,
+                    image_url = item.Image,
+                    name_product = item.NameProduct,
+                    description = item.Description,
+                    price = item.Price,
+                    discount_product = item.Discount,
+                    quantity = item.Quantity,
+                    type_product = item.TypeProduct?.TypeProductName, 
+                    status_product = item.TypeProductSale?.StatusProduct, 
+                };
+                jsonResult.Add(jsonData);
+            }
+
+            return Json(new { status = true, data = jsonResult }, JsonRequestBehavior.AllowGet);
         }
+
 
         public async Task<ActionResult> Details(int? id)
         {
@@ -55,6 +141,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
             }
             return View(product);
         }
+
         [ManagerAuthorize]
         public ActionResult CreateProduct()
         {
@@ -75,7 +162,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
                     if (fileSave != null)
                         product.Image = fileSave;
                 }
-                    
+
                 db.Products.Add(product);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -85,6 +172,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
             ViewBag.IdTypeSale = new SelectList(db.TypeProductSales, "IdTypeSale", "StatusProduct", product.IdTypeSale);
             return View(product);
         }
+
 
         private string MoveImageToProject(HttpPostedFileBase file)
         {
@@ -112,7 +200,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
             catch (Exception)
             {
                 return null;
-            }   
+            }
         }
         [HttpGet]
         [ManagerAuthorize]
@@ -122,7 +210,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product =  db.Products.Find(id);
+            Product product = db.Products.Find(id);
             if (product == null)
             {
                 return HttpNotFound();

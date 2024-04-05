@@ -24,6 +24,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
             var consumers = db.Consumers.Include(c => c.Account);
             return View(await consumers.ToListAsync());
         }
+
         [ConsumerAuthorize]
         public ActionResult UpdateConsumer()
         {
@@ -59,6 +60,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
             ViewBag.Consumer = consumer;
             return View(consumer);
         }
+
         private string MoveImageToProject(HttpPostedFileBase file)
         {
             try

@@ -6,46 +6,47 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
-    <link rel="stylesheet" href="~/Assets/css/common.css">
     <link rel="stylesheet" href="~/Assets/fontawesome-free-6.4.0-web/css/all.min.css">
+
     <link rel="icon" href="~/Assets/images/images_Other/logo.png">
     <link rel="stylesheet" href="~/Assets/fonts/Roboto-Black.ttf">
-    <link rel="stylesheet" href="~/Assets/css/grid.css">
-    <link rel="stylesheet" href="~/Assets/css/BaseX.css">
+
+    <link rel="stylesheet" href="~/Assets/css/common.css">
+    <link rel="stylesheet" href="~/Assets/css/Base.css">
     <link rel="stylesheet" href="~/Assets/css/Discount.css">
-    <link rel="stylesheet" href="~/Assets/fontawesome-free-6.4.0-web/">
+    <link rel="stylesheet" href="~/Assets/css/share/LayoutManager.css">
+
 </head>
 
 <body>
 
     @*Top navgation*@
-    <div class="container-fluid" style="background-color:white">
+    <div class="container-fluid background-primary">
 
-            <div class="row">
-                <div class="col-3">
-                    <div class="headerleft">
-                        <img src="~/Assets/images/logo.svg" alt="" class="headerleft-logo">
-                    </div>
-                </div>
-
-                <div class="col-9" style="background-color:blue">
-                    <div class="headerright">
-                        <div class="headerright-admin">
-                            <img src="./assets/img/logo-shopee-1.jpg" alt="" class="headerright-img-admin">
-                            <div class="headerright-admin-name">Xin Chào hai_anh.__2003</div>
-                        </div>
-                        <i class="fa-solid fa-bars header-right-bars-logo"></i>
-                        <i class="fa-solid fa-bell header-right-bell-logo"></i>
-                        <div class="headerright-text">ANNA GLASSES</div>
-                    </div>
+        <div class="row background_container_child">
+            <div class="col-3">
+                <div class="headerleft">
+                    <img src="~/Assets/images/logo.svg" alt="" class="headerleft-logo">
                 </div>
             </div>
-        \
+
+            <div class="col-9 headerright">
+                    <div class="headerright-admin">
+                        <img src="~/Assets/images/logo.svg" alt="" class="headerright-img-admin">
+                        <div class="headerright-admin-name">Xin Chào hai_anh.__2003</div>
+                    </div>
+                    <i class="fa-solid fa-bars header-right-bars-logo"></i>
+                    <i class="fa-solid fa-bell header-right-bell-logo"></i>
+                    <div class="headerright-text">ANNA GLASSES</div>
+            </div>
+        </div>
+
         @*Body*@
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-2">
+            <div class="row background_container_body">
+                <div class="col-2 background_container_left">
                     <div class="category" onclick="setActive(event)">
+                        @*Product navigation*@
                         <div class="category-order-management" id="orderManagement" onclick="toggleSubItems('orderManagement')">
                             <div class="order-management-heading" onclick="toggleSubMenu('orderManagement')">
                                 <i class="fa-regular fa-clipboard Oder-icon"></i>
@@ -53,9 +54,10 @@
                                 <i class="fa-solid fa-chevron-down chevron-manage-icon"
                                    id="orderManagementIcon"></i>
                             </div>
-                            <a class="order-management-items hidden" @Html.ActionLink("Tất cả Đơn Hàng", "Index", "ManagerBill")</a>
+                            @Html.ActionLink("Tất cả Đơn Hàng", "Index", "ManagerBill", null, new { @class = "order-management-items hidden" })
                         </div>
 
+                        @*Product navigation*@
                         <div class="category-order-management" id="productManagement" onclick="toggleSubItems('productManagement')">
                             <div class="order-management-heading" onclick="toggleSubMenu('productManagement')">
                                 <i class="fa-solid fa-bag-shopping Oder-icon"></i>
@@ -63,10 +65,12 @@
                                 <i class="fa-solid fa-chevron-down chevron-manage-icon"
                                    id="productManagementIcon"></i>
                             </div>
-                            <a class="order-management-items hidden" @Html.ActionLink("Tất cả Sản Phẩm", "Index", "ManagerProduct")</a>
+                            @Html.ActionLink("Tất cả Sản Phẩm", "Index", "ManagerProduct", null, new { @class = "order-management-items hidden" })
                             <a href="#" class="order-management-items hidden">Thêm Sản Phẩm</a>
-                            <a class="order-management-items hidden" @Html.ActionLink("Loại sản phẩm", "Index", "ManagerTypeProduct")</a>
+                            @Html.ActionLink("Loại sản phẩm", "Index", "ManagerTypeProduct", null, new { @class = "order-management-items hidden" })
                         </div>
+
+                        @*Consumer navigation*@
                         <div class="category-order-management" id="ConsumersManagement" onclick="toggleSubItems('ConsumersManagement')">
                             <div class="order-management-heading" onclick="toggleSubMenu('ConsumersManagement')">
                                 <i class="fa-regular fa-user Oder-icon"></i>
@@ -74,8 +78,10 @@
                                 <i class="fa-solid fa-chevron-down chevron-manage-icon"
                                    id="ConsumersManagementIcon"></i>
                             </div>
-                            <a class="order-management-items hidden" @Html.ActionLink("Thông Tin Khách Hàng", "Index", "ManagerConsumer")</a>
+                            @Html.ActionLink("Thông Tin Khách Hàng", "Index", "ManagerConsumer", null, new { @class = "order-management-items hidden" })
                         </div>
+
+                        @*Discount navigation*@
                         <div class="category-order-management" id="DiscountManagement" onclick="toggleSubItems('DiscountManagement')">
                             <div class="order-management-heading" onclick="toggleSubMenu('DiscountManagement')">
                                 <i class="fa-solid fa-bag-shopping Oder-icon"></i>
@@ -83,80 +89,97 @@
                                 <i class="fa-solid fa-chevron-down chevron-manage-icon"
                                    id="DiscountManagementIcon"></i>
                             </div>
-                            <a class="order-management-items hidden" @Html.ActionLink("Mã Giảm giá của tôi", "Index", "ManagerDiscount")</a>
+
+                            @Html.ActionLink("Mã Giảm giá của tôi", "Index", "ManagerDiscount", null, new { @class = "order-management-items hidden" })
                         </div>
+
                         <div class="category-order-management" id="ShopManagement" onclick="toggleSubItems('ShopManagement')">
                             <div class="order-management-heading" onclick="toggleSubMenu('ShopManagement')">
                                 <i class="fa-solid fa-shop Oder-icon"></i>
                                 <div class="order-management-heading-text">Quản Lý Shop</div>
                                 <i class="fa-solid fa-chevron-down chevron-manage-icon" id="ShopManagementIcon"></i>
                             </div>
-                            <a class="order-management-items hidden" @Html.ActionLink("Báo cáo Thống kê", "Index", "DashBoard")</a>
-                            <a class="order-management-items hidden" @Html.ActionLink("Đăng xuất", "Index", "LoginAccount")</a>
+
+                            @*Dashboard navigation*@
+                            @Html.ActionLink("Báo cáo Thống kê", "Index", "DashBoard", null, new { @class = "order-management-items hidden" })
+
+                            @*Logout navigation*@
+                            @Html.ActionLink("Đăng xuất", "Index", "LoginAccount", null, new { @class = "order-management-items hidden" })
                         </div>
                     </div>
                 </div>
 
-                <div class="col-10">
+                <div class="col-10 background_container_child">
                     @RenderBody()
                 </div>
             </div>
         </div>
-</body>
+     </div>
 
+    <script>
+        function setActive ( event )
+        {
+            // Kiểm tra xem phần tử được bấm có class "order-management-items" không
+            const targetElement = event.target;
+            if ( targetElement.classList.contains( 'order-management-items' ) )
+            {
+                // Kiểm tra xem phần tử đã được kích hoạt trước đó chưa
+                const activeItem = document.querySelector( '.order-management-items-active' );
+                if ( activeItem !== null )
+                {
+                    // Nếu đã có phần tử được kích hoạt trước đó, hãy loại bỏ class "active" từ nó
+                    activeItem.classList.remove( 'order-management-items-active' );
+                }
+
+                // Thêm class "active" cho phần tử được bấm vào
+                targetElement.classList.add( 'order-management-items-active' );
+            } else
+            {
+                // Kiểm tra xem phần tử được bấm có phải là một phần tử con của thành phần cha không
+                const parentCategory = targetElement.closest( '.category-order-management' );
+                if ( !parentCategory )
+                {
+                    // Nếu không phải, thực hiện việc ẩn các thành phần con của tất cả các thành phần cha
+                    const allCategories = document.querySelectorAll( '.category-order-management' );
+                    allCategories.forEach( category =>
+                    {
+                        // Kiểm tra xem phần tử được bấm có phải là một phần tử con của category không
+                        if ( !category.contains( targetElement ) )
+                        {
+                            const subItems = category.querySelectorAll( '.order-management-items' );
+                            subItems.forEach( item =>
+                            {
+                                item.classList.add( 'hidden' );
+                            } );
+                        }
+                    } );
+                }
+            }
+        }
+
+        // Toggle menu và lưu trạng thái mới vào localStorage
+        function toggleSubMenu ( categoryId )
+        {
+            const category = document.getElementById( categoryId );
+            const icon = document.getElementById( categoryId + 'Icon' );
+            const subItems = category.querySelectorAll( '.order-management-items' );
+
+            category.classList.toggle( 'expanded' );
+            subItems.forEach( item =>
+            {
+                item.classList.toggle( 'hidden' );
+            } );
+            icon.classList.toggle( 'fa-chevron-down' );
+            icon.classList.toggle( 'fa-chevron-up' );
+
+            saveSubMenuState();
+        }
+    </script>
+
+</body>
 
 @Scripts.Render("~/bundles/jquery")
 @RenderSection("scripts", required: false)
 @Scripts.Render("//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js")
-
-<script>
-    function setActive(event) {
-        // Kiểm tra xem phần tử được bấm có class "order-management-items" không
-        const targetElement = event.target;
-        if (targetElement.classList.contains('order-management-items')) {
-            // Kiểm tra xem phần tử đã được kích hoạt trước đó chưa
-            const activeItem = document.querySelector('.order-management-items-active');
-            if (activeItem !== null) {
-                // Nếu đã có phần tử được kích hoạt trước đó, hãy loại bỏ class "active" từ nó
-                activeItem.classList.remove('order-management-items-active');
-            }
-
-            // Thêm class "active" cho phần tử được bấm vào
-            targetElement.classList.add('order-management-items-active');
-        } else {
-            // Kiểm tra xem phần tử được bấm có phải là một phần tử con của thành phần cha không
-            const parentCategory = targetElement.closest('.category-order-management');
-            if (!parentCategory) {
-                // Nếu không phải, thực hiện việc ẩn các thành phần con của tất cả các thành phần cha
-                const allCategories = document.querySelectorAll('.category-order-management');
-                allCategories.forEach(category => {
-                    // Kiểm tra xem phần tử được bấm có phải là một phần tử con của category không
-                    if (!category.contains(targetElement)) {
-                        const subItems = category.querySelectorAll('.order-management-items');
-                        subItems.forEach(item => {
-                            item.classList.add('hidden');
-                        });
-                    }
-                });
-            }
-        }
-    }
-
-    // Toggle menu và lưu trạng thái mới vào localStorage
-    function toggleSubMenu(categoryId) {
-        const category = document.getElementById(categoryId);
-        const icon = document.getElementById(categoryId + 'Icon');
-        const subItems = category.querySelectorAll('.order-management-items');
-
-        category.classList.toggle('expanded');
-        subItems.forEach(item => {
-            item.classList.toggle('hidden');
-        });
-        icon.classList.toggle('fa-chevron-down');
-        icon.classList.toggle('fa-chevron-up');
-
-        saveSubMenuState();
-    }
-</script>
 
 </html>

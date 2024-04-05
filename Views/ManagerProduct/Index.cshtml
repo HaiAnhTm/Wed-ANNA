@@ -5,51 +5,30 @@
     Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
 
-<div class="col l-10">
-    @*<div class="find-product">
-        <div class="find-product-de">
-            <div class="find-product-name">
-                <select class="find-product-name-text" name="find-product" id="find_product_select">
-                    <option value="0" selected>Tên Sản Phẩm</option>
-                    <option value="1">Mã Sản phẩm</option>
-                </select>
-                <input class="find-product-name-input" type="text" id="productNameInput"
-                       placeholder="Nhập Tên Sản Phẩm">
-            </div>
-            <div class="find-product-name">
-                <div class="find-product-name-text">Trạng Thái</div>
-                <input class="find-product-name-input" type="text" placeholder="Trạng Thái">
-            </div>
+<link rel="stylesheet" href="~/Assets/css/manager/ManagerProduct.css" />
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="content-product-header">
+            <input type="radio" id="radio-all" name="discount-type" class="content-discount-radio" hidden checked>
+            <label for="radio-all" class="content-discount-header-text header-text-active">Tất Cả</label>
+
+            <input type="radio" id="radio-active" name="discount-type" class="content-discount-radio" hidden>
+            <label for="radio-active" class="content-discount-header-text">Đang Hoạt Động</label>
+
+            <input type="radio" id="radio-out-of-stock" name="discount-type" class="content-discount-radio" hidden>
+            <label for="radio-out-of-stock" class="content-discount-header-text">Hết Hàng</label>
+
+            <input type="radio" id="radio-not-selling" name="discount-type" class="content-discount-radio" hidden>
+            <label for="radio-not-selling" class="content-discount-header-text">Không Bán</label>
         </div>
-
-            <div class="row">
-                <div class="col l-2">
-                    <button class="btn btn-find" id="findButton">Tìm</button>
-                </div>
-                <div class="col l-2">
-                    <button class="btn btn-find-2" id="resetButton">Nhập Lại</button>
-                </div>
-            </div>
-    </div>*@
-    <div class="container-fluid">
-
     </div>
 
-    <div class="content-product">
-
-        <div class="content-product-header">
-            <div class="content-discount-header-text header-text-active">Tất Cả</div>
-            <div class="content-discount-header-text">Đang Hoạt Động</div>
-            <div class="content-discount-header-text">Hết Hàng</div>
-            <div class="content-discount-header-text">Không Bán</div>
-        </div>
+    <div class="row">
         <div class="content-product-body">
             <div class="content-product-body-header">
                 <div class="body-products-available">
-                    <div class="number-of-products-available">69 Sản Phẩm</div>
-                    <div class="number-of-products-can-posted">
-                        Có thể đăng tải thêm 931 Sản Phẩm
-                    </div>
+                    <div class="number-of-products-available" id="number_products">0 Sản Phẩm</div>
                 </div>
                 <div class="form_select_arrangeAndAdd">
                     <div class="form_select_arrage_text">Sắp Xếp: </div>
@@ -59,87 +38,55 @@
                         <option value="2">Theo số lượng</option>
                         <option value="3">Theo giá</option>
                     </select>
-                    <button class="btn btn_add_product" href="@Url.Action("CreateProduct", "ManagerProduct")"> + Thêm Mới 1 Sản Phẩm </button>
+                    <a href="/ManagerProduct/CreateProduct" class="btn btn_add_product">+ Thêm Mới 1 Sản Phẩm</a>"
                 </div>
             </div>
         </div>
-        <div class="content-product-detail">
+    </div>
+
+    <div class="content-product content-product-detail">
             <div class="product-detail-header">
                 <div class="col l-3 header-text-product">
-                    <input type="checkbox">
                     <div class="header-check-text header-check-text-firt">Tên Sản Phẩm</div>
                 </div>
+
                 <div class="col l-2 header-check-tile">
                     <div class="header-check-text">Mô tả</div>
                 </div>
+
                 <div class="col l-2 header-check-tile">
                     <div class="header-check-text">Đơn Giá</div>
                 </div>
+
                 <div class="col l-1 header-check-tile">
-                    <div class="header-check-text">giảm giá</div>
+                    <div class="header-check-text">Giảm giá</div>
                 </div>
+
                 <div class="col l-1 header-check-tile">
                     <div class="header-check-text">Số Lượng</div>
                 </div>
+
                 <div class="col l-1 header-check-tile">
                     <div class="header-check-text">Loại</div>
                 </div>
+
                 <div class="col l-1 header-check-tile">
                     <div class="header-check-text">Trạng Thái</div>
                 </div>
+
                 <div class="col l-1 header-check-tile header-check-text-last">
                     <div class="header-check-text">Thao Tác</div>
                 </div>
             </div>
-            @foreach (var item in Model)
-            {
-                <div class="adProduct-content-body">
-                    <div class="col l-3 content-body-name">
-                        <input type="checkbox" class="content-body-name-checkbox">
-                        <img class="adProduct-body-product-img" src="@item.Image"
-                             alt="">
-                        <div class="adProduct-product-name">@Html.DisplayFor(modelItem => item.NameProduct)</div>
-                    </div>
 
-                    <div class="col l-2 adProduct-product">
-                        <div class="adProduct-product-manucafer">@Html.DisplayFor(modelItem => item.Description)</div>
-                    </div>
-                    <div class="col l-2 adProduct-product-unitprice adProduct-product">
-                        <div class="adProduct-product-manucafer">₫@Html.DisplayFor(modelItem => item.Price)</div>
-                    </div>
-                    <div class="col l-1 adProduct-product-unitprice adProduct-product">
-                        <div class="adProduct-product-manucafer">@Html.DisplayFor(modelItem => item.Discount)%</div>
-                    </div>
-                    <div class="col l-1 adProduct-product-unitprice adProduct-product">
-                        <div class="adProduct-product-manucafer">@Html.DisplayFor(modelItem => item.Quantity)</div>
-                    </div>
-                    <div class="col l-1 adProduct-product-quantity adProduct-product">
-                        <div class="adProduct-product-manucafer product-quantity">@Html.DisplayFor(modelItem => item.TypeProduct.TypeProductName)</div>
-                    </div>
-                    <div class="col l-1 adProduct-product">
-                        <div class="adProduct-product-manucafer">@Html.DisplayFor(model => item.TypeProductSale.StatusProduct)</div>
-                    </div>
-                    <div class="col l-1 adProduct-product">
-                        @Html.ActionLink("Cập nhật", "UpdateProduct", new { id = item.IdProduct }, new { @class = "product-Update-operation icon-update " })
 
-                        <div class="product-Update-operation" id="iconDelete" onclick="showDeleteDiaLogConfirm('@item.IdProduct')">Xóa</div>
-                    </div>
-                </div>
-
-                <div class="footer-chose">
-                    <div class="footer-chose-left">
-                        <input type="checkbox" class="footer-chose-left-checkbox">
-                        <div class="footer-chose-left-text">Chọn Tất cả</div>
-                    </div>
-                    <div class="footer-chose-right">
-                        <div class="footer-chose-right-text">69 sản phẩm đã được chọn</div>
-                        <button class="footer-chose-right-btn btn btn_delete" id="iconDelete" onclick="showDiaLogConfirm('@item.IdProduct')">@Html.ActionLink("Xóa", "DeleteProduct", new { id = item.IdProduct }, new { @class = "icon-delete" }) </button>
-                    </div>
-                </div>
-            }
+        <div id="content-product-list">
+        
         </div>
+
     </div>
-    </div>
+</div>
+
 
 @*Dialog Confirm Action Delete*@
 <div class="modal" id="dialog_confirm">
@@ -165,173 +112,335 @@
 
 @section Scripts  {
     <script>
+        var sortIndex = 0
+        var statusIndex = 0
 
-        const filterSelectedId = document.getElementById('fillter_selected');
-        filterSelectedId.addEventListener("change", function () {
-            // TODO
-            console.log("jslkdjflskdjflkkkkkkkkk")
-            
-        })
 
-        document.addEventListener('DOMContentLoaded', function () {
-            loadSortIndex();
-        });
+        initialize()
+        handleEventChangeTab()
+        handleEventFilter()
 
-        filterSelectedId.addEventListener('change', function (event) {
-            var selectedValue = this.value;
-            console.log(selectedValue);
-            location.href = `/ManagerProduct/Index?sort=${selectedValue}`;
-        });
+        function initialize ()
+        {
+            loadProducts(
+                sort = sortIndex,
+                statusProduct = statusIndex,
+                onSuccess = function ( data )
+                {
+                    console.log( data )
+                    showProducts( data )
+                },
+                onFailure = function ()
+                {
 
-        function loadSortIndex() {
-            var urlParams = new URLSearchParams(window.location.search);
-            var sortParam = urlParams.get('sort');
+                }
+            )
+        }        
 
-            if (!isNaN(sortParam) && sortParam !== -1) {
-                filterSelectedId.value = sortParam;
-            }
+        function handleEventFilter ()
+        {
+            const filterSelectedId = document.getElementById( 'fillter_selected' );
+         
+            filterSelectedId.addEventListener( 'change', function ( event )
+            {
+                sortIndex = this.value;
+                loadProducts(
+                    sort = sortIndex,
+                    statusProduct = statusIndex,
+                    onSuccess = function ( data )
+                    {
+                        console.log( data )
+                        showProducts( data )
+                    },
+                    onFailure = function ()
+                    {
+
+                    }
+                )
+            });
+        }
+        function handleEventChangeTab ()
+        {
+            const radios = document.querySelectorAll( '.content-discount-radio' );
+
+            radios.forEach( ( radio, index ) =>
+            {
+                radio.addEventListener( 'click', () =>
+                {
+                    statusIndex = index
+                    loadProducts(
+                        sort = sortIndex,
+                        statusProduct = statusIndex,
+                        onSuccess = function (data)
+                        {
+                            console.log( data )
+                            showProducts(data)
+                        },
+                        onFailure = function ()
+                        {
+                            // ToDo: Handle event load data failure
+                        }
+                    )
+
+                    const labels = document.querySelectorAll( '.content-discount-header-text' );
+                    labels.forEach( ( label, labelIndex ) =>
+                    {
+                        if ( labelIndex === index )
+                        {
+                            label.classList.add( 'header-text-active' );
+                        } else
+                        {
+                            label.classList.remove( 'header-text-active' );
+                        }
+                    });
+                });
+            });
         }
 
-        function handleIconDelete(event) {
-            event.preventDefault();
-            var link = event.target.parentElement.querySelector('.icon-delete');
-            if (link) {
-                link.click();
-            }
-        }
-        const dialogConfirmId = document.getElementById('dialog_confirm');
-        const buttonConfirmId = document.getElementById('button_delete')
-        function hideDialogConfirm() {
-            $(dialogConfirmId).modal('hide');
+        async function loadProducts (
+            sort = sortIndex,
+            statusProduct = statusIndex,
+            onSuccess,
+            onFailure
+        )
+        {
+            $.ajax( {
+                url: "/ManagerProduct/QueryProduct",
+                type: "GET",
+                data: {
+                    sort: sort,
+                    statusProduct: statusProduct,
+                },
+                success: function ( data )
+                {
+                    if ( data.status )
+                        onSuccess( data.data )
+                    else
+                    {
+                        location.href = data.url
+                    }
+                },
+                error: function ( error )
+                {
+                    console.log('Error: ', error)
+                    onFailure()
+                },
+            } );
         }
 
-        function showDeleteDiaLogConfirm(IdProduct) {
-            $(dialogConfirmId).modal('show');
+        function showProducts ( products )
+        {
+            var numberProduct = document.getElementById( 'number_products' );
+            numberProduct.textContent = `Có ${ products.length } sản phẩm`;
 
-            buttonConfirmId.addEventListener('click', function () {
-                $.ajax({
+            var productDetailId = document.getElementById( 'content-product-list' );
+
+            productDetailId.innerHTML = "";
+
+            products.forEach( ( item ) =>
+            {
+                var htmlContent = `
+                    <div class="adProduct-content-body">
+                    <div class="col l-3 content-body-name">
+                       <img class="adProduct-body-product-img" src="${ item.image_url }" alt="">
+                       <div class="adProduct-product-name">${ item.name_product }</div>
+                    </div>
+      
+                    <div class="col l-2 adProduct-product">
+                       <div class="adProduct-product-manucafer">${ item.description }</div>
+                    </div>
+                    <div class="col l-2 adProduct-product-unitprice adProduct-product">
+                       <div class="adProduct-product-manucafer">₫${ item.price }</div>
+                    </div>
+                    <div class="col l-1 adProduct-product-unitprice adProduct-product">
+                       <div class="adProduct-product-manucafer">${ item.discount_product }%</div>
+                    </div>
+                    <div class="col l-1 adProduct-product-unitprice adProduct-product">
+                       <div class="adProduct-product-manucafer">${ item.quantity }</div>
+                    </div>
+                    <div class="col l-1 adProduct-product-quantity adProduct-product">
+                       <div class="adProduct-product-manucafer product-quantity">${ item.type_product }</div>
+                    </div>
+                    <div class="col l-1 adProduct-product">
+                       <div class="adProduct-product-manucafer">${ item.status_product }</div>
+                    </div>
+                    <div class="col l-1 adProduct-product">
+                       <a href="/ManagerProduct/UpdateProduct/${ item.id_product }" class="product-Update-operation icon-update">Cập nhật</a>
+                       <div class="product-Update-operation" id="iconDelete" onclick="showDeleteDiaLogConfirm('${ item.id_product }')">Xóa</div>
+                    </div>
+                 </div>
+               `;
+                productDetailId.insertAdjacentHTML( 'beforeend', htmlContent );
+            } );
+        }
+
+
+        const dialogConfirmId = document.getElementById( 'dialog_confirm' );
+        const buttonConfirmId = document.getElementById( 'button_delete' )
+
+        function hideDialogConfirm ()
+        {
+            $( dialogConfirmId ).modal( 'hide' );
+        }
+
+        function showDeleteDiaLogConfirm ( IdProduct )
+        {
+            $( dialogConfirmId ).modal( 'show' );
+
+            buttonConfirmId.addEventListener( 'click', function ()
+            {
+                $.ajax( {
                     url: '/ManagerProduct/DeleteProduct',
                     type: 'POST',
                     data: { IdProduct: IdProduct },
-                    success: function (data) {
-                        if (data) {
+                    success: function ( data )
+                    {
+                        if ( data )
+                        {
                             hideDialogConfirm()
                             location.reload();
-                        } else {
-                            console.error("Update failed.");
+                        } else
+                        {
+                            console.error( "Update failed." );
                         }
                     },
-                    error: function (error) {
-                        console.log("Error: ", error);
+                    error: function ( error )
+                    {
+                        console.log( "Error: ", error );
                     }
-                });
-            })
-            buttonConfirmId.removeEventListener('click')
-
+                } );
+            } )
+            buttonConfirmId.removeEventListener( 'click' )
         }
 
 
-        document.addEventListener("DOMContentLoaded", function () {
-            // đổi lại placehoder khi được select
-            var selectElement = document.getElementById("find_product_select");
-            var inputElement = document.getElementById("productNameInput");
+    </script>
 
-            selectElement.addEventListener("change", function () {
-                if (selectElement.value === "0") {
-                    inputElement.placeholder = "Nhập Tên Sản Phẩm";
-                } else if (selectElement.value === "1") {
-                    inputElement.placeholder = "Nhập Mã Sản Phẩm";
-                }
-            });
-            // reset button
-            var resetButton = document.getElementById("resetButton");
+    <script>
+        //document.addEventListener( "DOMContentLoaded", function ()
+        //{
+        //    // đổi lại placehoder khi được select
+        //    var selectElement = document.getElementById( "find_product_select" );
+        //    var inputElement = document.getElementById( "productNameInput" );
 
-            resetButton.addEventListener("click", function () {
-                var inputs = document.querySelectorAll('.find-product-name-input');
-                inputs.forEach(function (input) {
-                    input.value = '';
-                });
-            });
-        });
-        // Hàm để cập nhật số lượng sản phẩm đã được chọn trong footer
-        function updateSelectedProductCount() {
-            var selectedCount = document.querySelectorAll('.content-body-name-checkbox:checked').length;
-            var footerText = document.querySelector('.footer-chose-right-text');
-            footerText.textContent = selectedCount + " sản phẩm đã được chọn";
-        }
+        //    selectElement.addEventListener( "change", function ()
+        //    {
+        //        if ( selectElement.value === "0" )
+        //        {
+        //            inputElement.placeholder = "Nhập Tên Sản Phẩm";
+        //        } else if ( selectElement.value === "1" )
+        //        {
+        //            inputElement.placeholder = "Nhập Mã Sản Phẩm";
+        //        }
+        //    } );
+        //    // reset button
+        //    var resetButton = document.getElementById( "resetButton" );
 
-        // Hàm để kiểm tra xem tất cả các checkbox đã được chọn hay chưa
-        function checkAllSelected() {
-            var checkboxes = document.querySelectorAll('.content-body-name-checkbox');
-            for (var i = 0; i < checkboxes.length; i++) {
-                if (!checkboxes[i].checked) {
-                    return false;
-                }
-            }
-            return true;
-        }
+        //    resetButton.addEventListener( "click", function ()
+        //    {
+        //        var inputs = document.querySelectorAll( '.find-product-name-input' );
+        //        inputs.forEach( function ( input )
+        //        {
+        //            input.value = '';
+        //        } );
+        //    } );
+        //} );
 
-        // Hàm để kiểm tra xem có bất kỳ checkbox nào được chọn không
-        function checkAnySelected() {
-            var checkboxes = document.querySelectorAll('.content-body-name-checkbox');
-            for (var i = 0; i < checkboxes.length; i++) {
-                if (checkboxes[i].checked) {
-                    return true;
-                }
-            }
-            return false;
-        }
+        //// Hàm để cập nhật số lượng sản phẩm đã được chọn trong footer
+        //function updateSelectedProductCount ()
+        //{
+        //    var selectedCount = document.querySelectorAll( '.content-body-name-checkbox:checked' ).length;
+        //    var footerText = document.querySelector( '.footer-chose-right-text' );
+        //    footerText.textContent = selectedCount + " sản phẩm đã được chọn";
+        //}
 
-        // Hàm để hiển thị hoặc ẩn phần footer
-        function toggleFooter() {
-            var footer = document.querySelector('.footer-chose');
-            var footerCheckbox = document.querySelector('.footer-chose-left-checkbox');
-            if (checkAnySelected()) {
-                footer.style.display = 'flex';
-                footerCheckbox.checked = checkAllSelected();
-            } else {
-                footer.style.display = 'none';
-                footerCheckbox.checked = false;
-            }
-        }
+        //// Hàm để kiểm tra xem tất cả các checkbox đã được chọn hay chưa
+        //function checkAllSelected ()
+        //{
+        //    var checkboxes = document.querySelectorAll( '.content-body-name-checkbox' );
+        //    for ( var i = 0; i < checkboxes.length; i++ )
+        //    {
+        //        if ( !checkboxes[ i ].checked )
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    return true;
+        //}
 
-        // Hàm để cập nhật trạng thái checkbox header
-        function updateHeaderCheckbox() {
-            var headerCheckbox = document.querySelector('.header-text-product input[type="checkbox"]');
-            headerCheckbox.checked = checkAllSelected();
-        }
+        //// Hàm để kiểm tra xem có bất kỳ checkbox nào được chọn không
+        //function checkAnySelected ()
+        //{
+        //    var checkboxes = document.querySelectorAll( '.content-body-name-checkbox' );
+        //    for ( var i = 0; i < checkboxes.length; i++ )
+        //    {
+        //        if ( checkboxes[ i ].checked )
+        //        {
+        //            return true;
+        //        }
+        //    }
+        //    return false;
+        //}
 
-        // Lắng nghe sự kiện click trên các checkbox và tiêu đề sản phẩm
-        var checkboxes = document.querySelectorAll('.content-body-name-checkbox');
-        for (var i = 0; i < checkboxes.length; i++) {
-            checkboxes[i].addEventListener('click', function () {
-                toggleFooter();
-                updateHeaderCheckbox();
-                updateSelectedProductCount();
-            });
-        }
+        //// Hàm để hiển thị hoặc ẩn phần footer
+        //function toggleFooter ()
+        //{
+        //    var footer = document.querySelector( '.footer-chose' );
+        //    var footerCheckbox = document.querySelector( '.footer-chose-left-checkbox' );
+        //    if ( checkAnySelected() )
+        //    {
+        //        footer.style.display = 'flex';
+        //        footerCheckbox.checked = checkAllSelected();
+        //    } else
+        //    {
+        //        footer.style.display = 'none';
+        //        footerCheckbox.checked = false;
+        //    }
+        //}
 
-        // Lắng nghe sự kiện click trên checkbox footer để chọn tất cả hoặc bỏ chọn tất cả
-        var footerCheckbox = document.querySelector('.footer-chose-left-checkbox');
-        footerCheckbox.addEventListener('click', function () {
-            var checkboxes = document.querySelectorAll('.content-body-name-checkbox');
-            for (var i = 0; i < checkboxes.length; i++) {
-                checkboxes[i].checked = footerCheckbox.checked;
-            }
-            toggleFooter();
-            updateHeaderCheckbox();
-            updateSelectedProductCount();
-        });
+        //// Hàm để cập nhật trạng thái checkbox header
+        //function updateHeaderCheckbox ()
+        //{
+        //    var headerCheckbox = document.querySelector( '.header-text-product input[type="checkbox"]' );
+        //    headerCheckbox.checked = checkAllSelected();
+        //}
 
-        // Lắng nghe sự kiện click trên checkbox header để chọn tất cả hoặc bỏ chọn tất cả
-        var headerCheckbox = document.querySelector('.header-text-product input[type="checkbox"]');
-        headerCheckbox.addEventListener('click', function () {
-            var checkboxes = document.querySelectorAll('.content-body-name-checkbox');
-            for (var i = 0; i < checkboxes.length; i++) {
-                checkboxes[i].checked = headerCheckbox.checked;
-            }
-            toggleFooter();
-            updateSelectedProductCount();
-        });
+        //// Lắng nghe sự kiện click trên các checkbox và tiêu đề sản phẩm
+        //var checkboxes = document.querySelectorAll( '.content-body-name-checkbox' );
+        //for ( var i = 0; i < checkboxes.length; i++ )
+        //{
+        //    checkboxes[ i ].addEventListener( 'click', function ()
+        //    {
+        //        toggleFooter();
+        //        updateHeaderCheckbox();
+        //        updateSelectedProductCount();
+        //    } );
+        //}
+        //// Lắng nghe sự kiện click trên checkbox footer để chọn tất cả hoặc bỏ chọn tất cả
+        //var footerCheckbox = document.querySelector( '.footer-chose-left-checkbox' );
+        //footerCheckbox.addEventListener( 'click', function ()
+        //{
+        //    var checkboxes = document.querySelectorAll( '.content-body-name-checkbox' );
+        //    for ( var i = 0; i < checkboxes.length; i++ )
+        //    {
+        //        checkboxes[ i ].checked = footerCheckbox.checked;
+        //    }
+        //    toggleFooter();
+        //    updateHeaderCheckbox();
+        //    updateSelectedProductCount();
+        //} );
+
+        //// Lắng nghe sự kiện click trên checkbox header để chọn tất cả hoặc bỏ chọn tất cả
+        //var headerCheckbox = document.querySelector( '.header-text-product input[type="checkbox"]' );
+        //headerCheckbox.addEventListener( 'click', function ()
+        //{
+        //    var checkboxes = document.querySelectorAll( '.content-body-name-checkbox' );
+        //    for ( var i = 0; i < checkboxes.length; i++ )
+        //    {
+        //        checkboxes[ i ].checked = headerCheckbox.checked;
+        //    }
+        //    toggleFooter();
+        //    updateSelectedProductCount();
+        //} );
     </script>
 }

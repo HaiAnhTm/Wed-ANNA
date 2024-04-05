@@ -1,0 +1,14 @@
+﻿.background-primary {
+  background-color: gray;
+}
+
+.background_container_child {
+  background-color: white;
+  border-radius: 12px;
+  border: none;
+}
+.background_container_body {
+  margin-top: 10px;
+}
+.background_container_left {
+}
