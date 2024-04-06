@@ -37,21 +37,21 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
                 {
                     item.StatusDiscount = db.StatusDiscounts.FirstOrDefault(item2 => item2.Status.Equals("Hết hạn"));
                     db.Discounts.AddOrUpdate(item);
-                    db.SaveChanges();
+                    db.SaveChanges();   
                 }
             });
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<JsonResult> QueryDiscount(string sort, string statusProduct, string search)
         {
-            //if (manager == null)
-            //    return Json(new
-            //    {
-            //        status = false,
-            //        message = "Yêu cầu đăng nhập!",
-            //        url = "/LoginAccount"
-            //    });
+            if (manager == null)
+                return Json(new
+                {
+                    status = false,
+                    message = "Yêu cầu đăng nhập!",
+                    url = "/LoginAccount"
+                });
             if (!int.TryParse(sort, out int indexSort))
             {
                 indexSort = -1;
@@ -107,8 +107,6 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
                     }
             }
 
-          
-
             switch (indexSort)
             {
                 case 1:
@@ -154,29 +152,9 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
         }
 
         [HttpGet]
-        public async Task<ActionResult> Index(string sort)
+        public ActionResult Index()
         {
-            if (!int.TryParse(sort, out int indexSort))
-            {
-                indexSort = -1;
-            }
-            var discounts = await db.Discounts.Include(d => d.StatusDiscount).ToListAsync();
-            switch (indexSort)
-            {
-                case 1:
-                    discounts.Sort((first, second) => first.TitleDiscount.CompareTo(second.TitleDiscount));
-                    break;
-                case 2:
-                    discounts.Sort((first, second) => first.Quantity.Value.CompareTo(second.Quantity));
-                    break;
-                case 3:
-                    discounts.Sort((first, second) => first.PercentValue.Value.CompareTo(second.PercentValue));
-                    break;
-                default:
-                    break;
-            }
-
-            return View(discounts);
+            return View();
         }
 
         [HttpGet]
@@ -194,7 +172,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateDiscount([Bind(Include = "IdDiscount,IdStatus,TitleDiscount,DateOfStart,DateOfEnd,Quantity,Percent,CodeDiscount,ImageFile,Image")] Discount discount)
+        public async Task<ActionResult> CreateDiscount([Bind(Include = "IdDiscount,IdStatus,TitleDiscount,DateOfStart,DateOfEnd,Quantity,PercentValue,CodeDiscount,ImageFile,Image")] Discount discount)
         {
             if (ModelState.IsValid)
             {
@@ -244,7 +222,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> UpdateDiscount([Bind(Include = "IdDiscount,IdStatus,TitleDiscount,DateOfStart,DateOfEnd,Quantity,Percent,ImageFile,CodeDiscount,Image")] Discount discount)
+        public async Task<ActionResult> UpdateDiscount([Bind(Include = "IdDiscount,IdStatus,TitleDiscount,DateOfStart,DateOfEnd,Quantity,PercentValue,ImageFile,CodeDiscount,Image")] Discount discount)
         {
             if (ModelState.IsValid)
             {
@@ -300,6 +278,40 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
             {
                 return null;
             }
+        }
+        [HttpDelete]
+        public async Task<JsonResult> DeleteDiscount(string id_discount)
+        {
+            if (manager == null)
+                return Json(new
+                {
+                    status = false,
+                    message = "Yêu cầu đăng nhập!",
+                    url = "/LoginAccount"
+                });
+            if (!int.TryParse(id_discount, out int idDiscount))
+            {
+                idDiscount = -1;
+            }
+
+
+            var discountDelete = db.Discounts.FirstOrDefault(item => item.IdDiscount.Equals(idDiscount));
+
+            if (discountDelete != null)
+            {
+                db.Discounts.Remove(discountDelete);
+                await db.SaveChangesAsync();
+                return Json(new
+                {
+                    status = true,
+                    message = "Xóa thành công."
+                });
+            }
+            return Json(new
+            {
+                status = false,
+                message = "Xóa thất bại!"
+            });
         }
 
         [HttpPost]

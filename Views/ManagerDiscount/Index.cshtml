@@ -109,129 +109,71 @@
     </div>
 </div>
 
-
-
-    <!--<div class="d-flex justify-content-between mb-3 mt-5">
-        <h3>Danh sách mã khuyến mãi</h3>
-        <a class="btn btn-outline-secondary rounded-pill" href="@Url.Action("CreateDiscount", "ManagerDiscount")">Thêm mới mã khuyến mãi</a>
-    </div>
-
-    <div class="row">
-        <div class="col">
-            <h4>Sắp xếp</h4>
-        </div>
-
-        <div class="col">
-            <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="fillter_selected">
-                <option value=0 selected>Mặc đinh</option>
-                <option value="1">Theo tên chương trình</option>
-                <option value="2">Theo số lượng</option>
-                <option value="3">Theo tỉ lệ</option>
-            </select>
-        </div>
-
-    </div>
-
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CodeDiscount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TitleDiscount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateOfStart)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateOfEnd)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PercentValue)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.Image)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.StatusDiscount.Status)
-            </th>
-            <th></th>
-        </tr>
-
-
-    <!--</td>
-            </tr>
-        }
-    </table>-->
-    @*<div class="modal fade" id="DialogConfirm" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content modal-dialog-centered">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Cảnh Báo!</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true"></span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Xác nhận xóa sản phẩm</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" onclick="ActionDelete()">Xóa</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    </div>
-                    <input id="ma" name="ma" hidden />
+@*UI: Css lại cho dialog hiển thị lên màn hình*@
+@*Dialog delete discount*@
+<div class="modal fade" id="DialogConfirm" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content modal-dialog-centered">
+                <div class="modal-header">
+                    <h5 class="modal-title"Xóa mã khuyến mãi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"></span>
+                    </button>
                 </div>
+                <div class="modal-body">
+                    <p>Xác nhận xóa mã khuyến mãi</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="deleteDiscount()">Xóa</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                </div>
+                <input id="id_discount" name="id_discount" hidden />
             </div>
-        </div>*@
+        </div>
+    </div>
 
-    @section Scripts  {
-        <script>
-           
-            function clickButtonCreateDiscount ()
+@section Scripts  {
+    <script>
+
+        function clickButtonCreateDiscount ()
+        {
+            window.location.href = "/ManagerDiscount/CreateDiscount";
+        }
+
+
+        var sortIndex = 0
+        var statusIndex = 0
+
+        initialize()
+
+        handleEventFilter()
+
+        handleEventChangeTab()
+
+        function initialize ()
+        {
+            loadDiscounts(
+                onSuccess = function onSuccess ( data )
+                {
+                    console.log( "Success! Data:", data );
+                    showDiscounts(
+                        discounts = data
+                    )
+                },
+                onFailure = function onFailure ()
+                {
+                    console.log( "Failed to load discounts." );
+                }
+            )
+        }
+
+        function handleEventFilter ()
+        {
+            const filterSelectedId = document.getElementById( 'fillter_selected' );
+
+            filterSelectedId.addEventListener( 'change', function ( event )
             {
-                window.location.href = "/ManagerDiscount/CreateDiscount";
-            }
-
-            //const filterSelectedId = document.getElementById( 'fillter_selected' );
-
-            //document.addEventListener( 'DOMContentLoaded', function ()
-            //{
-            //    loadSortIndex();
-            //} );
-
-            //filterSelectedId.addEventListener( 'change', function ( event )
-            //{
-            //    var selectedValue = this.value;
-            //    console.log( selectedValue );
-            //    location.href = `/ManagerDiscount/Index?sort=${ selectedValue }`;
-            //} );
-
-            //function loadSortIndex ()
-            //{
-            //    var urlParams = new URLSearchParams( window.location.search );
-            //    var sortParam = urlParams.get( 'sort' );
-
-            //    if ( !isNaN( sortParam ) && sortParam !== -1 )
-            //    {
-            //        filterSelectedId.value = sortParam;
-            //    }
-            //}
-            
-
-            var sortIndex = 0
-            var statusIndex = 0
-
-            initialize()
-            handleEventFilter()
-            handleEventChangeTab()
-
-            function initialize ()
-            {
+                sortIndex = this.value;
                 loadDiscounts(
                     onSuccess = function onSuccess ( data )
                     {
@@ -245,16 +187,19 @@
                         console.log( "Failed to load discounts." );
                     }
                 )
-            }  
+            } );
+        }
 
+        function handleEventChangeTab ()
+        {
+            const radios = document.querySelectorAll( '.content-discount-radio' );
 
-            function handleEventFilter ()
+            radios.forEach( ( radio, index ) =>
             {
-                const filterSelectedId = document.getElementById( 'fillter_selected' );
-
-                filterSelectedId.addEventListener( 'change', function ( event )
+                radio.addEventListener( 'click', () =>
                 {
-                    sortIndex = this.value;
+                    statusIndex = index
+
                     loadDiscounts(
                         onSuccess = function onSuccess ( data )
                         {
@@ -268,211 +213,242 @@
                             console.log( "Failed to load discounts." );
                         }
                     )
-                });
-            }
 
-            function handleEventChangeTab ()
-            {
-                const radios = document.querySelectorAll( '.content-discount-radio' );
-
-                radios.forEach( ( radio, index ) =>
-                {
-                    radio.addEventListener( 'click', () =>
+                    const labels = document.querySelectorAll( '.content-discount-header-text' );
+                    labels.forEach( ( label, labelIndex ) =>
                     {
-                        statusIndex = index
-
-                        loadDiscounts(
-                            onSuccess = function onSuccess ( data )
-                            {
-                                console.log( "Success! Data:", data );
-                                showDiscounts(
-                                    discounts = data
-                                )
-                            },
-                            onFailure = function onFailure ()
-                            {
-                                console.log( "Failed to load discounts." );
-                            }
-                        )
-
-                        const labels = document.querySelectorAll( '.content-discount-header-text' );
-                        labels.forEach( ( label, labelIndex ) =>
+                        if ( labelIndex === index )
                         {
-                            if ( labelIndex === index )
-                            {
-                                label.classList.add( 'header-text-active' );
-                            } else
-                            {
-                                label.classList.remove( 'header-text-active' );
-                            }
-                        } );
+                            label.classList.add( 'header-text-active' );
+                        } else
+                        {
+                            label.classList.remove( 'header-text-active' );
+                        }
                     } );
                 } );
-            }
+            } );
+        }
 
-            async function loadDiscounts (
-                onSuccess,
-                onFailure,
-                sort = sortIndex,
-                statusProduct = statusIndex,
-                search = ''
-            )
+        async function loadDiscounts (
+            onSuccess,
+            onFailure,
+            sort = sortIndex,
+            statusProduct = statusIndex,
+            search = ''
+        )
+        {
+            try
             {
-                console.log( "Search: " + search )
-                try
-                {
-                    const response = await $.ajax( {
-                        url: "/ManagerDiscount/QueryDiscount",
-                        type: "GET",
-                        data: {
-                            sort: sort,
-                            statusProduct: statusProduct,
-                            search: search
-                        }
-                    } );
-
-                    if ( response.status )
-                    {
-                        onSuccess( response.data );
-                    } else
-                    {
-                        location.href = response.url;
+                const response = await $.ajax( {
+                    url: "/ManagerDiscount/QueryDiscount",
+                    type: "POST",
+                    data: {
+                        sort: sort,
+                        statusProduct: statusProduct,
+                        search: search
                     }
-                } catch ( error )
+                } );
+
+                if ( response.status )
                 {
-                    console.error( 'Error:', error );
-                    onFailure();
+                    onSuccess( response.data );
+                } else
+                {
+                    location.href = response.url;
                 }
-            }
-
-            function onClickButtonSearch ()
+            } catch ( error )
             {
-                var inputElement = document.getElementById( "input_discount_search" );
-                var searchText = inputElement.value;
-
-                loadDiscounts(
-                    function onSuccess ( data )
-                    {
-                        if ( data.length == 1)
-                            showDiscount( data[ 0 ] )
-                        else
-                        {
-                            showDiscounts(data)
-                        }
-                    },
-                    function onFailure ()
-                    {
-                        console.log( "Failed to load discounts." );
-                    },
-                    undefined,
-                    undefined,
-                    searchText
-                );
+                console.error( 'Error:', error );
+                onFailure();
             }
+        }
 
-            function showDiscount ( item )
+        async function loadDeleteDiscount (
+            id_discount,
+            onSuccess,
+            onFailure
+        )
+        {
+            try
             {
-                var discountDetailId = document.getElementById( "content-discount-list" );
+                const response = await $.ajax( {
+                    url: "/ManagerDiscount/DeleteDiscount",
+                    type: "DELETE",
+                    data: {
+                        id_discount: id_discount,
+                    },
+                } );
 
-                discountDetailId.innerHTML = "";
+                if ( response.status )
+                {
+                    onSuccess( response.message );
+                } else
+                {
+                    onFailure( response.message )
+                }
+            } catch ( error )
+            {
+                console.error( "Error:", error );
+                onFailure();
+            }
+        }
 
-        
-                    var htmlContent =
-                        `
-                <div class="addiscount-content-body ongoing">
+        function onClickButtonSearch ()
+        {
+            var inputElement = document.getElementById( "input_discount_search" );
+            var searchText = inputElement.value;
 
-                  <div class="col l-4 content-body-name">
-                    <img class="addiscount-body-discount-img" src="${ item.image_url }" alt="" />
+            loadDiscounts(
+                function onSuccess ( data )
+                {
+                    if ( data.length == 1 )
+                        showDiscount( data[ 0 ] )
+                    else
+                    {
+                        showDiscounts( data )
+                    }
+                },
+                function onFailure ()
+                {
+                    console.log( "Failed to load discounts." );
+                },
+                undefined,
+                undefined,
+                searchText
+            );
+        }
 
-                    <div class="discount_name_and_code">
+        function showDiscount ( item )
+        {
+            var discountDetailId = document.getElementById( "content-discount-list" );
 
-                      <div class="addiscount-discount">${ item.name_discount }</div>
+            discountDetailId.innerHTML = "";
 
-                      <div class="addiscount-discount-code">
-                        Mã Voucher: ${ item.code_discount }
+
+            var htmlContent =
+                `
+                    <div class="addiscount-content-body ongoing">
+
+                      <div class="col l-4 content-body-name">
+                        <img class="addiscount-body-discount-img" src="${ item.image_url }" alt="" />
+
+                        <div class="discount_name_and_code">
+
+                          <div class="addiscount-discount">${ item.name_discount }</div>
+
+                          <div class="addiscount-discount-code">
+                            Mã Voucher: ${ item.code_discount }
+                          </div>
+
+                        </div>
                       </div>
-          
+
+                      <div class="col l-1 addiscount-discount">
+                        <div class="addiscount-discount">${ item.percent } %</div>
+                      </div>
+
+                      <div class="col l-1 addiscount-discount-unitprice addiscount-discount">
+                        <div class="addiscount-discount">${ item.quantity }</div>
+                      </div>
+
+                      <div class="col l-2 addiscount-discount-quantity addiscount-discount">
+                        <div class="addiscount-discount">${ item.status }</div>
+                      </div>
+
+                      <div class="col l-3 addiscount-discount">
+                        <div class="addiscount-discount">${ item.duration }</div>
+                      </div>
+
+                      <div class="col l-2 addiscount-discount">
+                        <a href="/ManagerDiscount/UpdateDiscount/${ item.id_discount }" class="discount-Update-operation">Câp nhật</a>
+                        <div class="discount-Update-operation" onclick="showDialog(${item.id_discount})">Xóa</div>
+                      </div>
                     </div>
-                  </div>
+                    `;
+            discountDetailId.insertAdjacentHTML( "beforeend", htmlContent );
+        }
 
-                  <div class="col l-1 addiscount-discount">
-                    <div class="addiscount-discount">${ item.percent } %</div>
-                  </div>
+        function showDiscounts ( discounts )
+        {
+            var discountDetailId = document.getElementById( "content-discount-list" );
 
-                  <div class="col l-1 addiscount-discount-unitprice addiscount-discount">
-                    <div class="addiscount-discount">${ item.quantity }</div>
-                  </div>
+            discountDetailId.innerHTML = "";
 
-                  <div class="col l-2 addiscount-discount-quantity addiscount-discount">
-                    <div class="addiscount-discount">${ item.status }</div>
-                  </div>
-
-                  <div class="col l-3 addiscount-discount">
-                    <div class="addiscount-discount">${ item.duration }</div>
-                  </div>
-
-                  <div class="col l-2 addiscount-discount">
-                    <div class="discount-Update-operation">Cập nhật</div>
-                    <div class="discount-Update-operation">Xóa</div>
-                    <div class="discount-Update-operation">Xem Thêm</div>
-                  </div>
-                </div>
-                `;
-                    discountDetailId.insertAdjacentHTML( "beforeend", htmlContent );
-            }
-
-            function showDiscounts (discounts)
+            discounts.forEach( ( item ) =>
             {
-                var discountDetailId = document.getElementById("content-discount-list");
+                var htmlContent =
+                    `
+                                <div class="addiscount-content-body ongoing">
 
-                discountDetailId.innerHTML = "";
+                                  <div class="col l-4 content-body-name">
+                                    <img class="addiscount-body-discount-img" src="${ item.image_url }" alt="" />
 
-                discounts.forEach( ( item ) =>
-                    {
-                        var htmlContent =
-                            `
-                            <div class="addiscount-content-body ongoing">
+                                    <div class="discount_name_and_code">
 
-                              <div class="col l-4 content-body-name">
-                                <img class="addiscount-body-discount-img" src="${ item.image_url }" alt="" />
+                                      <div class="addiscount-discount">${ item.name_discount }</div>
 
-                                <div class="discount_name_and_code">
+                                      <div class="addiscount-discount-code">
+                                        Mã Voucher: ${ item.code_discount }
+                                      </div>
 
-                                  <div class="addiscount-discount">${ item.name_discount }</div>
-
-                                  <div class="addiscount-discount-code">
-                                    Mã Voucher: ${ item.code_discount }
+                                    </div>
                                   </div>
-          
+
+                                  <div class="col l-1 addiscount-discount">
+                                    <div class="addiscount-discount">${ item.percent } %</div>
+                                  </div>
+
+                                  <div class="col l-1 addiscount-discount-unitprice addiscount-discount">
+                                    <div class="addiscount-discount">${ item.quantity }</div>
+                                  </div>
+
+                                  <div class="col l-2 addiscount-discount-quantity addiscount-discount">
+                                    <div class="addiscount-discount">${ item.status }</div>
+                                  </div>
+
+                                  <div class="col l-3 addiscount-discount">
+                                    <div class="addiscount-discount">${ item.duration }</div>
+                                  </div>
+
+                                  <div class="col l-2 addiscount-discount">
+                                    <a href="/ManagerDiscount/UpdateDiscount/${ item.id_discount }" class="discount-Update-operation">Câp nhật</a>
+                                    <div class="discount-Update-operation" onclick="showDialog(${item.id_discount})">Xóa</div>
+                                  </div>
                                 </div>
-                              </div>
+                                `;
+                discountDetailId.insertAdjacentHTML( "beforeend", htmlContent );
+            } );
+        }
 
-                              <div class="col l-1 addiscount-discount">
-                                <div class="addiscount-discount">${ item.percent } %</div>
-                              </div>
 
-                              <div class="col l-1 addiscount-discount-unitprice addiscount-discount">
-                                <div class="addiscount-discount">${ item.quantity }</div>
-                              </div>
+        function showDialog ( id )
+        {
+            document.getElementById( 'id_discount' ).value = id;
+            $( '#DialogConfirm' ).modal( 'show' );
+        }
 
-                              <div class="col l-2 addiscount-discount-quantity addiscount-discount">
-                                <div class="addiscount-discount">${ item.status }</div>
-                              </div>
+        function hideDialog ()
+        {
+            document.getElementById( 'id_discount' ).value = "";
+            $( '#DialogConfirm' ).modal( 'hide' );
+        }
 
-                              <div class="col l-3 addiscount-discount">
-                                <div class="addiscount-discount">${ item.duration }</div>
-                              </div>
+        function deleteDiscount ()
+        {
+            var id_discount = document.getElementById( 'id_discount' ).value;
+            console.log( "Deleting discount with ID: " + id_discount );
 
-                              <div class="col l-2 addiscount-discount">
-                                <div class="discount-Update-operation">Cập nhật</div>
-                                <div class="discount-Update-operation">Xóa</div>
-                                <div class="discount-Update-operation">Xem Thêm</div>
-                              </div>
-                            </div>
-                            `;
-                        discountDetailId.insertAdjacentHTML( "beforeend", htmlContent );
-                    } );
-            }
-                
-        </script>
-    }
+            loadDeleteDiscount(
+                id_discount = id_discount,
+                onSuccess = function ( message )
+                {
+                    console.log(message)
+                    location.reload()
+                },
+                onFailure = function ( message ) {
+                    console.log( message )
+                })
+            hideDialog();
+        }
+    </script>
+}
