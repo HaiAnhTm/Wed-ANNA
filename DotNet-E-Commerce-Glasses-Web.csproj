@@ -2572,6 +2572,7 @@
     <Content Include="Views\ManagerBill\Edit.cshtml" />
     <Content Include="Views\ManagerBill\Index.cshtml" />
     <Content Include="Views\DashBoard\Index.cshtml" />
+    <Content Include="Views\ConsumerProduct\Payment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

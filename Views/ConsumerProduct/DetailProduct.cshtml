@@ -4,10 +4,188 @@
     ViewBag.Title = "Chi tiết sản phẩm";
     Layout = ViewBag.Consumer != null ? "~/Views/Shared/_LayoutConsumer.cshtml" : "~/Views/Shared/_Layout.cshtml";
 }
-<link href="~/Assets/css/DetailProduct.css" rel="stylesheet"/>
+<link href="~/Assets/css/DetailProduct.css" rel="stylesheet" />
 
 
+<div class="body_detail_product">
+    <div class="grid wide">
+        <div class="detail_product_body">
+            <div class="col l-6">
+                <div class="detail_product_body_left">
+                    <div class="detail_product_body_left_img">
+                        <img src="@Model.Image" alt="" class="img-detail-product-img">
+                    </div>
+                </div>
+            </div>
+            <div class="col l-6">
+                <div class="detail_product_body_right">
+                    <div class="detail_product_body_right_header">
+                        @Model.NameProduct
+                    </div>
+                    <div class="detail_product_body_price">
+                        @*TODO: truy vấn giá mới*@
+                        <div class="detail_product_body_old_price">@Model.Price đ</div>
+                        <div class="detail_product_body_new_price">350.000 đ</div>
+                    </div>
+                    @*TODO: truy vấn loại sản phẩm Ví dụ: Phân Loại: Tròng kính*@
+                    <div class="detail_product_body_right_type_product">Phân Loại: Tròng kính</div>
+                    <ul class="detail_product_body_right_manual">
+                        <div class="body_right_manual">Hướng dẫn sử dụng:</div>
+                        <li class="manual_list">
+                            <ul class="manual_items">
+                                + Tháo kính bằng 2 tay hoặc những nơi có nhiệt độ cao làm
+                                biến dạng kính.
+                            </ul>
+                            <ul class="manual_items">
+                                + Không bỏ kính vào cốp xe hoặc những nơi có nhiệt độ cao
+                                làm biến dạng kính.
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="quantity-selector">
+                        <div class="quantity-selector_left">
+                            <button type="button" class="minus-btn" onclick="updateListCart(`@Model.IdProduct`, `-1`)">-</button>
+                            <input type="text" value="1" min="1" class="quantity-input" inputmode="numeric"
+                                   pattern="[0-9]*" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                            <button type="button" class="plus-btn" onclick="updateListCart(`@Model.IdProduct`, `1`)">+</button>
+                        </div>
+                        @*TODO: truy vấn giá mới*@
+                        <button class="add-to-cart-btn" onclick="updateListCart(`@Model.IdProduct`, `1`)">Thêm vào giỏ • @Model.Price</button>
+                    </div>
+                    <div class="remaining_products">
+                        @*TODO: truy vấn sản phẩm còn lại trong kho*@
+                        <div class="remaining_products_left">Còn @Model.Quantity sản phẩm</div>
+                        <div class="remaining_products_right">
+                            Xem showroom còn hàng
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                    </div>
+                    <div class="detail_product">
+                        <div class="detail_product_heading">
+                            <div class="detail_product_heading_text">Thông tin</div>
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                        <div class="detail_product_content hidden">
+                            @Model.Description
+                        </div>
+                    </div>
+                    <div class="detail_product">
+                        <div class="detail_product_heading">
+                            <div class="detail_product_heading_text">Vận chuyển</div>
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                        <div class="detail_product_content hidden">
+                            Thời gian giao hàng dao động từ 2-4 ngày đối
+                            với
+                            đơn gọng kính, 3-5 ngày đối với đơn cắt cận.
+                        </div>
+                    </div>
+                    <div class="detail_product">
+                        <div class="detail_product_heading">
+                            <div class="detail_product_heading_text">Đổi trả</div>
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                        <div class="detail_product_content hidden">
+                            1. Bảo hành 1 đổi 1 trong 180 ngày sau khi
+                            mua
+                            hàng nếu lớp váng dầu của tròng kính gặp vấn đề về kỹ thuật như xô váng, mất
+                            váng mà không phải do nhiệt hay tác động vật lý như trầy xước, nứt, vỡ.
 
+                            <p>
+                                2. Anna bảo hành cho cả lỗi người dùng nếu không may làm gẫy hoặc mất kính. Trợ
+                                giá 50% giá niêm yết khi khách hàng sử dụng lại sản phẩm cũ. Trong trường hợp
+                                sản phẩm cũ hết hàng có thể thay thế sang sản phẩm có giá trị bằng hoặc thấp
+                                hơn. Áp dụng 1 lần duy nhất trên tổng hóa đơn trong 60 ngày kể từ khi mua hàng
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="grid wide">
+    <div class="body_best_seller_product">
+        @*TODO: truy vấn loại sản phẩm tương tự sản phẩm người dùng bấm vào Ví dụ: Kính dâm tương tự*@
+        <div class="seller_product_title">Kính dâm tương tự</div>
+        @*TODO: truy vấn các sản phẩm tương tự và hiển thị tối đa là 4 sản phẩm*@
+        <div class="seller_product_list">
+            @foreach (var item in Model)
+            {
+                if (item.TypeProductSale.StatusProduct.Equals("Bán hàng"))
+                {
+                    <div class="col l-3">
+                        <div class="best_seller_product-card" data-item-id="@item.IdProduct">
+                            <div class="best_seller_product-image">
+                                <img src="@item.Image" alt="Gọng kính">
+                            </div>
+                            <div class="best_seller_product-details">
+                                <div class="best_seller_product-name">@item.NameProduct</div>
+                                <div class="best_seller_product-pricing">
+                                    <div class="best_seller_product-discount">
+                                        Tiết kiệm được <span class="best_seller_product-discount-price">150.000đ</span>
+                                    </div>
+                                    <div class="best_seller_product-original-price">@item.Price</div>
+                                </div>
+                                <button class="best_seller_product-buy-btn">
+                                    <div class="best_seller_product-price">@item.CurrencyString()</div>
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+<div class="suggestion">
+    <div class="grid wide">
+        <div class="seller_product_title">các loại sản phẩm khác</div>
+        <div class="suggestion_body">
+            <div class="col l-4">
+                <div class="suggestion_body_items">
+                    <img src="./assets/img/glass_img.jpeg" alt="">
+                    <div class="suggestion_body_items_title">Gọng kính</div>
+                </div>
+            </div>
+            <div class="col l-4">
+                <div class="suggestion_body_items">
+                    <img src="./assets/img/glass_img.jpeg" alt="">
+                    <div class="suggestion_body_items_title">Tròng Kính</div>
+                </div>
+            </div>
+            <div class="col l-4">
+                <div class="suggestion_body_items">
+                    <img src="./assets/img/glass_img.jpeg" alt="">
+                    <div class="suggestion_body_items_title">Kính râm</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*thanh toán ở cuối trang*@
+<div class="total_pay hidden">
+    <div class="grid wide">
+        <div class="total_pay_content">
+            <div class="total_pay_left">
+                <img src="@Model.Image" alt="">
+                <div class="total_pay_text">
+                    <div class="total_pay_text_header">@Model.NameProduct</div>
+                    @*giá cũ*@
+                    <div class="total_pay_text_price">@Model.Price</div>
+                </div>
+            </div>
+            <div class="total_pay_right">
+                @*TODO:giá mới sau khi đã giảm giá*@
+                <div class="total_pay_text_price_discount">650.000đ</div>
+                <button class="total_pay_btn_price" onclick="updateListCart(`@Model.IdProduct`, `1`)">Thêm vào giỏ hàng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*code cũ của Chính*@
 <div class="container">
     <div class="row h-75">
 
@@ -87,78 +265,144 @@
             </div>
         </div>
 
-        </div>
     </div>
+</div>
 
-        @section Scripts  {
+@section Scripts  {
 
-            <script>
-                const stars = document.querySelectorAll( '.star' );
-                const ratingText = document.getElementById( 'ratingText' );
-                const currentRating = document.getElementById( 'currentRating' );
+    <script>
+        const stars = document.querySelectorAll('.star');
+        const ratingText = document.getElementById('ratingText');
+        const currentRating = document.getElementById('currentRating');
 
-                stars.forEach( ( star, index ) =>
-                {
-                    star.addEventListener( 'click', () =>
-                    {
-                        const ratingValue = index + 1;
-                        currentRating.textContent = ratingValue;
-                        ratingText.style.display = 'block'; // Display the rating text once a rating is given
-                        resetStars();
-                        highlightStars( index );
-                    } );
-                } );
+        stars.forEach((star, index) => {
+            star.addEventListener('click', () => {
+                const ratingValue = index + 1;
+                currentRating.textContent = ratingValue;
+                ratingText.style.display = 'block'; // Display the rating text once a rating is given
+                resetStars();
+                highlightStars(index);
+            });
+        });
 
-                function resetStars ()
-                {
-                    stars.forEach( star =>
-                    {
-                        star.textContent = '☆'; // Reset all stars to empty
-                    } );
-                }
-
-                function highlightStars ( index )
-                {
-                    for ( let i = 0; i <= index; i++ )
-                    {
-                        stars[ i ].textContent = '★'; // Highlight stars up to the clicked one
-                    }
-                }
-
-
-
-                function updateListCart ( idProduct, quantity )
-                {
-                    $.ajax( {
-                        url: "/ConsumerProduct/AddProductToCart",
-                        type: "POST",
-                        data: {
-                            productId: idProduct,
-                            quantity: quantity,
-                        },
-                        success: function ( result )
-                        {
-                            console.log( result );
-                            if ( result.status )
-                            {
-                                console.log( "Buy Success." );
-                                toastr.options.closeButton = true;
-                                toastr.success( "Giỏ hàng", "Thêm sản phẩm thành công!" );
-                                location.reload();
-                            } else
-                            {
-                                console.log( "Buy Failed." );
-                                window.location.href = result.url;
-                                toastr.options.closeButton = true;
-                            }
-                        },
-                        error: function ()
-                        {
-                            console.error( "AJAX request failed" );
-                        },
-                    } );
-                }
-
-
-            </script>
+        function resetStars() {
+            stars.forEach(star => {
+                star.textContent = '☆'; // Reset all stars to empty
+            });
         }
+
+        function highlightStars(index) {
+            for (let i = 0; i <= index; i++) {
+                stars[i].textContent = '★'; // Highlight stars up to the clicked one
+            }
+        }
+
+
+
+        function updateListCart(idProduct, quantity) {
+            $.ajax({
+                url: "/ConsumerProduct/AddProductToCart",
+                type: "POST",
+                data: {
+                    productId: idProduct,
+                    quantity: quantity,
+                },
+                success: function (result) {
+                    console.log(result);
+                    if (result.status) {
+                        console.log("Buy Success.");
+                        toastr.options.closeButton = true;
+                        toastr.success("Giỏ hàng", "Thêm sản phẩm thành công!");
+                        location.reload();
+                    } else {
+                        console.log("Buy Failed.");
+                        window.location.href = result.url;
+                        toastr.options.closeButton = true;
+                    }
+                },
+                error: function () {
+                    console.error("AJAX request failed");
+                },
+            });
+        }
+
+
+        // total-pay
+        document.addEventListener('DOMContentLoaded', function () {
+            const bodyDetailProduct = document.querySelector('.seller_product_title'); // Phần tử body_detail_product
+            const totalPay = document.querySelector('.total_pay'); // Phần tử total_pay
+            const windowHeight = window.innerHeight; // Chiều cao của cửa sổ trình duyệt
+
+            // Xác định vị trí của body_detail_product
+            const bodyDetailProductOffsetTop = bodyDetailProduct.offsetTop;
+
+            // Xác định điều kiện hiển thị total pay và thêm hoặc loại bỏ lớp CSS tương ứng
+            function toggleTotalPayVisibility() {
+                const scrollTop = window.scrollY || window.pageYOffset; // Lấy vị trí hiện tại của thanh cuộn
+                const bodyDetailProductBottom = bodyDetailProductOffsetTop + bodyDetailProduct.offsetHeight; // Tính toán vị trí dưới cùng của body_detail_product
+
+                // Hiển thị total pay khi cuộn đến cuối body_detail_product và ẩn nếu không
+                if (scrollTop + windowHeight >= bodyDetailProductBottom) {
+                    totalPay.classList.remove('total-pay-visible');
+                    totalPay.classList.remove('hidden');
+
+                } else {
+
+                    totalPay.classList.add('total-pay-visible');
+                }
+            }
+
+            // Thực hiện chức năng khi cuộn trang
+            window.addEventListener('scroll', toggleTotalPayVisibility);
+        });
+        // quantity_input
+        document.addEventListener('DOMContentLoaded', function () {
+            const minusBtn = document.querySelector('.minus-btn'); // Nút giảm
+            const plusBtn = document.querySelector('.plus-btn'); // Nút tăng
+            const quantityInput = document.querySelector('.quantity-input'); // Input số lượng
+
+            // Xử lý sự kiện khi nhấn nút giảm
+            minusBtn.addEventListener('click', function () {
+                let currentValue = parseInt(quantityInput.value);
+                if (currentValue > 1) {
+                    quantityInput.value = currentValue - 1;
+                }
+            });
+
+            // Xử lý sự kiện khi nhấn nút tăng
+            plusBtn.addEventListener('click', function () {
+                let currentValue = parseInt(quantityInput.value);
+                quantityInput.value = currentValue + 1;
+            });
+
+            // Xử lý sự kiện khi người dùng rời khỏi input
+            quantityInput.addEventListener('blur', function () {
+                if (quantityInput.value === '') {
+                    quantityInput.value = 1;
+                }
+            });
+        });
+        // detail_product
+        document.addEventListener('DOMContentLoaded', function () {
+            const detailProductHeadings = document.querySelectorAll('.detail_product_heading');
+
+            // Loop through each detail product heading
+            detailProductHeadings.forEach(function (heading) {
+                // Add click event listener to each heading
+                heading.addEventListener('click', function () {
+                    const content = this.nextElementSibling; // Get the content div
+                    const icon = this.querySelector('i'); // Get the icon element inside heading
+
+                    // Toggle the visibility of content
+                    content.classList.toggle('hidden');
+
+                    // Toggle the icon between plus and minus
+                    icon.classList.toggle('fa-plus');
+                    icon.classList.toggle('fa-minus');
+                });
+            });
+        });
+
+
+    </script>
+}

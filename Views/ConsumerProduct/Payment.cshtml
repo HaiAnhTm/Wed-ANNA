@@ -1,0 +1,132 @@
+﻿@model DotNet_E_Commerce_Glasses_Web.Models.ProductSaleModel
+
+@{
+    ViewBag.Title = "Chi tiết sản phẩm";
+    Layout = ViewBag.Consumer != null ? "~/Views/Shared/_LayoutConsumer.cshtml" : "~/Views/Shared/_Layout.cshtml";
+}
+
+@*TODO: Sửa lại logic trong controller nha Chính*@
+<div class="consumer_header_product">
+    <div class="consumer_header_img_text">
+        <div class="consumer_header_img_heading">Thanh toán</div>
+        <div class="consumer_header_img_content">
+            <a href="" class="consumer_header_img_1">Trang chủ</a>
+            <div class="consumer_header_img_node"></div>
+            <div class="consumer_header_img_1">Cảm ơn vì bạn đã tin tưởng và ủng hộ sản phẩm của chúng tôi</div>
+        </div>
+    </div>
+</div>
+
+<div class="body_pay">
+    <div class="grid wide">
+        <div class="payment_body">
+            <div class="col l-6">
+                @*TODO: truy vấn thông tin khách hàng của cả khối body_pay_payment *@
+                <div class="body_pay_payment">
+                    <div class="pay_payment_header">THANH TOÁN</div>
+                    <div class="pay_payment_items">
+                        <div class="pay_payment_items_title">Họ và tên <span class="xxx">*</span>:</div>
+                        <input type="text" class="pay_payment_items_input_text" placeholder="Nhập họ và tên">
+                    </div>
+                    <div class="pay_payment_items">
+                        <div class="pay_payment_items_title">Số điện thoại <span class="xxx">*</span>:</div>
+                        <input type="text" class="pay_payment_items_input_text" placeholder="Nhập số điện thoại">
+                    </div>
+                    <div class="pay_payment_items">
+                        <div class="pay_payment_items_title">Tỉnh/Thành Phố <span class="xxx">*</span>:</div>
+                        <input type="text" class="pay_payment_items_input_text" placeholder="Nhập Tỉnh/Thành Phố">
+                    </div>
+                    <div class="pay_payment_items">
+                        <div class="pay_payment_items_title">Quận/Huyện <span class="xxx">*</span>:</div>
+                        <input type="text" class="pay_payment_items_input_text" placeholder="Nhập Quận/Huyện">
+                    </div>
+                    <div class="pay_payment_items">
+                        <div class="pay_payment_items_title">Xã/Phường <span class="xxx">*</span>:</div>
+                        <input type="text" class="pay_payment_items_input_text" placeholder="Nhập Xã/Phường">
+                    </div>
+                    <div class="pay_payment_items">
+                        <div class="pay_payment_items_title">Địa chỉ chi tiết <span class="xxx">*</span>:</div>
+                        <input type="text" class="pay_payment_items_input_text" placeholder="Nhập Địa chỉ chi tiết">
+                    </div>
+                    <div class="pay_payment_items">
+                        <div class="pay_payment_items_title">Thông tin bổ sung:</div>
+                        <textarea type="text" class="pay_payment_items_textarea_text"
+                                  placeholder="Nhập Địa chỉ chi tiết"></textarea>
+                    </div>
+                    <div class="pay_payment_methods">Phương thức thanh toán</div>
+                    <div class="pay_payment_methods_items">
+                        <input type="radio" id="option1" name="options" value="option1" checked>
+                        <label for="option1" class="payment_options">Thanh toán khi nhận hàng</label><br>
+
+                        <input type="radio" id="option2" name="options" value="option2">
+                        <label for="option2" class="payment_options">Thanh toán Applepay</label><br>
+                    </div>
+                    <div class="pay_payment_text">
+                        Thông tin cá nhân của bạn sẽ được sử dụng để xử lý đơn hàng và cho các mục
+                        đích cụ thể khác đã được mô tả trong chính sách riêng tư của chúng tôi
+                    </div>
+                    <button type="button" class="btn btn-pay" onclick="actionPayBill()">Đặt hàng</button>
+                </div>
+            </div>
+            <div class="col l-6">
+                <div class="body_pay_bill">
+                    <div class="pay_bill_body">
+                        <div class="bill_body_header">Nhập mã giảm giá</div>
+                        <div class="bill_body_discount">
+                            <input type="text" class="bill_body_discount_input" name="GiamGia" id="input-code" placeholder="Nhập mã giảm giá">
+                            <span id="notify_GiamGia"></span>
+                            <button type="button" class="btn btn-pay-discount" onclick="appDiscount()">Áp dụng</button>
+                        </div>
+                        <div class="bill_content_head">
+                            <div class="bill_content_expens_text">Sản phẩm</div>
+                            <div class="bill_content_expens_text">Thành tiền</div>
+                        </div>
+                        <div class="bill_content_product">
+                            @foreach (var item in (IEnumerable<DotNet_E_Commerce_Glasses_Web.Models.ProductSaleModel>)ViewBag.ListCart)
+                            {
+                                <div class="bill_content_product_left">
+                                    <img src="@item.Image" alt="" class="bill_content_product_img">
+                                    <div class="bill_content_body_text">
+                                        @*TODO: thẻ span có nghĩa là số sản phẩm người dùng mua*@
+                                        <div class="bill_content_body_textheader">
+                                            @item.NameProduct <span class="span_total_bill">@ViewBag.ListCart.Count</span>
+                                        </div>
+                                        <div class="bill_contnet_classify">Phân Loại: Kính dâm</div>
+                                    </div>
+                                </div>
+                                @*TODO:Tồng số tiền phải trả cho số sản phẩm (đơn giá x số lượng)*@
+                                <div class="bill_content_expens_price">1.200.000đ</div>
+                            }
+                        </div>
+                        <div class="bill_content_expens">
+                            <div class="bill_content_expens_items">
+                                <div class="bill_content_expens_text">Tạm tính</div>
+                                @*TODO: Tổng tiền trước khi giảm giá*@
+                                <div class="bill_content_expens_price">@Model.currencyTotalBill() đ</div>
+                            </div>
+                            <div class="bill_content_expens_items">
+                                <div class="bill_content_expens_text">Phí vận chuyển</div>
+                                <div class="bill_content_expens_price">30.000đ</div>
+                            </div>
+                            <div class="bill_content_expens_items">
+                                @*TODO: giảm giá*@
+                                <div class="bill_content_expens_text">Giảm</div>
+                                <div class="bill_content_expens_price">@((Model.Discount != null ? Model.Discount.PercentValue : 0) + " %")</div>
+                            </div>
+                        </div>
+                        <div class="bill_content_expens_total">
+                            <div class="bill_content_expens_text">Tổng cộng</div>
+                            @*TODO: giá cuối cùng phải trả sau khi áp dụng giảm giá và phí vận chuyển*@
+                            <div class="bill_content_expens_price">@Model.currencyTotalPay()đ</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts  {
+    <script src="~/Assets/scripts/ForConsumer/ConsumerCart.js"></script>
+}

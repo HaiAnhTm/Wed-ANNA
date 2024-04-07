@@ -127,7 +127,51 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
                     });
             }
         }
+        [HttpPost]
+        public async Task<JsonResult> Payment(int productId, int quantity)
+        {
+            if (consumer == null)
+                return Json(new
+                {
+                    status = false,
+                    message = "Yêu cầu đăng nhập trước khi mua hàng",
+                    url = "/LoginAccount/Index"
+                });
+            else
+            {
+                int temp = 0;
+                if (dicCart.ContainsKey(productId))
+                    temp = dicCart[productId];
+                var product = await db.Products.FindAsync(productId);
+                if (product != null && product.Quantity - temp > 0)
+                {
+                    if (dicCart.ContainsKey(productId))
+                        dicCart[productId] += quantity;
+                    else
+                        dicCart.Add(productId, quantity);
+                    if (dicCart[productId] < 0)
+                        dicCart[productId] = 0;
 
+                    consumer.ListCart = JsonUtils.convertDicToCartJson(dicCart);
+
+                    db.Consumers.AddOrUpdate(consumer);
+                    await db.SaveChangesAsync();
+                    return Json(new
+                    {
+                        status = true,
+                        message = "Thêm vào giỏ hàng thành công",
+                        url = ""
+                    });
+                }
+                else
+                    return Json(new
+                    {
+                        status = false,
+                        message = "Hết hàng",
+                        url = ""
+                    });
+            }
+        }
         private long CalculatorTotalBill(Dictionary<int, ProductSaleModel> dicSale)
         {
             long result = 0;
