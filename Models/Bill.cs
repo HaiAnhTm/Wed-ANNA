@@ -24,7 +24,6 @@ namespace DotNet_E_Commerce_Glasses_Web.Models
         public Nullable<long> TotalPay { get; set; }
         public Nullable<int> IdDetailDelivery { get; set; }
         public Nullable<int> IdDetailBill { get; set; }
-    
         public virtual Consumer Consumer { get; set; }
         public virtual DetailBill DetailBill { get; set; }
         public virtual Discount Discount { get; set; }
@@ -32,6 +31,11 @@ namespace DotNet_E_Commerce_Glasses_Web.Models
         public string datePurchaseStr() => this.DateOfPurchase?.ToString("dd/MM/yyyy");
         public string currencyTotalBill() => CurrencyUtils.CurrencyConvertToString(this.TotalBill);
         public string currencyTotalPay() => CurrencyUtils.CurrencyConvertToString(this.TotalPay);
-        public string valuePercent() => this.PercentDiscount?.ToString() ?? "0" + "%";
+        public string valuePercent()
+        {
+            if (this.Discount != null && this.Discount.PercentValue > 0)
+                return this.Discount.PercentValue.Value.ToString() + "%";
+            return "0 %";
+        }
     }
 }

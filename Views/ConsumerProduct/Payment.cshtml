@@ -1,11 +1,10 @@
-﻿@model DotNet_E_Commerce_Glasses_Web.Models.ProductSaleModel
+﻿﻿@model DotNet_E_Commerce_Glasses_Web.Models.Bill
 
 @{
     ViewBag.Title = "Chi tiết sản phẩm";
     Layout = ViewBag.Consumer != null ? "~/Views/Shared/_LayoutConsumer.cshtml" : "~/Views/Shared/_Layout.cshtml";
 }
 
-@*TODO: Sửa lại logic trong controller nha Chính*@
 <div class="consumer_header_product">
     <div class="consumer_header_img_text">
         <div class="consumer_header_img_heading">Thanh toán</div>
@@ -21,22 +20,21 @@
     <div class="grid wide">
         <div class="payment_body">
             <div class="col l-6">
-                @*TODO: truy vấn thông tin khách hàng của cả khối body_pay_payment *@
                 <div class="body_pay_payment">
                     <div class="pay_payment_header">THANH TOÁN</div>
                     <div class="pay_payment_items">
                         <div class="pay_payment_items_title">Họ và tên <span class="xxx">*</span>:</div>
-                        <input type="text" class="pay_payment_items_input_text" placeholder="Nhập họ và tên">
+                        <input type="text" class="pay_payment_items_input_text" placeholder="Nhập họ và tên" value="@Model.Consumer.Username">
                     </div>
                     <div class="pay_payment_items">
                         <div class="pay_payment_items_title">Số điện thoại <span class="xxx">*</span>:</div>
-                        <input type="text" class="pay_payment_items_input_text" placeholder="Nhập số điện thoại">
+                        <input type="text" class="pay_payment_items_input_text" placeholder="Nhập số điện thoại" value="@Model.Consumer.NumberPhone">
                     </div>
                     <div class="pay_payment_items">
                         <div class="pay_payment_items_title">Tỉnh/Thành Phố <span class="xxx">*</span>:</div>
-                        <input type="text" class="pay_payment_items_input_text" placeholder="Nhập Tỉnh/Thành Phố">
+                        <input type="text" class="pay_payment_items_input_text" placeholder="Nhập Tỉnh/Thành Phố" value="@Model.Consumer.Address">
                     </div>
-                    <div class="pay_payment_items">
+                    @*<div class="pay_payment_items">
                         <div class="pay_payment_items_title">Quận/Huyện <span class="xxx">*</span>:</div>
                         <input type="text" class="pay_payment_items_input_text" placeholder="Nhập Quận/Huyện">
                     </div>
@@ -47,11 +45,11 @@
                     <div class="pay_payment_items">
                         <div class="pay_payment_items_title">Địa chỉ chi tiết <span class="xxx">*</span>:</div>
                         <input type="text" class="pay_payment_items_input_text" placeholder="Nhập Địa chỉ chi tiết">
-                    </div>
+                    </div>*@
                     <div class="pay_payment_items">
                         <div class="pay_payment_items_title">Thông tin bổ sung:</div>
                         <textarea type="text" class="pay_payment_items_textarea_text"
-                                  placeholder="Nhập Địa chỉ chi tiết"></textarea>
+                                  placeholder="Nhập Địa chỉ chi tiết" ></textarea>
                     </div>
                     <div class="pay_payment_methods">Phương thức thanh toán</div>
                     <div class="pay_payment_methods_items">
@@ -81,6 +79,8 @@
                             <div class="bill_content_expens_text">Sản phẩm</div>
                             <div class="bill_content_expens_text">Thành tiền</div>
                         </div>
+
+
                         <div class="bill_content_product">
                             @foreach (var item in (IEnumerable<DotNet_E_Commerce_Glasses_Web.Models.ProductSaleModel>)ViewBag.ListCart)
                             {
@@ -91,11 +91,11 @@
                                         <div class="bill_content_body_textheader">
                                             @item.NameProduct <span class="span_total_bill">@ViewBag.ListCart.Count</span>
                                         </div>
-                                        <div class="bill_contnet_classify">Phân Loại: Kính dâm</div>
+                                        <div class="bill_contnet_classify">Phân Loại: @item.TypeProduct.TypeProductName</div>
                                     </div>
                                 </div>
                                 @*TODO:Tồng số tiền phải trả cho số sản phẩm (đơn giá x số lượng)*@
-                                <div class="bill_content_expens_price">1.200.000đ</div>
+                                <div class="bill_content_expens_price">@item.getTotalProduct() đ</div>
                             }
                         </div>
                         <div class="bill_content_expens">
@@ -111,7 +111,7 @@
                             <div class="bill_content_expens_items">
                                 @*TODO: giảm giá*@
                                 <div class="bill_content_expens_text">Giảm</div>
-                                <div class="bill_content_expens_price">@((Model.Discount != null ? Model.Discount.PercentValue : 0) + " %")</div>
+                                <div class="bill_content_expens_price">@Model.valuePercent()</div>
                             </div>
                         </div>
                         <div class="bill_content_expens_total">
@@ -120,6 +120,8 @@
                             <div class="bill_content_expens_price">@Model.currencyTotalPay()đ</div>
                         </div>
                     </div>
+
+
                 </div>
             </div>
         </div>
@@ -128,5 +130,75 @@
 
 
 @section Scripts  {
-    <script src="~/Assets/scripts/ForConsumer/ConsumerCart.js"></script>
+
+    <script>
+
+        function actionPayBill ()
+        {
+            $.ajax( {
+                url: "/ConsumerProduct/PayBill",
+                type: "POST",
+                data: {},
+                success: function ( result )
+                {
+                    console.log( result );
+                    if ( result.status )
+                    {
+                        toastr.options.closeButton = true;
+                        toastr.success( result.message, "Thanh toán" );
+                        location.reload();
+                    } else
+                    {
+                        //window.location.href = result.url;
+                        toastr.options.closeButton = true;
+                        toastr.warning( result.message, "Thanh toán" );
+                    }
+                },
+                error: function ()
+                {
+                    console.error( "AJAX request failed" );
+                },
+            } );
+        }
+
+
+        function appDiscount ()
+        {
+            const inputCode = document.getElementById( "input-code" );
+
+            var code = inputCode.value;
+
+            if ( code.length > 0 )
+            {
+                $.ajax( {
+                    url: "/ConsumerProduct/AddDiscount",
+                    type: "POST",
+                    data: {
+                        codeDiscount: code,
+                    },
+                    success: function ( result )
+                    {
+                        console.log( result );
+                        if ( result.status )
+                        {
+                            console.log( "Buy Success." );
+                            toastr.options.closeButton = true;
+                            toastr.success( "Khuyến mại", "Áp mã giảm giá thành công" );
+                            location.href = result.url
+
+                        } else
+                        {
+                            toastr.options.closeButton = true;
+                            toastr.warning(
+                                result.message ?? "Mã khuyến mãi không khả dụng",
+                                "Khuyến mại"
+                            );
+                        }
+                    },
+                } );
+            } else
+                document.getElementById( "notify_GiamGia" ).textContent =
+                    "Nhập mã giảm giá trước khi áp dung.";
+        }
+    </script>
 }

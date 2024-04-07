@@ -16,10 +16,11 @@
     </div>
 </div>
 
-<div class="cart_body">
+<!--<div class="cart_body">
     <div class="grid wide">
         <div class="cart_header_body">Sản phẩm</div>
         <div class="cart_content">
+
             <div class="col l-9">
                 <div class="cart_content_product">
                     <div class="cart_content_header">
@@ -41,112 +42,73 @@
                         </div>
                     </div>
                     <div class="cart_content_body">
-                        @foreach (var item in (IEnumerable<DotNet_E_Commerce_Glasses_Web.Models.ProductSaleModel>)ViewBag.ListCart)
+                        System.Activities.Statements.ForEach (var item in (IEnumerable<DotNet_E_Commerce_Glasses_Web.Models.ProductSaleModel>)ViewBag.ListCart)
                         {
                             <div class="col l-5 cart_content_name">
                                 <input type="checkbox" class="cart_content_input">
-                                <img src="@item.Image" alt="" class="cart_content_body_img">
+                                <img src="item.Image" alt="" class="cart_content_body_img">
                                 <div class="content_body_text">
                                     <div class="content_body_textheader">
-                                        @item.NameProduct
+                                        item.NameProduct
                                     </div>
                                 </div>
                             </div>
-                            <div class="col l-1 content_body_text">
-                                @*TODO: cần giá sau khi giảm có vẻ đây là giá gốc*@
-                                <div class="content_body_text-1">@item.Price đ</div>
-                            </div>
-                            <div class="col l-2 content_body_text">
-                                <div class="cart_quantity-selector">
-                                    <div class="cart_quantity-selector_left">
-                                        <button class="cart_minus-btn" onclick="updateListCart(`@item.IdProduct`, `-1`)">-</button>
-                                        <input type="text" value="1" min="1" class="cart_quantity-input"
-                                               inputmode="numeric" pattern="[0-9]*"
-                                               onkeypress='return event.charCode >= 48 && event.charCode <= 57' value="@item.QuanitySale" disabled>
-                                        <button class="cart_plus-btn" onclick="updateListCart(`@item.IdProduct`, `1`)">+</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col l-2 content_body_text">
-                                @*TODO:Sản phẩm còn lại trong kho và lấy số sản phẩm này là số tối đa có thể bấm hoặc nhập vào thẻ input số lượng*@
-                                <div class="content_body_text-1">@Model.Quantity Sản Phẩm</div>
-                            </div>
-                            <div class="col l-2 content_body_text">
-                                @*TODO: Tổng số tiền tương ứng với số sản phẩm*@
-                                <div class="content_body_text-1">@item.getTotalProduct() đ</div>
-                            </div>
-                        }
-                    </div>
-                </div>
-            </div>
-            <div class="col l-3">
-                <div class="cart_content_bill">
-                    <div class="cart_bill_header">Tóm tắt đơn hàng</div>
-                    <div class="cart_bill_body">
-                        <div class="cart_bill_body_content">
-                            <div class="bill_body_text">Tạm tính</div>
-                            <div class="bill_body_text">@Model.currencyTotalBill() đ</div>
-                        </div>
-                        <div class="cart_bill_body_content">
-                            <div class="bill_body_text">Tổng</div>
-                            <div class="bill_body_text">@Model.currencyTotalBill() đ</div>
-                        </div>
-                    </div>
-                    @*UI: Đi đến trang thanh toán*@
-                    <div class="cart_bill_btn btn">Thanh toán ngay</div>
-                </div>
-            </div>
-        </div>
-        <div class="btn_cart">
-            @*TODO: làm sao để khi check vào sản phẩm thì xóa được sản phẩm đó đây Chính ơi*@
-            <div class="btn btn_cart_delete" @*onclick="deleteProduct(`@item.IdProduct`)"*@>Xóa sản phẩm đã chọn</div>
-            @*UI: đi đến trang sản phẩm để tiếp tục mua*@
-            <div class="btn btn_cart_continue">Tiếp tục mua hàng</div>
+                            <div class="col l-1 content_body_text">-->
+@*TODO: cần giá sau khi giảm có vẻ đây là giá gốc*@
+<!--<div class="content_body_text-1">item.Price đ</div>
+</div>
+<div class="col l-2 content_body_text">
+    <div class="cart_quantity-selector">
+        <div class="cart_quantity-selector_left">
+            <button class="cart_minus-btn" onclick="updateListCart(`item.IdProduct`, `-1`)">-</button>
+            <input type="text" value="1" min="1" class="cart_quantity-input"
+                   inputmode="numeric" pattern="[0-9]*"
+                   onkeypress='return event.charCode >= 48 && event.charCode <= 57' value="item.QuanitySale" disabled>
+            <button class="cart_plus-btn" onclick="updateListCart(`item.IdProduct`, `1`)">+</button>
         </div>
     </div>
 </div>
-<div class="grid wide">
-    <div class="body_best_seller_product">
-        <div class="seller_product_title">SẢN PHẨM CÓ THỂ BẠN QUAN TÂM</div>
-        @*TODO: truy vấn 4 sản phẩm đầu tiên hoặc được bán nhiều nhất trong csdl*@
-        <div class="seller_product_list">
-            @foreach (var item in Model)
-            {
-                if (item.TypeProductSale.StatusProduct.Equals("Bán hàng"))
-                {
-                    <div class="col l-3">
-                        <div class="best_seller_product-card" data-item-id="@item.IdProduct">
-                            <div class="best_seller_product-image">
-                                <img src="@item.Image" alt="Gọng kính">
-                            </div>
-                            <div class="best_seller_product-details">
-                                <div class="best_seller_product-name">@item.NameProduct</div>
-                                <div class="best_seller_product-pricing">
-                                    <div class="best_seller_product-discount">
-                                        Tiết kiệm được <span class="best_seller_product-discount-price">150.000đ</span>
-                                    </div>
-                                    <div class="best_seller_product-original-price">@item.Price</div>
-                                </div>
-                                <button class="best_seller_product-buy-btn">
-                                    <div class="best_seller_product-price">@item.CurrencyString()</div>
-                                    <i class="fas fa-chevron-right"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                }
+<div class="col l-2 content_body_text">-->
+@*TODO:Sản phẩm còn lại trong kho và lấy số sản phẩm này là số tối đa có thể bấm hoặc nhập vào thẻ input số lượng*@
+<!--<div class="content_body_text-1">-->@*@Model.Quantity Sản Phẩm*@
+<!--</div>
+</div>
+<div class="col l-2 content_body_text">-->
+@*TODO: Tổng số tiền tương ứng với số sản phẩm*@
+<!--<div class="content_body_text-1">item.getTotalProduct() đ</div>
+                </div>
             }
         </div>
     </div>
 </div>
 
+<div class="col l-3">
+    <div class="cart_content_bill">
+        <div class="cart_bill_header">Tóm tắt đơn hàng</div>
+        <div class="cart_bill_body">
+            <div class="cart_bill_body_content">
+                <div class="bill_body_text">Tạm tính</div>
+                <div class="bill_body_text">Model.currencyTotalBill() đ</div>
+            </div>
+            <div class="cart_bill_body_content">
+                <div class="bill_body_text">Tổng</div>
+                <div class="bill_body_text">Model.currencyTotalBill() đ</div>
+            </div>
+        </div>-->
+@*UI: Đi đến trang thanh toán*@
+<!--<div class="cart_bill_btn btn">Thanh toán ngay</div>
+        </div>
+    </div>
+</div>
+<div class="btn_cart">-->
+@*TODO: làm sao để khi check vào sản phẩm thì xóa được sản phẩm đó đây Chính ơi*@
+@*UI: đi đến trang sản phẩm để tiếp tục mua*@
+<!--<div class="btn btn_cart_continue">Tiếp tục mua hàng</div>
+        </div>
+    </div>
+</div>-->
 
-
-
-
-@*code cũ của Chính*@
-<h3>Giỏ hàng</h3>
-<div class="container">
+<div class="container-xxl">
     <div class="row h-75">
         <div class="col-sm-9">
             <table class="table table-hover">
@@ -159,6 +121,7 @@
                         <th scope="col"></th>
                     </tr>
                 </thead>
+
                 <tbody>
                     @foreach (var item in (IEnumerable<DotNet_E_Commerce_Glasses_Web.Models.ProductSaleModel>)ViewBag.ListCart)
                     {
@@ -193,18 +156,7 @@
                     }
                 </tbody>
             </table>
-            <div class="row">
-                <strong class="col">
-                    Mã giảm giá
-                </strong>
-                <div class="col">
-                    <input type="text" name="GiamGia" class="rounded" id="input-code">
-                    <span id="notify_GiamGia"></span>
-                    <button type="button" class="btn btn-outline-secondary rounded-pill" onclick="appDiscount()">
-                        Áp dụng
-                    </button>
-                </div>
-            </div>
+           
         </div>
         <div class="col-sm-3">
             <div class="d-flex flex-column justify-content-between align-items-center rounded" style="background-color: white">
@@ -247,7 +199,7 @@
                 </div>
                 <div style="margin-top:20px ; margin-bottom:30px;">
                     <button type="button" class="btn btn-outline-secondary rounded-pill" onclick="actionCancelBill()">Hủy</button>
-                    <button type="button" class="btn btn-danger rounded-pill" onclick="actionPayBill()">Thanh toán</button>
+                    <button type="button" class="btn btn-danger rounded-pill" onclick="navigateToPayment()">Thanh toán</button>
                 </div>
             </div>
         </div>
@@ -255,63 +207,312 @@
 </div>
 
 
+<div class="grid wide">
+    <div class="body_best_seller_product">
+        <div class="seller_product_title">SẢN PHẨM NỔI BẬT</div>
+
+        <div class="seller_product_list" id="product_highlight_list"></div>
+    </div>
+</div>
+
+
+
+
 @section Scripts  {
-    <script src="~/Assets/scripts/ForConsumer/ConsumerCart.js"></script>
     <script>
         // quantity buttons
-        document.addEventListener('DOMContentLoaded', function () {
-            const minusBtns = document.querySelectorAll('.cart_minus-btn'); // Tất cả nút giảm
-            const plusBtns = document.querySelectorAll('.cart_plus-btn'); // Tất cả nút tăng
-            const quantityInputs = document.querySelectorAll('.cart_quantity-input'); // Tất cả input số lượng
+        document.addEventListener( 'DOMContentLoaded', function ()
+        {
+            const minusBtns = document.querySelectorAll( '.cart_minus-btn' ); // Tất cả nút giảm
+            const plusBtns = document.querySelectorAll( '.cart_plus-btn' ); // Tất cả nút tăng
+            const quantityInputs = document.querySelectorAll( '.cart_quantity-input' ); // Tất cả input số lượng
 
             // Xử lý cho nút giảm
-            minusBtns.forEach(function (btn) {
-                btn.addEventListener('click', function () {
-                    let parent = this.closest('.cart_content_body');
-                    let quantityInput = parent.querySelector('.cart_quantity-input');
-                    let currentValue = parseInt(quantityInput.value);
-                    if (currentValue > 1) {
+            minusBtns.forEach( function ( btn )
+            {
+                btn.addEventListener( 'click', function ()
+                {
+                    let parent = this.closest( '.cart_content_body' );
+                    let quantityInput = parent.querySelector( '.cart_quantity-input' );
+                    let currentValue = parseInt( quantityInput.value );
+                    if ( currentValue > 1 )
+                    {
                         quantityInput.value = currentValue - 1;
                     }
-                });
-            });
+                } );
+            } );
 
             // Xử lý cho nút tăng
-            plusBtns.forEach(function (btn) {
-                btn.addEventListener('click', function () {
-                    let parent = this.closest('.cart_content_body');
-                    let quantityInput = parent.querySelector('.cart_quantity-input');
-                    let currentValue = parseInt(quantityInput.value);
+            plusBtns.forEach( function ( btn )
+            {
+                btn.addEventListener( 'click', function ()
+                {
+                    let parent = this.closest( '.cart_content_body' );
+                    let quantityInput = parent.querySelector( '.cart_quantity-input' );
+                    let currentValue = parseInt( quantityInput.value );
                     quantityInput.value = currentValue + 1;
-                });
-            });
+                } );
+            } );
 
             // Xử lý khi người dùng rời khỏi input
-            quantityInputs.forEach(function (input) {
-                input.addEventListener('blur', function () {
-                    if (input.value === '') {
+            quantityInputs.forEach( function ( input )
+            {
+                input.addEventListener( 'blur', function ()
+                {
+                    if ( input.value === '' )
+                    {
                         input.value = 1;
                     }
-                });
-            });
-        });
+                } );
+            } );
+        } );
         // check box
-        document.addEventListener('DOMContentLoaded', function () {
-            const headerCheckboxes = document.querySelectorAll('.cart_content_header .cart_content_input'); // Tất cả các checkbox trong header
-            const contentCheckboxes = document.querySelectorAll('.cart_content_body .cart_content_input'); // Tất cả các checkbox trong body
+        document.addEventListener( 'DOMContentLoaded', function ()
+        {
+            const headerCheckboxes = document.querySelectorAll( '.cart_content_header .cart_content_input' ); // Tất cả các checkbox trong header
+            const contentCheckboxes = document.querySelectorAll( '.cart_content_body .cart_content_input' ); // Tất cả các checkbox trong body
 
             // Xử lý cho nút checkbox trong header
-            headerCheckboxes.forEach(function (checkbox) {
-                checkbox.addEventListener('change', function () {
+            headerCheckboxes.forEach( function ( checkbox )
+            {
+                checkbox.addEventListener( 'change', function ()
+                {
                     // Lấy trạng thái checked của checkbox
                     const isChecked = this.checked;
 
                     // Duyệt qua tất cả các checkbox trong body và thiết lập trạng thái checked của chúng
-                    contentCheckboxes.forEach(function (contentCheckbox) {
+                    contentCheckboxes.forEach( function ( contentCheckbox )
+                    {
                         contentCheckbox.checked = isChecked;
-                    });
-                });
-            });
-        });
+                    } );
+                } );
+            } );
+        } );
+
+        function navigateToPayment ()
+        {
+            location.href = "/ConsumerProduct/Payment"
+        }
+       
+
+        function createFormPost ( data )
+        {
+            var form = document.createElement( "form" );
+            form.action = "/ConsumerProduct/ConsumerCart"
+            form.method = "POST";
+            for ( var key in data )
+            {
+                if ( data.hasOwnProperty( key ) )
+                {
+                    var input = document.createElement( "input" );
+                    input.type = "hidden";
+                    input.name = key;
+                    input.value = data[ key ];
+                    form.appendChild( input );
+                }
+            }
+            document.body.appendChild( form );
+            form.submit();
+        }
+
+        function updateListCart ( idProduct, quantity )
+        {
+            $.ajax( {
+                url: "/ConsumerProduct/AddProductToCart",
+                type: "POST",
+                data: {
+                    productId: idProduct,
+                    quantity: quantity,
+                },
+                success: function ( result )
+                {
+                    console.log( result );
+                    if ( result.status )
+                    {
+                        console.log( "Buy Success." );
+                        toastr.options.closeButton = true;
+                        toastr.success( "Giỏ hàng", "Thêm sản phẩm thành công!" );
+                        location.reload();
+                    } else
+                    {
+                        console.log( "Buy Failed." );
+                        window.location.href = result.url;
+                        toastr.options.closeButton = true;
+                    }
+                },
+                error: function ()
+                {
+                    console.error( "AJAX request failed" );
+                },
+            } );
+        }
+
+
+
+        function actionPayBill ()
+        {
+            $.ajax( {
+                url: "/ConsumerProduct/PayBill",
+                type: "POST",
+                data: {},
+                success: function ( result )
+                {
+                    if ( result.status )
+                    {
+                        toastr.options.closeButton = true;
+                        toastr.success( result.message, "Giỏ hàng" );
+                        setTimeout( function ()
+                        {
+                            location.reload();
+                        }, 500 );
+                    } else
+                    {
+                        toastr.options.closeButton = true;
+                        toastr.warning( result.message, "Giỏ hàng" );
+                    }
+                },
+                error: function ()
+                {
+                    console.error( "AJAX request failed" );
+                },
+            } );
+        }
+        function actionCancelBill ()
+        {
+            $.ajax( {
+                url: "/ConsumerProduct/CancelBill",
+                type: "POST",
+                data: {},
+                success: function ( result )
+                {
+                    console.log( result );
+                    if ( result.status )
+                    {
+                        toastr.options.closeButton = true;
+                        toastr.success( result.message, "Thanh toán" );
+                        location.reload();
+                    } else
+                    {
+                        //window.location.href = result.url;
+                        toastr.options.closeButton = true;
+                        toastr.warning( result.message, "Thanh toán" );
+                    }
+                },
+                error: function ()
+                {
+                    console.error( "AJAX request failed" );
+                },
+            } );
+        }
+
+
+        function deleteProduct ( idProduct )
+        {
+            $.ajax( {
+                url: "/ConsumerProduct/RemoveFromCart",
+                type: "POST",
+                data: {
+                    productId: idProduct
+                },
+                success: function ( result )
+                {
+                    console.log( result );
+                    if ( result.status )
+                    {
+                        toastr.options.closeButton = true;
+                        toastr.success( "Giỏ hàng", "Cập nhật giỏ hàng thành công!" );
+                        location.reload();
+                    } else
+                    {
+                        window.location.href = result.url;
+                        toastr.options.closeButton = true;
+                        toastr.warning( "Giỏ hàng", "Cập nhật giỏ hàng thất bại!" );
+                    }
+                },
+                error: function ( error )
+                {
+                    console.error( "AJAX request failed", error );
+                },
+            } );
+        }
+
+        initializeHighLightProduct()
+        function initializeHighLightProduct ()
+        {
+            $.ajax( {
+                url: "/Common/GetProduct",
+                type: "POST",
+                data: {},
+                success: function ( result )
+                {
+                    if ( result.status )
+                    {
+                        showHighLightProduct( result.data )
+                    } else
+                    {
+
+                    }
+                },
+                error: function ()
+                {
+                    console.error( "AJAX request failed" );
+                },
+            } );
+        }
+        function showHighLightProduct ( products )
+        {
+            var productDetailId = document.getElementById( 'product_highlight_list' );
+
+            productDetailId.innerHTML = "";
+
+            products.forEach( ( item ) =>
+            {
+                var htmlContent = `
+                  <div class="col l-3">
+                      <div class="best_seller_product-card" data-item-id="${ item.id_product }">
+                          <div class="best_seller_product-image">
+                              <img src="${ item.image_url }" alt="Gọng kính" style="height:150px">
+                          </div>
+                          <div class="best_seller_product-details">
+                              <div class="best_seller_product-name">${ item.name_product }</div>
+                              <div class="best_seller_product-pricing">
+                                  <div class="best_seller_product-discount">
+                                     Phân loại: <span class="best_seller_product-discount-price">${ item.type_product }</span>
+                                  </div>
+                              </div>
+                              <button class="best_seller_product-buy-btn">
+                                  <div class="best_seller_product-price">${ item.price }</div>
+                                  <i class="fas fa-chevron-right"></i>
+                              </button>
+                          </div>
+                      </div>
+                  </div>
+                `;
+                productDetailId.insertAdjacentHTML( 'beforeend', htmlContent );
+            } );
+
+            var productCards = document.querySelectorAll( ".best_seller_product-card" );
+
+            productCards.forEach( function ( card )
+            {
+                card.addEventListener( "click", function ( event )
+                {
+                    var target = event.target;
+                    var itemId = card.dataset.itemId;
+
+                    if ( target.closest( ".best_seller_product-buy-btn" ) )
+                    {
+                        updateListCart( itemId, 1 )
+                        console.log( "Buy button clicked for item with ID: " + itemId );
+                    } else
+                    {
+                        var itemId = card.dataset.itemId;
+                        window.location.href = "/ConsumerProduct/DetailProduct?product_id=" + itemId;
+                    }
+                } );
+            } );
+
+        }
+
     </script>
 }

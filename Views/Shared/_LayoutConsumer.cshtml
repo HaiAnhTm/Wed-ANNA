@@ -144,69 +144,8 @@
 
                             <div class="header-cart-list">
                                 <h4 class="cart-heading">Sản phẩm đã thêm</h4>
+
                                 <ul class="cart-list-items">
-                                    <li class="cart-items">
-                                        <img src="~/Assets/images/img/glass_img.jpeg" alt="" class="cart-items-img">
-                                        <div class="cart-items-info">
-                                            <div class="cart-items-head">
-                                                <h5 class="cart-items-name">Sách Hoàng Tử Bé</h5>
-                                                <div class="cart-items-price-wrap">
-                                                    <span class="cart-items-price">98.000đ</span>
-                                                    <span class="cart-items-multiply">x</span>
-                                                    <span class="cart-items-qnt">2</span>
-                                                </div>
-                                            </div>
-                                            <div class="cart-items-body">
-                                                <span class="cart-items-description">
-                                                    Phân loại: sách
-                                                </span>
-                                                <span class="cart-items-remove">Xóa</span>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <li class="cart-items">
-                                        <img src="~/Assets/images/img/glass_img.jpeg" alt="" class="cart-items-img">
-                                        <div class="cart-items-info">
-                                            <div class="cart-items-head">
-                                                <h5 class="cart-items-name">
-                                                    Sách kẻ điên bên phải thiên tài bên trái
-                                                </h5>
-                                                <div class="cart-items-price-wrap">
-                                                    <span class="cart-items-price">67.900đ</span>
-                                                    <span class="cart-items-multiply">x</span>
-                                                    <span class="cart-items-qnt">1</span>
-                                                </div>
-                                            </div>
-                                            <div class="cart-items-body">
-                                                <span class="cart-items-description">
-                                                    phân loại: sách
-                                                </span>
-                                                <span class="cart-items-remove">Xóa</span>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <li class="cart-items">
-                                        <img src="~/Assets/images/img/glass_img.jpeg" alt="" class="cart-items-img">
-                                        <div class="cart-items-info">
-                                            <div class="cart-items-head">
-                                                <h5 class="cart-items-name">Đắc Nhân Tâm</h5>
-                                                <div class="cart-items-price-wrap">
-                                                    <span class="cart-items-price">123.500</span>
-                                                    <span class="cart-items-multiply">x</span>
-                                                    <span class="cart-items-qnt">3</span>
-                                                </div>
-                                            </div>
-                                            <div class="cart-items-body">
-                                                <span class="cart-items-description">
-                                                    phân loại: sách
-                                                </span>
-                                                <span class="cart-items-remove">Xóa</span>
-                                            </div>
-                                        </div>
-                                    </li>
-
                                 </ul>
 
                                 <button class="btn btn-primary btn-cart-view">Xem giỏ hàng</button>
@@ -271,7 +210,124 @@
         </div>
     </footer>
 
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js")
+    @RenderSection("scripts", required: false)
+
     <script>
+        initializeCart()
+
+        function initializeCart ()
+        {
+            loadCart(
+                onSuccess = function ( data )
+                {
+                    addHTMLToCartList( data )
+                },
+                onFailure = function ( message )
+                {
+
+                }
+            )
+        }
+
+
+        async function loadCart ( onSuccess, onFailure )
+        {
+            $.ajax( {
+                url: "/Common/GetCart",
+                type: "POST",
+                data: {},
+                success: function ( response )
+                {
+                    if ( response.status )
+                    {
+                        onSuccess( response.data );
+                    } else
+                    {
+                        onFailure( response.message );
+                    }
+                },
+                error: function ( xhr, textStatus, errorThrown )
+                {
+                    console.error( "Error:", errorThrown );
+                    onFailure( errorThrown );
+                }
+            } );
+        }
+
+
+        function addHTMLToCartList ( data )
+        {
+            var cartList = document.querySelector( '.cart-list-items' );
+
+            cartList.innerHTML = "";
+
+            data.forEach( item =>
+            {
+                if ( item != null )
+                {
+                    var htmlContent =
+                        `
+                             <li class="cart-items">
+                                <img src="${item.image_url}" alt="" class="cart-items-img">
+                                <div class="cart-items-info">
+                                    <div class="cart-items-head">
+                                        <h5 class="cart-items-name">${item.name_product}</h5>
+                                        <div class="cart-items-price-wrap">
+                                            <span class="cart-items-price">${item.price}đ</span>
+                                            <span class="cart-items-multiply">x</span>
+                                            <span class="cart-items-qnt">${item.quanity}</span>
+                                        </div>
+                                    </div>
+                                    <div class="cart-items-body">
+                                        <span class="cart-items-description">
+                                            Phân loại: ${item.type_product}
+                                        </span>
+                                        <span class="cart-items-remove" onClick="handleEventDeleteProduct(${item.id_product})">Xóa</span>
+                                    </div>
+                                </div>
+                             </li>
+                             `
+                    cartList.insertAdjacentHTML( 'beforeend', htmlContent );
+                }
+            } )
+        }
+
+        function handleEventDeleteProduct ( idProduct )
+        {
+            deleteProduct( idProduct )
+        }
+        function deleteProduct ( idProduct )
+        {
+            $.ajax( {
+                url: "/ConsumerProduct/RemoveFromCart",
+                type: "POST",
+                data: {
+                    productId: idProduct
+                },
+                success: function ( result )
+                {
+                    console.log( result );
+                    if ( result.status )
+                    {
+                        toastr.options.closeButton = true;
+                        toastr.success( "Giỏ hàng", "Cập nhật giỏ hàng thành công!" );
+                        location.reload();
+                    } else
+                    {
+                        window.location.href = result.url;
+                        toastr.options.closeButton = true;
+                        toastr.warning( "Giỏ hàng", "Cập nhật giỏ hàng thất bại!" );
+                    }
+                },
+                error: function ( error )
+                {
+                    console.error( "AJAX request failed", error );
+                },
+            } );
+        }
+
         // cuộn header
         let lastScrollTop = 0; // Lưu vị trí cuộn cuối cùng
         const header = document.querySelector( '.main_header' ); // Chọn thanh header
@@ -313,33 +369,33 @@
         //        slides[ currentIndex ].classList.add( 'slide_active' );
         //    }
 
-            // Tự động chuyển slide
-            //setInterval( function ()
-            //{
-            //    changeSlide( currentIndex + 1 );
-            //}, 4000 ); // 4000ms = 4s
+        // Tự động chuyển slide
+        //setInterval( function ()
+        //{
+        //    changeSlide( currentIndex + 1 );
+        //}, 4000 ); // 4000ms = 4s
 
-            //// Nút chuyển slide
-            //prevButton.addEventListener( 'click', function ()
-            //{
-            //    changeSlide( currentIndex - 1 );
-            //} );
+        //// Nút chuyển slide
+        //prevButton.addEventListener( 'click', function ()
+        //{
+        //    changeSlide( currentIndex - 1 );
+        //} );
 
-            //nextButton.addEventListener( 'click', function ()
-            //{
-            //    changeSlide( currentIndex + 1 );
-            //} );
+        //nextButton.addEventListener( 'click', function ()
+        //{
+        //    changeSlide( currentIndex + 1 );
+        //} );
 
-            //// Thêm sự kiện kéo cho slider
-            //let startX;
-            //const sliderContainer = document.querySelector( '.slider-container' );
+        //// Thêm sự kiện kéo cho slider
+        //let startX;
+        //const sliderContainer = document.querySelector( '.slider-container' );
 
-            //sliderContainer.addEventListener( 'mousedown', function ( e )
-            //{
-            //    startX = e.pageX;
-            //    sliderContainer.addEventListener( 'mousemove', mouseMoveHandler );
-            //    e.preventDefault(); // Ngăn chặn việc bắt đầu kéo và thả mặc định
-            //} );
+        //sliderContainer.addEventListener( 'mousedown', function ( e )
+        //{
+        //    startX = e.pageX;
+        //    sliderContainer.addEventListener( 'mousemove', mouseMoveHandler );
+        //    e.preventDefault(); // Ngăn chặn việc bắt đầu kéo và thả mặc định
+        //} );
 
         //    document.addEventListener( 'mouseup', function ()
         //    {
@@ -430,9 +486,5 @@
         } );
     </script>
 </body>
-
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js")
-@RenderSection("scripts", required: false)
 
 </html>

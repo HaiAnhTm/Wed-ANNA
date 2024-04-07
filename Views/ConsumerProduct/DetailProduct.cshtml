@@ -24,13 +24,14 @@
                     </div>
                     <div class="detail_product_body_price">
                         @*TODO: truy vấn giá mới*@
-                        <div class="detail_product_body_old_price">@Model.Price đ</div>
-                        <div class="detail_product_body_new_price">350.000 đ</div>
+                        <div class="detail_product_body_old_price">@*@Model.Price đ*@</div>
+                        <div class="detail_product_body_new_price">@Model.Price đ</div>
                     </div>
                     @*TODO: truy vấn loại sản phẩm Ví dụ: Phân Loại: Tròng kính*@
-                    <div class="detail_product_body_right_type_product">Phân Loại: Tròng kính</div>
+                    <div class="detail_product_body_right_type_product">Phân Loại: @Model.TypeProduct.TypeProductName</div>
+                    <div class="body_right_manual">Hướng dẫn sử dụng:</div>
                     <ul class="detail_product_body_right_manual">
-                        <div class="body_right_manual">Hướng dẫn sử dụng:</div>
+
                         <li class="manual_list">
                             <ul class="manual_items">
                                 + Tháo kính bằng 2 tay hoặc những nơi có nhiệt độ cao làm
@@ -42,17 +43,21 @@
                             </ul>
                         </li>
                     </ul>
+
                     <div class="quantity-selector">
                         <div class="quantity-selector_left">
-                            <button type="button" class="minus-btn" onclick="updateListCart(`@Model.IdProduct`, `-1`)">-</button>
+                            <button type="button" class="minus-btn">-</button>
                             <input type="text" value="1" min="1" class="quantity-input" inputmode="numeric"
-                                   pattern="[0-9]*" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-                            <button type="button" class="plus-btn" onclick="updateListCart(`@Model.IdProduct`, `1`)">+</button>
+                                   pattern="[0-9]*" id="quantity-input" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                            <button type="button" class="plus-btn">+</button>
                         </div>
+
                         @*TODO: truy vấn giá mới*@
-                        <button class="add-to-cart-btn" onclick="updateListCart(`@Model.IdProduct`, `1`)">Thêm vào giỏ • @Model.Price</button>
+                        <button class="add-to-cart-btn" onclick="updateListCart('@Model.IdProduct', document.getElementById('quantity-input').value)">Thêm vào giỏ • @Model.Price</button>
+
                     </div>
                     <div class="remaining_products">
+
                         @*TODO: truy vấn sản phẩm còn lại trong kho*@
                         <div class="remaining_products_left">Còn @Model.Quantity sản phẩm</div>
                         <div class="remaining_products_right">
@@ -104,42 +109,18 @@
         </div>
     </div>
 </div>
+
+
 <div class="grid wide">
     <div class="body_best_seller_product">
-        @*TODO: truy vấn loại sản phẩm tương tự sản phẩm người dùng bấm vào Ví dụ: Kính dâm tương tự*@
-        <div class="seller_product_title">Kính dâm tương tự</div>
-        @*TODO: truy vấn các sản phẩm tương tự và hiển thị tối đa là 4 sản phẩm*@
-        <div class="seller_product_list">
-            @*@foreach (var item in Model)
-            {
-                if (item.TypeProductSale.StatusProduct.Equals("Bán hàng"))
-                {
-                    <div class="col l-3">
-                        <div class="best_seller_product-card" data-item-id="@item.IdProduct">
-                            <div class="best_seller_product-image">
-                                <img src="@item.Image" alt="Gọng kính">
-                            </div>
-                            <div class="best_seller_product-details">
-                                <div class="best_seller_product-name">@item.NameProduct</div>
-                                <div class="best_seller_product-pricing">
-                                    <div class="best_seller_product-discount">
-                                        Tiết kiệm được <span class="best_seller_product-discount-price">150.000đ</span>
-                                    </div>
-                                    <div class="best_seller_product-original-price">@item.Price</div>
-                                </div>
-                                <button class="best_seller_product-buy-btn">
-                                    <div class="best_seller_product-price">@item.CurrencyString()</div>
-                                    <i class="fas fa-chevron-right"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                }
-            }*@
-        </div>
+        <div class="seller_product_title">SẢN PHẨM NỔI BẬT</div>
+
+        <div class="seller_product_list" id="product_highlight_list"></div>
     </div>
 </div>
-<div class="suggestion">
+
+
+@*<div class="suggestion">
     <div class="grid wide">
         <div class="seller_product_title">các loại sản phẩm khác</div>
         <div class="suggestion_body">
@@ -163,7 +144,8 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
+
 @*thanh toán ở cuối trang*@
 <div class="total_pay hidden">
     <div class="grid wide">
@@ -185,223 +167,244 @@
     </div>
 </div>
 
-@*code cũ của Chính*@
-<div class="container">
-    <div class="row h-75">
-
-        <div class="row g-0 text-center">
-            <div class="col-sm-6 col-md-8">
-                <div style="position: relative;">
-                    <img src="@Model.Image" style="width: 360px;" />
-
-                    @if (Model.Discount > 0)
-                    {
-                        <div style="position: absolute; top: 10px; right: 10px; background-color: red; color: white; padding: 5px; border-radius: 5px;">
-                            @Model.Discount % off
-                        </div>
-                    }
-                </div>
-            </div>
-
-            <div class="col-6 col-md-4">
-                <div class="container">
-                    <div class="row">
-                        <h2>@Model.NameProduct</h2>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="rating" id="stars">
-                                <span class="star">&#9734;</span>
-                                <span class="star">&#9734;</span>
-                                <span class="star">&#9734;</span>
-                                <span class="star">&#9734;</span>
-                                <span class="star">&#9734;</span>
-                            </div>
-
-                        </div>
-
-                        <div class="col-md-6">
-                            <p id="ratingText">Rating: <span id="currentRating">0</span>/5</p>
-                        </div>
-
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h4>@Model.Price</h4>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <h4>@Model.Description</h4>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-
-                            <div class="row">
-                                <button type="button" class="btn btn-outline-secondary d-flex justify-content-center align-items-center rounded-circle" style="max-width: 30px;" onclick="updateListCart(`@Model.IdProduct`, `-1`)">
-                                    <i class="fa-solid fa-minus"></i>
-                                </button>
-                                <input type="number" class="col rounded text-center" style="max-width: 100px;" value="@Model.QuanitySale" disabled>
-                                <button type="button" class="btn btn-outline-secondary d-flex justify-content-center align-items-center rounded-circle" style="max-width: 30px;" onclick="updateListCart(`@Model.IdProduct`, `1`)">
-                                    <i class="fa-solid fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-
-                            @if (Model.Quantity <= 0)
-                            {
-                                <button class="btn btn-secondary" disabled>Hết hàng</button>
-                            }
-                            else
-                            {
-                                <button class="btn btn-primary add-to-cart-btn" onclick="updateListCart(`@Model.IdProduct`, `1`)">Thêm giỏ hàng</button>
-                            }
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
-
 @section Scripts  {
 
     <script>
-        const stars = document.querySelectorAll('.star');
-        const ratingText = document.getElementById('ratingText');
-        const currentRating = document.getElementById('currentRating');
+        const stars = document.querySelectorAll( '.star' );
+        const ratingText = document.getElementById( 'ratingText' );
+        const currentRating = document.getElementById( 'currentRating' );
 
-        stars.forEach((star, index) => {
-            star.addEventListener('click', () => {
+        stars.forEach( ( star, index ) =>
+        {
+            star.addEventListener( 'click', () =>
+            {
                 const ratingValue = index + 1;
                 currentRating.textContent = ratingValue;
                 ratingText.style.display = 'block'; // Display the rating text once a rating is given
                 resetStars();
-                highlightStars(index);
-            });
-        });
+                highlightStars( index );
+            } );
+        } );
 
-        function resetStars() {
-            stars.forEach(star => {
+        function resetStars ()
+        {
+            stars.forEach( star =>
+            {
                 star.textContent = '☆'; // Reset all stars to empty
-            });
+            } );
         }
 
-        function highlightStars(index) {
-            for (let i = 0; i <= index; i++) {
-                stars[i].textContent = '★'; // Highlight stars up to the clicked one
+        function highlightStars ( index )
+        {
+            for ( let i = 0; i <= index; i++ )
+            {
+                stars[ i ].textContent = '★'; // Highlight stars up to the clicked one
             }
         }
 
 
-
-        function updateListCart(idProduct, quantity) {
-            $.ajax({
+        function updateListCart ( idProduct, quantity )
+        {
+            $.ajax( {
                 url: "/ConsumerProduct/AddProductToCart",
                 type: "POST",
                 data: {
                     productId: idProduct,
                     quantity: quantity,
                 },
-                success: function (result) {
-                    console.log(result);
-                    if (result.status) {
-                        console.log("Buy Success.");
+                success: function ( result )
+                {
+                    console.log( result );
+                    if ( result.status )
+                    {
+                        console.log( "Buy Success." );
                         toastr.options.closeButton = true;
-                        toastr.success("Giỏ hàng", "Thêm sản phẩm thành công!");
-                        location.reload();
-                    } else {
-                        console.log("Buy Failed.");
+                        toastr.success( "Giỏ hàng", "Thêm sản phẩm thành công!" );
+                        initializeCart()
+                    } else
+                    {
+                        console.log( "Buy Failed." );
                         window.location.href = result.url;
                         toastr.options.closeButton = true;
                     }
                 },
-                error: function () {
-                    console.error("AJAX request failed");
+                error: function ()
+                {
+                    console.error( "AJAX request failed" );
                 },
-            });
+            } );
         }
 
 
         // total-pay
-        document.addEventListener('DOMContentLoaded', function () {
-            const bodyDetailProduct = document.querySelector('.seller_product_title'); // Phần tử body_detail_product
-            const totalPay = document.querySelector('.total_pay'); // Phần tử total_pay
+        document.addEventListener( 'DOMContentLoaded', function ()
+        {
+            const bodyDetailProduct = document.querySelector( '.seller_product_title' ); // Phần tử body_detail_product
+            const totalPay = document.querySelector( '.total_pay' ); // Phần tử total_pay
             const windowHeight = window.innerHeight; // Chiều cao của cửa sổ trình duyệt
 
             // Xác định vị trí của body_detail_product
             const bodyDetailProductOffsetTop = bodyDetailProduct.offsetTop;
 
             // Xác định điều kiện hiển thị total pay và thêm hoặc loại bỏ lớp CSS tương ứng
-            function toggleTotalPayVisibility() {
+            function toggleTotalPayVisibility ()
+            {
                 const scrollTop = window.scrollY || window.pageYOffset; // Lấy vị trí hiện tại của thanh cuộn
                 const bodyDetailProductBottom = bodyDetailProductOffsetTop + bodyDetailProduct.offsetHeight; // Tính toán vị trí dưới cùng của body_detail_product
 
                 // Hiển thị total pay khi cuộn đến cuối body_detail_product và ẩn nếu không
-                if (scrollTop + windowHeight >= bodyDetailProductBottom) {
-                    totalPay.classList.remove('total-pay-visible');
-                    totalPay.classList.remove('hidden');
+                if ( scrollTop + windowHeight >= bodyDetailProductBottom )
+                {
+                    totalPay.classList.remove( 'total-pay-visible' );
+                    totalPay.classList.remove( 'hidden' );
 
-                } else {
-
-                    totalPay.classList.add('total-pay-visible');
+                } else
+                {
+                    totalPay.classList.add( 'total-pay-visible' );
                 }
             }
 
             // Thực hiện chức năng khi cuộn trang
-            window.addEventListener('scroll', toggleTotalPayVisibility);
-        });
+            window.addEventListener( 'scroll', toggleTotalPayVisibility );
+        } );
         // quantity_input
-        document.addEventListener('DOMContentLoaded', function () {
-            const minusBtn = document.querySelector('.minus-btn'); // Nút giảm
-            const plusBtn = document.querySelector('.plus-btn'); // Nút tăng
-            const quantityInput = document.querySelector('.quantity-input'); // Input số lượng
+        document.addEventListener( 'DOMContentLoaded', function ()
+        {
+            const minusBtn = document.querySelector( '.minus-btn' ); // Nút giảm
+            const plusBtn = document.querySelector( '.plus-btn' ); // Nút tăng
+            const quantityInput = document.querySelector( '.quantity-input' ); // Input số lượng
 
             // Xử lý sự kiện khi nhấn nút giảm
-            minusBtn.addEventListener('click', function () {
-                let currentValue = parseInt(quantityInput.value);
-                if (currentValue > 1) {
+            minusBtn.addEventListener( 'click', function ()
+            {
+                let currentValue = parseInt( quantityInput.value );
+                if ( currentValue > 1 )
+                {
                     quantityInput.value = currentValue - 1;
                 }
-            });
+            } );
 
             // Xử lý sự kiện khi nhấn nút tăng
-            plusBtn.addEventListener('click', function () {
-                let currentValue = parseInt(quantityInput.value);
+            plusBtn.addEventListener( 'click', function ()
+            {
+                let currentValue = parseInt( quantityInput.value );
                 quantityInput.value = currentValue + 1;
-            });
+            } );
 
             // Xử lý sự kiện khi người dùng rời khỏi input
-            quantityInput.addEventListener('blur', function () {
-                if (quantityInput.value === '') {
+            quantityInput.addEventListener( 'blur', function ()
+            {
+                if ( quantityInput.value === '' )
+                {
                     quantityInput.value = 1;
                 }
-            });
-        });
+            } );
+        } );
+
+
         // detail_product
-        document.addEventListener('DOMContentLoaded', function () {
-            const detailProductHeadings = document.querySelectorAll('.detail_product_heading');
+        document.addEventListener( 'DOMContentLoaded', function ()
+        {
+            const detailProductHeadings = document.querySelectorAll( '.detail_product_heading' );
 
             // Loop through each detail product heading
-            detailProductHeadings.forEach(function (heading) {
+            detailProductHeadings.forEach( function ( heading )
+            {
                 // Add click event listener to each heading
-                heading.addEventListener('click', function () {
+                heading.addEventListener( 'click', function ()
+                {
                     const content = this.nextElementSibling; // Get the content div
-                    const icon = this.querySelector('i'); // Get the icon element inside heading
+                    const icon = this.querySelector( 'i' ); // Get the icon element inside heading
 
                     // Toggle the visibility of content
-                    content.classList.toggle('hidden');
+                    content.classList.toggle( 'hidden' );
 
                     // Toggle the icon between plus and minus
-                    icon.classList.toggle('fa-plus');
-                    icon.classList.toggle('fa-minus');
-                });
-            });
-        });
+                    icon.classList.toggle( 'fa-plus' );
+                    icon.classList.toggle( 'fa-minus' );
+                } );
+            } );
+        } );
+
+
+
+        initializeHighLightProduct()
+        function initializeHighLightProduct ()
+        {
+            $.ajax( {
+                url: "/Common/GetProduct",
+                type: "POST",
+                data: {},
+                success: function ( result )
+                {
+                    if ( result.status )
+                    {
+                        showHighLightProduct( result.data )
+                    } else
+                    {
+
+                    }
+                },
+                error: function ()
+                {
+                    console.error( "AJAX request failed" );
+                },
+            } );
+        }
+        function showHighLightProduct ( products )
+        {
+            var productDetailId = document.getElementById( 'product_highlight_list' );
+
+            productDetailId.innerHTML = "";
+
+            products.forEach( ( item ) =>
+            {
+                var htmlContent = `
+           <div class="col l-3">
+               <div class="best_seller_product-card" data-item-id="${ item.id_product }">
+                   <div class="best_seller_product-image">
+                       <img src="${ item.image_url }" alt="Gọng kính" style="height:150px">
+                   </div>
+                   <div class="best_seller_product-details">
+                       <div class="best_seller_product-name">${ item.name_product }</div>
+                       <div class="best_seller_product-pricing">
+                           <div class="best_seller_product-discount">
+                              Phân loại: <span class="best_seller_product-discount-price">${ item.type_product }</span>
+                           </div>
+                       </div>
+                       <button class="best_seller_product-buy-btn">
+                           <div class="best_seller_product-price">${ item.price }</div>
+                           <i class="fas fa-chevron-right"></i>
+                       </button>
+                   </div>
+               </div>
+           </div>
+         `;
+                productDetailId.insertAdjacentHTML( 'beforeend', htmlContent );
+            } );
+
+            var productCards = document.querySelectorAll( ".best_seller_product-card" );
+
+            productCards.forEach( function ( card )
+            {
+                card.addEventListener( "click", function ( event )
+                {
+                    var target = event.target;
+                    var itemId = card.dataset.itemId;
+
+                    if ( target.closest( ".best_seller_product-buy-btn" ) )
+                    {
+                        updateListCart( itemId, 1 )
+                        console.log( "Buy button clicked for item with ID: " + itemId );
+                    } else
+                    {
+                        var itemId = card.dataset.itemId;
+                        window.location.href = "/ConsumerProduct/DetailProduct?product_id=" + itemId;
+                    }
+                } );
+            } );
+
+        }
 
 
     </script>

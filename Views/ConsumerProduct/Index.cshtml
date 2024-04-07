@@ -88,9 +88,8 @@
                                             <div class="best_seller_product-name">@item.NameProduct</div>
                                             <div class="best_seller_product-pricing">
                                                 <div class="best_seller_product-discount">
-                                                    Tiết kiệm được <span class="best_seller_product-discount-price">150.000đ</span>
+                                                    Phân loại: <span class="best_seller_product-discount-price">@item.TypeProduct.TypeProductName</span>
                                                 </div>
-                                                <div class="best_seller_product-original-price">@item.Price</div>
                                             </div>
                                             <button class="best_seller_product-buy-btn">
                                                 <div class="best_seller_product-price">@item.CurrencyString()</div>
@@ -169,40 +168,90 @@
 <div class="grid wide">
     <div class="body_best_seller_product">
         <div class="seller_product_title">SẢN PHẨM NỔI BẬT</div>
-        <div class="seller_product_list">
-            @foreach (var item in Model)
-            {
-                if (item.TypeProductSale.StatusProduct.Equals("Bán hàng"))
-                {
-                    <div class="col l-3">
-                        <div class="best_seller_product-card" data-item-id="@item.IdProduct">
-                            <div class="best_seller_product-image">
-                                <img src="@item.Image" alt="Gọng kính">
-                            </div>
-                            <div class="best_seller_product-details">
-                                <div class="best_seller_product-name">@item.NameProduct</div>
-                                <div class="best_seller_product-pricing">
-                                    <div class="best_seller_product-discount">
-                                        Tiết kiệm được <span class="best_seller_product-discount-price">150.000đ</span>
-                                    </div>
-                                    <div class="best_seller_product-original-price">@item.Price</div>
-                                </div>
-                                <button class="best_seller_product-buy-btn">
-                                    <div class="best_seller_product-price">@item.CurrencyString()</div>
-                                    <i class="fas fa-chevron-right"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                }
-            }
-        </div>
+
+        <div class="seller_product_list" id="product_highlight_list"></div>
     </div>
 </div>
 
 @section Scripts  {
     <script>
+        initializeHighLightProduct()
+        function initializeHighLightProduct ()
+        {
+            $.ajax( {
+                url: "/Common/GetProduct",
+                type: "POST",
+                data: {},
+                success: function ( result )
+                {
+                    if ( result.status )
+                    {
+                        showHighLightProduct(result.data)
+                    } else
+                    {
 
+                    }
+                },
+                error: function ()
+                {
+                    console.error( "AJAX request failed" );
+                },
+            } );
+        }
+        function showHighLightProduct ( products )
+        {
+            var productDetailId = document.getElementById('product_highlight_list');
+
+            productDetailId.innerHTML = "";
+
+            products.forEach( ( item ) =>
+            {
+                var htmlContent = `
+                 <div class="col l-3">
+                     <div class="best_seller_product-card" data-item-id="${item.id_product}">
+                         <div class="best_seller_product-image">
+                             <img src="${item.image_url}" alt="Gọng kính" style="height:150px">
+                         </div>
+                         <div class="best_seller_product-details">
+                             <div class="best_seller_product-name">${item.name_product}</div>
+                             <div class="best_seller_product-pricing">
+                                 <div class="best_seller_product-discount">
+                                    Phân loại: <span class="best_seller_product-discount-price">${item.type_product}</span>
+                                 </div>
+                             </div>
+                             <button class="best_seller_product-buy-btn">
+                                 <div class="best_seller_product-price">${item.price}</div>
+                                 <i class="fas fa-chevron-right"></i>
+                             </button>
+                         </div>
+                     </div>
+                 </div>
+               `;
+                productDetailId.insertAdjacentHTML( 'beforeend', htmlContent );
+            } );
+
+            var productCards = document.querySelectorAll( ".best_seller_product-card" );
+
+            productCards.forEach( function ( card )
+            {
+                card.addEventListener( "click", function ( event )
+                {
+                    var target = event.target;
+                    var itemId = card.dataset.itemId;
+
+                    if ( target.closest( ".best_seller_product-buy-btn" ) )
+                    {
+                        updateListCart( itemId, 1 )
+                        console.log( "Buy button clicked for item with ID: " + itemId );
+                    } else
+                    {
+                        var itemId = card.dataset.itemId;
+                        window.location.href = "/ConsumerProduct/DetailProduct?product_id=" + itemId;
+                    }
+                } );
+            } );
+
+        }
         document.addEventListener( "DOMContentLoaded", function ()
         {
             var productCards = document.querySelectorAll( ".best_seller_product-card" );
@@ -225,7 +274,7 @@
                     }
                 } );
             } );
-        } ); 
+        } );
 
         function updateListCart ( idProduct, quantity )
         {
@@ -339,7 +388,6 @@
             buttonConfirmId.removeEventListener( 'click' )
 
         }
-
 
         //document.addEventListener( "DOMContentLoaded", function ()
         //{

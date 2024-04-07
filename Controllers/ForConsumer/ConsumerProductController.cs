@@ -40,7 +40,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
                     bill.Consumer = consumer;
                     bill.IdConsumer = consumerID;
                 }
-            }
+            }   
         }
 
         [HttpGet]
@@ -126,6 +126,43 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
                         message = "Hết hàng",
                         url = ""
                     });
+            }
+        }
+        [HttpGet]
+        public async Task<ActionResult> Payment(string code)
+        {
+            if (consumer == null)
+                return RedirectToAction("Index", "LogInAccount");
+            else if (dicCart.Count <= 0)
+            {
+                return RedirectToAction("ConsumerCart", "ConsumerProduct");
+            }
+            else
+            {
+                Dictionary<int, ProductSaleModel> temp = new Dictionary<int, ProductSaleModel>();
+                if (dicCart != null)
+                {
+                    foreach (var pair in dicCart)
+                    {
+                        var key = pair.Key;
+                        var value = pair.Value;
+                        var product = await db.Products.FindAsync(key);
+                        if (product != null)
+                            temp.Add(key, new ProductSaleModel(value, product));
+                    }
+                }
+                if (!code.IsNullOrWhiteSpace())
+                {
+                    var a = db.Discounts.FirstOrDefault(item => item.CodeDiscount.Equals(code));
+                    bill.Discount = db.Discounts.FirstOrDefault(item => item.CodeDiscount.Equals(code));
+                }
+                bill.TotalBill = CalculatorTotalBill(temp);
+                bill.TotalPay = CalculatorTotalPay(bill);
+
+                ViewBag.ListCart = temp.Values;
+                ViewBag.Consumer = consumer;
+
+                return View(bill);
             }
         }
         [HttpPost]
@@ -298,7 +335,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
                     {
                         status = true,
                         message = "",
-                        url = "/ConsumerProduct/ConsumerCart?code=" + codeDiscount
+                        url = "/ConsumerProduct/Payment?code=" + codeDiscount
                     });
                 }
             }

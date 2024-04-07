@@ -183,6 +183,7 @@
     <Compile Include="App_Start\ManagerAuthorize.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ForCommon\CommonController.cs" />
     <Compile Include="Controllers\ForCommon\HomeController.cs" />
     <Compile Include="Controllers\ForCommon\LoginAccountController.cs" />
     <Compile Include="Controllers\ForCommon\RegisterAccountController.cs" />
@@ -2365,7 +2366,6 @@
     <Content Include="Assets\images\logo.svg" />
     <Content Include="Assets\scripts\ConsumerProduct.js" />
     <Content Include="Assets\scripts\ForCommon\LogInAccount.js" />
-    <Content Include="Assets\scripts\ForConsumer\ConsumerCart.js" />
     <Content Include="Assets\scripts\ManagerBill.js" />
     <Content Include="Assets\scripts\ManagerCreateDiscount.js" />
     <Content Include="Assets\scripts\ManagerDashboard.js" />
@@ -2580,6 +2580,7 @@
     <Folder Include="Assets\images\images_Manager\" />
     <Folder Include="Assets\images\images_Product\" />
     <Folder Include="Assets\scripts\ForManager\" />
+    <Folder Include="Views\Common\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
