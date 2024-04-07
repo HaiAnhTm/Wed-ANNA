@@ -55,7 +55,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
             int pageNumber = page ?? 1;
             int pageSize = 12;
 
-            var sanPhams = await db.Products.ToListAsync();
+            var sanPhams = await db.Products.Where(item => item.Quantity.Value > 0).ToListAsync();
             if (!string.IsNullOrWhiteSpace(typeProductID))
                 sanPhams = sanPhams.Where(item => item.TypeProduct.IdTypeProduct.ToString().Equals(typeProductID)).ToList();
             if (!string.IsNullOrWhiteSpace(search))
@@ -63,14 +63,15 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
             return View(sanPhams.ToPagedList(pageNumber, pageSize));
         }
 
+
         [HttpGet]
-        public async Task<ActionResult> DetailProduct(int? productID)
+        public async Task<ActionResult> DetailProduct(int? product_id)
         {
-            if (productID == null)
+            if (product_id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = await db.Products.FindAsync(productID);
+            Product product = await db.Products.FindAsync(product_id);
             if (product == null)
             {
                 return HttpNotFound();

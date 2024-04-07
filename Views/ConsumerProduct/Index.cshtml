@@ -9,6 +9,7 @@
 @{
     ICollection<DotNet_E_Commerce_Glasses_Web.Models.TypeProduct> loai = ViewBag.TypeProduct;
 }
+
 <div class="consumer_header_product"    style="background-image: url('/Assets/images/img/bg-banner-about-us.jpeg');"">
     <div class="consumer_header_img_text">
         <div class="consumer_header_img_heading">LỜI CẢM ƠN</div>
@@ -19,6 +20,7 @@
         </div>
     </div>
 </div>
+
 <div class="consumer_product_container">
     <div class="grid wide">
         <div class="consumer_product_content">
@@ -47,13 +49,15 @@
                     </ul>
                 </nav>
             </div>
-            @*Todo:lọc và sắp xếp*@
+
             <div class="col l-10-4">
                 <div class="home-filter hide-on-mobile-tablet">
-                    <span class="home-filter_label">sắp xếp theo</span>
+                    @*Todo:lọc và sắp xếp*@
+
+                    @*<span class="home-filter_label">Sắp xếp theo</span>
                     <button class="btn home-filter_btn"> Phổ biến</button>
                     <button class="btn btn-primary_home-filter home-filter_btn"> Mới nhất</button>
-                    <button class="btn home-filter_btn"> Bán chạy</button>
+                    <button class="btn home-filter_btn"> Bán chạy</button>*@
 
                     <div class="select-input">
                         <span class="select-input-label">Giá</span>
@@ -67,7 +71,6 @@
                             </li>
                         </ul>
                     </div>
-
                 </div>
 
                 <div class="home-product">
@@ -79,7 +82,7 @@
                                 <div class="col l-3">
                                     <div class="best_seller_product-card" data-item-id="@item.IdProduct">
                                         <div class="best_seller_product-image">
-                                            <img src="@item.Image" alt="Gọng kính">
+                                            <img src="@item.Image" alt="Gọng kính" style="height:150px">
                                         </div>
                                         <div class="best_seller_product-details">
                                             <div class="best_seller_product-name">@item.NameProduct</div>
@@ -100,6 +103,7 @@
                         }
                     </div>
                 </div>
+
                 @*Paging*@
                 @*Sử dụng kĩ thuật phân trang để hiển thị danh sách sản phẩm*@
                 <ul class="pagination home-product-pagination">
@@ -156,12 +160,12 @@
                         </li>
                     }
                 </ul>
-
             </div>
-
         </div>
     </div>
 </div>
+
+
 <div class="grid wide">
     <div class="body_best_seller_product">
         <div class="seller_product_title">SẢN PHẨM NỔI BẬT</div>
@@ -196,10 +200,272 @@
     </div>
 </div>
 
-
-
-
-
 @section Scripts  {
-    <script src="~/Assets/scripts/ConsumerProduct.js"></script>
+    <script>
+
+        document.addEventListener( "DOMContentLoaded", function ()
+        {
+            var productCards = document.querySelectorAll( ".best_seller_product-card" );
+
+            productCards.forEach( function ( card )
+            {
+                card.addEventListener( "click", function ( event )
+                {
+                    var target = event.target;
+                    var itemId = card.dataset.itemId;
+
+                    if ( target.closest( ".best_seller_product-buy-btn" ) )
+                    {
+                        updateListCart( itemId, 1 )
+                        console.log( "Buy button clicked for item with ID: " + itemId );
+                    } else
+                    {
+                        var itemId = card.dataset.itemId;
+                        window.location.href = "/ConsumerProduct/DetailProduct?product_id=" + itemId;
+                    }
+                } );
+            } );
+        } ); 
+
+        function updateListCart ( idProduct, quantity )
+        {
+            $.ajax( {
+                url: "/ConsumerProduct/AddProductToCart",
+                type: "POST",
+                data: {
+                    productId: idProduct,
+                    quantity: quantity,
+                },
+                success: function ( result )
+                {
+                    console.log( result );
+                    if ( result.status )
+                    {
+                        console.log( "Buy Success." );
+                        toastr.options.closeButton = true;
+                        toastr.success( result.message, "Mua sản phẩm" );
+                    } else
+                    {
+                        console.log( "Buy Failed." );
+                        toastr.success( result.message, "Mua sản phẩm");
+                        toastr.options.closeButton = true;
+                    }
+                },
+                error: function ()
+                {
+                    console.error( "AJAX request failed" );
+                },
+            } );
+        }
+
+
+        //const filterSelectedId = document.getElementById( 'fillter_selected' );
+
+        //document.addEventListener( 'DOMContentLoaded', function ()
+        //{
+        //    loadSortIndex();
+        //} );
+
+        //filterSelectedId.addEventListener( 'change', function ( event )
+        //{
+        //    var selectedValue = this.value;
+        //    console.log( selectedValue );
+        //    location.href = `/ManagerProduct/Index?sort=${ selectedValue }`;
+        //} );
+
+        //function loadSortIndex ()
+        //{
+        //    var urlParams = new URLSearchParams( window.location.search );
+        //    var sortParam = urlParams.get( 'sort' );
+
+        //    if ( !isNaN( sortParam ) && sortParam !== -1 )
+        //    {
+        //        filterSelectedId.value = sortParam;
+        //    }
+        //}
+
+        function handleIconUpdate ( event )
+        {
+            event.preventDefault();
+            var link = event.target.parentElement.querySelector( '.icon-update' );
+            if ( link )
+            {
+                link.click();
+            }
+        }
+        function handleIconDelete ( event )
+        {
+            event.preventDefault();
+            var link = event.target.parentElement.querySelector( '.icon-delete' );
+            if ( link )
+            {
+                link.click();
+            }
+        }
+        const dialogConfirmId = document.getElementById( 'dialog_confirm' );
+        const buttonConfirmId = document.getElementById( 'button_delete' )
+        function hideDialogConfirm ()
+        {
+            $( dialogConfirmId ).modal( 'hide' );
+        }
+
+        function showDiaLogConfirm ( IdProduct )
+        {
+            $( dialogConfirmId ).modal( 'show' );
+
+            buttonConfirmId.addEventListener( 'click', function ()
+            {
+                $.ajax( {
+                    url: '/ManagerProduct/DeleteProduct',
+                    type: 'POST',
+                    data: { IdProduct: IdProduct },
+                    success: function ( data )
+                    {
+                        if ( data )
+                        {
+                            hideDialogConfirm()
+                            location.reload();
+                        } else
+                        {
+                            console.error( "Update failed." );
+                        }
+                    },
+                    error: function ( error )
+                    {
+                        console.log( "Error: ", error );
+                    }
+                } );
+            } )
+            buttonConfirmId.removeEventListener( 'click' )
+
+        }
+
+
+        //document.addEventListener( "DOMContentLoaded", function ()
+        //{
+        //    // đổi lại placehoder khi được select
+        //    var selectElement = document.getElementById( "find_product_select" );
+        //    var inputElement = document.getElementById( "productNameInput" );
+
+        //    selectElement.addEventListener( "change", function ()
+        //    {
+        //        if ( selectElement.value === "0" )
+        //        {
+        //            inputElement.placeholder = "Nhập Tên Sản Phẩm";
+        //        } else if ( selectElement.value === "1" )
+        //        {
+        //            inputElement.placeholder = "Nhập Mã Sản Phẩm";
+        //        }
+        //    } );
+        //    // reset button
+        //    var resetButton = document.getElementById( "resetButton" );
+
+        //    resetButton.addEventListener( "click", function ()
+        //    {
+        //        var inputs = document.querySelectorAll( '.find-product-name-input' );
+        //        inputs.forEach( function ( input )
+        //        {
+        //            input.value = '';
+        //        } );
+        //    } );
+        //} );
+
+        // Hàm để cập nhật số lượng sản phẩm đã được chọn trong footer
+        function updateSelectedProductCount ()
+        {
+            var selectedCount = document.querySelectorAll( '.content-body-name-checkbox:checked' ).length;
+            var footerText = document.querySelector( '.footer-chose-right-text' );
+            footerText.textContent = selectedCount + " sản phẩm đã được chọn";
+        }
+
+        // Hàm để kiểm tra xem tất cả các checkbox đã được chọn hay chưa
+        function checkAllSelected ()
+        {
+            var checkboxes = document.querySelectorAll( '.content-body-name-checkbox' );
+            for ( var i = 0; i < checkboxes.length; i++ )
+            {
+                if ( !checkboxes[ i ].checked )
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // Hàm để kiểm tra xem có bất kỳ checkbox nào được chọn không
+        function checkAnySelected ()
+        {
+            var checkboxes = document.querySelectorAll( '.content-body-name-checkbox' );
+            for ( var i = 0; i < checkboxes.length; i++ )
+            {
+                if ( checkboxes[ i ].checked )
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // Hàm để hiển thị hoặc ẩn phần footer
+        function toggleFooter ()
+        {
+            var footer = document.querySelector( '.footer-chose' );
+            var footerCheckbox = document.querySelector( '.footer-chose-left-checkbox' );
+            if ( checkAnySelected() )
+            {
+                footer.style.display = 'flex';
+                footerCheckbox.checked = checkAllSelected();
+            } else
+            {
+                footer.style.display = 'none';
+                footerCheckbox.checked = false;
+            }
+        }
+
+        // Hàm để cập nhật trạng thái checkbox header
+        function updateHeaderCheckbox ()
+        {
+            var headerCheckbox = document.querySelector( '.header-text-product input[type="checkbox"]' );
+            headerCheckbox.checked = checkAllSelected();
+        }
+
+        // Lắng nghe sự kiện click trên các checkbox và tiêu đề sản phẩm
+        var checkboxes = document.querySelectorAll( '.content-body-name-checkbox' );
+        for ( var i = 0; i < checkboxes.length; i++ )
+        {
+            checkboxes[ i ].addEventListener( 'click', function ()
+            {
+                toggleFooter();
+                updateHeaderCheckbox();
+                updateSelectedProductCount();
+            } );
+        }
+
+        //// Lắng nghe sự kiện click trên checkbox footer để chọn tất cả hoặc bỏ chọn tất cả
+        //var footerCheckbox = document.querySelector( '.footer-chose-left-checkbox' );
+        //footerCheckbox.addEventListener( 'click', function ()
+        //{
+        //    var checkboxes = document.querySelectorAll( '.content-body-name-checkbox' );
+        //    for ( var i = 0; i < checkboxes.length; i++ )
+        //    {
+        //        checkboxes[ i ].checked = footerCheckbox.checked;
+        //    }
+        //    toggleFooter();
+        //    updateHeaderCheckbox();
+        //    updateSelectedProductCount();
+        //} );
+
+        //// Lắng nghe sự kiện click trên checkbox header để chọn tất cả hoặc bỏ chọn tất cả
+        //var headerCheckbox = document.querySelector( '.header-text-product input[type="checkbox"]' );
+        //headerCheckbox.addEventListener( 'click', function ()
+        //{
+        //    var checkboxes = document.querySelectorAll( '.content-body-name-checkbox' );
+        //    for ( var i = 0; i < checkboxes.length; i++ )
+        //    {
+        //        checkboxes[ i ].checked = headerCheckbox.checked;
+        //    }
+        //    toggleFooter();
+        //    updateSelectedProductCount();
+        //} );
+    </script>
 }
