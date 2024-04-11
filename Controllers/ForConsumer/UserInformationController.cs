@@ -11,21 +11,20 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
         private GlassesEntities db = new GlassesEntities();
         private readonly Consumer consumer;
 
-        public UserInformationController()
-        {
-            string session = ConsumerSession.getConsumerSession();
-            if (session != null && int.TryParse(session, out int consumerID))
-            {
-                consumer = db.Consumers.FirstOrDefault(item => item.IdConsumer.Equals(consumerID));
-            }
-        }
+        //public UserInformationController()
+        //{
+        //    string session = ConsumerSession.getConsumerSession();
+        //    if (session != null && int.TryParse(session, out int consumerID))
+        //    {
+        //        consumer = db.Consumers.FirstOrDefault(item => item.IdConsumer.Equals(consumerID));
+        //    }
+        //}
 
+       
         public ActionResult Index()
         {
-            ViewBag.Consumer = consumer;
             return View();
         }
-       
 
         //[HttpGet]
         //public ActionResult UserInfor()
