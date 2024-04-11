@@ -188,6 +188,7 @@
     <Compile Include="Controllers\ForCommon\LoginAccountController.cs" />
     <Compile Include="Controllers\ForCommon\RegisterAccountController.cs" />
     <Compile Include="Controllers\ForConsumer\ConsumerProductController.cs" />
+    <Compile Include="Controllers\ForConsumer\UserInformationController.cs" />
     <Compile Include="Controllers\ForManager\DashBoardController.cs" />
     <Compile Include="Controllers\ForManager\ManagerBillController.cs" />
     <Compile Include="Controllers\ForManager\ManagerConsumerController.cs" />
@@ -272,6 +273,7 @@
     <Content Include=".gitignore" />
     <Content Include="Assets\css\Base.css" />
     <Content Include="Assets\css\common.css" />
+    <Content Include="Assets\css\consumer\InfoStyle.css" />
     <Content Include="Assets\css\DetailProduct.css" />
     <Content Include="Assets\css\Discount.css" />
     <Content Include="Assets\css\grid.css" />
@@ -2484,6 +2486,8 @@
     <Content Include="Assets\fontawesome-free-6.4.0-web\webfonts\fa-v4compatibility.ttf" />
     <Content Include="Assets\fontawesome-free-6.4.0-web\webfonts\fa-v4compatibility.woff2" />
     <Content Include="Web.config" />
+    <Content Include="Views\UserInformation\Index.cshtml" />
+    <Content Include="Views\UserInformation\ChangePasword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
