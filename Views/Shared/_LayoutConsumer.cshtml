@@ -210,141 +210,117 @@
         </div>
     </footer>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js")
-    @RenderSection("scripts", required: false)
-
     <script>
         initializeCart()
 
-        function initializeCart ()
-        {
+        function initializeCart() {
             loadCart(
-                onSuccess = function ( data )
-                {
-                    addHTMLToCartList( data )
+                onSuccess = function (data) {
+                    addHTMLToCartList(data)
                 },
-                onFailure = function ( message )
-                {
+                onFailure = function (message) {
 
                 }
             )
         }
 
 
-        async function loadCart ( onSuccess, onFailure )
-        {
-            $.ajax( {
+        async function loadCart(onSuccess, onFailure) {
+            $.ajax({
                 url: "/Common/GetCart",
                 type: "POST",
                 data: {},
-                success: function ( response )
-                {
-                    if ( response.status )
-                    {
-                        onSuccess( response.data );
-                    } else
-                    {
-                        onFailure( response.message );
+                success: function (response) {
+                    if (response.status) {
+                        onSuccess(response.data);
+                    } else {
+                        onFailure(response.message);
                     }
                 },
-                error: function ( xhr, textStatus, errorThrown )
-                {
-                    console.error( "Error:", errorThrown );
-                    onFailure( errorThrown );
+                error: function (xhr, textStatus, errorThrown) {
+                    console.error("Error:", errorThrown);
+                    onFailure(errorThrown);
                 }
-            } );
+            });
         }
 
 
-        function addHTMLToCartList ( data )
-        {
-            var cartList = document.querySelector( '.cart-list-items' );
+        function addHTMLToCartList(data) {
+            var cartList = document.querySelector('.cart-list-items');
 
             cartList.innerHTML = "";
 
-            data.forEach( item =>
-            {
-                if ( item != null )
-                {
+            data.forEach(item => {
+                if (item != null) {
                     var htmlContent =
                         `
-                             <li class="cart-items">
-                                <img src="${item.image_url}" alt="" class="cart-items-img">
-                                <div class="cart-items-info">
-                                    <div class="cart-items-head">
-                                        <h5 class="cart-items-name">${item.name_product}</h5>
-                                        <div class="cart-items-price-wrap">
-                                            <span class="cart-items-price">${item.price}đ</span>
-                                            <span class="cart-items-multiply">x</span>
-                                            <span class="cart-items-qnt">${item.quanity}</span>
+                                     <li class="cart-items">
+                                        <img src="${item.image_url}" alt="" class="cart-items-img">
+                                        <div class="cart-items-info">
+                                            <div class="cart-items-head">
+                                                <h5 class="cart-items-name">${item.name_product}</h5>
+                                                <div class="cart-items-price-wrap">
+                                                    <span class="cart-items-price">${item.price}đ</span>
+                                                    <span class="cart-items-multiply">x</span>
+                                                    <span class="cart-items-qnt">${item.quanity}</span>
+                                                </div>
+                                            </div>
+                                            <div class="cart-items-body">
+                                                <span class="cart-items-description">
+                                                    Phân loại: ${item.type_product}
+                                                </span>
+                                                <span class="cart-items-remove" onClick="handleEventDeleteProduct(${item.id_product})">Xóa</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="cart-items-body">
-                                        <span class="cart-items-description">
-                                            Phân loại: ${item.type_product}
-                                        </span>
-                                        <span class="cart-items-remove" onClick="handleEventDeleteProduct(${item.id_product})">Xóa</span>
-                                    </div>
-                                </div>
-                             </li>
-                             `
-                    cartList.insertAdjacentHTML( 'beforeend', htmlContent );
+                                     </li>
+                                     `
+                    cartList.insertAdjacentHTML('beforeend', htmlContent);
                 }
-            } )
+            })
         }
 
-        function handleEventDeleteProduct ( idProduct )
-        {
-            deleteProduct( idProduct )
+        function handleEventDeleteProduct(idProduct) {
+            deleteProduct(idProduct)
         }
-        function deleteProduct ( idProduct )
-        {
-            $.ajax( {
+        function deleteProduct(idProduct) {
+            $.ajax({
                 url: "/ConsumerProduct/RemoveFromCart",
                 type: "POST",
                 data: {
                     productId: idProduct
                 },
-                success: function ( result )
-                {
-                    console.log( result );
-                    if ( result.status )
-                    {
+                success: function (result) {
+                    console.log(result);
+                    if (result.status) {
                         toastr.options.closeButton = true;
-                        toastr.success( "Giỏ hàng", "Cập nhật giỏ hàng thành công!" );
+                        toastr.success("Giỏ hàng", "Cập nhật giỏ hàng thành công!");
                         location.reload();
-                    } else
-                    {
+                    } else {
                         window.location.href = result.url;
                         toastr.options.closeButton = true;
-                        toastr.warning( "Giỏ hàng", "Cập nhật giỏ hàng thất bại!" );
+                        toastr.warning("Giỏ hàng", "Cập nhật giỏ hàng thất bại!");
                     }
                 },
-                error: function ( error )
-                {
-                    console.error( "AJAX request failed", error );
+                error: function (error) {
+                    console.error("AJAX request failed", error);
                 },
-            } );
+            });
         }
 
         // cuộn header
         let lastScrollTop = 0; // Lưu vị trí cuộn cuối cùng
-        const header = document.querySelector( '.main_header' ); // Chọn thanh header
+        const header = document.querySelector('.main_header'); // Chọn thanh header
 
-        window.addEventListener( 'scroll', function ()
-        {
+        window.addEventListener('scroll', function () {
             let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             // Khi kéo xuống và vượt qua 100px
-            if ( scrollTop > lastScrollTop && scrollTop > 400 )
-            {
-                header.classList.add( 'header-hidden' ); // Ẩn header
-            } else
-            {
-                header.classList.remove( 'header-hidden' ); // Hiện header
+            if (scrollTop > lastScrollTop && scrollTop > 400) {
+                header.classList.add('header-hidden'); // Ẩn header
+            } else {
+                header.classList.remove('header-hidden'); // Hiện header
             }
             lastScrollTop = scrollTop;
-        } );
+        });
 
         //// slider
         //document.addEventListener( 'DOMContentLoaded', function ()
@@ -419,72 +395,64 @@
         //    }
         //} );
         // chữ từ từ xuất hiện ở introduce
-        function isVisible ( element )
-        {
+        function isVisible(element) {
             const elementPosition = element.getBoundingClientRect();
             const windowHeight = window.innerHeight || document.documentElement.clientHeight;
             // Kiểm tra xem phần tử có trong viewport không
             return elementPosition.top <= windowHeight && elementPosition.bottom >= 0;
         }
-        function typeWritingEffect ( element, text, speed )
-        {
+        function typeWritingEffect(element, text, speed) {
             let i = 0;
-            function typing ()
-            {
-                if ( i < text.length )
-                {
-                    element.innerHTML += text.charAt( i );
+            function typing() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
                     i++;
-                    setTimeout( typing, speed );
+                    setTimeout(typing, speed);
                 }
             }
             typing();
         }
-        function initTypeWritingEffect ()
-        {
-            const titles = document.querySelectorAll( ".introduce_title_1, .introduce_title_2" );
-            titles.forEach( title =>
-            {
+        function initTypeWritingEffect() {
+            const titles = document.querySelectorAll(".introduce_title_1, .introduce_title_2");
+            titles.forEach(title => {
                 // Kiểm tra nếu phần tử đã hiển thị và chưa có hiệu ứng được áp dụng
-                if ( isVisible( title ) && !title.classList.contains( 'typed' ) )
-                {
+                if (isVisible(title) && !title.classList.contains('typed')) {
                     const text = title.textContent;
                     title.textContent = '';
-                    title.classList.add( 'typed' ); // Đánh dấu phần tử đã có hiệu ứng
-                    typeWritingEffect( title, text, 50 ); // Thay đổi tốc độ theo ý muốn
+                    title.classList.add('typed'); // Đánh dấu phần tử đã có hiệu ứng
+                    typeWritingEffect(title, text, 50); // Thay đổi tốc độ theo ý muốn
                 }
-            } );
+            });
         }
-        window.addEventListener( 'scroll', initTypeWritingEffect );
+        window.addEventListener('scroll', initTypeWritingEffect);
 
-        document.addEventListener( 'DOMContentLoaded', ( event ) =>
-        {
-            const fadeInElements = document.querySelectorAll( '.introduce_content' );
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const fadeInElements = document.querySelectorAll('.introduce_content');
 
-            const checkVisibility = ( element ) =>
-            {
+            const checkVisibility = (element) => {
                 const rect = element.getBoundingClientRect();
-                const windowHeight = ( window.innerHeight || document.documentElement.clientHeight );
+                const windowHeight = (window.innerHeight || document.documentElement.clientHeight);
                 return rect.top <= windowHeight && rect.bottom >= 0;
             };
 
-            const runFadeInAnimations = () =>
-            {
-                fadeInElements.forEach( element =>
-                {
-                    if ( checkVisibility( element ) )
-                    {
+            const runFadeInAnimations = () => {
+                fadeInElements.forEach(element => {
+                    if (checkVisibility(element)) {
                         // Kích hoạt hiệu ứng animation bằng cách thiết lập animation-play-state là running
                         element.style.animationPlayState = 'running';
                     }
-                } );
+                });
             };
 
             // Kiểm tra khi trang được tải và khi người dùng cuộn trang
             runFadeInAnimations();
-            window.addEventListener( 'scroll', runFadeInAnimations );
-        } );
+            window.addEventListener('scroll', runFadeInAnimations);
+        });
     </script>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js")
+    @RenderSection("scripts", required: false)
 </body>
+
 
 </html>
