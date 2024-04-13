@@ -279,6 +279,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
                 return null;
             }
         }
+
         [HttpDelete]
         public async Task<JsonResult> DeleteDiscount(string id_discount)
         {

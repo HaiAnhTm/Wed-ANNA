@@ -3,9 +3,16 @@ using DotNet_E_Commerce_Glasses_Web.Sessions;
 using DotNet_E_Commerce_Glasses_Web.Models;
 using System.Linq;
 using System.Web.Mvc;
+using System.IO;
+using System.Web;
+using System;
+using System.Threading.Tasks;
+using System.Data.Entity.Migrations;
+using System.Net;
 
 namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
 {
+    [ConsumerAuthorize]
     public class UserInformationController : Controller
     {
         private readonly GlassesEntities db = new GlassesEntities();
@@ -25,6 +32,54 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
         {
             ViewBag.Consumer = consumer;    
             return View(consumer);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Index([Bind(Include = "IdConsumer,IdAccount,Username,Address,DateOfBirth,NumberPhone,Image,ImageFile")] Consumer consumer)
+        {
+            if (ModelState.IsValid)
+            {
+                if (consumer.ImageFile != null)
+                {
+                    var fileSave = MoveImageToProject(consumer.ImageFile);
+                    if (fileSave != null)
+                        consumer.Image = fileSave;
+                }
+                db.Consumers.AddOrUpdate(consumer);
+                await db.SaveChangesAsync();
+                return RedirectToAction("UpdateConsumer");
+            }
+            ViewBag.Consumer = consumer;
+            return View(consumer);
+        }
+
+        private string MoveImageToProject(HttpPostedFileBase file)
+        {
+            try
+            {
+                if (file != null && file.ContentLength > 0)
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(file.FileName);
+                    string extension = Path.GetExtension(file.FileName);
+                    fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+
+                    string folderPath = @"~\Assets\images\images_Consumer\";
+
+                    string fullPath = Path.Combine(Server.MapPath(folderPath), fileName);
+
+                    file.SaveAs(fullPath);
+
+                    return Path.Combine(folderPath, fileName).Replace("~", "");
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         //[HttpGet]

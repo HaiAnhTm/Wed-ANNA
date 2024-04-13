@@ -7,83 +7,136 @@
 
 <link rel="stylesheet" href="~/Assets/css/consumer/InfoStyle.css" />
 
-<div class="background_header"></div>
-<div class="user_info">
-    <div class="grid wide">
-        <div class="profile">
-            <div class="col l-3">
-                <div class="user_info_nav">
-                    <div class="user_info_nav_top">
-                        <img src="" alt="" class="user_info_nav_top_img">
-                        <div class="user_info_nav_text space_user_info">kaitokid1122003@gmail.com</div>
-                    </div>
-                    <div class="user_info_nav_bottom">
-                        <div class="info_nav_bottom_items user_info_nav_bottom_active">
-                            <i class="fa-regular fa-user info_nav_icon"></i>
-                            <a href="userinfo.html" class="user_info_nav_text">Thông tin tài khoản</a>
+@using (Html.BeginForm("UpdateConsumer", "ManagerConsumer", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+{
+    @Html.AntiForgeryToken()
+
+    <div class="background_header"></div>
+    <div class="user_info">
+        <div class="grid wide">
+            <div class="profile">
+                <div class="col l-3">
+                    <div class="user_info_nav">
+                        <div class="user_info_nav_top">
+                            <img src="" alt="" class="user_info_nav_top_img">
+                            <div class="user_info_nav_text space_user_info">kaitokid1122003@gmail.com</div>
                         </div>
-                        <div>@Model.Username</div>
-                        <div class="info_nav_bottom_items">
-                            <i class="fa-solid fa-unlock-keyhole info_nav_icon"></i>
-                            <a href="userChange_pass.html" class="user_info_nav_text">Đổi mật khẩu</a>
-                        </div>
-                        <div class="info_nav_bottom_items">
-                            <i class="fa-solid fa-arrow-right-from-bracket info_nav_icon"></i>
-                            <div class="user_info_nav_text">Đăng xuất</div>
+                        <div class="user_info_nav_bottom">
+                            <div class="info_nav_bottom_items user_info_nav_bottom_active">
+                                <i class="fa-regular fa-user info_nav_icon"></i>
+                                <a href="userinfo.html" class="user_info_nav_text">Thông tin tài khoản</a>
+                            </div>
+                            <div class="info_nav_bottom_items">
+                                <i class="fa-solid fa-unlock-keyhole info_nav_icon"></i>
+                                <a href="userChange_pass.html" class="user_info_nav_text">Đổi mật khẩu</a>
+                            </div>
+                            <div class="info_nav_bottom_items">
+                                <i class="fa-solid fa-arrow-right-from-bracket info_nav_icon"></i>
+                                <div class="user_info_nav_text">Đăng xuất</div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col l-9">
-                <div class="user_info_right">
-                    <div class="col l-7">
-                        <div class="profile-heading">
-                            <div class="profile-text-heading">Hồ Sơ Của Tôi</div>
-                            <div class="profile-text-heading-2">
-                                Quản lý thông tin hồ sơ để bảo mật tài khoản
+
+                <div class="col l-9">
+                    <div class="user_info_right">
+                        <div class="col l-7">
+                            <div class="profile-heading">
+                                <div class="profile-text-heading">Hồ Sơ Của Tôi</div>
+                                <div class="profile-text-heading-2">
+                                    Quản lý thông tin hồ sơ để bảo mật tài khoản
+                                </div>
+                            </div>
+                            <div class="profile_body_infomation">
+                                <div class="profile-title-text">Tên Đăng Nhập<span class="xxx">*</span>:</div>
+                                <input type="text" class="profile_body_input_text" value="@Model.Account.Username" readonly>
+                            </div>
+                            <div class="profile_body_infomation">
+                                <div class="profile-title-text">Tên<span class="xxx">*</span>:</div>
+                                <input type="text" class="profile_body_input_text" value="@Model.Username" placeholder="Tên người dùng">
+                            </div>
+                            <div class="profile_body_infomation">
+                                <div class="profile-title-text">Email<span class="xxx">*</span>:</div>
+                                <input type="text" class="profile_body_input_text" placeholder="Email">
+                            </div>
+                            <div class="profile_body_infomation">
+                                <div class="profile-title-text">Số Điện Thoại<span class="xxx">*</span>:</div>
+                                <input type="text" class="profile_body_input_text" placeholder="Số Điện Thoại" value="@Model.NumberPhone">
+                            </div>
+                            <div class="profile_body_infomation">
+                                <div class="profile-title-text">Địa Chỉ<span class="xxx">*</span>:</div>
+                                <textarea type="text" class="profile_body_textarea_text"
+                                          placeholder="Nhập Địa chỉ"> @Model.Address</textarea>
+                            </div>
+
+                            <div class="btn_change_profile">
+                                <button class="btn  btn-change-profile_unchange">Hủy</button>
+                                <button type="submit" class="btn  btn-change-profile_save">Lưu Thay Đổi</button>
                             </div>
                         </div>
-                        <div class="profile_body_infomation">
-                            <div class="profile-title-text">Tên Đăng Nhập<span class="xxx">*</span>:</div>
-                            <input type="text" class="profile_body_input_text" value="Haianhtm112" readonly>
-                        </div>
-                        <div class="profile_body_infomation">
-                            <div class="profile-title-text">Tên<span class="xxx">*</span>:</div>
-                            <input type="text" class="profile_body_input_text" placeholder="Tên">
-                        </div>
-                        <div class="profile_body_infomation">
-                            <div class="profile-title-text">Email<span class="xxx">*</span>:</div>
-                            <input type="text" class="profile_body_input_text" placeholder="Email">
-                        </div>
-                        <div class="profile_body_infomation">
-                            <div class="profile-title-text">Số Điện Thoại<span class="xxx">*</span>:</div>
-                            <input type="text" class="profile_body_input_text" placeholder="Số Điện Thoại">
-                        </div>
-                        <div class="profile_body_infomation">
-                            <div class="profile-title-text">Địa Chỉ<span class="xxx">*</span>:</div>
-                            <textarea type="text" class="profile_body_textarea_text"
-                                      placeholder="Nhập Địa chỉ"></textarea>
+                        <div class="col l-5">
+                            <div class="profile_user_right">
+
+                                @*<div class="profile-user-img">
+                                        <img id="profileImg" src="./assets/img/glass_img.jpeg" alt=""
+                                             class="profile-img">
+                                    </div>
+
+                                    <input type="file" style="width:83%;" class="form-control" accept="image/*" name="ImageFile" />
+
+
+                                    <input type="file" id="uploadImg" accept=".jpg, .jpeg, .png" style="display: none;">
+                                    <label for="uploadImg" class="btn profile-text-choseimg">Chọn Ảnh</label>
+                                    <div class="profile-text-update">Dung lượng file tối đa 1 MB</div>
+                                    <div class="profile-text-update">Định dạng: .JPEG, .PNG</div>*@
+
+                                <div class="form-group">
+                                    <label for="HinhAnh">Hình Ảnh</label>
+                                    <input type="text" hidden name="Image" value="@Model.Image" />
+                                    <input type="file" style="width:83%;" class="form-control" accept="image/*" name="ImageFile" />
+                                    @Html.ValidationMessage("Image", new { @class = "text-danger" })
+                                    <img src="@Model.Image" style="width: 200px; " id="showImage" />
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="btn_change_profile">
-                            <button class="btn  btn-change-profile_unchange">Hủy</button>
-                            <button class="btn  btn-change-profile_save">Lưu Thay Đổi</button>
-                        </div>
-                    </div>
-                    <div class="col l-5">
-                        <div class="profile_user_right">
-                            <div class="profile-user-img">
-                                <img id="profileImg" src="./assets/img/glass_img.jpeg" alt=""
-                                     class="profile-img">
-                            </div>
-                            <input type="file" id="uploadImg" accept=".jpg, .jpeg, .png" style="display: none;">
-                            <label for="uploadImg" class="btn profile-text-choseimg">Chọn Ảnh</label>
-                            <div class="profile-text-update">Dung lượng file tối đa 1 MB</div>
-                            <div class="profile-text-update">Định dạng: .JPEG, .PNG</div>
-                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+}
+
+@section Scripts  {
+    <script>
+        async function updaeteAvatar(
+            onSuccess,
+            onFailure,
+            avatarUrl
+        ) {
+            try {
+                const response = await $.ajax({
+                    url: "/UserInformation/UpdateAvatar",
+                    type: "POST",
+                    data: {
+                        avatarUrl: avatarUrl
+                    }
+                });
+
+                if (response.status) {
+
+                    console.log("alkjdf: ", response)
+                    //onSuccess(response.data);
+                } else {
+                    //location.href = response.url;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                onFailure();
+            }
+        }
+
+    </script>
+}
