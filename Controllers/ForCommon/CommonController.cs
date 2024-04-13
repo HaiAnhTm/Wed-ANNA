@@ -51,7 +51,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForCommon
             var index = 0;
             foreach (var item in dicCart)
             {
-                if (index > 4)
+                if (index >= 4)
                     break;
                 var product = await db.Products.FirstOrDefaultAsync(p => p.IdProduct == item.Key);
 
