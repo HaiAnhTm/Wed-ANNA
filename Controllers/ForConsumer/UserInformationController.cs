@@ -12,7 +12,6 @@ using System.Net;
 
 namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
 {
-    [ConsumerAuthorize]
     public class UserInformationController : Controller
     {
         private readonly GlassesEntities db = new GlassesEntities();
@@ -35,19 +34,19 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
         }
 
         [HttpPost]
-        public async Task<ActionResult> Index([Bind(Include = "IdConsumer,IdAccount,Username,Address,DateOfBirth,NumberPhone,Image,ImageFile")] Consumer consumer)
+        public async Task<ActionResult> Index([Bind(Include = "IdConsumer,IdAccount,Username,Address,DateOfBirth,NumberPhone,Image,ImageFile")] Consumer updateConsumer)
         {
             if (ModelState.IsValid)
             {
-                if (consumer.ImageFile != null)
+                if (updateConsumer.ImageFile != null)
                 {
-                    var fileSave = MoveImageToProject(consumer.ImageFile);
+                    var fileSave = MoveImageToProject(updateConsumer.ImageFile);
                     if (fileSave != null)
-                        consumer.Image = fileSave;
+                        updateConsumer.Image = fileSave;
                 }
-                db.Consumers.AddOrUpdate(consumer);
+                db.Consumers.AddOrUpdate(updateConsumer);
                 await db.SaveChangesAsync();
-                return RedirectToAction("UpdateConsumer");
+                return RedirectToAction("Index");
             }
             ViewBag.Consumer = consumer;
             return View(consumer);

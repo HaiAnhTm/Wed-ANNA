@@ -7,7 +7,7 @@
 
 <link rel="stylesheet" href="~/Assets/css/consumer/InfoStyle.css" />
 
-@using (Html.BeginForm("UpdateConsumer", "ManagerConsumer", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Index", "UserInformation", FormMethod.Post, new { enctype = "multipart/form-data" }))
 
 {
     @Html.AntiForgeryToken()
@@ -48,13 +48,15 @@
                                     Quản lý thông tin hồ sơ để bảo mật tài khoản
                                 </div>
                             </div>
+                            <input name="IdConsumer" hidden value="@Model.IdConsumer" />
+                            <input name="IdAccount" hidden value="@Model.IdAccount" />
                             <div class="profile_body_infomation">
                                 <div class="profile-title-text">Tên Đăng Nhập<span class="xxx">*</span>:</div>
                                 <input type="text" class="profile_body_input_text" value="@Model.Account.Username" readonly>
                             </div>
                             <div class="profile_body_infomation">
                                 <div class="profile-title-text">Tên<span class="xxx">*</span>:</div>
-                                <input type="text" class="profile_body_input_text" value="@Model.Username" placeholder="Tên người dùng">
+                                <input type="text" class="profile_body_input_text" value="@Model.Username" name="Username" placeholder="Tên người dùng">
                             </div>
                             <div class="profile_body_infomation">
                                 <div class="profile-title-text">Email<span class="xxx">*</span>:</div>
@@ -62,12 +64,12 @@
                             </div>
                             <div class="profile_body_infomation">
                                 <div class="profile-title-text">Số Điện Thoại<span class="xxx">*</span>:</div>
-                                <input type="text" class="profile_body_input_text" placeholder="Số Điện Thoại" value="@Model.NumberPhone">
+                                <input type="text" class="profile_body_input_text" placeholder="Số Điện Thoại" name="NumberPhone" value="@Model.NumberPhone">
                             </div>
                             <div class="profile_body_infomation">
                                 <div class="profile-title-text">Địa Chỉ<span class="xxx">*</span>:</div>
                                 <textarea type="text" class="profile_body_textarea_text"
-                                          placeholder="Nhập Địa chỉ"> @Model.Address</textarea>
+                                          placeholder="Nhập Địa chỉ" name="Address"> @Model.Address</textarea>
                             </div>
 
                             <div class="btn_change_profile">
