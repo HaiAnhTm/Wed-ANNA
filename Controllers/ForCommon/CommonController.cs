@@ -35,7 +35,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForCommon
             }
         }
 
-        [HttpGet]
+        [HttpPost]
         public async Task<JsonResult> GetCart()
         {
             if (consumer == null)
