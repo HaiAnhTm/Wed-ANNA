@@ -1,5 +1,4 @@
-﻿using DotNet_E_Commerce_Glasses_Web.App_Start;
-using DotNet_E_Commerce_Glasses_Web.Sessions;
+﻿using DotNet_E_Commerce_Glasses_Web.Sessions;
 using DotNet_E_Commerce_Glasses_Web.Models;
 using System.Linq;
 using System.Web.Mvc;
@@ -8,7 +7,7 @@ using System.Web;
 using System;
 using System.Threading.Tasks;
 using System.Data.Entity.Migrations;
-using System.Net;
+using DotNet_E_Commerce_Glasses_Web.App_Start;
 
 namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
 {
@@ -29,6 +28,9 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
         [HttpGet]
         public ActionResult Index()
         {
+            if (consumer == null)
+                return RedirectToAction("Index", "LoginAccount");
+
             ViewBag.Consumer = consumer;    
             return View(consumer);
         }

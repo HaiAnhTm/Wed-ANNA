@@ -37,5 +37,11 @@ namespace DotNet_E_Commerce_Glasses_Web.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RateProduct> RateProducts { get; set; }
         public HttpPostedFileBase ImageFile { get; set; }
+            public string GetDateOfBirthAsString()
+            {
+                DateTime date = DateOfBirth ?? DateTime.Now.Date;
+                return ((DateTime)date).ToString("yyyy-MM-dd");
+            }
+
     }
 }

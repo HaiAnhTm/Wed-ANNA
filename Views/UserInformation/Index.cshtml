@@ -59,8 +59,8 @@
                                 <input type="text" class="profile_body_input_text" value="@Model.Username" name="Username" placeholder="Tên người dùng">
                             </div>
                             <div class="profile_body_infomation">
-                                <div class="profile-title-text">Email<span class="xxx">*</span>:</div>
-                                <input type="text" class="profile_body_input_text" placeholder="Email">
+                                <div class="profile-title-text">Ngày sinh <span class="xxx">*</span>:</div>
+                                <input type="date" class="profile_body_input_text" placeholder="Ngày sinh" value="@Model.GetDateOfBirthAsString()" name="DateOfBirth" id="dateOfBirthInput">
                             </div>
                             <div class="profile_body_infomation">
                                 <div class="profile-title-text">Số Điện Thoại<span class="xxx">*</span>:</div>
@@ -100,10 +100,10 @@
                                     @Html.ValidationMessage("Image", new { @class = "text-danger" })
                                     <img src="@Model.Image" style="width: 200px; " id="showImage" />
                                 </div>
+
+
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
@@ -113,6 +113,8 @@
 
 @section Scripts  {
     <script>
+
+
         async function updaeteAvatar(
             onSuccess,
             onFailure,
