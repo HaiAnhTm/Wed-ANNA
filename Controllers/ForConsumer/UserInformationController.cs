@@ -8,6 +8,8 @@ using System;
 using System.Threading.Tasks;
 using System.Data.Entity.Migrations;
 using DotNet_E_Commerce_Glasses_Web.App_Start;
+using System.Data.Entity.Migrations.Model;
+using DotNet_E_Commerce_Glasses_Web.Utils;
 
 namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
 {
@@ -38,6 +40,9 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
         [HttpPost]
         public async Task<ActionResult> Index([Bind(Include = "IdConsumer,IdAccount,Username,Address,DateOfBirth,NumberPhone,Image,ImageFile")] Consumer updateConsumer)
         {
+            if (consumer == null)
+                return RedirectToAction("Index", "LoginAccount");
+
             if (ModelState.IsValid)
             {
                 if (updateConsumer.ImageFile != null)
@@ -83,68 +88,63 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
             }
         }
 
-        //[HttpGet]
-        //public ActionResult UserInfor()
-        //{
-        //    var id = KhachHangSession.getKhachHangSession();
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Models.KhachHang khachHang = db.KhachHangs.Find(id);
-        //    if (khachHang == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    ViewBag.NguoiDung = khachHang;
-        //    return View(khachHang);
-        //}
-        //[HttpPost]
-        //public ActionResult CapNhatKhachHang([Bind(Include = "MaKhachHang,MaTaiKhoan,TenKhachHang,DiaChi,NamSinh,SoDienThoai,HinhAnh,ImageFile")] Models.KhachHang khachHang)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        if (khachHang.ImageFile != null)
-        //            khachHang.HinhAnh = MoveImageToProject(khachHang.ImageFile);
-        //        db.KhachHangs.AddOrUpdate(khachHang);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    ViewBag.NguoiDung = khachHang;
-        //    return View(khachHang);
-        //}
-        //public string MoveImageToProject(HttpPostedFileBase directory)
-        //{
-        //    string fileName = Path.GetFileNameWithoutExtension(directory.FileName);
-        //    string extension = Path.GetExtension(directory.FileName);
-        //    fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-        //    string path = "/Asset/Images/" + fileName;
+        [HttpGet]
+        public ActionResult UpdatePassword()
+        {
+            if (consumer == null)
+                return RedirectToAction("Index", "LoginAccount");
+            return View(consumer);
+        }
 
-        //    fileName = Path.Combine(Server.MapPath("~/Asset/Images/"), fileName);
-        //    directory.SaveAs(fileName);
-        //    return path;
-        //}
-        //// Chức năng cập nhật mật khẩu cho khách hàng
-        //[KhachHangAuthorize]
-        //[HttpPost]
-        //public JsonResult   ChangePasword(string matKhauCu, string maKhauMoi, string maTaiKhoan)
-        //{
-        //    var taiKhoan = db.DangNhaps.FirstOrDefault(item => item.MaTaiKhoan.Equals(maTaiKhoan));
-        //    if (taiKhoan != null)
-        //    {
-        //        if (taiKhoan.MatKhau.Equals(matKhauCu))
-        //        {
-        //            taiKhoan.MatKhau = maKhauMoi;
-        //            db.DangNhaps.AddOrUpdate(taiKhoan);
-        //            db.SaveChanges();
-        //            return Json(new { status = true, message = "Cập nhật mật khẩu thành công" });
-        //        }
-        //        else
-        //            return Json(new { status = false, message = "Mật khẩu cũ không chính xác!" });
-        //    }
-        //    else
-        //        return Json(new { status = false, message = "Lỗi cập nhật!" });
-        //}
+        [HttpPost]
+        public async Task<JsonResult> CheckPassword(string IdAccount, string OldPassword, string NewPassword)
+        {
+            if (consumer == null)
+            {
+                return Json(new
+                {
+                    status = false,
+                    message = "Yêu cầu đăng nhập trước khi thay đổi mật khẩu!",
+                    url = "/LoginAccount/Index"
+                });
+            }
+
+            if (consumer.Account.IdAccount.ToString().Equals(IdAccount))
+            {
+                Account account = consumer.Account;
+
+                if (account.Password.Equals(PasswordSercurity.GetMD5(OldPassword)))
+                {
+                    account.Password = PasswordSercurity.GetMD5(NewPassword);
+                    db.Accounts.AddOrUpdate(account);
+                    await db.SaveChangesAsync();
+
+                    return Json(new
+                    {
+                        status = true,
+                        message = "Cập nhật thành công!",
+                        url = "/LoginAccount/Index"
+                    });
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        status = false,
+                        message = "Yêu cầu nhập đúng mật khẩu!",
+                        url = ""
+                    });
+                }
+            }
+
+            return Json(new
+            {
+                status = false,
+                message = "Yêu cầu đăng nhập trước khi thay đổi mật khẩu!",
+                url = "/LoginAccount/Index"
+            });
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
