@@ -35,7 +35,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForCommon
             }
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<JsonResult> GetCart()
         {
             if (consumer == null)
@@ -88,7 +88,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForCommon
             var index = 0;
             foreach (var item in products)
             {
-                if (index > 4)
+                if (index >= 4)
                     break;
                 if(item.Quantity > 0 && item.TypeProductSale.StatusProduct.Equals("Bán hàng"))
                 {
