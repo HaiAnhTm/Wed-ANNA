@@ -2551,13 +2551,8 @@
     <Content Include="Views\LoginAccount\Index.cshtml" />
     <Content Include="Views\ConsumerProduct\DetailProduct.cshtml" />
     <Content Include="Views\ConsumerProduct\UpdateConsumer.cshtml" />
-    <Content Include="Views\ManagerProduct\Details.cshtml" />
     <Content Include="Views\ManagerProduct\Index.cshtml" />
     <Content Include="Views\ManagerDiscount\Index.cshtml" />
-    <Content Include="Views\ManagerConsumer\Create.cshtml" />
-    <Content Include="Views\ManagerConsumer\Delete.cshtml" />
-    <Content Include="Views\ManagerConsumer\Details.cshtml" />
-    <Content Include="Views\ManagerConsumer\UpdateConsumer.cshtml" />
     <Content Include="Views\Shared\_LayoutConsumer.cshtml" />
     <Content Include="Views\Shared\_LayoutManager.cshtml" />
     <Content Include="Views\Shared\_LayoutNoNavigation.cshtml" />
@@ -2570,10 +2565,6 @@
     <Content Include="Views\ConsumerProduct\ConsumerCart.cshtml" />
     <Content Include="Views\ConsumerProduct\Index.cshtml" />
     <Content Include="Views\ManagerConsumer\Index.cshtml" />
-    <Content Include="Views\ManagerBill\Create.cshtml" />
-    <Content Include="Views\ManagerBill\Delete.cshtml" />
-    <Content Include="Views\ManagerBill\Details.cshtml" />
-    <Content Include="Views\ManagerBill\Edit.cshtml" />
     <Content Include="Views\ManagerBill\Index.cshtml" />
     <Content Include="Views\DashBoard\Index.cshtml" />
     <Content Include="Views\ConsumerProduct\Payment.cshtml" />
