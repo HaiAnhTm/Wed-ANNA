@@ -56,6 +56,6 @@ namespace DotNet_E_Commerce_Glasses_Web.Models
 
         public HttpPostedFileBase ImageFile { get; set; }
 
-        public string CurrencyString() => CurrencyUtils.CurrencyConvertToString(this.Price);
+        public string CurrencyString() => CurrencyUtils.CurrencyConvertToStringno(this.Price);
     }
 }

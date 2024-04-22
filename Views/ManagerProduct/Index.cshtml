@@ -249,7 +249,13 @@
                     </div>
       
                     <div class="col l-2 adProduct-product">
-                       <div class="adProduct-product-manucafer">${ item.description }</div>
+                       <div class="adProduct-product-manucafer" style="overflow: hidden;
+                                                                        display: -webkit-box;
+                                                                        -webkit-line-clamp: 3;
+                                                                        -webkit-box-orient: vertical;
+                                                                        text-overflow: ellipsis;
+                                                                        height: 4.5em; /* Chiều cao này có thể điều chỉnh tùy theo kích cỡ và kiểu chữ của bạn */
+                                                                        line-height: 1.5em; /* ">${ item.description }</div>
                     </div>
                     <div class="col l-2 adProduct-product-unitprice adProduct-product">
                        <div class="adProduct-product-manucafer">₫${ item.price }</div>
