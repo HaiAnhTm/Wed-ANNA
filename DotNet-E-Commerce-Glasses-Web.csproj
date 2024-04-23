@@ -273,8 +273,7 @@
     <Content Include=".gitignore" />
     <Content Include="Assets\css\Base.css" />
     <Content Include="Assets\css\common.css" />
-    <Content Include="Assets\css\consumer\updateinfostyle.css" />
-    <Content Include="Assets\css\consumer\InfoStyle.css" />
+    <Content Include="Assets\css\consumer\InfoStyle - Copy.css" />
     <Content Include="Assets\css\DetailProduct.css" />
     <Content Include="Assets\css\Discount.css" />
     <Content Include="Assets\css\grid.css" />

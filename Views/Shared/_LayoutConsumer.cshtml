@@ -12,17 +12,14 @@
 
     <link rel="stylesheet" href="~/Assets/fonts/Roboto-Black.ttf">
 
-    <link rel="stylesheet" href="~/Assets/css/common.css">
     <link rel="stylesheet" href="~/Assets/css/grid.css">
     <link rel="stylesheet" href="~/Assets/css/Base.css">
     <link rel="stylesheet" href="~/Assets/css/consumer.css">
 </head>
 
-<body>
-    <div class="container">
-
+<body style="margin:-15px 0;">
+    <div class="container" style="display:flex; justify-content:center;">
         <header class="main_header">
-
             <div class="top_header">
                 <div class="top_header_left">GIẢM NGAY 15% CHO ĐƠN HÀNG ĐẦU TIÊN</div>
                 <div class="top_header_right">
@@ -149,7 +146,7 @@
                                 <ul class="cart-list-items">
                                 </ul>
 
-                                <button class="btn btn-primary btn-cart-view">Xem giỏ hàng</button>
+                                <a href="@Url.Action("ConsumerCart", "ConsumerProduct")" class="btn btn-primary btn-cart-view">Xem giỏ hàng</a>
 
                             </div>
                         </div>
@@ -159,8 +156,9 @@
         </header>
     </div>
 
-
+    
     @RenderBody()
+    
 
     <footer class="footer">
         <div class="grid wide">
