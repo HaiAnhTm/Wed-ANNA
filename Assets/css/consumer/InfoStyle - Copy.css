@@ -2184,8 +2184,12 @@ html {
 .user_info_nav_top_img {
     width: 120px;
     height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Ngăn chặn hình ảnh bị tràn ra khỏi khung */
+    border: 1px solid var(--hover-color);
     border-radius: 50%;
-    background-size: cover;
 }
 
 .user_info_nav_bottom {
@@ -2202,7 +2206,6 @@ html {
 .info_nav_icon {
     font-size: 1.6rem;
     color: var(--text-color);
-    font-weight: 500;
 }
 
 .space_user_info {

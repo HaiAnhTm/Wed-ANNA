@@ -5,27 +5,38 @@
 }
 
 
-<div class="consumer_header_product">
+<style>
+    .consumer_header_img_content{
+        display:flex;
+        align-items:center;
+    }
+    .consumer_header_img_cart {
+        font-size: 5rem;
+        color: var(--primary-color);
+        margin: -8px 10px 0 10px;
+    }
+</style>
+
+<div class="consumer_header_product" style="background-image: url('/Assets/images/img/bg-banner-about-us.jpeg');">
     <div class="consumer_header_img_text">
         <div class="consumer_header_img_heading">GIỎ HÀNG</div>
         <div class="consumer_header_img_content">
             <a href="" class="consumer_header_img_1">Trang chủ</a>
-            <div class="consumer_header_img_node"></div>
+            <div class="consumer_header_img_cart">•</div>
             <div class="consumer_header_img_1">Giỏ hàng</div>
         </div>
     </div>
 </div>
 
-<!--<div class="cart_body">
+<div class="cart_body">
     <div class="grid wide">
         <div class="cart_header_body">Sản phẩm</div>
         <div class="cart_content">
-
             <div class="col l-9">
                 <div class="cart_content_product">
                     <div class="cart_content_header">
                         <div class="col l-5 cart_content_header_fisrt">
-                            <input type="checkbox" class="cart_content_input">
+                            @*<input type="checkbox" class="cart_content_input" id="select_all" onchange="selectAllCheckboxes(this.checked);">*@
                             <div class="content_header_text">Thông tin sản phẩm</div>
                         </div>
                         <div class="col l-1">
@@ -41,74 +52,67 @@
                             <div class="content_header_text">Tổng cộng</div>
                         </div>
                     </div>
+                 @foreach (var item in (IEnumerable<DotNet_E_Commerce_Glasses_Web.Models.ProductSaleModel>)ViewBag.ListCart)
+                  {
                     <div class="cart_content_body">
-                        System.Activities.Statements.ForEach (var item in (IEnumerable<DotNet_E_Commerce_Glasses_Web.Models.ProductSaleModel>)ViewBag.ListCart)
-                        {
                             <div class="col l-5 cart_content_name">
-                                <input type="checkbox" class="cart_content_input">
-                                <img src="item.Image" alt="" class="cart_content_body_img">
+                                <input type="checkbox" class="cart_content_input" data-product-id="@item.IdProduct">
+                                <img src="@item.Image" alt="" class="cart_content_body_img">
                                 <div class="content_body_text">
                                     <div class="content_body_textheader">
-                                        item.NameProduct
+                                        @item.NameProduct
                                     </div>
                                 </div>
                             </div>
-                            <div class="col l-1 content_body_text">-->
-@*TODO: cần giá sau khi giảm có vẻ đây là giá gốc*@
-<!--<div class="content_body_text-1">item.Price đ</div>
-</div>
-<div class="col l-2 content_body_text">
-    <div class="cart_quantity-selector">
-        <div class="cart_quantity-selector_left">
-            <button class="cart_minus-btn" onclick="updateListCart(`item.IdProduct`, `-1`)">-</button>
-            <input type="text" value="1" min="1" class="cart_quantity-input"
-                   inputmode="numeric" pattern="[0-9]*"
-                   onkeypress='return event.charCode >= 48 && event.charCode <= 57' value="item.QuanitySale" disabled>
-            <button class="cart_plus-btn" onclick="updateListCart(`item.IdProduct`, `1`)">+</button>
-        </div>
-    </div>
-</div>
-<div class="col l-2 content_body_text">-->
-@*TODO:Sản phẩm còn lại trong kho và lấy số sản phẩm này là số tối đa có thể bấm hoặc nhập vào thẻ input số lượng*@
-<!--<div class="content_body_text-1">-->@*@Model.Quantity Sản Phẩm*@
-<!--</div>
-</div>
-<div class="col l-2 content_body_text">-->
-@*TODO: Tổng số tiền tương ứng với số sản phẩm*@
-<!--<div class="content_body_text-1">item.getTotalProduct() đ</div>
+                            <div class="col l-1 content_body_text">
+                                <div class="content_body_text-1">@item.CurrencyString()</div>
+                            </div>
+                            <div class="col l-2 content_body_text">
+                                <div class="cart_quantity-selector">
+                                    <div class="cart_quantity-selector_left">
+                                        <button type="button" class="cart_minus-btn" onclick="updateListCart(`@item.IdProduct`, `-1`)">-</button>
+                                        <input type="text" min="1" class="cart_quantity-input"
+                                               inputmode="numeric" pattern="[0-9]*"
+                                               onkeypress='return event.charCode >= 48 && event.charCode <= 57' value="@item.QuanitySale">
+                                        <button type="button" class="cart_plus-btn"  onclick="updateListCart(`@item.IdProduct`, `1`)">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col l-2 content_body_text">
+                                <div class="content_body_text-1">@item.Quantity Sản Phẩm</div>
+                            </div>
+                            <div class="col l-2 content_body_text">
+                                <div class="content_body_text-1">@item.getTotalProduct()</div>
+                            </div>
+                        </div>
+                  }
                 </div>
-            }
+            </div>
+            <div class="col l-3">
+                <div class="cart_content_bill">
+                    <div class="cart_bill_header">Tóm tắt đơn hàng</div>
+                    <div class="cart_bill_body">
+                        <div class="cart_bill_body_content">
+                            <div class="bill_body_text">Tạm tính</div>
+                            <div class="bill_body_text">@Model.currencyTotalBill() đ</div>
+                        </div>
+                        <div class="cart_bill_body_content">
+                            <div class="bill_body_text">Tổng</div>
+                            <div class="bill_body_text">@Model.currencyTotalBill() đ</div>
+                        </div>
+                    </div>
+                    <a href="@Url.Action("Payment", "ConsumerProduct")" class="cart_bill_btn btn">Thanh toán ngay</a>
+                </div>
+            </div>
+        </div>
+        <div class="btn_cart">
+            <div class="btn btn_cart_delete" onclick="deleteSelectedProducts()">Xóa sản phẩm đã chọn</div>
+            <a href="@Url.Action("Index", "ConsumerProduct")" class="btn btn_cart_continue">Tiếp tục mua hàng</a>
         </div>
     </div>
 </div>
 
-<div class="col l-3">
-    <div class="cart_content_bill">
-        <div class="cart_bill_header">Tóm tắt đơn hàng</div>
-        <div class="cart_bill_body">
-            <div class="cart_bill_body_content">
-                <div class="bill_body_text">Tạm tính</div>
-                <div class="bill_body_text">Model.currencyTotalBill() đ</div>
-            </div>
-            <div class="cart_bill_body_content">
-                <div class="bill_body_text">Tổng</div>
-                <div class="bill_body_text">Model.currencyTotalBill() đ</div>
-            </div>
-        </div>-->
-@*UI: Đi đến trang thanh toán*@
-<!--<div class="cart_bill_btn btn">Thanh toán ngay</div>
-        </div>
-    </div>
-</div>
-<div class="btn_cart">-->
-@*TODO: làm sao để khi check vào sản phẩm thì xóa được sản phẩm đó đây Chính ơi*@
-@*UI: đi đến trang sản phẩm để tiếp tục mua*@
-<!--<div class="btn btn_cart_continue">Tiếp tục mua hàng</div>
-        </div>
-    </div>
-</div>-->
-
-<div class="container-xxl">
+@*<div class="container-xxl">
     <div class="row h-75">
         <div class="col-sm-9">
             <table class="table table-hover">
@@ -156,7 +160,7 @@
                     }
                 </tbody>
             </table>
-           
+
         </div>
         <div class="col-sm-3">
             <div class="d-flex flex-column justify-content-between align-items-center rounded" style="background-color: white">
@@ -204,16 +208,7 @@
             </div>
         </div>
     </div>
-</div>
-
-
-<div class="grid wide">
-    <div class="body_best_seller_product">
-        <div class="seller_product_title">SẢN PHẨM NỔI BẬT</div>
-
-        <div class="seller_product_list" id="product_highlight_list"></div>
-    </div>
-</div>
+</div>*@
 
 
 
@@ -221,298 +216,293 @@
 @section Scripts  {
     <script>
         // quantity buttons
-        document.addEventListener( 'DOMContentLoaded', function ()
-        {
-            const minusBtns = document.querySelectorAll( '.cart_minus-btn' ); // Tất cả nút giảm
-            const plusBtns = document.querySelectorAll( '.cart_plus-btn' ); // Tất cả nút tăng
-            const quantityInputs = document.querySelectorAll( '.cart_quantity-input' ); // Tất cả input số lượng
+        document.addEventListener('DOMContentLoaded', function () {
+            const minusBtns = document.querySelectorAll('.cart_minus-btn'); // Tất cả nút giảm
+            const plusBtns = document.querySelectorAll('.cart_plus-btn'); // Tất cả nút tăng
+            const quantityInputs = document.querySelectorAll('.cart_quantity-input'); // Tất cả input số lượng
 
             // Xử lý cho nút giảm
-            minusBtns.forEach( function ( btn )
-            {
-                btn.addEventListener( 'click', function ()
-                {
-                    let parent = this.closest( '.cart_content_body' );
-                    let quantityInput = parent.querySelector( '.cart_quantity-input' );
-                    let currentValue = parseInt( quantityInput.value );
-                    if ( currentValue > 1 )
-                    {
+            minusBtns.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    let parent = this.closest('.cart_content_body');
+                    let quantityInput = parent.querySelector('.cart_quantity-input');
+                    let currentValue = parseInt(quantityInput.value);
+                    if (currentValue > 1) {
                         quantityInput.value = currentValue - 1;
                     }
-                } );
-            } );
+                });
+            });
 
             // Xử lý cho nút tăng
-            plusBtns.forEach( function ( btn )
-            {
-                btn.addEventListener( 'click', function ()
-                {
-                    let parent = this.closest( '.cart_content_body' );
-                    let quantityInput = parent.querySelector( '.cart_quantity-input' );
-                    let currentValue = parseInt( quantityInput.value );
+            plusBtns.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    let parent = this.closest('.cart_content_body');
+                    let quantityInput = parent.querySelector('.cart_quantity-input');
+                    let currentValue = parseInt(quantityInput.value);
                     quantityInput.value = currentValue + 1;
-                } );
-            } );
+                });
+            });
 
             // Xử lý khi người dùng rời khỏi input
-            quantityInputs.forEach( function ( input )
-            {
-                input.addEventListener( 'blur', function ()
-                {
-                    if ( input.value === '' )
-                    {
+            quantityInputs.forEach(function (input) {
+                input.addEventListener('blur', function () {
+                    if (input.value === '') {
                         input.value = 1;
                     }
-                } );
-            } );
-        } );
+                });
+            });
+        });
         // check box
-        document.addEventListener( 'DOMContentLoaded', function ()
-        {
-            const headerCheckboxes = document.querySelectorAll( '.cart_content_header .cart_content_input' ); // Tất cả các checkbox trong header
-            const contentCheckboxes = document.querySelectorAll( '.cart_content_body .cart_content_input' ); // Tất cả các checkbox trong body
+        document.addEventListener('DOMContentLoaded', function () {
+            const headerCheckboxes = document.querySelectorAll('.cart_content_header .cart_content_input'); // Tất cả các checkbox trong header
+            const contentCheckboxes = document.querySelectorAll('.cart_content_body .cart_content_input'); // Tất cả các checkbox trong body
 
             // Xử lý cho nút checkbox trong header
-            headerCheckboxes.forEach( function ( checkbox )
-            {
-                checkbox.addEventListener( 'change', function ()
-                {
+            headerCheckboxes.forEach(function (checkbox) {
+                checkbox.addEventListener('change', function () {
                     // Lấy trạng thái checked của checkbox
                     const isChecked = this.checked;
 
                     // Duyệt qua tất cả các checkbox trong body và thiết lập trạng thái checked của chúng
-                    contentCheckboxes.forEach( function ( contentCheckbox )
-                    {
+                    contentCheckboxes.forEach(function (contentCheckbox) {
                         contentCheckbox.checked = isChecked;
-                    } );
-                } );
-            } );
-        } );
+                    });
+                });
+            });
+        });
 
-        function navigateToPayment ()
-        {
+        function navigateToPayment() {
             location.href = "/ConsumerProduct/Payment"
         }
-       
 
-        function createFormPost ( data )
-        {
-            var form = document.createElement( "form" );
+
+        function createFormPost(data) {
+            var form = document.createElement("form");
             form.action = "/ConsumerProduct/ConsumerCart"
             form.method = "POST";
-            for ( var key in data )
-            {
-                if ( data.hasOwnProperty( key ) )
-                {
-                    var input = document.createElement( "input" );
+            for (var key in data) {
+                if (data.hasOwnProperty(key)) {
+                    var input = document.createElement("input");
                     input.type = "hidden";
                     input.name = key;
-                    input.value = data[ key ];
-                    form.appendChild( input );
+                    input.value = data[key];
+                    form.appendChild(input);
                 }
             }
-            document.body.appendChild( form );
+            document.body.appendChild(form);
             form.submit();
         }
 
-        function updateListCart ( idProduct, quantity )
-        {
-            $.ajax( {
+        function updateListCart(idProduct, quantity) {
+            $.ajax({
                 url: "/ConsumerProduct/AddProductToCart",
                 type: "POST",
                 data: {
                     productId: idProduct,
                     quantity: quantity,
                 },
-                success: function ( result )
-                {
-                    console.log( result );
-                    if ( result.status )
-                    {
-                        console.log( "Buy Success." );
+                success: function (result) {
+                    console.log(result);
+                    if (result.status) {
+                        console.log("Buy Success.");
                         toastr.options.closeButton = true;
-                        toastr.success( "Giỏ hàng", "Thêm sản phẩm thành công!" );
+                        toastr.success("Giỏ hàng", "Thêm sản phẩm thành công!");
                         location.reload();
-                    } else
-                    {
-                        console.log( "Buy Failed." );
+                    } else {
+                        console.log("Buy Failed.");
                         window.location.href = result.url;
                         toastr.options.closeButton = true;
                     }
                 },
-                error: function ()
-                {
-                    console.error( "AJAX request failed" );
+                error: function () {
+                    console.error("AJAX request failed");
                 },
-            } );
+            });
         }
 
 
 
-        function actionPayBill ()
-        {
-            $.ajax( {
+        function actionPayBill() {
+            $.ajax({
                 url: "/ConsumerProduct/PayBill",
                 type: "POST",
                 data: {},
-                success: function ( result )
-                {
-                    if ( result.status )
-                    {
+                success: function (result) {
+                    if (result.status) {
                         toastr.options.closeButton = true;
-                        toastr.success( result.message, "Giỏ hàng" );
-                        setTimeout( function ()
-                        {
+                        toastr.success(result.message, "Giỏ hàng");
+                        setTimeout(function () {
                             location.reload();
-                        }, 500 );
-                    } else
-                    {
+                        }, 500);
+                    } else {
                         toastr.options.closeButton = true;
-                        toastr.warning( result.message, "Giỏ hàng" );
+                        toastr.warning(result.message, "Giỏ hàng");
                     }
                 },
-                error: function ()
-                {
-                    console.error( "AJAX request failed" );
+                error: function () {
+                    console.error("AJAX request failed");
                 },
-            } );
+            });
         }
-        function actionCancelBill ()
-        {
-            $.ajax( {
+        function actionCancelBill() {
+            $.ajax({
                 url: "/ConsumerProduct/CancelBill",
                 type: "POST",
                 data: {},
-                success: function ( result )
-                {
-                    console.log( result );
-                    if ( result.status )
-                    {
+                success: function (result) {
+                    console.log(result);
+                    if (result.status) {
                         toastr.options.closeButton = true;
-                        toastr.success( result.message, "Thanh toán" );
+                        toastr.success(result.message, "Thanh toán");
                         location.reload();
-                    } else
-                    {
+                    } else {
                         //window.location.href = result.url;
                         toastr.options.closeButton = true;
-                        toastr.warning( result.message, "Thanh toán" );
+                        toastr.warning(result.message, "Thanh toán");
                     }
                 },
-                error: function ()
-                {
-                    console.error( "AJAX request failed" );
+                error: function () {
+                    console.error("AJAX request failed");
                 },
-            } );
+            });
         }
 
 
-        function deleteProduct ( idProduct )
-        {
-            $.ajax( {
+        function deleteProduct(idProduct) {
+            $.ajax({
                 url: "/ConsumerProduct/RemoveFromCart",
                 type: "POST",
                 data: {
                     productId: idProduct
                 },
-                success: function ( result )
-                {
-                    console.log( result );
-                    if ( result.status )
-                    {
+                success: function (result) {
+                    console.log(result);
+                    if (result.status) {
                         toastr.options.closeButton = true;
-                        toastr.success( "Giỏ hàng", "Cập nhật giỏ hàng thành công!" );
+                        toastr.success("Giỏ hàng", "Cập nhật giỏ hàng thành công!");
                         location.reload();
-                    } else
-                    {
+                    } else {
                         window.location.href = result.url;
                         toastr.options.closeButton = true;
-                        toastr.warning( "Giỏ hàng", "Cập nhật giỏ hàng thất bại!" );
+                        toastr.warning("Giỏ hàng", "Cập nhật giỏ hàng thất bại!");
                     }
                 },
-                error: function ( error )
-                {
-                    console.error( "AJAX request failed", error );
+                error: function (error) {
+                    console.error("AJAX request failed", error);
                 },
-            } );
+            });
         }
 
         initializeHighLightProduct()
-        function initializeHighLightProduct ()
-        {
-            $.ajax( {
+        function initializeHighLightProduct() {
+            $.ajax({
                 url: "/Common/GetProduct",
                 type: "POST",
                 data: {},
-                success: function ( result )
-                {
-                    if ( result.status )
-                    {
-                        showHighLightProduct( result.data )
-                    } else
-                    {
+                success: function (result) {
+                    if (result.status) {
+                        showHighLightProduct(result.data)
+                    } else {
 
                     }
                 },
-                error: function ()
-                {
-                    console.error( "AJAX request failed" );
+                error: function () {
+                    console.error("AJAX request failed");
                 },
-            } );
+            });
         }
-        function showHighLightProduct ( products )
-        {
-            var productDetailId = document.getElementById( 'product_highlight_list' );
+        function showHighLightProduct(products) {
+            var productDetailId = document.getElementById('product_highlight_list');
 
             productDetailId.innerHTML = "";
 
-            products.forEach( ( item ) =>
-            {
+            products.forEach((item) => {
                 var htmlContent = `
-                  <div class="col l-3">
-                      <div class="best_seller_product-card" data-item-id="${ item.id_product }">
-                          <div class="best_seller_product-image">
-                              <img src="${ item.image_url }" alt="Gọng kính" style="height:150px">
-                          </div>
-                          <div class="best_seller_product-details">
-                              <div class="best_seller_product-name">${ item.name_product }</div>
-                              <div class="best_seller_product-pricing">
-                                  <div class="best_seller_product-discount">
-                                     Phân loại: <span class="best_seller_product-discount-price">${ item.type_product }</span>
-                                  </div>
+                      <div class="col l-3">
+                          <div class="best_seller_product-card" data-item-id="${item.id_product}">
+                              <div class="best_seller_product-image">
+                                  <img src="${item.image_url}" alt="Gọng kính" style="height:150px">
                               </div>
-                              <button class="best_seller_product-buy-btn">
-                                  <div class="best_seller_product-price">${ item.price }</div>
-                                  <i class="fas fa-chevron-right"></i>
-                              </button>
+                              <div class="best_seller_product-details">
+                                  <div class="best_seller_product-name">${item.name_product}</div>
+                                  <div class="best_seller_product-pricing">
+                                      <div class="best_seller_product-discount">
+                                         Phân loại: <span class="best_seller_product-discount-price">${item.type_product}</span>
+                                      </div>
+                                  </div>
+                                  <button class="best_seller_product-buy-btn">
+                                      <div class="best_seller_product-price">${item.price}</div>
+                                      <i class="fas fa-chevron-right"></i>
+                                  </button>
+                              </div>
                           </div>
                       </div>
-                  </div>
-                `;
-                productDetailId.insertAdjacentHTML( 'beforeend', htmlContent );
-            } );
+                    `;
+                productDetailId.insertAdjacentHTML('beforeend', htmlContent);
+            });
 
-            var productCards = document.querySelectorAll( ".best_seller_product-card" );
+            var productCards = document.querySelectorAll(".best_seller_product-card");
 
-            productCards.forEach( function ( card )
-            {
-                card.addEventListener( "click", function ( event )
-                {
+            productCards.forEach(function (card) {
+                card.addEventListener("click", function (event) {
                     var target = event.target;
                     var itemId = card.dataset.itemId;
 
-                    if ( target.closest( ".best_seller_product-buy-btn" ) )
-                    {
-                        updateListCart( itemId, 1 )
-                        console.log( "Buy button clicked for item with ID: " + itemId );
-                    } else
-                    {
+                    if (target.closest(".best_seller_product-buy-btn")) {
+                        updateListCart(itemId, 1)
+                        console.log("Buy button clicked for item with ID: " + itemId);
+                    } else {
                         var itemId = card.dataset.itemId;
                         window.location.href = "/ConsumerProduct/DetailProduct?product_id=" + itemId;
                     }
-                } );
-            } );
+                });
+            });
 
         }
+        //hàm xử lý sự kiện xóa
+        function deleteSelectedProducts() {
+            const selectedCheckboxes = document.querySelectorAll('.cart_content_input:checked');
+            if (selectedCheckboxes.length === 0) {
+                toastr.warning("Vui lòng chọn ít nhất một sản phẩm để xóa.");
+                return;
+            }
+
+            const deletePromises = Array.from(selectedCheckboxes).map(checkbox => {
+                const productId = checkbox.getAttribute('data-product-id');
+                return new Promise((resolve, reject) => {
+                    $.ajax({
+                        url: "/ConsumerProduct/RemoveFromCart",
+                        type: "POST",
+                        data: {
+                            productId: productId
+                        },
+                        success: function (result) {
+                            console.log("Success response:", result);
+                            if (result.status) {
+                                resolve(result);
+                            } else {
+                                reject(new Error("Failed to delete product with ID: " + productId + ". Server responded with: " + JSON.stringify(result)));
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("AJAX error response:", status, error);
+                            reject(new Error("AJAX Error: " + error + " for product ID: " + productId));
+                        },
+                    });
+                });
+            });
+
+            Promise.all(deletePromises)
+                .then(results => {
+                    toastr.success("Tất cả các sản phẩm đã chọn đã được xóa thành công!");
+                    location.reload(); // Tải lại trang để cập nhật giao diện
+                })
+                .catch(error => {
+                    toastr.error("Không thể xóa một hoặc nhiều sản phẩm. Vui lòng thử lại.");
+                    console.error("Error deleting products:", error.message);
+                });
+        }
+
 
     </script>
 }

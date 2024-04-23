@@ -9,13 +9,24 @@
 @{
     ICollection<DotNet_E_Commerce_Glasses_Web.Models.TypeProduct> loai = ViewBag.TypeProduct;
 }
+<style>
+    .consumer_header_img_content {
+        display: flex;
+        align-items: center;
+    }
 
-<div class="consumer_header_product"    style="background-image: url('/Assets/images/img/bg-banner-about-us.jpeg');"">
+    .consumer_header_img_cart {
+        font-size: 5rem;
+        color: var(--primary-color);
+        margin: -8px 10px 0 10px;
+    }
+</style>
+<div class="consumer_header_product"    style="background-image: url('/Assets/images/img/bg-banner-about-us.jpeg');">
     <div class="consumer_header_img_text">
         <div class="consumer_header_img_heading">LỜI CẢM ƠN</div>
         <div class="consumer_header_img_content">
             <a href="" class="consumer_header_img_1">Trang chủ</a>
-            <div class="consumer_header_img_node"></div>
+            <div class="consumer_header_img_cart">•</div>
             <div class="consumer_header_img_1">Danh sách sản phẩm</div>
         </div>
     </div>
@@ -81,8 +92,8 @@
                             {
                                 <div class="col l-3">
                                     <div class="best_seller_product-card" data-item-id="@item.IdProduct">
-                                        <div class="best_seller_product-image">
-                                            <img src="@item.Image" alt="Gọng kính" style="height:150px">
+                                        <div class="best_seller_product-image" style="height:340px">
+                                            <img src="@item.Image" alt="Gọng kính">
                                         </div>
                                         <div class="best_seller_product-details">
                                             <div class="best_seller_product-name">@item.NameProduct</div>
@@ -209,8 +220,8 @@
                 var htmlContent = `
                  <div class="col l-3">
                      <div class="best_seller_product-card" data-item-id="${item.id_product}">
-                         <div class="best_seller_product-image">
-                             <img src="${item.image_url}" alt="Gọng kính" style="height:150px">
+                         <div class="best_seller_product-image" style="height:390px">
+                             <img src="${item.image_url}" alt="Gọng kính">
                          </div>
                          <div class="best_seller_product-details">
                              <div class="best_seller_product-name">${item.name_product}</div>

@@ -14,44 +14,185 @@
     <link rel="stylesheet" href="~/Assets/css/grid.css">
     <link rel="stylesheet" href="~/Assets/css/base.css">
     <link rel="stylesheet" href="~/Assets/css/login.css">
+    <link rel="stylesheet" href="~/Assets/css/consumer.css">
     <link rel="icon" href="~/Assets/images/images_Other/logo.png">
     <title>@ViewBag.title</title>
     <link rel="stylesheet" href="~/Assets/css/common.css">
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm">
-        <div class="container d-sm-inline-flex justify-content-between">
-            <div class="collapse navbar-collapse ">
-                <div class="navbar-nav flex-grow-1">
-                    <div class="col-md-2">
-                        <a href="@Url.Action("Index", "Home", new { area = "ForCommon" })">
-                            <img src="~/Assets/images/images_Other/logo.png" style="width: 96px; height: 96px;" />
+    <div class="container-fluid" style="display:flex; justify-content:center; padding-bottom:140px; background-color:#f8f8f8;">
+        <header class="main_header" >
+
+            <div class="top_header">
+                <div class="top_header_left">GIẢM NGAY 15% CHO ĐƠN HÀNG ĐẦU TIÊN</div>
+                <div class="top_header_right">
+                    <div class="top_header_right_items">Chính Sách</div>
+                    <a href="@Url.Action("", "LoginAccount", null, Request.Url.Scheme)" class="top_header_right_items">
+                        <i class="fa-solid fa-user"></i>
+                        Tài Khoản
+                    </a>
+                </div>
+            </div>
+
+            <div class="navbarr">
+                <div class="header_navbar_list">
+                    <a href="@Url.Action("Index", "Home")" class="navbar-brand">
+                        <img src="~/Assets/images/img/logo.svg" alt="" class="navbar_img_logo" />
+                    </a>
+
+                    <div class="nav_items_product nav_product">
+                        <a href="@Url.Action("Index", "ConsumerProduct")" class="nav_link">
+                            Sản phẩm
+                            <i class="fa-solid fa-chevron-down chevron-manage-icon"></i>
+                        </a>
+
+                        <div class="grid wide">
+                            <div class="nav_product_title">
+                                <div class="col l-4 nav_product_title_item">
+                                    <div class="product_title_items">
+                                        <a href="">Kính dâm</a>
+                                    </div>
+                                    <div class="product_title_items">
+                                        <a href="">Decor</a>
+                                    </div>
+                                    <div class="product_title_items">
+                                        <a href="">Gọng kính</a>
+                                    </div>
+                                    <div class="product_title_items">
+                                        <a href="">Tròng kính</a>
+                                    </div>
+                                </div>
+                                <div class="col l-4">
+                                    <img src="~/Assets/images/img/img_login.jpg" alt="" class="nav_img_product_1">
+                                </div>
+                                <div class="col l-4">
+                                    <img src="~/Assets/images/img/register_img.jpg" alt="" class="nav_img_product_2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="nav_items_product">
+                        <a href="" class="nav_link">
+                            Tìm Cửa Hàng
+                            <i class="fa-solid fa-location-dot"></i>
                         </a>
                     </div>
 
-                    <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+                    <div class="header-search">
+                        <div class="search-input-wrap">
+                            <input type="text" class="header-search-input" placeholder="Các mẫu kính râm hot...">
+                            <div class="header-search-history">
+                                <h3 class="search-history-heading">Lịch sử tìm kiếm</h3>
+                                <ul class="search-history-list">
+                                    <li class="search-history-items">
+                                        <a href="">Gọng Kính</a>
+                                        <i class="fa-solid fa-arrow-right"></i>
+                                    </li>
+                                    <li class="search-history-items">
+                                        <a href="">tròng kính</a>
+                                        <i class="fa-solid fa-arrow-right"></i>
+                                    </li>
+                                    <li class="search-history-items">
+                                        <a href="">kính dâm</a>
+                                        <i class="fa-solid fa-arrow-right"></i>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <button class="header-search-btn">
+                            <i class="fa-solid fa-magnifying-glass header-search-btn-icon"></i>
+                        </button>
+                    </div>
+
+                    <div class="nav_items_product">
+                        <a href="" class="nav_link">
+                            Xem Thêm
+                            <i class="fa-solid fa-chevron-down chevron-manage-icon"></i>
+                        </a>
+
+                        <div class="nav_detail_list">
+                            <div class="nav_detail_items">
+                                <a href="">Chọn Kính Theo Gương Mặt</a>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </div>
+                            <div class="nav_detail_items">
+                                <a href="">Về Chúng Tôi</a>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </div>
+                            <div class="nav_detail_items">
+                                <a href="">Blog</a>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="nav_items_product">
+                        <a href="#kind_journey" class="nav_link">
+                            Hành Trình Tử Tế
+                        </a>
+                    </div>
+
                 </div>
-
-                <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Trang chủ", "Index", "Home", new { area = "Others" }, new { @class = "nav-link fs-4 fw-bolder" })</li>
-                    <li>@Html.ActionLink("Sản phẩm", "Index", "ConsumerProduct", new { area = "ForConsumer" }, new { @class = "nav-link fs-4 fw-bolder" })</li>
-                </ul>
-
-                
             </div>
-        </div>
-    </nav>
+        </header>
+    </div>
 
-    <div class="container body-content">
+    <div class="container-fluid" style="background-color:#f8f8f8">
         @RenderBody()
         @Scripts.Render("~/bundles/jquery")
         @RenderSection("scripts", required: false)
         @Scripts.Render("//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js")
     </div>
+    <footer class="footer">
+        <div class="grid wide">
+            <div class="main_footer">
+                <div class="footer_left">
+                    <div class="footer_left_name">ANNA</div>
+                    <div class="footer_left_slogan">THƯƠNG HIỆU KÍNH MẮT</div>
+                    <div class="footer_left_slogan">CỦA SỰ TỬ TẾ</div>
+                    <div class="footer_left_mail">Đăng kí để nhận tin mới nhất</div>
+                    <div class="footer_left_register_mail">
+                        <input type="text" class="footer_mail_input" placeholder="Để lại Email của bạn...">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                    <div class="footer_left_contact_icon">
+                        <i class="fa-brands fa-facebook contact_icon"></i>
+                        <i class="fa-brands fa-instagram contact_icon"></i>
+                        <i class="fa-brands fa-tiktok contact_icon"></i>
+                        <i class="fa-brands fa-youtube contact_icon"></i>
+                    </div>
+                </div>
+                <div class="footer_right">
+                    <div class="footer_right_top">
+                        <div class="col">
+                            <div class="footer_right_title">SẢN PHẨM</div>
+                            <div class="footer_right_content">Kính râm</div>
+                            <div class="footer_right_content">Decor</div>
+                            <div class="footer_right_content">Gọng Kính</div>
+                            <div class="footer_right_content">Tròng Kính</div>
+                        </div>
+                        <div class="col">
+                            <div class="footer_right_title">THÔNG TIN LIÊN HỆ</div>
+                            <div class="footer_right_content">0393200525</div>
+                            <div class="footer_right_content">Hải Anh</div>
+                            <div class="footer_right_content">kaitokid1122003@gmail.com</div>
+                        </div>
+                    </div>
+                    <div class="footer_right_bottom col">
+                        <div class="footer_right_title">CHÍNH SÁCH MUA HÀNG</div>
+                        <div class="footer_right_content">Hình thức thanh toán</div>
+                        <div class="footer_right_content">Chính sách giao hàng</div>
+                        <div class="footer_right_content">Chính sách bảo hành</div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer_bottom">
+                <div class="footer_bottom_text">Anna © 2018 - 2023. Design by Hải Anh</div>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
 

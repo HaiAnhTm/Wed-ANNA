@@ -5,9 +5,21 @@
     Layout = "~/Views/Shared/_LayoutConsumer.cshtml";
 }
 
-<link rel="stylesheet" href="~/Assets/css/consumer/InfoStyle.css" />
-
-@using (Html.BeginForm("ChangePassword", "UserInformation", FormMethod.Post, new { enctype = "multipart/form-data" }))
+<style>
+    .profile-user-img_nav {
+        height: 120px;
+        width: 120px;
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden; /* Ngăn chặn hình ảnh bị tràn ra khỏi khung */
+        border-radius: 50%;
+        margin: auto;
+    }
+</style>
+<link rel="stylesheet" href="~/Assets/css/consumer/InfoStyle - Copy.css">
+@using (Html.BeginForm("Index", "UserInformation", FormMethod.Post, new { enctype = "multipart/form-data" }))
 
 {
     @Html.AntiForgeryToken()
@@ -19,21 +31,23 @@
                 <div class="col l-3">
                     <div class="user_info_nav">
                         <div class="user_info_nav_top">
-                            <img src="" alt="" class="user_info_nav_top_img">
+                            <div class="profile-user-img_nav">
+                                <img src="@Model.Image" alt="" class="user_info_nav_top_img" style=" background-size: auto; display: block; width: 100%; height: 100%; object-fit: cover; object-position: center;">
+                            </div>
                             <div class="user_info_nav_text space_user_info">kaitokid1122003@gmail.com</div>
                         </div>
                         <div class="user_info_nav_bottom">
                             <div class="info_nav_bottom_items user_info_nav_bottom_active">
                                 <i class="fa-regular fa-user info_nav_icon"></i>
-                                <a href="./UserInformation/Index" class="user_info_nav_text">Thông tin tài khoản</a>
+                                <a href="@Url.Action("Index", "UserInformation")" class="user_info_nav_text">Thông tin tài khoản</a>
                             </div>
                             <div class="info_nav_bottom_items">
                                 <i class="fa-solid fa-unlock-keyhole info_nav_icon"></i>
-                                <a href="./UserInformation/UpdatePassword" class="user_info_nav_text">Đổi mật khẩu</a>
+                                <a href="@Url.Action("UpdatePassword", "UserInformation")" class="user_info_nav_text">Đổi mật khẩu</a>
                             </div>
                             <div class="info_nav_bottom_items">
                                 <i class="fa-solid fa-arrow-right-from-bracket info_nav_icon"></i>
-                                <div href="./LoginAccount/Index" class="user_info_nav_text">Đăng xuất</div>
+                                <a href="@Url.Action("Index", "LoginAccount")" class="user_info_nav_text">Đăng xuất</a>
                             </div>
                         </div>
                     </div>
@@ -78,28 +92,24 @@
                             </div>
                         </div>
                         <div class="col l-5">
+
                             <div class="profile_user_right">
-
-                                @*<div class="profile-user-img">
-                                        <img id="profileImg" src="./assets/img/glass_img.jpeg" alt=""
-                                             class="profile-img">
-                                    </div>
-
-                                    <input type="file" style="width:83%;" class="form-control" accept="image/*" name="ImageFile" />
-
-
-                                    <input type="file" id="uploadImg" accept=".jpg, .jpeg, .png" style="display: none;">
-                                    <label for="uploadImg" class="btn profile-text-choseimg">Chọn Ảnh</label>
-                                    <div class="profile-text-update">Dung lượng file tối đa 1 MB</div>
-                                    <div class="profile-text-update">Định dạng: .JPEG, .PNG</div>*@
-
-                                <div class="form-group">
-                                    <label for="HinhAnh">Hình Ảnh</label>
-                                    <input type="text" hidden name="Image" value="@Model.Image" />
-                                    <input type="file" style="width:83%;" class="form-control" accept="image/*" name="ImageFile" />
-                                    @Html.ValidationMessage("Image", new { @class = "text-danger" })
-                                    <img src="@Model.Image" style="width: 200px; " id="showImage" />
+                                <div class="profile-user-img">
+                                    <!-- Ảnh được hiển thị ngay tại đây sau khi người dùng chọn file -->
+                                    <img id="profileImg" src="@Model.Image" alt="" class="profile-img">
                                 </div>
+
+                                <input type="text" hidden name="Image" value="@Model.Image" />
+
+                                <!-- Sử dụng 'onchange' để xử lý sự kiện khi file được chọn -->
+                                <input type="file" id="uploadImg" accept=".jpg, .jpeg, .png" style="display: none;" name="ImageFile" class="form-control" onchange="previewImage();">
+                                <label for="uploadImg" class="btn profile-text-choseimg">Chọn Ảnh</label>
+
+                                @Html.ValidationMessage("Image", new { @class = "text-danger" })
+
+                                <div class="profile-text-update">Dung lượng file tối đa 1 MB</div>
+                                <div class="profile-text-update">Định dạng: .JPEG, .PNG</div>
+
                             </div>
                         </div>
                     </div>
@@ -111,6 +121,17 @@
 
 @section Scripts  {
     <script>
+        function previewImage() {
+            var file = document.getElementById("uploadImg").files;
+            if (file.length > 0) {
+                var fileReader = new FileReader();
 
+                fileReader.onload = function (event) {
+                    document.getElementById("profileImg").setAttribute("src", event.target.result);
+                };
+
+                fileReader.readAsDataURL(file[0]);
+            }
+        }
     </script>
 }

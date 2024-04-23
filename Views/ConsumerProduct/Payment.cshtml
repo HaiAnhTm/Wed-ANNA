@@ -4,13 +4,24 @@
     ViewBag.Title = "Chi tiết sản phẩm";
     Layout = ViewBag.Consumer != null ? "~/Views/Shared/_LayoutConsumer.cshtml" : "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    .consumer_header_img_content {
+        display: flex;
+        align-items: center;
+    }
 
-<div class="consumer_header_product">
+    .consumer_header_img_cart {
+        font-size: 5rem;
+        color: var(--primary-color);
+        margin: -8px 10px 0 10px;
+    }
+</style>
+<div class="consumer_header_product" style="background-image: url('/Assets/images/img/bg-banner-about-us.jpeg');">
     <div class="consumer_header_img_text">
         <div class="consumer_header_img_heading">Thanh toán</div>
         <div class="consumer_header_img_content">
             <a href="" class="consumer_header_img_1">Trang chủ</a>
-            <div class="consumer_header_img_node"></div>
+            <div class="consumer_header_img_cart">•</div>
             <div class="consumer_header_img_1">Cảm ơn vì bạn đã tin tưởng và ủng hộ sản phẩm của chúng tôi</div>
         </div>
     </div>
@@ -80,46 +91,47 @@
                             <div class="bill_content_expens_text">Thành tiền</div>
                         </div>
 
-
-                        <div class="bill_content_product">
-                            @foreach (var item in (IEnumerable<DotNet_E_Commerce_Glasses_Web.Models.ProductSaleModel>)ViewBag.ListCart)
-                            {
-                                <div class="bill_content_product_left">
-                                    <img src="@item.Image" alt="" class="bill_content_product_img">
-                                    <div class="bill_content_body_text">
-                                        @*TODO: thẻ span có nghĩa là số sản phẩm người dùng mua*@
-                                        <div class="bill_content_body_textheader">
-                                            @item.NameProduct <span class="span_total_bill">@ViewBag.ListCart.Count</span>
+                        @foreach (var item in (IEnumerable<DotNet_E_Commerce_Glasses_Web.Models.ProductSaleModel>)ViewBag.ListCart)
+                        {
+                            <div class="bill_content_product">
+                               
+                                    <div class="bill_content_product_left">
+                                        <img src="@item.Image" alt="" class="bill_content_product_img">
+                                        <div class="bill_content_body_text">
+                                            @*TODO: thẻ span có nghĩa là số sản phẩm người dùng mua*@
+                                            <div class="bill_content_body_textheader">
+                                                @item.NameProduct <span class="span_total_bill">x @item.QuanitySale</span>
+                                            </div>
+                                            <div class="bill_contnet_classify">Phân Loại: @item.TypeProduct.TypeProductName</div>
                                         </div>
-                                        <div class="bill_contnet_classify">Phân Loại: @item.TypeProduct.TypeProductName</div>
                                     </div>
+                                    @*TODO:Tồng số tiền phải trả cho số sản phẩm (đơn giá x số lượng)*@
+                                    <div class="bill_content_expens_price">@item.getTotalProduct() đ</div>
+                                
+                            </div>
+                        }
+                            <div class="bill_content_expens">
+                                <div class="bill_content_expens_items">
+                                    <div class="bill_content_expens_text">Tạm tính</div>
+                                    @*TODO: Tổng tiền trước khi giảm giá*@
+                                    <div class="bill_content_expens_price">@Model.currencyTotalBill() đ</div>
                                 </div>
-                                @*TODO:Tồng số tiền phải trả cho số sản phẩm (đơn giá x số lượng)*@
-                                <div class="bill_content_expens_price">@item.getTotalProduct() đ</div>
-                            }
-                        </div>
-                        <div class="bill_content_expens">
-                            <div class="bill_content_expens_items">
-                                <div class="bill_content_expens_text">Tạm tính</div>
-                                @*TODO: Tổng tiền trước khi giảm giá*@
-                                <div class="bill_content_expens_price">@Model.currencyTotalBill() đ</div>
+                                <div class="bill_content_expens_items">
+                                    <div class="bill_content_expens_text">Phí vận chuyển</div>
+                                    <div class="bill_content_expens_price">30.000đ</div>
+                                </div>
+                                <div class="bill_content_expens_items">
+                                    @*TODO: giảm giá*@
+                                    <div class="bill_content_expens_text">Giảm</div>
+                                    <div class="bill_content_expens_price">@Model.valuePercent()</div>
+                                </div>
                             </div>
-                            <div class="bill_content_expens_items">
-                                <div class="bill_content_expens_text">Phí vận chuyển</div>
-                                <div class="bill_content_expens_price">30.000đ</div>
-                            </div>
-                            <div class="bill_content_expens_items">
-                                @*TODO: giảm giá*@
-                                <div class="bill_content_expens_text">Giảm</div>
-                                <div class="bill_content_expens_price">@Model.valuePercent()</div>
+                            <div class="bill_content_expens_total">
+                                <div class="bill_content_expens_text">Tổng cộng</div>
+                                @*TODO: giá cuối cùng phải trả sau khi áp dụng giảm giá và phí vận chuyển*@
+                                <div class="bill_content_expens_price">@Model.currencyTotalPay()đ</div>
                             </div>
                         </div>
-                        <div class="bill_content_expens_total">
-                            <div class="bill_content_expens_text">Tổng cộng</div>
-                            @*TODO: giá cuối cùng phải trả sau khi áp dụng giảm giá và phí vận chuyển*@
-                            <div class="bill_content_expens_price">@Model.currencyTotalPay()đ</div>
-                        </div>
-                    </div>
 
 
                 </div>
