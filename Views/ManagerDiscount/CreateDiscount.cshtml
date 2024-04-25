@@ -8,92 +8,160 @@
 @using (Html.BeginForm("CreateDiscount", "ManagerDiscount", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>Discount</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        <div class="col">
-            <div class="form-group">
-                @Html.LabelFor(model => model.CodeDiscount, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.CodeDiscount, new { htmlAttributes = new { @class = "form-control", id = "code_discount", @readonly = "readonly" } })
-                    @Html.ValidationMessageFor(model => model.CodeDiscount, "", new { @class = "text-danger" })
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="Create-discount">
+        <div class="Create_discount_head">Tạo mã giảm giá mới</div>
+        <div class="Create_discount_body">
+            <div class="Create_discount_body_head">Thông tin cơ bản</div>
+            <div class="Discount_content">
+                <div class="row">
+                    <div class="col-md-3 Discount_text">
+                        <div class="Discount_name">Hình ảnh sản phẩm</div>
+                    </div>
+                    <div class="col-md-5 Discount_input">
+                        <input type="file" id="file-upload" name="ImageFile" accept="image/*" class="file-input" />
+                        <label for="file-upload" class="upload-label">
+                            <div id="upload-placeholder" class="upload-icon">
+                                <span>+</span>
+                                <span>Thêm hình ảnh</span>
+                            </div>
+                            <img id="image-preview" src="#" alt="Image Preview" style="display: none;" />
+                        </label>
+                        @Html.ValidationMessage("ImageFile", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 Discount_text">
+                        <div class="Discount_name">Tên chương trình giảm giá</div>
+                    </div>
+                    <div class="col-md-5 Discount_input">
+                        @Html.EditorFor(model => model.TitleDiscount, new { htmlAttributes = new { @class = "discount-name-input", placeholder = "Nhập Tên chương trình giảm giá" } })
+                        @Html.ValidationMessageFor(model => model.TitleDiscount, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 Discount_text">
+                        <div class="Discount_name">Mã Voucher</div>
+                    </div>
+                    <div class="col-md-5 Discount_input">
+                        @Html.EditorFor(model => model.CodeDiscount, new { htmlAttributes = new { @class = "discount-name-input ramdom_discount", id = "code_discount", @readonly = "readonly", placeholder = "Bấm tạo mã giảm giá" } })
+                        @Html.ValidationMessageFor(model => model.CodeDiscount, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-4">
+                        <button id="button_create_code" type="button" class="ramdom_discount_input btn">Tạo mã</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 Discount_text">
+                        <div class="Discount_name">Thời gian sử dụng mã</div>
+                    </div>
+                    <div class="col-md-5 Discount_input">
+                        <div class="date_time_input">
+                            @Html.EditorFor(model => model.DateOfStart, new { htmlAttributes = new { @class = "form-control datetime-input", type = "datetime-local" ,id = "dateTimePlus10Min" } })
+                            @Html.ValidationMessageFor(model => model.DateOfStart, "", new { @class = "text-danger" })
+                            <div class="minus">___</div>
+                            @Html.EditorFor(model => model.DateOfEnd, new { htmlAttributes = new { @class = "form-control datetime-input", type = "datetime-local", id = "dateTimePlus1Hr10Min" } })
+                            @Html.ValidationMessageFor(model => model.DateOfEnd, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-4"></div>
                 </div>
             </div>
-
-            <button id="button_create_code" type="button">Tạo mã</button>
-
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TitleDiscount, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TitleDiscount, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TitleDiscount, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DateOfStart, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DateOfStart, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateOfStart, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DateOfEnd, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DateOfEnd, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateOfEnd, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PercentValue, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PercentValue, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PercentValue, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdStatus, "IdStatus", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("IdStatus", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.IdStatus, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="HinhAnh">Hình Ảnh</label>
-            <input type="file" class="form-control" accept="image/*" name="ImageFile" />
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+        <div class="Create_discount_body">
+            <div class="Create_discount_body_head">Thiết lập mã giảm giá</div>
+            <div class="Discount_content">
+                <div class="row">
+                    <div class="col-md-3 Discount_text">
+                        <div class="Discount_name">Mức giảm giá(Theo %)</div>
+                    </div>
+                    <div class="col-md-5 Discount_input">
+                        @Html.EditorFor(model => model.PercentValue, new { htmlAttributes = new { @class = "discount-name-input", placeholder = "Nhập mức giảm giá" } })
+                        @Html.ValidationMessageFor(model => model.PercentValue, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 Discount_text">
+                        <div class="Discount_name">Tổng lượt sử dụng tối đa</div>
+                    </div>
+                    <div class="col-md-5 Discount_input">
+                        @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "discount-name-input", placeholder = "Nhập tổng số lượt sử dụng" } })
+                        @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 Discount_text">
+                        <div class="Discount_name">Trạng thái</div>
+                    </div>
+                    <div class="col-md-5 Discount_input">
+                        @Html.DropDownList("IdStatus", null, htmlAttributes: new { @class = "discount-name-input" })
+                        @Html.ValidationMessageFor(model => model.IdStatus, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 Discount_text">
+                        <div class="Discount_name">Sản phẩm được áp dụng</div>
+                    </div>
+                    <div class="col-md-5 Discount_input">
+                        <div class="Discount_display">Tất cả sản phẩm trong cửa hàng</div>
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
             </div>
         </div>
     </div>
+    <div class="Discount_confirm">
+        <button class="btn_cancel " onclick="window.location.href='@Url.Action("Index")'">Hủy</button>
+        <button type="submit" class="btn_confirm" >Xác nhận</button>
+    </div>
 }
 
-<div class="form-group" style="margin-top:20px;">
-    <a class="btn btn-outline-secondary rounded-pill" @Html.ActionLink("Quay trở lại", "Index")</a>
-</div>
 
 
 @section Scripts  {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Assets/scripts/ManagerCreateDiscount.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#file-upload').change(function () {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#image-preview').attr('src', e.target.result);
+                    $('#image-preview').show();
+                    $('#upload-placeholder').hide(); // Ẩn dấu + và chữ
+                }
+                reader.readAsDataURL(this.files[0]);
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            let now = new Date();
+            let tenMinutesLater = new Date(now.getTime() + 10 * 60000); // 60000 milliseconds in a minute
+            let oneHourTenMinutesLater = new Date(now.getTime() + 70 * 60000); // 1 hour and 10 minutes later
+
+            function formatDateTime(date) {
+                let year = date.getFullYear();
+                let month = ('0' + (date.getMonth() + 1)).slice(-2);
+                let day = ('0' + date.getDate()).slice(-2);
+                let hours = ('0' + date.getHours()).slice(-2);
+                let minutes = ('0' + date.getMinutes()).slice(-2);
+                return `${year}-${month}-${day}T${hours}:${minutes}`;
+            }
+
+            document.getElementById('dateTimePlus10Min').value = formatDateTime(tenMinutesLater);
+            document.getElementById('dateTimePlus1Hr10Min').value = formatDateTime(oneHourTenMinutesLater);
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            const elementsToShow = document.querySelectorAll('.hidden-by-default');
+            elementsToShow.forEach(element => {
+                element.classList.remove('hidden-by-default');
+            });
+        });
+    </script>
 }

@@ -145,28 +145,25 @@
 .order-management-items:hover {
     color: var(--secondary-color);
 }
-.Create_discount_head{
+.Create_discount_head {
     font-size: 2.6rem;
     color: var(--text-color);
-    margin-top: 2px;
     padding-left: 10px;
-    margin: 60px 0;
+    margin: 40px 0 30px 0;
 }
 
-.Create_discount_body{
+.Create_discount_body {
     background-color: var(--white-color);
     box-shadow: 4px rgba(0, 0, 0, 0.9);
-    border-radius: 5px;
+    border-radius: 10px;
     padding: 20px;
+    margin: 25px 0;
 }
 .Create_discount_body_head{
     font-size: 1.8rem;
     color: var(--text-color);
     margin: 10px 0;
     margin-bottom: 10px;
-}
-.Discount_content{
-    display: flex;
 }
 .Discount_name{
     font-size: 1.4rem;
@@ -197,10 +194,17 @@
     border-radius: 5px;
     border-color: #b2b2b2;
     width: 80%;
-    height: 30px;
+    height: 36px;
     margin: 20px;
 }
-.minus{
+.ramdom_discount_input {
+    width: 80px;
+    height: 36px;
+    color: var(--white-color);
+    background-color: var(--primary-color);
+    margin: 20px 0;
+}
+.minus {
     font-weight: bold;
     padding-top: 25px;
     color: var(--text-lighter);
@@ -213,12 +217,18 @@
     border-color: var(--primary-color);
     cursor: pointer;
 }
+.ramdom_discount[readonly] {
+    border: none !important;
+    border: 1px solid #dcdcdc;
+    background-color: #f4f4f4;
+    cursor: not-allowed;
+}
 .datetime-input{
     font-size: 1.4rem;
     color: var(--text-color);
     font-family: inherit;
     width: 40%;
-    height: 30px;
+    height: 36px;
     margin: 20px;
     border: none;
     border: 1px solid var(--text-color);
@@ -227,8 +237,7 @@
 .Discount_display{
     font-size: 1.4rem;
     color: var(--text-color);
-    padding: 20px;
-    margin-top: 14px;
+    margin: 28px 20px;
 }
 .Discount_confirm{
     background-color: var(--white-color);
@@ -641,11 +650,13 @@
 .content-body-name{
     display: flex;
     align-items: center;
-    margin-left: 30px;
+    margin-left: 5px;
 }
 .adProduct-body-product-img{
-    width: 50px;
-    height: 50px;
+    border-radius:5px;
+    width: 90px;
+    height: 90px;
+    margin-bottom:15px;
 }
 .content-body-name-checkbox{
     margin-right: 12px;
@@ -730,9 +741,6 @@
     margin-left: 20px;
 }
 
-.Product_content{
-    display: flex;
-}
 .Product_name{
     font-size: 1.4rem;
     color: var(--text-color);

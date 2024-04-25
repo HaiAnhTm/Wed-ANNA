@@ -7,7 +7,7 @@
 
 <link rel="stylesheet" href="~/Assets/css/manager/ManagerProduct.css" />
 
-<div class="container-fluid">
+<div class="container-fluid" style="background-color:#fff">
     <div class="row">
         <div class="content-product-header">
             <input type="radio" id="radio-all" name="discount-type" class="content-discount-radio" hidden checked>
@@ -48,42 +48,53 @@
     </div>
 
     <div class="content-product content-product-detail">
-            <div class="product-detail-header">
-                <div class="col l-3 header-text-product">
+        
+            <div class="row product-detail-header">
+                <!-- Tên Sản Phẩm -->
+                <div class="col-md-3 header-text-product">
                     <div class="header-check-text header-check-text-firt">Tên Sản Phẩm</div>
                 </div>
 
-                <div class="col l-2 header-check-tile">
+                <!-- Mô tả -->
+                <div class="col-md-2 header-check-tile">
                     <div class="header-check-text">Mô tả</div>
                 </div>
 
-                <div class="col l-2 header-check-tile">
+                <!-- Đơn Giá -->
+                <div class="col-md-2 header-check-tile" style="width: calc(16.66666667% - 15px);">
                     <div class="header-check-text">Đơn Giá</div>
                 </div>
 
-                <div class="col l-1 header-check-tile">
+                <!-- Giảm giá -->
+                <div class="col-md-1 header-check-tile">
                     <div class="header-check-text">Giảm giá</div>
                 </div>
 
-                <div class="col l-1 header-check-tile">
+                <!-- Số Lượng -->
+                <div class="col-md-1 header-check-tile">
                     <div class="header-check-text">Số Lượng</div>
                 </div>
 
-                <div class="col l-1 header-check-tile">
+                <!-- Loại -->
+                <div class="col-md-1 header-check-tile">
                     <div class="header-check-text">Loại</div>
                 </div>
 
-                <div class="col l-1 header-check-tile">
+                <!-- Trạng Thái -->
+                <div class="col-md-1 header-check-tile">
                     <div class="header-check-text">Trạng Thái</div>
                 </div>
 
-                <div class="col l-1 header-check-tile header-check-text-last">
+                <!-- Thao Tác -->
+                <div class="col-md-1 header-check-tile header-check-text-last">
                     <div class="header-check-text">Thao Tác</div>
                 </div>
             </div>
+        
+
 
         <div id="content-product-list">
-        
+
         </div>
 
     </div>
@@ -242,41 +253,56 @@
             products.forEach( ( item ) =>
             {
                 var htmlContent = `
-                    <div class="adProduct-content-body">
-                    <div class="col l-3 content-body-name">
-                       <img class="adProduct-body-product-img" src="${ item.image_url }" alt="">
-                       <div class="adProduct-product-name">${ item.name_product }</div>
-                    </div>
-      
-                    <div class="col l-2 adProduct-product">
-                       <div class="adProduct-product-manucafer" style="overflow: hidden;
-                                                                        display: -webkit-box;
-                                                                        -webkit-line-clamp: 3;
-                                                                        -webkit-box-orient: vertical;
-                                                                        text-overflow: ellipsis;
-                                                                        height: 4.5em; /* Chiều cao này có thể điều chỉnh tùy theo kích cỡ và kiểu chữ của bạn */
-                                                                        line-height: 1.5em; /* ">${ item.description }</div>
-                    </div>
-                    <div class="col l-2 adProduct-product-unitprice adProduct-product">
-                       <div class="adProduct-product-manucafer">₫${ item.price }</div>
-                    </div>
-                    <div class="col l-1 adProduct-product-unitprice adProduct-product">
-                       <div class="adProduct-product-manucafer">${ item.discount_product }%</div>
-                    </div>
-                    <div class="col l-1 adProduct-product-unitprice adProduct-product">
-                       <div class="adProduct-product-manucafer">${ item.quantity }</div>
-                    </div>
-                    <div class="col l-1 adProduct-product-quantity adProduct-product">
-                       <div class="adProduct-product-manucafer product-quantity">${ item.type_product }</div>
-                    </div>
-                    <div class="col l-1 adProduct-product">
-                       <div class="adProduct-product-manucafer">${ item.status_product }</div>
-                    </div>
-                    <div class="col l-1 adProduct-product">
-                       <a href="/ManagerProduct/UpdateProduct/${ item.id_product }" class="product-Update-operation icon-update">Cập nhật</a>
-                       <div class="product-Update-operation" id="iconDelete" onclick="showDeleteDiaLogConfirm('${ item.id_product }')">Xóa</div>
-                    </div>
-                 </div>
+  <div class="adProduct-content-body">
+    <!-- Tên và Hình Ảnh Sản Phẩm -->
+    <div class="col-md-3 content-body-name">
+      <img class="adProduct-body-product-img" src="${item.image_url}" alt="">
+      <div class="adProduct-product-name">${item.name_product}</div>
+    </div>
+    
+    <!-- Mô tả -->
+    <div class="col-md-2 adProduct-product">
+      <div class="adProduct-product-manucafer" style="overflow: hidden;
+                                                       display: -webkit-box;
+                                                       -webkit-line-clamp: 3;
+                                                       -webkit-box-orient: vertical;
+                                                       text-overflow: ellipsis;
+                                                       height: 4.5em;
+                                                       line-height: 1.5em;">${item.description}</div>
+    </div>
+
+    <!-- Đơn Giá -->
+    <div class="col-md-2 adProduct-product-unitprice adProduct-product">
+      <div class="adProduct-product-manucafer" style="margin-left:10px;">₫${item.price}</div>
+    </div>
+
+    <!-- Giảm Giá -->
+    <div class="col-md-1 adProduct-product-unitprice adProduct-product">
+      <div class="adProduct-product-manucafer">${item.discount_product}%</div>
+    </div>
+
+    <!-- Số Lượng -->
+    <div class="col-md-1 adProduct-product-unitprice adProduct-product">
+      <div class="adProduct-product-manucafer">${item.quantity}</div>
+    </div>
+
+    <!-- Loại Sản Phẩm -->
+    <div class="col-md-1 adProduct-product-quantity adProduct-product">
+      <div class="adProduct-product-manucafer product-quantity">${item.type_product}</div>
+    </div>
+
+    <!-- Trạng Thái Sản Phẩm -->
+    <div class="col-md-1 adProduct-product">
+      <div class="adProduct-product-manucafer">${item.status_product}</div>
+    </div>
+
+    <!-- Thao Tác -->
+    <div class="col-md-1 adProduct-product">
+      <a href="/ManagerProduct/UpdateProduct/${item.id_product}" class="product-Update-operation icon-update">Cập nhật</a>
+      <div class="product-Update-operation" id="iconDelete" onclick="showDeleteDiaLogConfirm('${item.id_product}')">Xóa</div>
+    </div>
+  </div>
+
                `;
                 productDetailId.insertAdjacentHTML( 'beforeend', htmlContent );
             } );
