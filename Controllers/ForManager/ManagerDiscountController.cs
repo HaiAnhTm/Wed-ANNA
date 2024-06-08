@@ -89,7 +89,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
                     {
 
                         discounts = discounts
-                             .Where(item => item.DateOfStart.Value.Subtract(DateTime.Now).TotalDays >= 7)
+                             .Where(item => item.DateOfStart.Value.Subtract(DateTime.Now).TotalMinutes >= 7)
                              .ToList();
                         break;
                     }

@@ -5,60 +5,35 @@
     Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
 
-<h2>Danh sách hóa đơn</h2>
-
-<div class="container-xxl">
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.DateOfPurchase)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalBill)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PercentDiscount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalPay)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Consumer.Username)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StatusDelivery.Status)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    <p>@item.datePurchaseStr()</p>
-                </td>
-                <td>
-                    <p>@item.currencyTotalBill()</p>
-                </td>
-                <td>
-                    <p>@item.valuePercent()</p>
-                </td>
-                <td>
-                    <p>@item.currencyTotalPay()</p>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Consumer.Username)
-                </td>
-                <th>
-                    @Html.DisplayNameFor(model => model.StatusDelivery.Status)
-                </th>
-                <td>
-                    <button class="btn btn-outline-secondary" onclick="actionDialogDetailBill(`@item.IdBild`)">Chi tiết</button>
-                </td>
-            </tr>
-        }
-    </table>
+<div class="bill_header_texxt">Danh sách hóa đơn</div>
+<div class="bill_table">
+    <div class="bill_table_header">
+        <div class="row">
+            <div class="col-md-2 bill_table_title">Tên khách hàng</div>
+            <div class="col-md-2 bill_table_title">Tổng hóa đơn</div>
+            <div class="col-md-1 bill_table_title">Giảm giá</div>
+            <div class="col-md-2 bill_table_title">Tổng thanh toán</div>
+            <div class="col-md-2 bill_table_title">Ngày Thanh toán</div>
+            <div class="col-md-2 bill_table_title">Trạng thái</div>
+            <div class="col-md-1 bill_table_title">Thao tác</div>
+        </div>
+    </div>
+    @foreach (var item in Model)
+    {
+        <div class="bill_table_content">
+            <div class="row bill_table_content_row">
+                <div class="col-md-2 bill_table_content_item bold">@Html.DisplayFor(modelItem => item.Consumer.Username)</div>
+                <div class="col-md-2 bill_table_content_item">@item.currencyTotalBill()</div>
+                <div class="col-md-1 bill_table_content_item">@item.valuePercent()</div>
+                <div class="col-md-2 bill_table_content_item">@item.currencyTotalPay()</div>
+                <div class="col-md-2 bill_table_content_item">@item.datePurchaseStr()</div>
+                <div class="col-md-2 bill_table_content_item">@Html.DisplayNameFor(model => model.StatusDelivery.Status)</div>
+                <button style="background: none; border: none; padding: 0; margin: 0; text-align: unset; color: blue;" class="col-md-1 bill_table_content_item" onclick="actionDialogDetailBill(`@item.IdBild`)">Chi tiết</button>
+            </div>
+        </div>
+    }
 </div>
+
 
 
 <div class="modal" id="dialog_detail_bill">

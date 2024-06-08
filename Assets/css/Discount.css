@@ -849,3 +849,46 @@
     width: auto !important;
     padding: 0 10px;
 }
+
+.bill_header_texxt {
+    font-size: 2.4rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin: 20px 0;
+}
+
+.bill_table {
+    padding: 10px;
+    background-color: var(--white-color);
+    box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.bill_table_header {
+    background-color: rgba(0,0,0,0.05);
+    padding: 20px 10px 20px 20px;
+}
+
+.bill_table_title {
+    font-size: 1.4rem;
+    color: rgba(0,0,0,0.5);
+}
+
+.bill_table_content_item {
+    font-size: 1.4rem;
+    color: var(--text-color);
+}
+
+.bill_table_content_row {
+    padding: 25px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.bill_table_content {
+    padding-left: 20px;
+}
+
+.bold {
+    font-weight: bold;
+}
