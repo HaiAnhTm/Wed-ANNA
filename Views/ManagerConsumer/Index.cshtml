@@ -5,50 +5,32 @@
     Layout = Model != null ? "~/Views/Shared/_LayoutManager.cshtml" : "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Danh sách khách hàng</h2>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Username)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Address)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateOfBirth)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NumberPhone)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Image)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ListCart)
-        </th>
-    </tr>
+<div class="bill_header_texxt">Danh sách khách hàng</div>
+<div class="bill_table">
+    <div class="bill_table_header">
+        <div class="row">
+            <div class="col-md-4 bill_table_title">Tên khách hàng</div>
+            <div class="col-md-3 bill_table_title">Địa chỉ</div>
+            <div class="col-md-2 bill_table_title">Số điện thoại</div>
+            <div class="col-md-2 bill_table_title">Ngày sinh nhật</div>
+            <div class="col-md-1 bill_table_title">Giỏ hàng</div>
+        </div>
+    </div>
+    <div class="bill_table_content">
+        @foreach (var item in Model)
+        {
+            <div class="row consumer_table_content_row">
+                <div class="col-md-4 bill_table_content_consumer">
+                    <img class="table_consumer_img" src="@item.Image" alt="">
+                    <div class="table_consumer_name">@Html.DisplayFor(modelItem => item.Username)</div>
+                </div>
+                <div class="col-md-3 consumer_table_content_item">@Html.DisplayFor(modelItem => item.Address)</div>
+                <div class="col-md-2 consumer_table_content_item">@Html.DisplayFor(modelItem => item.NumberPhone)</div>
+                <div class="col-md-2 consumer_table_content_item">@Html.DisplayFor(modelItem => item.DateOfBirth)</div>
+                <div class="col-md-1 consumer_table_content_item">@Html.DisplayFor(modelItem => item.ListCart)</div>
+            </div>
+        }
+        </div>
+</div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Username)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateOfBirth)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NumberPhone)
-        </td>
-        <td>
-            <img src="@item.Image" style="width: 200px;"/>
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ListCart)
-        </td>
-    </tr>
-}
-</table>
