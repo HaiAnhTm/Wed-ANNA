@@ -5,41 +5,80 @@
     Layout = "~/Views/Shared/_LayoutManager.cshtml";
 }
 
-<div class="container-fluid">
-    <div class="d-flex justify-content-between mb-3 mt-5">
-        <h3>Danh sách loại sản phẩm</h3>
-        <button type="button" class="btn btn-outline-secondary rounded-pill" onclick="showDialogAdd()">Thêm loại sản phẩm</button>
-    </div>
 
-    <table class="table table-hover w-75 ms-5">
-        <thead>
-            <tr class="table-primary">
-                <th scope="col">STT</th>
-                <th scope="col">@Html.DisplayNameFor(model => model.TypeProductName)</th>
-                <th>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (var index = 0; index < Model.Count(); index++)
-            {
-                var item = Model.ElementAt(index);
-                <tr class="table-secondary rounded">
-                    <td>
-                        @(index + 1)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TypeProductName)
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-outline-secondary rounded-pill" onclick="showDialogUpdate('@item.IdTypeProduct', '@item.TypeProductName')">Thay đổi</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+<style>
 
+    .modal-title {
+        font-size: 2.4rem;
+        font-weight: bold;
+    }
+    .btn-close {
+        font-size: 1.8rem;
+    }
+    .form-label{
+        font-size: 1.8rem;
+    }
+    .form-control {
+        border-color: var(--primary-color); 
+        border-radius:20px;
+        height: 46px;
+        align-items:center;
+        padding: 15px;
+        font-size: 1.8rem;
+    }
+    .form-control::placeholder{
+        color: #777;
+        font-size:1.6rem;
+        margin-top:5px;
+    }
+    .btn_tyeproduct_add {
+        width: auto;
+        height: 46px;
+        border-radius: 20px;
+        background-color: var(--primary-color);
+        color: white;
+        padding: 0 20px;
+        font-size: 1.8rem;
+    }
+    .btn_typeproduct_cancel {
+        width: auto;
+        height: 46px;
+        border-radius: 20px;
+        background-color: #777;
+        color: white;
+        padding: 0 20px;
+        font-size: 1.8rem;
+    }
+</style>
+
+
+
+<div class="type_product_header1">
+    <div class="bill_header_texxt">Danh sách loại sản phẩm</div>
+    <button type="button" class="btn btn_add_type_product" onclick="showDialogAdd()" >+ Thêm loại sản phẩm</button>
 </div>
+<div class="bill_table">
+    <div class="bill_table_header">
+        <div class="row">
+            <div class="col-md-2 bill_table_title">Số thứ tự</div>
+            <div class="col-md-8 bill_table_title">Tên loại sản phẩm</div>
+            <div class="col-md-2 bill_table_title">Thao tác</div>
+        </div>
+    </div>
+    <div class="bill_table_content">
+        @for (var index = 0; index < Model.Count(); index++)
+        {
+            var item = Model.ElementAt(index);
+            <div class="row bill_table_content_row">
+                <div class="col-md-2 bill_table_content_item">@(index + 1)</div>
+                <div class="col-md-8 bill_table_content_item">@Html.DisplayFor(modelItem => item.TypeProductName)</div>
+                <button type="button" class="col-md-2 btn_change_type bill_table_content_item" onclick="showDialogUpdate('@item.IdTypeProduct', '@item.TypeProductName')">Thay đổi</button>
+            </div>
+        }
+        </div>
+</div>
+
+
 
 @*Dialog thay doi*@
 <div class="modal" id="modal_dialog_update">
@@ -68,8 +107,8 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary rounded-pill" onclick="actionUpdateTypeProduct()">Cập nhật</button>
-                <button type="button" class="btn btn-dark rounded-pill" onclick="actionDeleteTypeProduct()">Xóa</button>
+                <button type="button" class="btn btn-primary rounded-pill btn_tyeproduct_add" onclick="actionUpdateTypeProduct()">Cập nhật</button>
+                <button type="button" class="btn btn-dark rounded-pill btn_typeproduct_cancel" onclick="actionDeleteTypeProduct()">Xóa</button>
             </div>
         </div>
     </div>
@@ -100,8 +139,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="actionAddTypeProduct()">Ok</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary btn_tyeproduct_add" onclick="actionAddTypeProduct()">Tạo mới</button>
+                <button type="button" class="btn btn-secondary btn_typeproduct_cancel" data-bs-dismiss="modal">Hủy</button>
             </div>
         </div>
     </div>
