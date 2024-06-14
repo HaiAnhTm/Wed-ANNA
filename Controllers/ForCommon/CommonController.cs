@@ -98,8 +98,9 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForCommon
                         type_product = item.TypeProduct.TypeProductName,
                         price = item.Price,
                         image_url = item.Image,
-                        name_product = item.NameProduct
-
+                        name_product = item.NameProduct,
+                        discount = item.Discount,
+                        price_discount = item.CurrencyString2()
                     };
                     jsonData.Add(json);
                     index++;

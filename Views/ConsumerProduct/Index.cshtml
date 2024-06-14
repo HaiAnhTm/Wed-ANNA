@@ -87,7 +87,7 @@
                         {
                             if (item.TypeProductSale.StatusProduct.Equals("Bán hàng"))
                             {
-                                <div class="col l-3">
+                                                                <div class="col l-3">
                                     <div class="best_seller_product-card" data-item-id="@item.IdProduct">
                                         <div class="best_seller_product-image" style="height:340px">
                                             <img src="@item.Image" alt="Gọng kính">
@@ -100,7 +100,7 @@
                                                 </div>
                                             </div>
                                             <button class="best_seller_product-buy-btn">
-                                                <div class="best_seller_product-price">@item.CurrencyString()</div>
+                                                <div class="best_seller_product-price">@item.CurrencyString2()</div>
                                                 <i class="fas fa-chevron-right"></i>
                                             </button>
                                         </div>
@@ -228,7 +228,7 @@
                                 </div>
                             </div>
                             <button class="best_seller_product-buy-btn">
-                                <div class="best_seller_product-price">${item.price}</div>
+                                <div class="best_seller_product-price">${item.price_discount}</div>
                                 <i class="fas fa-chevron-right"></i>
                             </button>
                         </div>

@@ -12,6 +12,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Models
     using DotNet_E_Commerce_Glasses_Web.Utils;
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Web;
 
     public partial class Product
@@ -57,5 +58,12 @@ namespace DotNet_E_Commerce_Glasses_Web.Models
         public HttpPostedFileBase ImageFile { get; set; }
 
         public string CurrencyString() => CurrencyUtils.CurrencyConvertToStringno(this.Price);
+
+         public string CurrencyString2()
+        {
+            return CacularPrice().ToString("#,##0") + " VND";
+        }
+
+        public double CacularPrice() => (double)this.Price * (100 - this.Discount) / 100 ?? (double)this.Price;
     }
 }
