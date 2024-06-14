@@ -44,7 +44,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
         }
 
         [HttpGet]
-        public async Task<ActionResult> Index(string typeProductID, int? page, string search)
+        public async Task<ActionResult> Index(string typeProductID, int? page, string search, int? sort)
         {
             ViewBag.Consumer = consumer;
             ViewBag.TypeProduct = await db.TypeProducts.ToListAsync() as ICollection<TypeProduct>;
@@ -56,10 +56,24 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
             int pageSize = 12;
 
             var sanPhams = await db.Products.Where(item => item.Quantity.Value > 0).ToListAsync();
+
             if (!string.IsNullOrWhiteSpace(typeProductID))
                 sanPhams = sanPhams.Where(item => item.TypeProduct.IdTypeProduct.ToString().Equals(typeProductID)).ToList();
             if (!string.IsNullOrWhiteSpace(search))
                 sanPhams = sanPhams.Where(item => item.NameProduct.ToLower().Contains(search.ToLower())).ToList();
+
+            switch (sort)
+            {
+                case 0:
+                    sanPhams = sanPhams.OrderByDescending(item => item.Price).ToList();
+                    break;
+                case 1:
+                    sanPhams = sanPhams.OrderBy(item => item.Price).ToList();
+                    break;
+                default:
+                    break;
+            }
+
             return View(sanPhams.ToPagedList(pageNumber, pageSize));
         }
 

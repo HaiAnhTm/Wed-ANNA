@@ -66,22 +66,16 @@
 
             <div class="col l-10-4">
                 <div class="home-filter hide-on-mobile-tablet">
-                    @*Todo:lọc và sắp xếp*@
-
-                    @*<span class="home-filter_label">Sắp xếp theo</span>
-                    <button class="btn home-filter_btn"> Phổ biến</button>
-                    <button class="btn btn-primary_home-filter home-filter_btn"> Mới nhất</button>
-                    <button class="btn home-filter_btn"> Bán chạy</button>*@
-
                     <div class="select-input">
                         <span class="select-input-label">Giá</span>
                         <i class="fa-solid fa-chevron-down"></i>
                         <ul class="select-input-list">
                             <li class="select-input-items">
-                                <a href="" class="select-input-link">Giá: Thấp đến cao</a>
+                                <a href='/ConsumerProduct?sort=0' class="select-input-link">Giá: Thấp đến cao</a>
                             </li>
+                            
                             <li class="select-input-items">
-                                <a href="" class="select-input-link">Giá: Cao đến thấp</a>
+                                <a href='/ConsumerProduct?sort=1' class="select-input-link">Giá: Cao đến thấp</a>
                             </li>
                         </ul>
                     </div>
@@ -400,7 +394,6 @@
                 } );
             } )
             buttonConfirmId.removeEventListener( 'click' )
-
         }
 
         //document.addEventListener( "DOMContentLoaded", function ()
