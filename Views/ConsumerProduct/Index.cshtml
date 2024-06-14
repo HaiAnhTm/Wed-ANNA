@@ -215,26 +215,26 @@
             products.forEach( ( item ) =>
             {
                 var htmlContent = `
-                 <div class="col l-3">
-                     <div class="best_seller_product-card" data-item-id="${item.id_product}">
-                         <div class="best_seller_product-image" style="height:390px">
-                             <img src="${item.image_url}" alt="Gọng kính">
-                         </div>
-                         <div class="best_seller_product-details">
-                             <div class="best_seller_product-name">${item.name_product}</div>
-                             <div class="best_seller_product-pricing">
-                                 <div class="best_seller_product-discount">
+                <div class="col l-3">
+                    <div class="best_seller_product-card" data-item-id="${item.id_product}">
+                        <div class="best_seller_product-image" style="height:390px">
+                            <img src="${item.image_url}" alt="Gọng kính">
+                        </div>
+                        <div class="best_seller_product-details">
+                            <div class="best_seller_product-name">${item.name_product}</div>
+                            <div class="best_seller_product-pricing">
+                                <div class="best_seller_product-discount">
                                     Phân loại: <span class="best_seller_product-discount-price">${item.type_product}</span>
-                                 </div>
-                             </div>
-                             <button class="best_seller_product-buy-btn">
-                                 <div class="best_seller_product-price">${item.price}</div>
-                                 <i class="fas fa-chevron-right"></i>
-                             </button>
-                         </div>
-                     </div>
-                 </div>
-               `;
+                                </div>
+                            </div>
+                            <button class="best_seller_product-buy-btn">
+                                <div class="best_seller_product-price">${item.price}</div>
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
                 productDetailId.insertAdjacentHTML( 'beforeend', htmlContent );
             } );
 
@@ -258,31 +258,7 @@
                     }
                 } );
             } );
-
         }
-        document.addEventListener( "DOMContentLoaded", function ()
-        {
-            var productCards = document.querySelectorAll( ".best_seller_product-card" );
-
-            productCards.forEach( function ( card )
-            {
-                card.addEventListener( "click", function ( event )
-                {
-                    var target = event.target;
-                    var itemId = card.dataset.itemId;
-
-                    if ( target.closest( ".best_seller_product-buy-btn" ) )
-                    {
-                        updateListCart( itemId, 1 )
-                        console.log( "Buy button clicked for item with ID: " + itemId );
-                    } else
-                    {
-                        var itemId = card.dataset.itemId;
-                        window.location.href = "/ConsumerProduct/DetailProduct?product_id=" + itemId;
-                    }
-                } );
-            } );
-        } );
 
         function updateListCart ( idProduct, quantity )
         {
