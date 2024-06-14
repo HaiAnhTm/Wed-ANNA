@@ -19,10 +19,13 @@
 </div>
 
 <div class="grid wide">
+
+
     <div class="body_best_seller_product">
         <div class="seller_product_title">BÁN CHẠY NHẤT</div>
-        <div class="seller_product_list">
-            <div class="col l-3">
+        <div class="seller_product_list" id="product_highlight_list">
+
+            <!-- <div class="col l-3">
                 <div class="best_seller_product-card">
                     <div class="best_seller_product-image" style="height:380px">
                         <img src="~/Assets/images/img/glass_img.jpeg" alt="Gọng kính">
@@ -41,7 +44,8 @@
                         </button>
                     </div>
                 </div>
-            </div>
+            </div> -->
+
 
         </div>
     </div>
@@ -230,6 +234,78 @@
     var linkElement = document.createElement("link");
     linkElement.rel = "stylesheet";
     linkElement.type = "text/css";
-    document.head.appendChild(linkElement);
+    document.head.appendChild( linkElement );
+    initializeHighLightProduct()
+        
+    function initializeHighLightProduct (){
+        $.ajax( {
+            url: "/Common/GetProduct",
+            type: "POST",
+            data: {},
+            success: function ( result )
+            {
+                if ( result.status )
+                {
+                    showHighLightProduct(result.data)
+                } else
+                {
+                
+                }
+                },
+            error: function ()
+            {
+                console.error( "AJAX request failed" );
+            },
+        } );
+    }
+
+    function showHighLightProduct ( products ) {
+        var productDetailId = document.getElementById('product_highlight_list');
+
+        productDetailId.innerHTML = "";
+
+        products.forEach( ( item ) =>
+        {
+            var htmlContent = `
+                <div class="col l-3">
+                    <div class="best_seller_product-card" data-item-id="${item.id_product}">
+                        <div class="best_seller_product-image" style="height:390px">
+                            <img src="${item.image_url}" alt="Gọng kính">
+                        </div>
+                    <div class="best_seller_product-details">
+                        <div class="best_seller_product-name">${item.name_product}</div>
+                    <div class="best_seller_product-pricing">
+                    <div class="best_seller_product-discount">
+                            Phân loại: <span class="best_seller_product-discount-price">${item.type_product}</span>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            `;
+                productDetailId.insertAdjacentHTML( 'beforeend', htmlContent );
+        } );
+
+        var productCards = document.querySelectorAll( ".best_seller_product-card" );
+
+        productCards.forEach( function ( card )
+        {
+            card.addEventListener( "click", function ( event )
+            {
+                var target = event.target;
+                var itemId = card.dataset.itemId;
+
+                if ( target.closest( ".best_seller_product-buy-btn" ) )
+                {
+                    updateListCart( itemId, 1 )
+                    console.log( "Buy button clicked for item with ID: " + itemId );
+                } else
+                {
+                    var itemId = card.dataset.itemId;
+                    window.location.href = "/ConsumerProduct/DetailProduct?product_id=" + itemId;
+                }
+            } );
+        } );
+    }
 </script>
 }
