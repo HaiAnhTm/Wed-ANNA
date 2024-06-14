@@ -25,7 +25,7 @@
                     <div class="detail_product_body_price">
                         @*TODO: truy vấn giá mới*@
                         <div class="detail_product_body_old_price">@*@Model.Price đ*@</div>
-                        <div class="detail_product_body_new_price">@Model.Price đ</div>
+                        <div class="detail_product_body_new_price">@Model.CurrencyString2()</div>
                     </div>
                     @*TODO: truy vấn loại sản phẩm Ví dụ: Phân Loại: Tròng kính*@
                     <div class="detail_product_body_right_type_product">Phân Loại: @Model.TypeProduct.TypeProductName</div>
@@ -52,7 +52,7 @@
                         </div>
 
                         @*TODO: truy vấn giá mới*@
-                        <button class="add-to-cart-btn" onclick="updateListCart('@Model.IdProduct', document.getElementById('quantity-input').value)">Thêm vào giỏ • @Model.Price</button>
+                        <button class="add-to-cart-btn" onclick="updateListCart('@Model.IdProduct', document.getElementById('quantity-input').value)">Thêm vào giỏ • @Model.CurrencyString2()</button>
 
                     </div>
                     <div class="remaining_products">
