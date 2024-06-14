@@ -154,12 +154,11 @@
                 <div class="total_pay_text">
                     <div class="total_pay_text_header">@Model.NameProduct</div>
                     @*giá cũ*@
-               
                 </div>
             </div>
             <div class="total_pay_right">
                 @*TODO:giá mới sau khi đã giảm giá*@
-                <div class="total_pay_text_price_discount">@Model.Price đ</div>
+                <div class="total_pay_text_price_discount">@Model.CurrencyString2()</div>
                 <button class="total_pay_btn_price" onclick="updateListCart(`@Model.IdProduct`, `1`)">Thêm vào giỏ hàng</button>
             </div>
         </div>

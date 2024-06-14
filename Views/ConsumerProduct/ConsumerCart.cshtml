@@ -4,7 +4,6 @@
     Layout = ViewBag.Consumer != null ? "~/Views/Shared/_LayoutConsumer.cshtml" : "~/Views/Shared/_Layout.cshtml";
 }
 
-
 <style>
     body {
         margin: -15px 0;
@@ -55,8 +54,8 @@
                             <div class="content_header_text">Tổng cộng</div>
                         </div>
                     </div>
-                 @foreach (var item in (IEnumerable<DotNet_E_Commerce_Glasses_Web.Models.ProductSaleModel>)ViewBag.ListCart)
-                  {
+                @foreach (var item in (IEnumerable<DotNet_E_Commerce_Glasses_Web.Models.ProductSaleModel>)ViewBag.ListCart)
+                {
                     <div class="cart_content_body">
                             <div class="col l-5 cart_content_name">
                                 <input type="checkbox" class="cart_content_input" data-product-id="@item.IdProduct">
@@ -68,15 +67,13 @@
                                 </div>
                             </div>
                             <div class="col l-1 content_body_text">
-                                <div class="content_body_text-1">@item.CurrencyString()</div>
+                                <div class="content_body_text-1">@item.CurrencyString2()</div>
                             </div>
                             <div class="col l-2 content_body_text">
                                 <div class="cart_quantity-selector">
                                     <div class="cart_quantity-selector_left">
                                         <button type="button" class="cart_minus-btn" onclick="updateListCart(`@item.IdProduct`, `-1`)">-</button>
-                                        <input type="text" min="1" class="cart_quantity-input"
-                                               inputmode="numeric" pattern="[0-9]*"
-                                               onkeypress='return event.charCode >= 48 && event.charCode <= 57' value="@item.QuanitySale">
+                                        <input type="text" min="1" class="cart_quantity-input" inputmode="numeric" pattern="[0-9]*" onkeypress='return event.charCode >= 48 && event.charCode <= 57' value="@item.QuanitySale">
                                         <button type="button" class="cart_plus-btn"  onclick="updateListCart(`@item.IdProduct`, `1`)">+</button>
                                     </div>
                                 </div>
@@ -88,7 +85,7 @@
                                 <div class="content_body_text-1">@item.getTotalProduct()</div>
                             </div>
                         </div>
-                  }
+                }
                 </div>
             </div>
             <div class="col l-3">

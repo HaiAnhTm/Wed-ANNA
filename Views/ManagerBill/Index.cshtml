@@ -27,7 +27,7 @@
                 <div class="col-md-1 bill_table_content_item">@item.valuePercent()</div>
                 <div class="col-md-2 bill_table_content_item">@item.currencyTotalPay()</div>
                 <div class="col-md-2 bill_table_content_item">@item.datePurchaseStr()</div>
-                <div class="col-md-2 bill_table_content_item">@Html.DisplayNameFor(model => model.StatusDelivery.Status)</div>
+                <div class="col-md-2 bill_table_content_item">@item.StatusDelivery.Status</div>
                 <button style="background: none; border: none; padding: 0; margin: 0; text-align: unset; color: blue;" class="col-md-1 bill_table_content_item" onclick="actionDialogDetailBill(`@item.IdBild`)">Chi tiết</button>
             </div>
         </div>
