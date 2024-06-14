@@ -118,7 +118,8 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
                     discount_product = item.Discount,
                     quantity = item.Quantity,
                     type_product = item.TypeProduct?.TypeProductName, 
-                    status_product = item.TypeProductSale?.StatusProduct, 
+                    status_product = item.TypeProductSale?.StatusProduct,
+                    price_string = item.CurrencyString()
                 };
                 jsonResult.Add(jsonData);
             }
@@ -161,6 +162,15 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
                     if (fileSave != null)
                         product.Image = fileSave;
                 }
+                if (!product.Discount.HasValue || product.Discount.Value > 100)
+                {
+                    product.Discount = 0;
+                }
+
+                if (!product.Quantity.HasValue)
+                    product.Quantity = 0;
+                if (product.Description == null)
+                    product.Description = String.Empty;
 
                 db.Products.Add(product);
                 await db.SaveChangesAsync();
@@ -232,6 +242,16 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
                     if (fileSave != null)
                         product.Image = fileSave;
                 }
+
+                if (!product.Discount.HasValue || product.Discount.Value > 100)
+                {
+                    product.Discount = 0;
+                }
+
+                if (!product.Quantity.HasValue)
+                    product.Quantity = 0;
+                if (product.Description == null)
+                    product.Description = String.Empty;
                 db.Entry(product).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");

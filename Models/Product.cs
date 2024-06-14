@@ -57,7 +57,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Models
 
         public HttpPostedFileBase ImageFile { get; set; }
 
-        public string CurrencyString() => CurrencyUtils.CurrencyConvertToStringno(this.Price);
+        public string CurrencyString() => (this.Price ?? 0).ToString("#,##0") + " VND";
 
          public string CurrencyString2()
         {

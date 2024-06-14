@@ -27,7 +27,7 @@
                 </div>
                 <div class="col-md-3 consumer_table_content_item">@Html.DisplayFor(modelItem => item.Address)</div>
                 <div class="col-md-2 consumer_table_content_item">@Html.DisplayFor(modelItem => item.NumberPhone)</div>
-                <div class="col-md-2 consumer_table_content_item">@Html.DisplayFor(modelItem => item.DateOfBirth)</div>
+                <div class="col-md-2 consumer_table_content_item">@item.GetDateOfBirthAsString()</div>
                 <div class="col-md-1 consumer_table_content_item">@Html.DisplayFor(modelItem => item.ListCart)</div>
             </div>
         }

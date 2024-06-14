@@ -170,8 +170,8 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
                     var a = db.Discounts.FirstOrDefault(item => item.CodeDiscount.Equals(code));
                     bill.Discount = db.Discounts.FirstOrDefault(item => item.CodeDiscount.Equals(code));
                 }
-                bill.TotalBill = CalculatorTotalBill(temp);
-                bill.TotalPay = CalculatorTotalPay(bill);
+                bill.TotalBill = (long)CalculatorTotalBill(temp);
+                bill.TotalPay = (long)CalculatorTotalPay(bill);
 
                 ViewBag.ListCart = temp.Values;
                 ViewBag.Consumer = consumer;
@@ -224,17 +224,17 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
                     });
             }
         }
-        private long CalculatorTotalBill(Dictionary<int, ProductSaleModel> dicSale)
+        private double CalculatorTotalBill(Dictionary<int, ProductSaleModel> dicSale)
         {
-            long result = 0;
-            dicSale.Values.ForEach(item => result += item.QuanitySale * item.Price.Value);
+            double result = 0;
+            dicSale.Values.ForEach(item => result += item.QuanitySale * (double)item.Price.Value * (100 - item.Discount.Value) / 100);
             return result;
         }
 
-        private long CalculatorTotalPay(Bill bill)
+        private double CalculatorTotalPay(Bill bill)
         {
             if (bill.Discount != null && bill.Discount.PercentValue > 0)
-                return (long)(bill.TotalBill * (100 - bill.Discount.PercentValue) / 100);
+                return (double)(bill.TotalBill * (100 - bill.Discount.PercentValue) / 100);
             else
                 return bill.TotalBill ?? 0;
         }
@@ -265,8 +265,8 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
                             temp.Add(key, new ProductSaleModel(value, product));
                     }
                 }
-                bill.TotalBill = CalculatorTotalBill(temp);
-                bill.TotalPay = CalculatorTotalPay(bill);
+                bill.TotalBill = (long)CalculatorTotalBill(temp);
+                bill.TotalPay = (long)CalculatorTotalPay(bill);
 
                 ViewBag.ListCart = temp.Values;
                 ViewBag.Consumer = consumer;
@@ -292,8 +292,8 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
                         temp.Add(key, new ProductSaleModel(value, db.Products.FirstOrDefault(item => item.IdProduct.Equals(key))));
                     }
                 }
-                bill.TotalBill = CalculatorTotalBill(temp);
-                bill.TotalPay = CalculatorTotalPay(bill);
+                bill.TotalBill = (long)CalculatorTotalBill(temp);
+                bill.TotalPay = (long)CalculatorTotalPay(bill);
 
                 ViewBag.ListCart = temp.Values;
                 ViewBag.Consumer = consumer;
@@ -457,8 +457,8 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
 
                 bill.DetailBill = detailBill;
                 bill.DateOfPurchase = DateTime.Now;
-                bill.TotalBill = CalculatorTotalBill(temp);
-                bill.TotalPay = CalculatorTotalPay(bill);
+                bill.TotalBill = (long)CalculatorTotalBill(temp);
+                bill.TotalPay = (long)CalculatorTotalPay(bill);
                 bill.StatusDelivery = await db.StatusDeliveries.FirstOrDefaultAsync(item => item.Status.Equals("Chưa giao hàng"));
 
                 dicCart.Clear();

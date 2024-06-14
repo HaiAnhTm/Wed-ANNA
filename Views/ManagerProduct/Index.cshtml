@@ -262,48 +262,48 @@
     
     <!-- Mô tả -->
     <div class="col-md-2 adProduct-product">
-      <div class="adProduct-product-manucafer" style="overflow: hidden;
-                                                       display: -webkit-box;
-                                                       -webkit-line-clamp: 3;
-                                                       -webkit-box-orient: vertical;
-                                                       text-overflow: ellipsis;
-                                                       height: 4.5em;
-                                                       line-height: 1.5em;">${item.description}</div>
+        <div class="adProduct-product-manucafer" style="overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            text-overflow: ellipsis;
+            height: 4.5em;
+            line-height: 1.5em;">${item.description}</div>
+        </div>
+
+            <!-- Đơn Giá -->
+        <div class="col-md-2 adProduct-product-unitprice adProduct-product">
+            <div class="adProduct-product-manucafer" style="margin-left:10px;">${item.price_string}</div>
+        </div>
+
+        <!-- Giảm Giá -->
+            <div class="col-md-1 adProduct-product-unitprice adProduct-product">
+            <div class="adProduct-product-manucafer">${item.discount_product}%</div>
+        </div>
+
+            <!-- Số Lượng -->
+        <div class="col-md-1 adProduct-product-unitprice adProduct-product">
+            <div class="adProduct-product-manucafer">${item.quantity}</div>
+        </div>
+
+            <!-- Loại Sản Phẩm -->
+        <div class="col-md-1 adProduct-product-quantity adProduct-product">
+            <div class="adProduct-product-manucafer product-quantity">${item.type_product}</div>
+        </div>
+
+            <!-- Trạng Thái Sản Phẩm -->
+        <div class="col-md-1 adProduct-product">
+            <div class="adProduct-product-manucafer">${item.status_product}</div>
+        </div>
+
+            <!-- Thao Tác -->
+        <div class="col-md-1 adProduct-product">
+            <a href="/ManagerProduct/UpdateProduct?id=${item.id_product}" class="product-Update-operation icon-update">Cập nhật</a>
+            <div class="product-Update-operation" id="iconDelete" onclick="showDeleteDiaLogConfirm('${item.id_product}')">Xóa</div>
+        </div>
     </div>
 
-    <!-- Đơn Giá -->
-    <div class="col-md-2 adProduct-product-unitprice adProduct-product">
-      <div class="adProduct-product-manucafer" style="margin-left:10px;">₫${item.price}</div>
-    </div>
-
-    <!-- Giảm Giá -->
-    <div class="col-md-1 adProduct-product-unitprice adProduct-product">
-      <div class="adProduct-product-manucafer">${item.discount_product}%</div>
-    </div>
-
-    <!-- Số Lượng -->
-    <div class="col-md-1 adProduct-product-unitprice adProduct-product">
-      <div class="adProduct-product-manucafer">${item.quantity}</div>
-    </div>
-
-    <!-- Loại Sản Phẩm -->
-    <div class="col-md-1 adProduct-product-quantity adProduct-product">
-      <div class="adProduct-product-manucafer product-quantity">${item.type_product}</div>
-    </div>
-
-    <!-- Trạng Thái Sản Phẩm -->
-    <div class="col-md-1 adProduct-product">
-      <div class="adProduct-product-manucafer">${item.status_product}</div>
-    </div>
-
-    <!-- Thao Tác -->
-    <div class="col-md-1 adProduct-product">
-      <a href="/ManagerProduct/UpdateProduct/${item.id_product}" class="product-Update-operation icon-update">Cập nhật</a>
-      <div class="product-Update-operation" id="iconDelete" onclick="showDeleteDiaLogConfirm('${item.id_product}')">Xóa</div>
-    </div>
-  </div>
-
-               `;
+            `;
                 productDetailId.insertAdjacentHTML( 'beforeend', htmlContent );
             } );
         }

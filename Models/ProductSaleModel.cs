@@ -13,7 +13,6 @@ namespace DotNet_E_Commerce_Glasses_Web.Models
         {
             this.QuanitySale = quanitySale;
         }
-
-        public string getTotalProduct() => CurrencyUtils.CurrencyConvertToString(this.QuanitySale * this.Price);
+        public string getTotalProduct() => (this.QuanitySale * (this.Price ?? 0)* (100 - this.Discount ?? 0) / 100).ToString("#,##0") + " VND";
     }
 }
