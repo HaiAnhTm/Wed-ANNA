@@ -49,9 +49,14 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
                 {
                     var fileSave = MoveImageToProject(updateConsumer.ImageFile);
                     if (fileSave != null)
-                        updateConsumer.Image = fileSave;
+                        consumer.Image = fileSave;
                 }
-                db.Consumers.AddOrUpdate(updateConsumer);
+                consumer.Username= updateConsumer.Username;
+                consumer.Address = updateConsumer.Address;
+                consumer.DateOfBirth = updateConsumer.DateOfBirth;
+                consumer.NumberPhone = updateConsumer.NumberPhone;
+
+                db.Consumers.AddOrUpdate(consumer);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }

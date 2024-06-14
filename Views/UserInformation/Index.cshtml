@@ -34,7 +34,7 @@
                             <div class="profile-user-img_nav">
                                 <img src="@Model.Image" alt="" class="user_info_nav_top_img" style=" background-size: auto; display: block; width: 100%; height: 100%; object-fit: cover; object-position: center;">
                             </div>
-                            <div class="user_info_nav_text space_user_info">kaitokid1122003@gmail.com</div>
+                            <div class="user_info_nav_text space_user_info">@Model.Account.Username</div>
                         </div>
                         <div class="user_info_nav_bottom">
                             <div class="info_nav_bottom_items user_info_nav_bottom_active">
@@ -82,12 +82,11 @@
                             </div>
                             <div class="profile_body_infomation">
                                 <div class="profile-title-text">Địa Chỉ<span class="xxx">*</span>:</div>
-                                <textarea type="text" class="profile_body_textarea_text"
-                                          placeholder="Nhập Địa chỉ" name="Address"> @Model.Address</textarea>
+                                <textarea type="text" class="profile_body_textarea_text" placeholder="Nhập Địa chỉ" name="Address"> @Model.Address</textarea>
                             </div>
 
                             <div class="btn_change_profile">
-                                <button class="btn  btn-change-profile_unchange">Hủy</button>
+                                <button type="button" class="btn  btn-change-profile_unchange">Hủy</button>
                                 <button type="submit" class="btn  btn-change-profile_save">Lưu Thay Đổi</button>
                             </div>
                         </div>
