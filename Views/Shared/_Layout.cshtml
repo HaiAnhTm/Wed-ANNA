@@ -25,7 +25,7 @@
             <div class="top_header">
                 <div class="top_header_left">GIẢM NGAY 15% CHO ĐƠN HÀNG ĐẦU TIÊN</div>
                 <div class="top_header_right">
-                    <div class="top_header_right_items">Chính Sách</div>
+                    <a href="@Url.Action("Index", "Home")" class="top_header_right_items">Chính Sách</a>
                     <a href="@Url.Action("", "LoginAccount", null, Request.Url.Scheme)" class="top_header_right_items">
                         <i class="fa-solid fa-user"></i>
                         Tài Khoản
@@ -72,7 +72,7 @@
                     </div>
 
                     <div class="nav_items_product">
-                        <a href="" class="nav_link">
+                        <a href="/Home/Index" class="nav_link">
                             Tìm Cửa Hàng
                             <i class="fa-solid fa-location-dot"></i>
                         </a>
@@ -105,29 +105,29 @@
                     </div>
 
                     <div class="nav_items_product">
-                        <a href="" class="nav_link">
+                        <a href="/Home/Index" class="nav_link">
                             Xem Thêm
                             <i class="fa-solid fa-chevron-down chevron-manage-icon"></i>
                         </a>
 
                         <div class="nav_detail_list">
                             <div class="nav_detail_items">
-                                <a href="">Chọn Kính Theo Gương Mặt</a>
+                                <a href="/Home/Index#kind_journey">Chọn Kính Theo Gương Mặt</a>
                                 <i class="fa-solid fa-arrow-right"></i>
                             </div>
                             <div class="nav_detail_items">
-                                <a href="">Về Chúng Tôi</a>
+                                <ahref="/Home/Index">Về Chúng Tôi</a>
                                 <i class="fa-solid fa-arrow-right"></i>
                             </div>
                             <div class="nav_detail_items">
-                                <a href="">Blog</a>
+                                <a href="/Home/Index#kind_journey">Blog</a>
                                 <i class="fa-solid fa-arrow-right"></i>
                             </div>
                         </div>
                     </div>
 
                     <div class="nav_items_product">
-                        <a href="#kind_journey" class="nav_link">
+                        <a href="/Home/Index#kind_journey" class="nav_link">
                             Hành Trình Tử Tế
                         </a>
                     </div>

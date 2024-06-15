@@ -37,7 +37,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
                 {
                     item.StatusDiscount = db.StatusDiscounts.FirstOrDefault(item2 => item2.Status.Equals("Hết hạn"));
                     db.Discounts.AddOrUpdate(item);
-                    db.SaveChanges();   
+                    db.SaveChanges();
                 }
             });
         }
@@ -69,7 +69,8 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
                     .Where(item => item.TitleDiscount.ToLower().Contains(search.ToLower()))
                     .Include(d => d.StatusDiscount)
                     .ToListAsync();
-            }else
+            }
+            else
             {
                 discounts = await db.Discounts
                     .Include(d => d.StatusDiscount)
@@ -127,7 +128,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
             {
                 if (item == null)
                 {
-                    continue; 
+                    continue;
                 }
 
                 var jsonData = new
@@ -144,8 +145,9 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
                 jsonResult.Add(jsonData);
             }
 
-            return Json(new {
-                status = true, 
+            return Json(new
+            {
+                status = true,
                 data = jsonResult
             },
             JsonRequestBehavior.AllowGet);
@@ -229,8 +231,8 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
                 if (discount.ImageFile != null)
                 {
                     var pathSave = MoveImageToProject(discount.ImageFile);
-                        if(pathSave != null)
-                            discount.Image = pathSave;
+                    if (pathSave != null)
+                        discount.Image = pathSave;
                 }
                 if (discount.DateOfStart > discount.DateOfEnd)
                     discount.DateOfEnd = discount.DateOfStart;

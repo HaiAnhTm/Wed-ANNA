@@ -23,8 +23,8 @@
             <div class="top_header">
                 <div class="top_header_left">GIẢM NGAY 15% CHO ĐƠN HÀNG ĐẦU TIÊN</div>
                 <div class="top_header_right">
-                    <div class="top_header_right_items">Chính Sách</div>
-                    <div class="top_header_right_items">Tra cứu đơn hàng</div>
+                    @*<div class="top_header_right_items">Chính Sách</div>*@
+                    @*<div class="top_header_right_items">Tra cứu đơn hàng</div>*@
                     <a href="@Url.Action("Index", "UserInformation", null, Request.Url.Scheme)" class="top_header_right_items">
                         <i class="fa-solid fa-user"></i>
                         Tài Khoản
@@ -69,8 +69,8 @@
                         </div>
                     </div>
 
-                    <div class="nav_items_product">
-                        <a href="" class="nav_link">
+                    <div class="nav_items_product" >
+                        <a href="@Url.Action("Index", "Home")" class="nav_link">
                             Tìm Cửa Hàng
                             <i class="fa-solid fa-location-dot"></i>
                         </a>
@@ -78,7 +78,7 @@
 
                     <div class="header-search">
                         <div class="search-input-wrap">
-                            <input type="text" class="header-search-input" placeholder="Các mẫu kính râm hot...">
+                            <input type="text" class="header-search-input" id="all_search_product_textfield" placeholder="Các mẫu kính râm hot...">
                             <div class="header-search-history">
                                 <h3 class="search-history-heading">Lịch sử tìm kiếm</h3>
                                 <ul class="search-history-list">
@@ -97,35 +97,35 @@
                                 </ul>
                             </div>
                         </div>
-                        <button class="header-search-btn">
+                        <button type="button" class="header-search-btn" id="all_search_product_button">
                             <i class="fa-solid fa-magnifying-glass header-search-btn-icon"></i>
                         </button>
                     </div>
 
                     <div class="nav_items_product">
-                        <a href="" class="nav_link">
+                        <a href="@Url.Action("Index", "Home")" class="nav_link">
                             Xem Thêm
                             <i class="fa-solid fa-chevron-down chevron-manage-icon"></i>
                         </a>
 
                         <div class="nav_detail_list">
                             <div class="nav_detail_items">
-                                <a href="">Chọn Kính Theo Gương Mặt</a>
+                                <a href="@Url.Action("Index", "Home")">Chọn Kính Theo Gương Mặt</a>
                                 <i class="fa-solid fa-arrow-right"></i>
                             </div>
                             <div class="nav_detail_items">
-                                <a href="">Về Chúng Tôi</a>
+                                <a href="@Url.Action("Index", "Home")" >Về Chúng Tôi</a>
                                 <i class="fa-solid fa-arrow-right"></i>
                             </div>
                             <div class="nav_detail_items">
-                                <a href="">Blog</a>
+                                <a href="@Url.Action("Index", "Home")">Blog</a>
                                 <i class="fa-solid fa-arrow-right"></i>
                             </div>
                         </div>
                     </div>
 
                     <div class="nav_items_product">
-                        <a href="#kind_journey" class="nav_link">
+                        <a href="@Url.Action("Index", "Home")" class="nav_link">
                             Hành Trình Tử Tế
                         </a>
                     </div>
@@ -211,6 +211,7 @@
 
     <script>
         initializeCart()
+        initializeSearchProduct()
 
         function initializeCart() {
             loadCart(
@@ -321,7 +322,17 @@
                 header.classList.remove('header-hidden'); // Hiện header
             }
             lastScrollTop = scrollTop;
-        });
+        } );
+
+        function initializeSearchProduct ()
+        {
+            document.getElementById('all_search_product_button').addEventListener( 'click', function ()
+            {
+                var searchText = document.getElementById( 'all_search_product_textfield' ).value;
+
+                window.location.href = `/ConsumerProduct?search=${ encodeURIComponent( searchText ) }`;
+            } );
+        }
 
         //// slider
         //document.addEventListener( 'DOMContentLoaded', function ()

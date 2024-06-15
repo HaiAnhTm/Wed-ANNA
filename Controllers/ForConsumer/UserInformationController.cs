@@ -1,15 +1,13 @@
-﻿using DotNet_E_Commerce_Glasses_Web.Sessions;
-using DotNet_E_Commerce_Glasses_Web.Models;
-using System.Linq;
-using System.Web.Mvc;
-using System.IO;
-using System.Web;
-using System;
-using System.Threading.Tasks;
-using System.Data.Entity.Migrations;
-using DotNet_E_Commerce_Glasses_Web.App_Start;
-using System.Data.Entity.Migrations.Model;
+﻿using DotNet_E_Commerce_Glasses_Web.Models;
+using DotNet_E_Commerce_Glasses_Web.Sessions;
 using DotNet_E_Commerce_Glasses_Web.Utils;
+using System;
+using System.Data.Entity.Migrations;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
 
 namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
 {
@@ -33,7 +31,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
             if (consumer == null)
                 return RedirectToAction("Index", "LoginAccount");
 
-            ViewBag.Consumer = consumer;    
+            ViewBag.Consumer = consumer;
             return View(consumer);
         }
 
@@ -51,7 +49,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
                     if (fileSave != null)
                         consumer.Image = fileSave;
                 }
-                consumer.Username= updateConsumer.Username;
+                consumer.Username = updateConsumer.Username;
                 consumer.Address = updateConsumer.Address;
                 consumer.DateOfBirth = updateConsumer.DateOfBirth;
                 consumer.NumberPhone = updateConsumer.NumberPhone;

@@ -8,30 +8,30 @@ const notifyUsername = document.getElementById('notify_username')
 const notifyPassword = document.getElementById('notify_password')
 const notifyStatus = document.getElementById('notify_status')
 
- inputUsername.addEventListener('click', function () {
-    removeTextContent(notifyUsername)
-    removeTextContent(notifyStatus)
- })
- inputPassword.addEventListener('click', function () {
-    removeTextContent(notifyPassword)
-    removeTextContent(notifyStatus)
- })
+inputUsername.addEventListener('click', function () {
+   removeTextContent(notifyUsername)
+   removeTextContent(notifyStatus)
+})
+inputPassword.addEventListener('click', function () {
+   removeTextContent(notifyPassword)
+   removeTextContent(notifyStatus)
+})
 
 inputUsername.addEventListener('blur', function (event) {
-    if (inputEmpty(notifyUsername, inputUsername.value))
-       return
- })
+   if (inputEmpty(notifyUsername, inputUsername.value))
+      return
+})
 
 inputPassword.addEventListener('blur', function (event) {
-    if (inputEmpty(notifyPassword, inputPassword.value))
-       return
- })
+   if (inputEmpty(notifyPassword, inputPassword.value))
+      return
+})
 
 buttonLogin.addEventListener('click', function () {
    loadLogInButton()
-    if (
-        notifyUsername.textContent.length == 0 &&
-        notifyPassword.textContent.length == 0) {
+   if (
+      notifyUsername.textContent.length == 0 &&
+      notifyPassword.textContent.length == 0) {
       loginAccountSuccess(
          inputUsername.value,
          inputPassword.value,
@@ -61,7 +61,7 @@ buttonLogin.addEventListener('click', function () {
 
 async function loginAccountSuccess(userName, password, onSuccess, onFailure) {
    $.ajax({
-       url: '/LoginAccount',
+      url: '/LoginAccount',
       type: 'POST',
       data: {
          Username: userName,

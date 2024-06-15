@@ -62,8 +62,7 @@
                     </div>*@
                     <div class="pay_payment_items">
                         <div class="pay_payment_items_title">Thông tin bổ sung:</div>
-                        <textarea type="text" class="pay_payment_items_textarea_text"
-                                  placeholder="Nhập Địa chỉ chi tiết" ></textarea>
+                        <textarea type="text" class="pay_payment_items_textarea_text" placeholder="Nhập Địa chỉ chi tiết" ></textarea>
                     </div>
                     <div class="pay_payment_methods">Phương thức thanh toán</div>
                     <div class="pay_payment_methods_items">
@@ -97,7 +96,6 @@
                         @foreach (var item in (IEnumerable<DotNet_E_Commerce_Glasses_Web.Models.ProductSaleModel>)ViewBag.ListCart)
                         {
                             <div class="bill_content_product">
-                               
                                     <div class="bill_content_product_left">
                                         <img src="@item.Image" alt="" class="bill_content_product_img">
                                         <div class="bill_content_body_text">
@@ -135,8 +133,6 @@
                                 <div class="bill_content_expens_price">@Model.currencyTotalPay()đ</div>
                             </div>
                         </div>
-
-
                 </div>
             </div>
         </div>

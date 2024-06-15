@@ -15,23 +15,19 @@
                 </div>
                 <form action="/RegisterAccount/Index" method="POST" id="form-signIn" class="auth-form_form">
                     <div class="auth-form_gr">
-                        <input type="text" class="form-control" placeholder="Tài khoản" id="input-username"
-                               name="Username">
+                        <input type="text" class="form-control" placeholder="Tài khoản" id="input-username" name="Username">
                         <span class="text-warning" id="notify_username"></span>
                     </div>
                     <div class="auth-form_gr">
-                        <input type="password" class="form-control" placeholder="Mật khẩu" id="input-password"
-                               name="Password">
+                        <input type="password" class="form-control" placeholder="Mật khẩu" id="input-password" name="Password">
                         <span class="text-warning" id="notify_password"></span>
                     </div>
                     <div class="auth-form_gr">
-                        <input type="password" class="form-control" placeholder="Xác nhận mật khẩu"
-                               id="input-password-confirm">
+                        <input type="password" class="form-control" placeholder="Xác nhận mật khẩu" id="input-password-confirm">
                         <span class="text-warning" id="notify_password_confirm"></span>
                     </div>
                     <div class="auth-form_gr">
-                        <input type="text" class="form-control" placeholder="Tên khách hàng" id="input-name"
-                               name="Name">
+                        <input type="text" class="form-control" placeholder="Tên khách hàng" id="input-name" name="Name">
                         <span class="text-warning" id="notify_name"></span>
                     </div>
                 </form>
@@ -42,17 +38,17 @@
                         Đăng Ký Ngay
                     </button>
                 </div>
-                <div class="login_or">Hoặc</div>
-                <div class="auth-form-socials">
-                    <a href="" class="btn auth-form-face">
-                        <i class="fa-brands fa-square-facebook"></i>
-                        &emsp;Đăng nhập với Facebook
-                    </a>
-                    <a href="" class="btn auth-form-gg">
-                        <i class="fa-brands fa-google"></i>
-                        &emsp;Đăng nhập với Google
-                    </a>
-                </div>
+                    @*<div class="login_or">Hoặc</div>
+                    <div class="auth-form-socials">
+                        <a href="" class="btn auth-form-face">
+                            <i class="fa-brands fa-square-facebook"></i>
+                            &emsp;Đăng nhập với Facebook
+                        </a>
+                        <a href="" class="btn auth-form-gg">
+                            <i class="fa-brands fa-google"></i>
+                            &emsp;Đăng nhập với Google
+                        </a>
+                    </div>*@
                 <div class="auth-form-footer">
                     <div class="auth-form-footer_answer">Bạn đã có tài khoản?</div>
                     <a href="@Url.Action("Index", "LoginAccount")" class="auth-form-footer-link">Đăng nhập ngay</a>

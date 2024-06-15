@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
@@ -26,8 +25,8 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
                     dicTotalPay[item.DateOfPurchase.Value.Date].Product += item.DetailBill.totalQuanityProduct();
                 }
                 else dicTotalPay.Add(item.DateOfPurchase.Value.Date, new DashBoardModel(
-                    date: item.DateOfPurchase.Value.Date, 
-                    totalPay: item.TotalPay.Value, 
+                    date: item.DateOfPurchase.Value.Date,
+                    totalPay: item.TotalPay.Value,
                     product: item.DetailBill.totalQuanityProduct()));
             });
             dicTotalPay = dicTotalPay.OrderBy(item => item.Key).ToDictionary(pair => pair.Key, pair => pair.Value);

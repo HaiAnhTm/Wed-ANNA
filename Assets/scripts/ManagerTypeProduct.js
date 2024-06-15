@@ -8,8 +8,6 @@ const updateInputNameId = document.getElementById('update_input_type_product_nam
 const notifyInputAddId = document.getElementById('notify_input_add')
 const notifyInputUpdateId = document.getElementById('notify_input_update')
 
-
-
 addInputNameId.addEventListener('click', function () {
     removeTextContent(notifyInputAddId)
 })

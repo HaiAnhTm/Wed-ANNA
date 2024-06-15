@@ -2488,6 +2488,7 @@
     <Content Include="Web.config" />
     <Content Include="Views\UserInformation\Index.cshtml" />
     <Content Include="Views\UserInformation\UpdatePassword.cshtml" />
+    <Content Include="Views\ManagerBill\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

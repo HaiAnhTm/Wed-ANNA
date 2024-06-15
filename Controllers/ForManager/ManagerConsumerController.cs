@@ -1,16 +1,16 @@
-﻿using System;
+﻿using DotNet_E_Commerce_Glasses_Web.App_Start;
+using DotNet_E_Commerce_Glasses_Web.Models;
+using DotNet_E_Commerce_Glasses_Web.Sessions;
+using DotNet_E_Commerce_Glasses_Web.Utils;
+using System;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
+using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using DotNet_E_Commerce_Glasses_Web.Models;
-using System.IO;
-using DotNet_E_Commerce_Glasses_Web.Sessions;
-using System.Data.Entity.Migrations;
-using DotNet_E_Commerce_Glasses_Web.Utils;
-using DotNet_E_Commerce_Glasses_Web.App_Start;
 
 namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
 {
@@ -50,7 +50,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
                 if (consumer.ImageFile != null)
                 {
                     var fileSave = MoveImageToProject(consumer.ImageFile);
-                    if (fileSave  != null)
+                    if (fileSave != null)
                         consumer.Image = fileSave;
                 }
                 db.Consumers.AddOrUpdate(consumer);
@@ -94,21 +94,22 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
         [HttpPost]
         public async Task<JsonResult> UpdatePassword(int accountId, string oldPassword, string newPassword)
         {
-            if(ConsumerSession.getConsumerSession() != null)
+            if (ConsumerSession.getConsumerSession() != null)
             {
                 return Json(new { status = false, message = "Yêu cầu đăng nhập!" });
             }
             var account = db.Accounts.FirstOrDefault(item => item.IdAccount.Equals(accountId));
             if (account != null)
             {
-                if (account.Password.Equals(PasswordSercurity.GetMD5(oldPassword))) 
+                if (account.Password.Equals(PasswordSercurity.GetMD5(oldPassword)))
                 {
                     account.Password = PasswordSercurity.GetMD5(newPassword);
                     db.Accounts.AddOrUpdate(account);
                     await db.SaveChangesAsync();
-                    return Json(new { 
-                        status = true, 
-                        message = "Cập nhật mật khẩu thành công" 
+                    return Json(new
+                    {
+                        status = true,
+                        message = "Cập nhật mật khẩu thành công"
                     });
                 }
                 else

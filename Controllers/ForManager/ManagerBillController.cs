@@ -1,15 +1,11 @@
-﻿using System;
+﻿using DotNet_E_Commerce_Glasses_Web.App_Start;
+using DotNet_E_Commerce_Glasses_Web.Models;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Net;
-using System.Web;
+using System.Threading.Tasks;
 using System.Web.Mvc;
-using DotNet_E_Commerce_Glasses_Web.Models;
-using Newtonsoft.Json;
-using DotNet_E_Commerce_Glasses_Web.App_Start;
 
 namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
 {
@@ -28,9 +24,10 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
         public async Task<JsonResult> DetailBill(int billId)
         {
             var bill = await db.Bills.FindAsync(billId);
-            if(bill == null)
-                return Json(new { 
-                    status = false, 
+            if (bill == null)
+                return Json(new
+                {
+                    status = false,
                     data = new
                     {
 
@@ -48,8 +45,9 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
             productSaleDic.Values.ToList().ForEach(item => listBill.Add(new ItemListBillModel(item.NameProduct, item.QuanitySale)));
             return Json(new
             {
-                status = true, 
-                data =  new {
+                status = true,
+                data = new
+                {
                     ConsumerName = bill.Consumer.Username,
                     ConsumerImage = bill.Consumer.Image,
                     TotalBill = bill.currencyTotalBill(),
@@ -60,6 +58,46 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
                 },
                 message = ""
             });
+        }
+
+        // GET: Bills2/Edit/5
+        public async Task<ActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Bill bill = await db.Bills.FindAsync(id);
+            if (bill == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.IdConsumer = new SelectList(db.Consumers, "IdConsumer", "Username", bill.IdConsumer);
+            ViewBag.IdDetailBill = new SelectList(db.DetailBills, "IdDetailBill", "IdDetailBill", bill.IdDetailBill);
+            ViewBag.IdDetailDiscount = new SelectList(db.Discounts, "IdDiscount", "TitleDiscount", bill.IdDetailDiscount);
+            ViewBag.IdDetailDelivery = new SelectList(db.StatusDeliveries, "IdStatus", "Status", bill.IdDetailDelivery);
+            return View(bill);
+        }
+
+        [HttpPost]
+        [ManagerAuthorize]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit([Bind(Include = "IdBild,IdDetailDelivery")] int? id, int? idDetailDelivery)
+        {
+            if(id == null || idDetailDelivery == null)
+            {
+                return View();
+            }
+
+            var bill = db.Bills.Find(id);
+            if (bill == null)
+                return View();
+
+            bill.IdDetailDelivery = idDetailDelivery;
+
+            db.Entry(bill).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

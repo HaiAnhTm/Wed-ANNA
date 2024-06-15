@@ -3,19 +3,19 @@
     direction: rtl;
 }
 
-    .rating > span {
-        display: inline-block;
-        position: relative;
-        width: 1.1em;
-    }
+.rating > span {
+    display: inline-block;
+    position: relative;
+    width: 1.1em;
+}
 
-        .rating > span:hover:before,
-        .rating > span:hover ~ span:before {
-            content: "\2605";
-            position: absolute;
-            color: gold;
-        }
+.rating > span:hover:before,
+.rating > span:hover ~ span:before {
+    content: "\2605";
+    position: absolute;
+    color: gold;
+}
 
-        .rating > span:hover:before {
-            z-index: 1000;
-        }
+.rating > span:hover:before {
+    z-index: 1000;
+}

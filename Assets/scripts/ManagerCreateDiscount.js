@@ -3,9 +3,9 @@ const inputCreateCode = document.getElementById('code_discount')
 
 buttonCreateCode.addEventListener('click', function (event) {
     console.log('click')
-     getCodeDiscount(
-         onSuccess = function (code, message) {
-             inputCreateCode.value = code
+    getCodeDiscount(
+        onSuccess = function (code, message) {
+            inputCreateCode.value = code
         },
         onFailure = function () {
 

@@ -23,7 +23,7 @@ async function loadDetailBill(
    onSuccess,
    onFailure
 ) {
-    $.ajax({
+   $.ajax({
       url: '/ManagerBill/DetailBill',
       type: 'POST',
       data: {
@@ -128,11 +128,11 @@ function showDialogDetailBill(data) {
       var item = detailListBill[i];
       danhSach.innerHTML +=
          `
-       <tr class="table-active">
+      <tr class="table-active">
             <th scope="row">${item.NameProduct}</th>
             <td>${item.Quantity}</td>
-        </tr>
-        `;
+      </tr>
+      `;
    }
 
    $(dialogDetailBill).modal('show');

@@ -35,13 +35,14 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
         [HttpGet]
         public async Task<JsonResult> QueryProduct(string sort, string statusProduct)
         {
-            if(manager == null)
-                return Json(new {
+            if (manager == null)
+                return Json(new
+                {
                     status = false,
                     message = "Yêu cầu đăng nhập!",
                     url = "/LoginAccount"
-            }); 
-           if (!int.TryParse(sort, out int indexSort))
+                });
+            if (!int.TryParse(sort, out int indexSort))
             {
                 indexSort = -1;
             }
@@ -56,7 +57,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
             {
                 case 1:
                     {
-                        var typeSale =  await db.TypeProductSales.Where(item => item.StatusProduct.Equals("Bán hàng")).FirstOrDefaultAsync();
+                        var typeSale = await db.TypeProductSales.Where(item => item.StatusProduct.Equals("Bán hàng")).FirstOrDefaultAsync();
                         if (typeSale != null)
                             products = products
                                 .Where(item => item.IdTypeSale.Equals(typeSale.IdTypeSale))
@@ -117,7 +118,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForManager
                     price = item.Price,
                     discount_product = item.Discount,
                     quantity = item.Quantity,
-                    type_product = item.TypeProduct?.TypeProductName, 
+                    type_product = item.TypeProduct?.TypeProductName,
                     status_product = item.TypeProductSale?.StatusProduct,
                     price_string = item.CurrencyString()
                 };

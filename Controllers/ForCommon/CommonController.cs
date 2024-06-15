@@ -92,7 +92,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForCommon
             {
                 if (index >= 4)
                     break;
-                if(item.Quantity > 0 && item.TypeProductSale.StatusProduct.Equals("Bán hàng"))
+                if (item.Quantity > 0 && item.TypeProductSale.StatusProduct.Equals("Bán hàng"))
                 {
                     var json = new
                     {

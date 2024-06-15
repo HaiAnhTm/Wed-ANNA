@@ -32,11 +32,11 @@
             <div class="col-9 headerright">
                 <div class="headerright-admin">
                     <img src="~/Assets/images/logo.svg" alt="" class="headerright-img-admin">
-                    <div class="headerright-admin-name">Xin Chào hai_anh.__2003</div>
+                    <div class="headerright-admin-name">Xin Chào, Admin</div>
                 </div>
-                <i class="fa-solid fa-bars header-right-bars-logo"></i>
-                <i class="fa-solid fa-bell header-right-bell-logo"></i>
-                <div class="headerright-text">ANNA GLASSES</div>
+                @*<i class="fa-solid fa-bars header-right-bars-logo"></i>
+                <i class="fa-solid fa-bell header-right-bell-logo"></i>*@
+                <div class="headerright-text" style="margin-left:10px">ANNA GLASSES</div>
             </div>
         </div>
 
@@ -50,8 +50,7 @@
                             <div class="order-management-heading" onclick="toggleSubMenu('orderManagement')">
                                 <i class="fa-regular fa-clipboard Oder-icon"></i>
                                 <div class="order-management-heading-text">Quản Lý Đơn Hàng</div>
-                                <i class="fa-solid fa-chevron-down chevron-manage-icon"
-                                   id="orderManagementIcon"></i>
+                                <i class="fa-solid fa-chevron-down chevron-manage-icon" id="orderManagementIcon"></i>
                             </div>
                             @Html.ActionLink("Tất cả Đơn Hàng", "Index", "ManagerBill", null, new { @class = "order-management-items hidden" })
                         </div>
@@ -61,8 +60,7 @@
                             <div class="order-management-heading" onclick="toggleSubMenu('productManagement')">
                                 <i class="fa-solid fa-bag-shopping Oder-icon"></i>
                                 <div class="order-management-heading-text">Quản Lý Sản Phẩm</div>
-                                <i class="fa-solid fa-chevron-down chevron-manage-icon"
-                                   id="productManagementIcon"></i>
+                                <i class="fa-solid fa-chevron-down chevron-manage-icon" id="productManagementIcon"></i>
                             </div>
                             @Html.ActionLink("Tất cả Sản Phẩm", "Index", "ManagerProduct", null, new { @class = "order-management-items hidden" })
                             <a href="/ManagerProduct/CreateProduct" class="order-management-items hidden">Thêm Sản Phẩm</a>
@@ -74,8 +72,7 @@
                             <div class="order-management-heading" onclick="toggleSubMenu('ConsumersManagement')">
                                 <i class="fa-regular fa-user Oder-icon"></i>
                                 <div class="order-management-heading-text">Quản Lý Khách Hàng</div>
-                                <i class="fa-solid fa-chevron-down chevron-manage-icon"
-                                   id="ConsumersManagementIcon"></i>
+                                <i class="fa-solid fa-chevron-down chevron-manage-icon" id="ConsumersManagementIcon"></i>
                             </div>
                             @Html.ActionLink("Thông Tin Khách Hàng", "Index", "ManagerConsumer", null, new { @class = "order-management-items hidden" })
                         </div>
@@ -85,8 +82,7 @@
                             <div class="order-management-heading" onclick="toggleSubMenu('DiscountManagement')">
                                 <i class="fa-solid fa-bag-shopping Oder-icon"></i>
                                 <div class="order-management-heading-text">Kênh MarKetting</div>
-                                <i class="fa-solid fa-chevron-down chevron-manage-icon"
-                                   id="DiscountManagementIcon"></i>
+                                <i class="fa-solid fa-chevron-down chevron-manage-icon" id="DiscountManagementIcon"></i>
                             </div>
 
                             @Html.ActionLink("Mã Giảm giá của tôi", "Index", "ManagerDiscount", null, new { @class = "order-management-items hidden" })

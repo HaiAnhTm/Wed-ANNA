@@ -5,7 +5,6 @@ using Microsoft.Ajax.Utilities;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -58,7 +57,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers
 
             var jsonData = new List<object>();
 
-            foreach(var item in dicCart)
+            foreach (var item in dicCart)
             {
                 var product = await db.Products.FirstOrDefaultAsync(p => p.IdProduct == item.Key);
 

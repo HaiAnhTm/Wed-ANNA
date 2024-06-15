@@ -1,6 +1,4 @@
-﻿using DotNet_E_Commerce_Glasses_Web.Utils;
-
-namespace DotNet_E_Commerce_Glasses_Web.Models
+﻿namespace DotNet_E_Commerce_Glasses_Web.Models
 {
     public class ProductSaleModel : Product
     {
@@ -13,6 +11,6 @@ namespace DotNet_E_Commerce_Glasses_Web.Models
         {
             this.QuanitySale = quanitySale;
         }
-        public string getTotalProduct() => (this.QuanitySale * (this.Price ?? 0)* (100 - this.Discount ?? 0) / 100).ToString("#,##0") + " VND";
+        public string getTotalProduct() => (this.QuanitySale * (this.Price ?? 0) * (100 - this.Discount ?? 0) / 100).ToString("#,##0") + " VND";
     }
 }

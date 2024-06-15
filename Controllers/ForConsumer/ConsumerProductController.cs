@@ -1,5 +1,4 @@
-﻿using DotNet_E_Commerce_Glasses_Web.App_Start;
-using DotNet_E_Commerce_Glasses_Web.Models;
+﻿using DotNet_E_Commerce_Glasses_Web.Models;
 using DotNet_E_Commerce_Glasses_Web.Sessions;
 using DotNet_E_Commerce_Glasses_Web.Utils;
 using Microsoft.Ajax.Utilities;
@@ -40,7 +39,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
                     bill.Consumer = consumer;
                     bill.IdConsumer = consumerID;
                 }
-            }   
+            }
         }
 
         [HttpGet]
@@ -304,7 +303,7 @@ namespace DotNet_E_Commerce_Glasses_Web.Controllers.ForConsumer
         [HttpPost]
         public async Task<JsonResult> AddDiscount(string codeDiscount)
         {
-            if(consumer == null)
+            if (consumer == null)
                 return Json(new
                 {
                     status = false,
